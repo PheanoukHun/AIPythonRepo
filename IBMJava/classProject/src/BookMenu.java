@@ -81,7 +81,7 @@ public class BookMenu {
     private static void println(String s) { System.out.println(s); }
     private static void print(String s) { System.out.print(s); }
 
-    private static String comparePricesReturnHigher(Book b1, Book b2) {
+    public static String comparePricesReturnHigher(Book b1, Book b2) {
         if (b1 != null && b2 != null) {       
             if (b1.getPrice() > b2.getPrice()) { return b1.getTitle(); }
             else if (b1.getPrice() < b2.getPrice()) { return b2.getTitle(); }

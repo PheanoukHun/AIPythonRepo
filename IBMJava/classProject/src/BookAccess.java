@@ -1,11 +1,13 @@
 public class BookAccess {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
         Book book1 = new Book("Atomic Habits", "James Clear", 30.0f);
         
-        Book book2 = new Book("", "", 0.0f);
+        Book book2 = new Book();
         book2.setTitle("Sapiens");
         book2.setAuthor("Yuval Noah Harari");
         book2.setPrice(25.0f);
+
+        Book book3 = (Book) (book1.clone());
 
         System.out.println();
         System.out.println(book1);
@@ -13,6 +15,9 @@ public class BookAccess {
         System.out.println(book2);
         System.out.println();
         System.out.println(comparePrices(book1, book2));
+        System.out.println();
+        System.out.println("The third book is cloned.");
+        System.out.println(book3);
         System.out.println();
     }
 
