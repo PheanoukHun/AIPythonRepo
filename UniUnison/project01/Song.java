@@ -28,17 +28,22 @@ public class Song {
     }
     
     // Add your methods here.
+
+
+    // This Methods Prints Out the Refrain of the Song
     public static void refrain() {
         System.out.println("I don't know why she swallowed that fly,");
         System.out.println("Perhaps she'll die.");
         System.out.println();
     }
 
+    // This prints out the First Stanza/Verse of the Song.
     public static void stanzaOne() {
         System.out.println("There was an old woman who swallowed a fly.");
         refrain();
     }
     
+    // This prints out the Second Stanza/Verse of the Song.
     public static void stanzaTwo() {
         System.out.println("There was an old woman who swallowed a spider,");
         System.out.println("That wriggled and iggled and jiggled inside her.");
@@ -46,6 +51,7 @@ public class Song {
         refrain();
     }
 
+    // This prints out the Third Stanza/Verse of the Song.
     public static void stanzaThree() {
         System.out.println("There was an old woman who swallowed a bird,");
         System.out.println("How absurd to swallow a bird.");
@@ -54,6 +60,7 @@ public class Song {
         refrain();
     }
 
+    // This prints out the Fourth Stanza/Verse of the Song.
     public static void stanzaFour() {
         System.out.println("There was an old woman who swallowed a cat,");
         System.out.println("Imagine that to swallow a cat.");
@@ -63,6 +70,7 @@ public class Song {
         refrain();
     }
 
+    // This prints out the Fifth Stanza/Verse of the Song.
     public static void stanzaFive() {
         System.out.println("There was an old woman who swallowed a dog,");
         System.out.println("What a hog to swallow a dog.");
@@ -73,6 +81,7 @@ public class Song {
         refrain();
     }
 
+    // This prints out the Sixth Stanza/Verse of the Song.
     public static void stanzaSix() {
         System.out.println("There was an old woman who swallowed a goat,");
         System.out.println("She just opened her throat to swallow a goat.");
@@ -84,6 +93,7 @@ public class Song {
         refrain();
     }
 
+    // This prints out the Seventh Stanza/Verse of the Song.
     public static void stanzaSeven() {
         System.out.println("There was an old woman who swallowed a cow,");
         System.out.println("I don't know how she swallowed a cow.");
@@ -96,6 +106,7 @@ public class Song {
         refrain();
     }
     
+    // This prints out the Eighth Stanza/Verse of the Song.
     public  static void stanzaEight() {
         System.out.println("There was an old woman who swallowed a horse,");
         System.out.println("She died of course.");
