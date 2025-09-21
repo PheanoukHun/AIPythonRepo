@@ -2,13 +2,13 @@ import java.awt.Graphics;
 import java.awt.Color;
 import java.io.IOException;
 
- /*
+/*
  * CS312 Assignment 3 - Scintillation Grid
- * 
- * On my honor, <NAME>, this programming assignment is my own work, 
+ *
+ * On my honor, Pheanouk Hun, this programming assignment is my own work,
  * I have not shared it with others and I will not share it in the future.
  *
- * A program to print out various scintillation grids and a student designed drawing. 
+ * A program to print out various scintillation grids and a student designed drawing.
  *
  *  Name:
  *  UTEID:
@@ -32,7 +32,7 @@ public class ScintillationGrid {
     }
 
     
-    // Save the current drawing panel to the given file. 
+    // Save the current drawing panel to the given file.
     // CS312 Students, do not alter this method.
     public static void saveDrawingPanel(DrawingPanel dp, String fileName) {
         try {

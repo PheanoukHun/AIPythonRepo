@@ -129,7 +129,7 @@ import javax.swing.filechooser.FileFilter;
  *
  * <p>
  * Version: 4.04, 2016/08/17 (to accompany BJP 4th edition).
- * 
+ *
  * <p>
  * You can always download the latest {@code DrawingPanel} from
  * <a target="_blank" href="http://www.buildingjavaprograms.com/drawingpanel/DrawingPanel.java">
