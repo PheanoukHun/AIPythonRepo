@@ -58,8 +58,12 @@ public class ScintillationGrid {
         int initialHorizontalY = y + sizeOfSmall;
         int stepSize = sizeOfSmall + thicknessOfLines;
 
-        int extraDot = (int) (thicknessOfLines * 1.4);
+        int extraDot = (int) (thicknessOfLines * 0.4);
         int dotDiameter = thicknessOfLines + extraDot;
+
+        for (int i = 0; dotDiameter < 4; i++) {
+            dotDiameter += 1;
+        }
 
         int intialDotX = initialVerticalX - extraDot / 2;
         int intialDotY = initialHorizontalY - extraDot / 2;
