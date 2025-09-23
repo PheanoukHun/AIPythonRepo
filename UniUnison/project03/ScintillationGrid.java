@@ -49,60 +49,91 @@ public class ScintillationGrid {
         }
     }
 
-    public static void drawScintillationGrid(Graphics gr, int x, int y, int sizeOfLarge, int sizeOfSmall, int numberOfLines, int thicknessOfLines) {
+    // Purpose: Draws a Scintillation Grid of Various Sizes Depending on the Given Variables
+    // Parameters: gr - graphics object, x - left corner of the grid, y - top corner of the grid,
+    //             gridSize - Width of the Actual Size of the Grid, smallSize - Size of Small Box,
+    //             numLines - Number of Lines in the Grid, lineWidth - Width of Each Line
+    // Output: Draws a Scintillation Grid with the given variables
+    // Return: none
+    public static void drawScintillationGrid(Graphics gr, int x, int y, int gridSize, int smallSize, int numLines, int lineWidth) {
 
         gr.setColor(Color.BLACK);
-        gr.fillRect(x, y, sizeOfLarge, sizeOfLarge);
+        gr.fillRect(x, y, gridSize, gridSize);
 
-        int initialVerticalX = x + sizeOfSmall;
-        int initialHorizontalY = y + sizeOfSmall;
-        int stepSize = sizeOfSmall + thicknessOfLines;
+        int firstLineX = x + smallSize;
+        int firstLineY = y + smallSize;
+        int stepSize = smallSize + lineWidth;
 
-        int extraDot = (int) (thicknessOfLines * 0.4);
-        int dotDiameter = thicknessOfLines + extraDot;
-
-        for (int i = 0; dotDiameter < 4; i++) {
-            dotDiameter += 1;
-        }
-
-        int intialDotX = initialVerticalX - extraDot / 2;
-        int intialDotY = initialHorizontalY - extraDot / 2;
-
-        drawVerticalLines(gr, initialVerticalX, y, thicknessOfLines, sizeOfLarge, numberOfLines, stepSize);
-        drawHorizontalLines(gr, x, initialHorizontalY, thicknessOfLines, sizeOfLarge, numberOfLines, stepSize);
-        drawDots(gr, intialDotX, intialDotY, dotDiameter, numberOfLines, stepSize);
+        drawVerticalLines(gr, firstLineX, y, lineWidth, gridSize, numLines, stepSize);
+        drawHorizontalLines(gr, x, firstLineY, lineWidth, gridSize, numLines, stepSize);
+        drawDots(gr, firstLineX, firstLineY, lineWidth, numLines, stepSize);
     }
 
-    public static void drawVerticalLines(Graphics gr, int x, int y, int thicknessOfLines, int lineLength, int numberOfLines, int steps) {
+    // Purpose: Draw vertical gray lines for one grid
+    // Parameters: gr - graphics object, x - starting x coordinate, y - top y coordinate,
+    //             lineWidth - width of each vertical line, lineLen - length of each line,
+    //             numLines - number of lines to draw, steps - distance between each line
+    // Output: Draws vertical rectangles on the grid
+    // Return: none
+    public static void drawVerticalLines(Graphics gr, int x, int y, int lineWidth, int lineLen, int numLines, int steps) {
+
         gr.setColor(Color.GRAY);
-        for (int i = 0; i < numberOfLines; i++) {
-            gr.fillRect(x, y, thicknessOfLines, lineLength);
+
+        // Loop runs once per vertical line
+        for (int i = 0; i < numLines; i++) {
+            gr.fillRect(x, y, lineWidth, lineLen);
             x += steps;
         }
     }
 
-    public static void drawHorizontalLines(Graphics gr, int x, int y, int thicknessOfLines, int lineLength, int numberOfLines, int steps) {
+    // Purpose: Draw Horizontal gray lines for one grid
+    // Parameters: gr - graphics object, x - x coordinate, y - starting y coordinate,
+    //             lineWidth - width of each vertical line, lineLen - length of each line,
+    //             numLines - how many lines to draw, steps - distance between each line
+    // Output: Draws horizontal rectangles on the grid
+    // Return: none
+    public static void drawHorizontalLines(Graphics gr, int x, int y, int lineWidth, int lineLen, int numLines, int steps) {
+
         gr.setColor(Color.GRAY);
-        for (int i = 0; i < numberOfLines; i++) {
-            gr.fillRect(x, y, lineLength, thicknessOfLines);
+
+        // Loop runs once per Horizontal Line
+        for (int i = 0; i < numLines; i++) {
+            gr.fillRect(x, y, lineLen, lineWidth);
             y += steps;
         }
     }
 
-    public static void drawDots(Graphics gr, int x, int y, int dotDiameter, int numberOfLines, int steps) {
-        
-        int initialX = x;
-        
+    // Purpose: Draws a Grid of Dots in the Intersection of the Vertical and Horizontal Lines
+    // Parameters: gr - graphics object, x - starting x coordinate, y - starting y coordinate,
+    //             lineWidth - Width of the Lines used to determin dot size,
+    //             numDotsLinePerLine - The Number of Dots Per Line and number of Lines,
+    //             steps - distance between each dots up and down
+    // Output: Draws a grid of with numDotsLine by numDotsLine as the Dimensions
+    // Return: none
+    public static void drawDots(Graphics gr, int x, int y, int lineWidth, int numDotsLinePerLine, int steps) {
+
+        final int MIN_EXTRA_DOT = 4;
+        final double DOT_SCALE = 0.4;
+
+        int dotPadding = Math.max((int) (lineWidth * DOT_SCALE), MIN_EXTRA_DOT);
+        int dotDiameter = lineWidth + dotPadding;
+        int initialDotX = x - dotPadding / 2;
+        int initialDotY = y - dotPadding / 2;
+
         gr.setColor(Color.LIGHT_GRAY);
 
-        for (int i = 0; i < numberOfLines; i++) {
+        // Outer Loop Runs Once per Row of Dots
+        for (int i = 0; i < numDotsLinePerLine; i++) {
             
-            for (int j = 0; j < numberOfLines; j++) {
-                gr.fillOval(x, y, dotDiameter, dotDiameter);
-                x += steps;
+            int currX = initialDotX;
+
+            // Inner Loop runs once per Dot in the Row
+            for (int j = 0; j < numDotsLinePerLine; j++) {
+                gr.fillOval(currX, initialDotY, dotDiameter, dotDiameter);
+                currX += steps;
             }
-            x = initialX;
-            y += steps;
+
+            initialDotY += steps;
         }
     }
 }
