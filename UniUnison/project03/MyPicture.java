@@ -9,13 +9,13 @@ import java.io.IOException;
  * assignment on your own and that you didn't share your code with other
  * students.
  * 
- * On my honor, <NAME>, this programming assignment is my own work and I have
+ * On my honor, Pheanouk Hun, this programming assignment is my own work and I have
  * not shared my solution with any other student in the class.
  *
  * A graphic image of my own design.
  *
- *  email address:
- *  UTEID:
+ *  email address: ph23434@eid.utexas.edu
+ *  UTEID: ph23434
  */
 
 public class MyPicture {
@@ -42,12 +42,10 @@ public class MyPicture {
 	// This is an example graphic. Delete the body of this method and write your own.
 	// Do not alter the method header.
 	private static void drawPicture(Graphics gr) {
-		Color blue = new Color(0, 87, 183);
-		gr.setColor(blue);
-		gr.fillRect(0, 0, WIDTH, HEIGHT / 2);
-		Color yellow = new Color(255, 215, 0);
-		gr.setColor(yellow);
-		gr.fillRect(0, HEIGHT / 2, WIDTH, HEIGHT / 2);
+		Color BURNT_ORANGE = new Color(191, 87, 0);
+		gr.setColor(BURNT_ORANGE);
+		
+		gr.fillRect(0, 0, WIDTH, HEIGHT);
 	}
 
 }
