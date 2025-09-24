@@ -55,14 +55,14 @@ public class ScintillationGrid {
     //             numLines - Number of Lines in the Grid, lineWidth - Width of Each Line
     // Output: Draws a Scintillation Grid with the given variables
     // Return: none
-    public static void drawScintillationGrid(Graphics gr, int x, int y, int gridSize, int smallSize, int numLines, int lineWidth) {
-
-        gr.setColor(Color.BLACK);
-        gr.fillRect(x, y, gridSize, gridSize);
-
+    public static void drawScintillationGrid(Graphics gr, int x, int y, int gridSize,
+                                                int smallSize, int numLines, int lineWidth) {
         int firstLineX = x + smallSize;
         int firstLineY = y + smallSize;
         int stepSize = smallSize + lineWidth;
+
+        gr.setColor(Color.BLACK);
+        gr.fillRect(x, y, gridSize, gridSize);
 
         drawVerticalLines(gr, firstLineX, y, lineWidth, gridSize, numLines, stepSize);
         drawHorizontalLines(gr, x, firstLineY, lineWidth, gridSize, numLines, stepSize);
@@ -71,34 +71,36 @@ public class ScintillationGrid {
 
     // Purpose: Draw vertical gray lines for one grid
     // Parameters: gr - graphics object, x - starting x coordinate, y - top y coordinate,
-    //             lineWidth - width of each vertical line, lineLen - length of each line,
+    //             lineWidth - width of each vertical line, lineLenght - length of each line,
     //             numLines - number of lines to draw, steps - distance between each line
     // Output: Draws vertical rectangles on the grid
     // Return: none
-    public static void drawVerticalLines(Graphics gr, int x, int y, int lineWidth, int lineLen, int numLines, int steps) {
+    public static void drawVerticalLines(Graphics gr, int x, int y, int lineWidth,
+                                            int lineLength, int numLines, int steps) {
 
         gr.setColor(Color.GRAY);
 
         // Loop runs once per vertical line
         for (int i = 0; i < numLines; i++) {
-            gr.fillRect(x, y, lineWidth, lineLen);
+            gr.fillRect(x, y, lineWidth, lineLength);
             x += steps;
         }
     }
 
     // Purpose: Draw Horizontal gray lines for one grid
     // Parameters: gr - graphics object, x - x coordinate, y - starting y coordinate,
-    //             lineWidth - width of each vertical line, lineLen - length of each line,
+    //             lineWidth - width of each vertical line, lineLenght - length of each line,
     //             numLines - how many lines to draw, steps - distance between each line
     // Output: Draws horizontal rectangles on the grid
     // Return: none
-    public static void drawHorizontalLines(Graphics gr, int x, int y, int lineWidth, int lineLen, int numLines, int steps) {
+    public static void drawHorizontalLines(Graphics gr, int x, int y, int lineWidth,
+                                            int lineLenght, int numLines, int steps) {
 
         gr.setColor(Color.GRAY);
 
         // Loop runs once per Horizontal Line
         for (int i = 0; i < numLines; i++) {
-            gr.fillRect(x, y, lineLen, lineWidth);
+            gr.fillRect(x, y, lineLenght, lineWidth);
             y += steps;
         }
     }
@@ -110,7 +112,8 @@ public class ScintillationGrid {
     //             steps - distance between each dots up and down
     // Output: Draws a grid of with numDotsLine by numDotsLine as the Dimensions
     // Return: none
-    public static void drawDots(Graphics gr, int x, int y, int lineWidth, int numDotsLinePerLine, int steps) {
+    public static void drawDots(Graphics gr, int x, int y, int lineWidth,
+                                    int numDotsLinePerLine, int steps) {
 
         final int MIN_EXTRA_DOT = 4;
         final double DOT_SCALE = 0.4;
