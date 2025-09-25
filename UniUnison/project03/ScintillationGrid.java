@@ -123,7 +123,7 @@ public class ScintillationGrid {
         int initialDotX = x - dotPadding / 2;
         int initialDotY = y - dotPadding / 2;
 
-        gr.setColor(Color.LIGHT_GRAY);
+        gr.setColor(Color.WHITE);
 
         // Outer Loop Runs Once per Row of Dots
         for (int i = 0; i < numDotsLinePerLine; i++) {
