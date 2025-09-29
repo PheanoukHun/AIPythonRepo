@@ -44,6 +44,5 @@ public class RockPaperScissors {
         } else {
             int seed = Integer.parseInt(args[0]);
             return new RandomPlayer(seed);
-        }
     }
 }
