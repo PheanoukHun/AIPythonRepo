@@ -1,0 +1,84 @@
+Welcome to ROCK PAPER SCISSORS. I, Computer, will be your opponent.
+Please type in your name and press return: Kelly
+
+Welcome Kelly.
+
+All right Kelly. How many rounds would you like to play?
+Enter the number of rounds you want to play and press return: 10
+
+Round 1.
+Kelly, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 3
+Computer picked ROCK, Kelly picked SCISSORS.
+
+ROCK breaks SCISSORS. I win.
+
+Round 2.
+Kelly, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 1
+Computer picked PAPER, Kelly picked ROCK.
+
+PAPER covers ROCK. I win.
+
+Round 3.
+Kelly, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 2
+Computer picked SCISSORS, Kelly picked PAPER.
+
+SCISSORS cut PAPER. I win.
+
+Round 4.
+Kelly, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 3
+Computer picked PAPER, Kelly picked SCISSORS.
+
+SCISSORS cut PAPER. You win.
+
+Round 5.
+Kelly, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 1
+Computer picked SCISSORS, Kelly picked ROCK.
+
+ROCK breaks SCISSORS. You win.
+
+Round 6.
+Kelly, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 2
+Computer picked ROCK, Kelly picked PAPER.
+
+PAPER covers ROCK. You win.
+
+Round 7.
+Kelly, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 3
+Computer picked ROCK, Kelly picked SCISSORS.
+
+ROCK breaks SCISSORS. I win.
+
+Round 8.
+Kelly, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 1
+Computer picked ROCK, Kelly picked ROCK.
+
+We picked the same thing! This round is a draw.
+
+Round 9.
+Kelly, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 2
+Computer picked PAPER, Kelly picked PAPER.
+
+We picked the same thing! This round is a draw.
+
+Round 10.
+Kelly, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 3
+Computer picked SCISSORS, Kelly picked SCISSORS.
+
+We picked the same thing! This round is a draw.
+
+
+Number of games of ROCK PAPER SCISSORS: 10
+Number of times Computer won: 4
+Number of times Kelly won: 3
+Number of draws: 3
+I, Computer, am a master at ROCK, PAPER, SCISSORS.
