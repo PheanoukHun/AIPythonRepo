@@ -25,10 +25,6 @@ public class RockPaperScissors {
     public static final int PAPER = 2;
     public static final int SCISSORS = 3;
 
-    public static int playerScore = 0;
-    public static int computerScore = 0;
-    public static int draws = 0;
-
     public static void main(String[] args) {
         // CS312 Students. Do not change the following line.
         RandomPlayer computerPlayer = buildRandomPlayer(args);
@@ -39,8 +35,9 @@ public class RockPaperScissors {
 
         String name = welcome(keyboard);
         int numRounds = askNumRounds(keyboard, name);
-        playRounds(keyboard, computerPlayer, name, numRounds);
-        printResults(name, numRounds);
+        String results = playRounds(keyboard, computerPlayer, name, numRounds);
+        printResults(name, numRounds, results);
+        
         keyboard.close();
     }
 
@@ -78,14 +75,29 @@ public class RockPaperScissors {
         return numRounds;
     }
 
-    public static void playRounds(Scanner console, RandomPlayer computer, String name, int numRounds) {
+    public static String playRounds(Scanner console, RandomPlayer computer, String name, int numRounds) {
+
+        int playerScore = 0;
+        int computerScore = 0;
+        int draws = 0;
+
         for (int i = 1; i <= numRounds; i++) {
             System.out.println("\nRound " + i + ".");
-            playRound(console, computer, name);
+            char roundResult = playRound(console, computer, name);
+            if (roundResult == 'w') {
+                playerScore++;
+            } else if (roundResult == 'l') {
+                computerScore++;
+            } else {
+                draws++;
+            }
         }
+
+        String results = playerScore + " " + computerScore + " " + draws;
+        return results;
     }
 
-    public static void playRound(Scanner console, RandomPlayer computer, String name) {
+    public static char playRound(Scanner console, RandomPlayer computer, String name) {
         System.out.println(name + ", please enter your choice for this round.");
         System.out.print("1 for ROCK, 2 for PAPER, and 3 for SCISSORS: ");
         int playerChoice = console.nextInt();
@@ -95,7 +107,8 @@ public class RockPaperScissors {
         String computerStr = numHandToStringHand(computerChoice);
         System.out.println("Computer picked " + computerStr + ", " + name + " picked " + playerStr);
 
-        checkPlayerWin(playerChoice, computerChoice);
+        char result = checkPlayerWin(playerChoice, computerChoice);
+        return result;
     }
 
     public static String numHandToStringHand(int num) {
@@ -108,11 +121,10 @@ public class RockPaperScissors {
         }
     }
 
-    public static int checkPlayerWin(int playerChoice, int computerChoice) {
+    public static char checkPlayerWin(int playerChoice, int computerChoice) {
         if (playerChoice == computerChoice) {
             System.out.println("\nWe picked the same thing! This round is a draw.");
-            draws++;
-            return 1;
+            return 'd';
         }
 
         boolean conditionOne = playerChoice == ROCK && computerChoice == SCISSORS;
@@ -121,13 +133,11 @@ public class RockPaperScissors {
 
         if (conditionOne || conditionTwo || conditionThree) {
             printRoundWinMessage(playerChoice, " You win.");
-            playerScore++;
+            return 'w';
         } else {
             printRoundWinMessage(computerChoice, " I win.");
-            computerScore++;
+            return 'l';
         }
-
-        return 1;
     }
 
     public static void printRoundWinMessage(int winner, String lastPhrase) {
@@ -140,7 +150,15 @@ public class RockPaperScissors {
         }
     }
 
-    public static void printResults(String name, int numOfRounds) {
+    public static void printResults(String name, int numOfRounds, String gameResults) {
+        
+        int indexOne = gameResults.indexOf(" ");
+        int indexTwo = gameResults.indexOf(" ", indexOne + 1);
+
+        int playerScore = Integer.parseInt(gameResults.substring(0, indexOne));
+        int computerScore = Integer.parseInt(gameResults.substring(indexOne + 1, indexTwo));
+        int draws = Integer.parseInt(gameResults.substring(indexTwo + 1));
+        
         System.out.println("\nNumber of games of ROCK PAPER SCISSORS: " + numOfRounds);
         System.out.println("Number of times Computer won: " + computerScore);
         System.out.println("Number of times " + name + " won: " + playerScore);
