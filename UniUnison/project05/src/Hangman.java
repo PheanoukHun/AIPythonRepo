@@ -2,19 +2,21 @@
 /**
  * CS312 Assignment 5 - Hangman
  *
- * On my honor, <NAME>, this programming assignment is my own work, 
+ * On my honor, Pheanouk Hun, this programming assignment is my own work, 
  * I have not shared it with others and I will not share it in the future.
  *
  * A program to play Hangman.
  *
- *  Name:
- *  UTEID:
+ *  Name:Pheanouk Hun
+ *  UTEID: ph23434
  *
  */
 
 import java.util.Scanner;
 
 public class Hangman {
+
+    public static final int MAX_NUM_GUESSES = 5;
 
     public static void main(String[] args) {
 
@@ -25,12 +27,58 @@ public class Hangman {
         // Print the intro to the program.
         intro();
 
-        // CS12 students: add your code here, delete this comment when finished.
+        playRound(phrases, keyboard);
 
         keyboard.close();
     }
 
-    // CS12 students: add your methods here. Delete this comment when finished.
+    public static void playRound(PhraseBank phrases, Scanner keyboard) {
+        String playAgain = "y";
+        do {
+            String notGuessedLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            String phrase = phrases.getNextPhrase();
+            int numWrongGuess = 0;
+            String maskedWord = createMaskedPhrase(phrase, notGuessedLetters);
+            while (numWrongGuess < MAX_NUM_GUESSES && maskedWord.indexOf("*") != -1) {
+
+            }
+        } while ((playAgain.toLowerCase()).equals("y"));
+    }
+
+    public static String createMaskedPhrase(String phrase, String notGuessedLetters) {
+        String obfuscatedPhrase = "";
+        for (int i = 0; i < phrase.length(); i++) {
+            char currChar = phrase.charAt(i);
+            if (notGuessedLetters.indexOf(currChar) == -1) {
+                obfuscatedPhrase += "*";
+            } else if (currChar == 32) {
+                obfuscatedPhrase += "_";
+            } else {
+                obfuscatedPhrase += currChar;
+            }
+        }
+        return obfuscatedPhrase;
+    }
+
+    public static void printNotGuessedLetters(String notGuessedLetters) {
+        System.out.println("\nThe letters you have not guessed yet are:");
+        char currChar = notGuessedLetters.charAt(0);
+        System.out.print(currChar);
+        for (int i = 1; i < notGuessedLetters.length(); i++) {
+            currChar = notGuessedLetters.charAt(i);
+            System.out.print("--" + currChar);
+        }
+        System.out.println();
+    }
+
+    public static String getValidGuess(Scanner keyboard, String notGuessedLetters) {
+        System.out.print("\nEnter your next guess: ");
+        String guess = keyboard.nextLine();
+
+        
+
+        return guess;
+    }
 
     // Build the PhraseBank.
     // Creates a set of secret phrases read from a file using the PhraseBank.java
