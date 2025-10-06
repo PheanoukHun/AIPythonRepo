@@ -32,52 +32,122 @@ public class Hangman {
         keyboard.close();
     }
 
+    /**
+     * 
+     * @param phrases
+     * @param keyboard
+     */
     public static void playRound(PhraseBank phrases, Scanner keyboard) {
         String playAgain = "y";
         do {
             String notGuessedLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            String phrase = phrases.getNextPhrase();
+            String secretPhrase = phrases.getNextPhrase();
+            String maskedPhrase = createMaskedPhrase(secretPhrase, notGuessedLetters);
             int numWrongGuess = 0;
-            String maskedWord = createMaskedPhrase(phrase, notGuessedLetters);
-            while (numWrongGuess < MAX_NUM_GUESSES && maskedWord.indexOf("*") != -1) {
+            System.out.println("\nI am thinking of a " + phrases.getTopic() + " ...\n");
+            while (numWrongGuess < MAX_NUM_GUESSES && maskedPhrase.contains("*")) {
+                System.out.println("The current phrase is " + maskedPhrase + "\n");
+                String guess = getValidGuess(keyboard, notGuessedLetters);
+                notGuessedLetters = updateNotGuessedLetters(guess, notGuessedLetters);
+                if (!checkCorrectGuess(guess, notGuessedLetters, secretPhrase)) {
+                    numWrongGuess += 1;
+                }
 
+                System.out.println("\nNumber of wrong guesses so far: " + numWrongGuess);
+                maskedPhrase = createMaskedPhrase(secretPhrase, notGuessedLetters);
             }
         } while ((playAgain.toLowerCase()).equals("y"));
     }
 
-    public static String createMaskedPhrase(String phrase, String notGuessedLetters) {
+    /**
+     * 
+     * @param secretPhrase
+     * @param notGuessedLetters
+     * @return obfuscatedPhrase
+     */
+    public static String createMaskedPhrase(String secretPhrase, String notGuessedLetters) {
         String obfuscatedPhrase = "";
-        for (int i = 0; i < phrase.length(); i++) {
-            char currChar = phrase.charAt(i);
-            if (notGuessedLetters.indexOf(currChar) == -1) {
-                obfuscatedPhrase += "*";
-            } else if (currChar == 32) {
+        for (int i = 0; i < secretPhrase.length(); i++) {
+            char currChar = secretPhrase.charAt(i);
+            if (((int) currChar) == 32) {
                 obfuscatedPhrase += "_";
+            } else if (notGuessedLetters.indexOf(currChar) != -1) {
+                obfuscatedPhrase += "*";
             } else {
                 obfuscatedPhrase += currChar;
             }
         }
+        
         return obfuscatedPhrase;
     }
 
+    /**
+     * 
+     * @param notGuessedLetters
+     */
     public static void printNotGuessedLetters(String notGuessedLetters) {
-        System.out.println("\nThe letters you have not guessed yet are:");
+        System.out.println("The letters you have not guessed yet are:");
         char currChar = notGuessedLetters.charAt(0);
         System.out.print(currChar);
         for (int i = 1; i < notGuessedLetters.length(); i++) {
             currChar = notGuessedLetters.charAt(i);
             System.out.print("--" + currChar);
         }
-        System.out.println();
+        System.out.println("\n");
     }
 
+    /**
+     * 
+     * @param keyboard
+     * @param notGuessedLetters
+     * @return
+     */
     public static String getValidGuess(Scanner keyboard, String notGuessedLetters) {
-        System.out.print("\nEnter your next guess: ");
-        String guess = keyboard.nextLine();
+        printNotGuessedLetters(notGuessedLetters);
 
-        
+        System.out.print("Enter your next guess: ");
+        String guess = (keyboard.nextLine()).toUpperCase();
 
+        while (!(notGuessedLetters.contains(guess))) {
+            System.out.println(guess + " is not a valid guess.");
+            printNotGuessedLetters(notGuessedLetters);
+            System.out.print("Enter your next guess: ");
+            guess = (keyboard.nextLine()).toUpperCase();
+        }
+
+        System.out.println("\nYou guessed " + guess + ".\n");
         return guess;
+    }
+
+    /**
+     * 
+     * @param guess
+     * @param notGuessedLetters
+     * @return
+     */
+    public static String updateNotGuessedLetters(String guess, String notGuessedLetters) {
+        int guessIndex = notGuessedLetters.indexOf(guess);
+        String notGuessedPartOne = notGuessedLetters.substring(0, guessIndex);
+        String notGuessedPartTwo = notGuessedLetters.substring(guessIndex + 1);
+        return notGuessedPartOne + notGuessedPartTwo;
+    }
+
+    /**
+     * 
+     * @param guess
+     * @param notGuessedLetters
+     * @param secretPhrase
+     * @return
+     */
+    public static Boolean checkCorrectGuess(String guess, String notGuessedLetters,
+            String secretPhrase) {
+        if (secretPhrase.contains(guess)) {
+            System.out.println("This is present in the secrete phrase.");
+            return true;
+        }
+
+        System.out.println("This is not present in the secret phrase.");
+        return false;
     }
 
     // Build the PhraseBank.
