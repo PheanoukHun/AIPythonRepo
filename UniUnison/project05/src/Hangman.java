@@ -38,7 +38,7 @@ public class Hangman {
      * @param keyboard
      */
     public static void playRound(PhraseBank phrases, Scanner keyboard) {
-        String playAgain = "y";
+        String playAgain;
         do {
             String notGuessedLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             String secretPhrase = phrases.getNextPhrase();
@@ -56,7 +56,16 @@ public class Hangman {
                 System.out.println("\nNumber of wrong guesses so far: " + numWrongGuess);
                 maskedPhrase = createMaskedPhrase(secretPhrase, notGuessedLetters);
             }
-        } while ((playAgain.toLowerCase()).equals("y"));
+
+            if (numWrongGuess == MAX_NUM_GUESSES) {
+                System.out.println("You lose. The secret phrase was " + secretPhrase);
+            } else {
+                System.out.println("The phrase is " + secretPhrase + "\nYou win!!");
+            }
+
+            System.out.print("Do you want to play again?\nEnter 'Y' or 'y' to play again: ");
+            playAgain = (keyboard.nextLine()).toUpperCase();
+        } while (playAgain.equals("Y"));
     }
 
     /**
