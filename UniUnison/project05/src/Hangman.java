@@ -199,7 +199,7 @@ public class Hangman {
 
         // If: the secret phrase contains the guessed letter.
         if (secretPhrase.contains(guess)) {
-            System.out.println("That is present in the secret phrase.");
+            System.out.println("This is present in the secret phrase.");
             return true;
         }
 
