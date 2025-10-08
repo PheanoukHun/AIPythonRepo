@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class PhraseBank {
 
-    private static final String DEFAULT_FILE_NAME = "HangmanMovies.txt";
+    private static final String DEFAULT_FILE_NAME = "ProSportsTeams.txt";
 
     // simple phrase bank if we can't find the right file
     private static final String[] EMERGENCY_PHRASES = { "BOB_SCHNIEDER",

@@ -45,7 +45,8 @@ public class Hangman {
         do {
             playRound(phrases, keyboard);
             System.out.print("Do you want to play again?\nEnter 'Y' or 'y' to play again: ");
-            playAgain = (keyboard.nextLine()).toUpperCase();
+            playAgain = keyboard.nextLine();
+            playAgain = playAgain.toUpperCase();
         } while (playAgain.equals("Y"));
     }
 
@@ -82,7 +83,7 @@ public class Hangman {
             System.out.println("You lose. The secret phrase was " + secretPhrase);
         } else {
             // Else: player has guessed the entire phrase before running out of guesses.
-            System.out.println("The phrase is " + secretPhrase + "\nYou win!!");
+            System.out.println("The phrase is " + secretPhrase + ".\nYou win!!");
         }
     }
 
@@ -125,7 +126,7 @@ public class Hangman {
      */
     public static void printNotGuessedLetters(String notGuessedLetters) {
 
-        System.out.println("The letters you have not guessed yet are:");
+        System.out.println("The letters you have not guessed yet are: ");
 
         // Print the first letter without leading dashes.
         char currChar = notGuessedLetters.charAt(0);
@@ -157,19 +158,50 @@ public class Hangman {
 
         // Ask the user for their guess.
         System.out.print("Enter your next guess: ");
-        String guess = (keyboard.nextLine()).toUpperCase();
+        String guess = keyboard.nextLine();
+        boolean isValid = false;
 
         // Repeat until the user enters a valid guess from the remaining letters.
-        while (!(notGuessedLetters.contains(guess))) {
-            System.out.println(guess + " is not a valid guess.");
-            printNotGuessedLetters(notGuessedLetters);
-            System.out.print("Enter your next guess: ");
-            guess = (keyboard.nextLine()).toUpperCase();
+        while (!isValid) {
+
+            // Makes sure that the guess variable is valid or not
+            if (getIsValid(guess, notGuessedLetters)) {
+                guess = guess.toUpperCase();
+                guess = guess.substring(0, 1);
+                isValid = true;
+            }
+
+            // Only prompt again if guess is still invalid.
+            if (!isValid) {
+                System.out.println("\n"+ guess + " is not a valid guess.");
+                printNotGuessedLetters(notGuessedLetters);
+                System.out.print("Enter your next guess: ");
+                guess = keyboard.nextLine();
+            }
         }
 
         // Confirms that the user has guessed something valid.
         System.out.println("\nYou guessed " + guess + ".\n");
         return guess;
+    }
+
+    /**
+     * Makes sure that the user guess is invalid if it is empty or not a valid input.
+     * @param guess - the User's input
+     * @param notGuessedLetters - a string containing letters that have not been guessed yet.
+     * @return a boolean value indicating whether it is valid or not.
+     */
+    public static boolean getIsValid(String guess, String notGuessedLetters) {
+
+        // If the guess is empty, then guess is invalid
+        if (guess.length() == 0) {
+            return false;
+        }
+
+        // Return the boolean of whether the non-empty guess string is valid still
+        String first = guess.toUpperCase();
+        first = first.substring(0, 1);
+        return notGuessedLetters.contains(first);
     }
 
     /**
@@ -199,12 +231,12 @@ public class Hangman {
 
         // If: the secret phrase contains the guessed letter.
         if (secretPhrase.contains(guess)) {
-            System.out.println("This is present in the secret phrase.");
+            System.out.println("That is present in the secret phrase.");
             return true;
         }
 
         // Else: the guessed letter is not in the secret phrase.
-        System.out.println("This is not present in the secret phrase.");
+        System.out.println("That is not present in the secret phrase.");
         return false;
     }
 
