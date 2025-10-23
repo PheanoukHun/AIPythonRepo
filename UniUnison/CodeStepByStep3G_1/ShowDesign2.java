@@ -1,34 +1,20 @@
 import java.awt.*;
 
 public class ShowDesign2 {
-
-    public static final int WIDTH = 300;
-    public static final int HEIGHT = 100;
-
-    public static void main(String[] args) {
-        DrawingPanel dp = new DrawingPanel(WIDTH, HEIGHT);
+	public static void main(String[] args) {
+        DrawingPanel dp = new DrawingPanel(900, 300);
         Graphics gr = dp.getGraphics();
-
-        showDesign(gr, WIDTH, HEIGHT);
+        drawRectangles(gr, 5, 900, 300);
     }
 
-    public static void showDesign(Graphics gr, int width, int height) {
-        final int RECT_COUNT = 4;
-        final int GAP = 20;
+    public static void drawRectangles(Graphics gr, int numOfRect, int width, int height) {
+        gr.setColor(Color.BLACK);
+        
+        int verticalStep = height / (numOfRect * 2);
+        int horizontalStep = width / (numOfRect * 2);
 
-        // Determine the maximum rectangle size that fits the window
-        int maxWidth = width - GAP;
-        int maxHeight = height - GAP;
-
-        // Draw the rectangles centered in the panel
-        for (int i = 0; i < RECT_COUNT; i++) {
-            int rectWidth = maxWidth - i * 2 * GAP;
-            int rectHeight = maxHeight - i * 2 * GAP;
-
-            int x = (width - rectWidth) / 2;
-            int y = (height - rectHeight) / 2;
-
-            gr.drawRect(x, y, rectWidth, rectHeight);
+        for (int i = 1; i < numOfRect; i++) {
+            gr.drawRect(i * verticalStep, i * horizontalStep, width - (2 * i * horizontalStep), height - (2 * i * verticalStep));
         }
     }
 }
