@@ -22,6 +22,10 @@ public class Personality {
 
     // CS312 students - Add class constants here
 
+    // Creates a set of String Arrays that contains all the personality categories.
+    public static final String[] TYPE_OF_AS = new String[] { "E", "S", "T", "J" };
+    public static final String[] TYPE_OF_BS = new String[] { "I", "N", "F", "P" };
+
     // The main method to process the data from the personality tests
     public static void main(String[] args) {
 
@@ -30,12 +34,8 @@ public class Personality {
 
         // CS312 students - Add code and methods calls here
 
-        // Creates a set of String Arrays that contains all the personality categories.
-        String[] typeAs = new String[] { "E", "S", "T", "J" };
-        String[] typeBs = new String[] { "I", "N", "F", "P" };
-
         // Get the Number of Personality Categories
-        int numCategories = typeAs.length;
+        int numCategories = TYPE_OF_AS.length;
 
         // Creates a String Array that contains two elements: Name and Answers
         String[] profile = new String[2];
@@ -59,7 +59,7 @@ public class Personality {
             getPerson(fileScanner, profile);
 
             updatePersonalityArrays(profile[answers], numAs, numBs, percentA, percentB);
-            String personalityType = getPersonality(typeAs, typeBs, percentA, percentB);
+            String personalityType = getPersonality(percentA, percentB);
 
             printPersonality(profile[name], personalityType, percentA, percentB);
             resetArrays(numAs, numBs, percentA, percentB);
@@ -141,12 +141,12 @@ public class Personality {
      */
     public static void updateNumArrays(int updateLocation, char answer, int[] numAs,
             int[] numBs) {
-        
+
         // IF: the char answer equals A, increase the A Num Array at the Location.
         if (answer == 'A') {
             numAs[updateLocation]++;
 
-        // ELSE IF: the char answer equals B, increase the B Num Array at the Location.
+            // ELSE IF: the char answer equals B, increase the B Num Array at the Location.
         } else if (answer == 'B') {
             numBs[updateLocation]++;
         }
@@ -171,10 +171,14 @@ public class Personality {
     public static void updatePercentageArrays(int[] numAs, int[] numBs,
             double[] percentA, double[] percentB) {
 
-        // 
+        // Loop runs once per category of personality to find the percentages.
         for (int i = 0; i < numAs.length; i++) {
+
+            // Finds the total number of answered questions
             int denominator = numAs[i] + numBs[i];
 
+            // IF: Converts the Num of Answers to Percentages if the user answered at least
+            // once
             if (denominator != 0) {
                 percentA[i] = Math.round((double) numAs[i] * 100 / denominator);
                 percentB[i] = Math.round((double) numBs[i] * 100 / denominator);
@@ -199,25 +203,40 @@ public class Personality {
      * 
      * @return A string value that shows the person's personality. Ex: INTP
      */
-    public static String getPersonality(String[] typeAs, String[] typeBs, double[] percentA,
+    public static String getPersonality(double[] percentA,
             double[] percentB) {
+
+        // Initialize the returned personality string
         String personality = "";
 
+        // Initializing the comparison constants
         double noAnswers = 0.0;
         double threshold = 50.0;
 
+        // Loop once per category to determine personality letters
         for (int i = 0; i < percentA.length; i++) {
+
+            // IF: There are no answers for this categories, add "-" to the personality
+            // string
             if (percentA[i] == noAnswers && percentB[i] == noAnswers) {
                 personality += "-";
+
+                // ELSE IF: both percentages equals, add "X" to the personality string.
             } else if (percentA[i] == percentB[i]) {
                 personality += "X";
+
+                // ELSE IF: the A percentage is greater, add the A personality type to the
+                // personality string.
             } else if (percentA[i] > threshold) {
-                personality += typeAs[i];
+                personality += TYPE_OF_AS[i];
+
+                // ELSE: the B personality type to the personality string.
             } else {
-                personality += typeBs[i];
+                personality += TYPE_OF_BS[i];
             }
         }
 
+        // Return the Personality String.
         return personality;
     }
 
@@ -240,16 +259,27 @@ public class Personality {
      */
     public static void printPersonality(String name, String personality, double[] percentA,
             double[] percentB) {
+
+        // Initializing the no answers constants
+        double noAnswers = 0.0;
+
+        // Print the name right-aligned 30-character wide string
         System.out.printf("%30s:", name);
 
+        // Loop runs once per personality category
         for (int i = 0; i < percentA.length; i++) {
-            if (percentA[i] == 0.0 && percentB[i] == 0.0) {
+
+            // IF: both A and B percentages are 0, then print out no answers
+            if (percentA[i] == noAnswers && percentB[i] == noAnswers) {
                 System.out.printf("%11s", "NO ANSWERS");
+
+                // ELSE: print the percentage for percentage of personality type B
             } else {
                 System.out.printf("%11.0f", percentB[i]);
             }
         }
 
+        // Print the personality String and move to the new line.
         System.out.println(" = " + personality);
     }
 
@@ -276,20 +306,20 @@ public class Personality {
     }
 
     // Method to choose a file.
-    public static Scanner getFileScanner(Scanner keyboard) {
+    public static Scanner getFileScanner(Scanner keyboard){
         Scanner result = null;
         try {
             System.out.print("Enter the name of the file with"
                     + " the personality data: ");
             String fileName = keyboard.nextLine().trim();
             result = new Scanner(new File(fileName));
-        } catch (FileNotFoundException e) {
+        } catch(FileNotFoundException e) {
             System.out.println("Problem creating Scanner: " + e);
-            System.out.println("Creating Scanner hooked up to default data "
+            System.out.println("Creating Scanner hooked up to default data " 
                     + e);
             String defaultData = "1\nDEFAULT DATA\n"
-                    + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                    + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+                + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
             result = new Scanner(defaultData);
         }
         return result;
