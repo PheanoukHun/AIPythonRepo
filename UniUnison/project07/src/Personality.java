@@ -14,9 +14,7 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Personality {
 
@@ -299,10 +297,19 @@ public class Personality {
      */
     public static void resetArrays(int[] numAs, int[] numBs,
             double[] percentA, double[] percentB) {
-        Arrays.fill(numAs, 0);
-        Arrays.fill(numBs, 0);
-        Arrays.fill(percentA, 0.0);
-        Arrays.fill(percentB, 0.0);
+
+        // Initializes the reset values for the int and double arrays.
+        int emptyInt = 0;
+        double emptyDouble = 0.0;
+
+        // Loop once per index of the arrays and reset all values back to the zero
+        // equivalent.
+        for (int i = 0; i < numAs.length; i++) {
+            numAs[i] = emptyInt;
+            numBs[i] = emptyInt;
+            percentA[i] = emptyDouble;
+            percentB[i] = emptyDouble;
+        }
     }
 
     // Method to choose a file.
