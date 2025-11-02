@@ -238,7 +238,7 @@ Encrypt character: |, decrypt character: x
 Encrypt character: }, decrypt character: 1
 Encrypt character: ~, decrypt character: F
 
-The current version of the decrypted text is:
+The current version of the decrypted text is: 
 
 kn craasin, o feg tywicod coses gricr iddmsthote tre heuohIobde uentod
 Lmodities af uy fhienlp ArehdacI -aduesp k ro.e enleo.amhelp os foh os
@@ -285,7 +285,8 @@ stohel ot riu in bdonI ouo"euentv
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character r should decrypt to instead: r's will now decrypt to h's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 kn chaasin, o feg tywicod coses ghich iddmstrote the reuorIobde uentod
 Lmodities af uy frienlp AherdacI -aduesp k ho.e enleo.amrelp os for os
@@ -332,7 +333,8 @@ storel ot hiu in bdonI ouo"euentv
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character a should decrypt to instead: a's will now decrypt to o's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 kn choosin, a feg tywicad cases ghich iddmstrate the reuarIabde uentad
 Lmadities of uy frienlp AherdocI -oduesp k ha.e enlea.omrelp as far as
@@ -379,7 +381,8 @@ starel at hiu in bdanI aua"euentv
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character d should decrypt to instead: d's will now decrypt to l's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 kn choosin, a feg tywical cases ghich illmstrate the reuarIable uental
 Lmalities of uy friendp AherlocI -oluesp k ha.e endea.omredp as far as
@@ -426,7 +429,8 @@ stared at hiu in blanI aua"euentv
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character w should decrypt to instead: w's will now decrypt to p's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 kn choosin, a feg typical cases ghich illmstrate the reuarIable uental
 Lmalities of uy friendw AherlocI -oluesw k ha.e endea.omredw as far as
@@ -473,7 +477,8 @@ stared at hiu in blanI aua"euentv
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character g should decrypt to instead: g's will now decrypt to w's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 kn choosin, a few typical cases which illmstrate the reuarIable uental
 Lmalities of uy friendg AherlocI -oluesg k ha.e endea.omredg as far as
@@ -520,7 +525,8 @@ stared at hiu in blanI aua"euentv
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character m should decrypt to instead: m's will now decrypt to u's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 kn choosin, a few typical cases which illustrate the remarIable mental
 Lualities of my friendg AherlocI -olmesg k ha.e endea.ouredg as far as
@@ -567,7 +573,8 @@ stared at him in blanI ama"ementv
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character I should decrypt to instead: I's will now decrypt to k's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosin, a few typical cases which illustrate the remarkable mental
 Lualities of my friendg Aherlock -olmesg I ha.e endea.ouredg as far as
@@ -614,7 +621,8 @@ stared at him in blank ama"ementv
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character A should decrypt to instead: A's will now decrypt to S's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosin, a few typical cases which illustrate the remarkable mental
 Lualities of my friendg Sherlock -olmesg I ha.e endea.ouredg as far as
@@ -661,7 +669,8 @@ stared at him in blank ama"ementv
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character - should decrypt to instead: -'s will now decrypt to H's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosin, a few typical cases which illustrate the remarkable mental
 Lualities of my friendg Sherlock Holmesg I ha.e endea.ouredg as far as
@@ -708,7 +717,8 @@ stared at him in blank ama"ementv
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character . should decrypt to instead: .'s will now decrypt to v's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosin, a few typical cases which illustrate the remarkable mental
 Lualities of my friendg Sherlock Holmesg I have endeavouredg as far as
@@ -755,7 +765,8 @@ stared at him in blank ama"ement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character , should decrypt to instead: ,'s will now decrypt to g's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -802,7 +813,8 @@ stared at him in blank ama"ement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character T should decrypt to instead: T's will now decrypt to "'s and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -849,7 +861,8 @@ stared at him in blank amaTement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character O should decrypt to instead: O's will now decrypt to W's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -896,7 +909,8 @@ stared at him in blank amaTement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character Y should decrypt to instead: Y's will now decrypt to ''s and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -943,7 +957,8 @@ stared at him in blank amaTement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character M should decrypt to instead: M's will now decrypt to x's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -990,7 +1005,8 @@ stared at him in blank amaTement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character T should decrypt to instead: T's will now decrypt to z's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -1037,7 +1053,8 @@ stared at him in blank amazement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character D should decrypt to instead: D's will now decrypt to !'s and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -1084,7 +1101,8 @@ stared at him in blank amazement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character E should decrypt to instead: E's will now decrypt to F's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -1131,7 +1149,8 @@ stared at him in blank amazement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character C should decrypt to instead: C's will now decrypt to ''s and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -1178,7 +1197,8 @@ stared at him in blank amazement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character t should decrypt to instead: t's will now decrypt to a's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing t few aypictl ctses which illusartae ahe remtrktble menatl
 Lutliaies of my friend, Sherlock Holmes, I htve endetvoured, ts ftr ts
@@ -1225,7 +1245,8 @@ satred ta him in bltnk tmtzemena.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character t should decrypt to instead: t's will now decrypt to a's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -1272,7 +1293,8 @@ stared at him in blank amazement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character G should decrypt to instead: G's will now decrypt to M's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -1319,7 +1341,8 @@ stared at him in blank amazement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character N should decrypt to instead: N's will now decrypt to A's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -1366,7 +1389,8 @@ stared at him in blank amazement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character R should decrypt to instead: R's will now decrypt to B's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -1413,7 +1437,8 @@ stared at him in blank amazement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character _ should decrypt to instead: _'s will now decrypt to P's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -1460,7 +1485,8 @@ stared at him in blank amazement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character - should decrypt to instead: -'s will now decrypt to E's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -1507,7 +1533,8 @@ stared at him in blank amazement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character N should decrypt to instead: N's will now decrypt to -'s and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -1554,7 +1581,8 @@ stared at him in blank amazement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character _ should decrypt to instead: _'s will now decrypt to O's and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -1601,7 +1629,8 @@ stared at him in blank amazement.
 
 Do you want to make a change to the key?
 Enter 'Y' or 'y' to make change: Enter the decrypt character you want to change: Enter what the character _ should decrypt to instead: _'s will now decrypt to :'s and vice versa.
-The current version of the decrypted text is:
+
+The current version of the decrypted text is: 
 
 In choosing a few typical cases which illustrate the remarkable mental
 Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
@@ -1647,7 +1676,8 @@ had echoed the inmost thought of my soul, I sat up in my chair and
 stared at him in blank amazement.
 
 Do you want to make a change to the key?
-Enter 'Y' or 'y' to make change: The current version of the key for ASCII characters 32 to 126 is: 
+Enter 'Y' or 'y' to make change: 
+The current version of the key for ASCII characters 32 to 126 is: 
 Encrypt character:  , decrypt character: \
 Encrypt character: !, decrypt character: :
 Encrypt character: ", decrypt character: <
@@ -1743,4 +1773,50 @@ Encrypt character: {, decrypt character: c
 Encrypt character: |, decrypt character: G
 Encrypt character: }, decrypt character: 1
 Encrypt character: ~, decrypt character: N
+
+
+The final version of the decrypted text is:
+
+In choosing a few typical cases which illustrate the remarkable mental
+Lualities of my friend, Sherlock Holmes, I have endeavoured, as far as
+possible, to select those which presented the minimum of
+sensationalism, while offering a fair field for his talents.  It is,
+however, unfortunately impossible entirely to separate the sensational
+from the criminal, and a chronicler is left in the dilemma that he must
+either sacrifice details which are essential to his statement and so
+give a false impression of the problem, or he must use matter which
+chance, and not choice, has provided him with.  With this short preface
+I shall turn to my notes of what proved to be a strange, though a
+peculiarly terrible, chain of events.
+
+It was a blazing hot day in August.  Baker Street was like an oven, and
+the glare of the sunlight upon the yellow brickwork of the house across
+the road was painful to the eye.  It was hard to believe that these
+were the same walls which loomed so gloomily through the fogs of
+winter.  Our blinds were half-drawn, and Holmes lay curled upon the
+sofa, reading and re-reading a letter which he had received by the
+morning post.  For myself, my term of service in India had trained me
+to stand heat better than cold, and a thermometer at ninety was no
+hardship.  But the morning paper was uninteresting.  Parliament had
+risen. Everybody was out of town, and I yearned for the glades of the
+Rew Forest or the shingle of Southsea.  A depleted bank account had
+caused me to postpone my holiday, and as to my companion, neither the
+country nor the sea presented the slightest attraction to him.  He
+loved to lie in the very center of five millions of people, with his
+filaments stretching out and running through them, responsive to every
+little rumour or suspicion of unsolved crime.  Appreciation of nature
+found no place among his many gifts, and his only change was when he
+turned his mind from the evil-doer of the town to track down his
+brother of the country.
+
+Finding that Holmes was too absorbed for conversation I had tossed side
+the barren paper, and leaning back in my chair I fell into a brown
+study.  Suddenly my companion's voice broke in upon my thoughts:
+
+"You are right, Watson," said he.  "It does seem a most preposterous
+way of settling a dispute."
+
+"Most preposterous!" I exclaimed, and then suddenly realizing how he
+had echoed the inmost thought of my soul, I sat up in my chair and
+stared at him in blank amazement.
 

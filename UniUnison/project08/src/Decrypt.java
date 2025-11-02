@@ -56,6 +56,7 @@ public class Decrypt {
         do {
 
             // Prints out the predicted text based on the current Key Set
+            System.out.println("The current version of the decrypted text is: \n");
             printDecryptedText(encryptedText, keySet);
 
             // Ask the user if they want to continue switching characters in the key set.
@@ -63,7 +64,12 @@ public class Decrypt {
         } while (wantToSwap);
 
         // Print out the Prediction Key set for future use.
+        System.out.println();
         printEncryptionKeySet(keySet);
+
+        // Prints out the Final Version of the Text
+        System.out.println("The final version of the decrypted text is: \n");
+        printDecryptedText(encryptedText, keySet);
 
         // Closing the Scanner
         keyboard.close();
@@ -207,7 +213,8 @@ public class Decrypt {
      */
     public static void printEncryptionKeySet(char[] keySet) {
 
-        System.out.println("The current version of the key for ASCII characters 32 to 126 is: ");
+        System.out.print("The current version of the key ");
+        System.out.println("for ASCII characters 32 to 126 is: ");
 
         // For each value starting from space to tilde, print out the char and its
         // associated decrypted char counterpart.
@@ -236,8 +243,6 @@ public class Decrypt {
      * @return - void
      */
     public static void printDecryptedText(String encryptedText, char[] keySet) {
-
-        System.out.println("The current version of the decrypted text is:\n");
 
         // For the length of the encryptedText string, convert the char at that index
         // into an int, find its decrypted version, and print out the decrypted version.
