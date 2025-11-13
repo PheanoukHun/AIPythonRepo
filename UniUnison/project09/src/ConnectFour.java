@@ -54,11 +54,20 @@ public class ConnectFour {
     }
 
     /**
+     * A Method to continually run tne game until either one of the player wins or
+     * there is a draw.
      * 
-     * @param board
-     * @param keyboard
-     * @param names
-     * @return
+     * @param board    - A 2D Char Array that stores the state of the game with the
+     *                 first index value signifying the row value of the board, and
+     *                 the second index being the column value of the board. With
+     *                 the value signifying the empty token, r being red player, and
+     *                 b being blue player.
+     * @param keyboard - A Scanner object that takes in input from the keyboard and
+     *                 user.
+     * @param names    - An array of strings wiht a length of 2 that contains the
+     *                 name of the two players.
+     * @return - A Boolean Array that contains the result of the game (whether
+     *         player one or player two wins, or there is a draw).
      */
     public static boolean[] playGame(char[][] board, Scanner keyboard, String[] names) {
 
@@ -87,9 +96,13 @@ public class ConnectFour {
     }
 
     /**
+     * This method prints the results of the game.
      * 
-     * @param gameResults
-     * @param names
+     * @param gameResults - A Boolean Array that contains the result of the game
+     *                    (whetherplayer one or player two wins, or there is a
+     *                    draw).
+     * @param names       - An array of strings wiht a length of 2 that contains the
+     *                    name of the two players.
      */
     public static void printGameResults(boolean[] gameResults, String[] names) {
         if (gameResults[RED_PLAYER]) {
@@ -102,11 +115,21 @@ public class ConnectFour {
     }
 
     /**
+     * This method gets the column number of the board in which the player palced
+     * their token into.
      * 
-     * @param keyboard
-     * @param names
-     * @param turn
-     * @return
+     * @param keyboard - A Scanner object that takes in input from the keyboard and
+     *                 user.
+     * @param names    - A Scanner object that takes in input from the keyboard and
+     *                 user.
+     * @param turn     - An int value that tells the methods whose turn it is.
+     * @param board    - A 2D Char Array that stores the state of the game with the
+     *                 first index value signifying the row value of the board, and
+     *                 the second index being the column value of the board. With
+     *                 the value signifying the empty token, r being red player, and
+     *                 b being blue player.
+     * @return - The int value that represents the column in which the user wants to
+     *         drop their token into.
      */
     public static int getPlayerResponse(Scanner keyboard, String[] names,
             int turn, char[][] board) {
@@ -143,8 +166,14 @@ public class ConnectFour {
     }
 
     /**
+     * A method that creates that creates the board at the start of the game and
+     * filling it with the EMPTY TOKEN char value.
      * 
-     * @return
+     * @return - A 2D Char Array that stores the state of the game with the
+     *         first index value signifying the row value of the board, and
+     *         the second index being the column value of the board. With
+     *         the value signifying the empty token, r being red player, and
+     *         b being blue player.
      */
     public static char[][] createBoard() {
 
@@ -160,10 +189,18 @@ public class ConnectFour {
     }
 
     /**
+     * This method updates the game board based on which column the user dropped
+     * their token.
      * 
-     * @param board
-     * @param chosenColumn
-     * @param playerTurn
+     * @param board        - A 2D Char Array that stores the state of the game with
+     *                     the first index value signifying the row value of the
+     *                     board, and the second index being the column value of the
+     *                     board. With the value signifying the empty token, r being
+     *                     red player, and b being blue player.
+     * @param chosenColumn - The int value that represents the column in which the
+     *                     user wants to drop their token into.
+     * @param playerTurn   - The int value that represents who turns it is to play
+     *                     it meaning, what character to update the board with.
      */
     public static void updateBoard(char[][] board, int chosenColumn, int playerTurn) {
 
@@ -178,8 +215,13 @@ public class ConnectFour {
     }
 
     /**
+     * This method prints out the game board after each round.
      * 
-     * @param board
+     * @param board - A 2D Char Array that stores the state of the game with the
+     *              first index value signifying the row value of the board, and the
+     *              second index being the column value of the board. With the value
+     *              signifying the empty token, r being red player, and b being blue
+     *              player.
      */
     public static void printBoard(char[][] board) {
 
@@ -200,25 +242,35 @@ public class ConnectFour {
     }
 
     /**
+     * This method checks whether there a draw in the current round right now.
      * 
-     * @param board
-     * @return
+     * @param board - A 2D Char Array that stores the state of the game with the
+     *              first index value signifying the row value of the board, and
+     *              the second index being the column value of the board. With
+     *              the value signifying the empty token, r being red player, and
+     *              b being blue player.
+     * @return - A Boolean Value that tells the program if there is a draw or not.
      */
     public static boolean checkDrawCondition(char[][] board) {
-        for (int row = 0; row < NUM_ROWS; row++) {
-            for (int col = 0; col < NUM_COLUMNS; col++) {
-                if (board[row][col] == TOKENS_TYPES[EMPTY]) {
-                    return false;
-                }
+        for (int col = 0; col < NUM_COLUMNS; col++) {
+            if (board[0][col] == TOKENS_TYPES[EMPTY]) {
+                return false;
             }
         }
         return true;
     }
 
     /**
+     * A method that checks if the player wins during the current round in 4
+     * directions.
      * 
-     * @param board
-     * @param playerChar
+     * @param board      - A 2D Char Array that stores the state of the game with
+     *                   the first index value signifying the row value of the
+     *                   board, and the second index being the column value of the
+     *                   board. With the value signifying the empty token, r being
+     *                   red player, and b being blue player.
+     * @param playerChar - An char value that represents what the method have to
+     *                   look for when trying to check for the win condition.
      * @return
      */
     public static boolean checkWinConditions(char[][] board, char playerChar) {
@@ -240,12 +292,21 @@ public class ConnectFour {
     }
 
     /**
+     * This method checks to see if there is win condition horizontally.
      * 
-     * @param board
-     * @param playerChar
-     * @param row
-     * @param col
-     * @return
+     * @param board      - A 2D Char Array that stores the state of the game with
+     *                   the first index value signifying the row value of the
+     *                   board, and the second index being the column value of the
+     *                   board. With the value signifying the empty token, r being
+     *                   red player, and b being blue player.
+     * @param playerChar - An char value that represents what the method have to
+     *                   look for when trying to check for the win condition.
+     * @param row        - The row index value of the board of the current
+     *                   character.
+     * @param col        - The column index value of the board of the current
+     *                   character.
+     * @return - The Boolean value of whether there is a win horizontally from that
+     *         position.
      */
     public static boolean checkRight(char[][] board, char playerChar, int row, int col) {
 
@@ -268,12 +329,21 @@ public class ConnectFour {
     }
 
     /**
+     * This method checks to see if there is win condition vertically.
      * 
-     * @param board
-     * @param playerChar
-     * @param row
-     * @param col
-     * @return
+     * @param board      - A 2D Char Array that stores the state of the game with
+     *                   the first index value signifying the row value of the
+     *                   board, and the second index being the column value of the
+     *                   board. With the value signifying the empty token, r being
+     *                   red player, and b being blue player.
+     * @param playerChar - An char value that represents what the method have to
+     *                   look for when trying to check for the win condition.
+     * @param row        - The row index value of the board of the current
+     *                   character.
+     * @param col        - The column index value of the board of the current
+     *                   character.
+     * @return - The Boolean value of whether there is a win vertically from that
+     *         position.
      */
     public static boolean checkDown(char[][] board, char playerChar, int row, int col) {
 
@@ -296,12 +366,21 @@ public class ConnectFour {
     }
 
     /**
+     * This method checks to see if there is win condition right down.
      * 
-     * @param board
-     * @param playerChar
-     * @param row
-     * @param col
-     * @return
+     * @param board      - A 2D Char Array that stores the state of the game with
+     *                   the first index value signifying the row value of the
+     *                   board, and the second index being the column value of the
+     *                   board. With the value signifying the empty token, r being
+     *                   red player, and b being blue player.
+     * @param playerChar - An char value that represents what the method have to
+     *                   look for when trying to check for the win condition.
+     * @param row        - The row index value of the board of the current
+     *                   character.
+     * @param col        - The column index value of the board of the current
+     *                   character.
+     * @return - The Boolean value of whether there is a win right down from that
+     *         position.
      */
     public static boolean checkDownRight(char[][] board, char playerChar, int row, int col) {
 
@@ -325,12 +404,21 @@ public class ConnectFour {
     }
 
     /**
+     * This method checks to see if there is win condition left down.
      * 
-     * @param board
-     * @param playerChar
-     * @param row
-     * @param col
-     * @return
+     * @param board      - A 2D Char Array that stores the state of the game with
+     *                   the first index value signifying the row value of the
+     *                   board, and the second index being the column value of the
+     *                   board. With the value signifying the empty token, r being
+     *                   red player, and b being blue player.
+     * @param playerChar - An char value that represents what the method have to
+     *                   look for when trying to check for the win condition.
+     * @param row        - The row index value of the board of the current
+     *                   character.
+     * @param col        - The column index value of the board of the current
+     *                   character.
+     * @return - The Boolean value of whether there is a win left down from that
+     *         position.
      */
     public static boolean checkDownLeft(char[][] board, char playerChar, int row, int col) {
 
