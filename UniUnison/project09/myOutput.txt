@@ -22,9 +22,13 @@ Current Board
 . . . . . . . 
 Bob it is your turn.
 Your pieces are the r's.
-Bob, enter the column to drop your checker: Bob, enter the column to drop your checker: Bob, enter the column to drop your checker: Bob, enter the column to drop your checker: 
+Bob, enter the column to drop your checker: 
+Bob, enter the column to drop your checker: 
+Bob, enter the column to drop your checker: 
+Bob, enter the column to drop your checker: 
 eight is not an integer.
 Bob, enter the column to drop your checker: 
+
 Current Board
 1 2 3 4 5 6 7  column numbers
 . . . . . . . 
@@ -36,3 +40,73 @@ Current Board
 Jen it is your turn.
 Your pieces are the b's.
 Jen, enter the column to drop your checker: 
+
+Current Board
+1 2 3 4 5 6 7  column numbers
+. . . . . . . 
+. . . . . . . 
+. . . . . . . 
+. . . . . . . 
+. . . . . . . 
+b . . . r . . 
+Bob it is your turn.
+Your pieces are the r's.
+Bob, enter the column to drop your checker: 
+
+Current Board
+1 2 3 4 5 6 7  column numbers
+. . . . . . . 
+. . . . . . . 
+. . . . . . . 
+. . . . . . . 
+. . . . r . . 
+b . . . r . . 
+Jen it is your turn.
+Your pieces are the b's.
+Jen, enter the column to drop your checker: 
+
+Current Board
+1 2 3 4 5 6 7  column numbers
+. . . . . . . 
+. . . . . . . 
+. . . . . . . 
+. . . . . . . 
+. . . . r . . 
+b b . . r . . 
+Bob it is your turn.
+Your pieces are the r's.
+Bob, enter the column to drop your checker: 
+
+Current Board
+1 2 3 4 5 6 7  column numbers
+. . . . . . . 
+. . . . . . . 
+. . . . . . . 
+. . . . r . . 
+. . . . r . . 
+b b . . r . . 
+Jen it is your turn.
+Your pieces are the b's.
+Jen, enter the column to drop your checker: 
+
+Current Board
+1 2 3 4 5 6 7  column numbers
+. . . . . . . 
+. . . . . . . 
+. . . . . . . 
+. . . . r . . 
+. . . . r . . 
+b b b . r . . 
+Bob it is your turn.
+Your pieces are the r's.
+Bob, enter the column to drop your checker: 
+Bob wins!!
+
+Final Board
+1 2 3 4 5 6 7  column numbers
+. . . . . . . 
+. . . . . . . 
+. . . . r . . 
+. . . . r . . 
+. . . . r . . 
+b b b . r . . 

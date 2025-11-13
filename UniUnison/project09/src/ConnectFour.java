@@ -20,6 +20,7 @@ public class ConnectFour {
 
     public static final int RED_PLAYER = 0;
     public static final int BLUE_PLAYER = 1;
+    public static final int DRAW_CONDITION = 2;
     public static final int NUM_PLAYERS = 2;
     public static final int EMPTY = 2;
 
@@ -39,44 +40,66 @@ public class ConnectFour {
 
         System.out.print("\nPlayer 2 enter your name: ");
         names[BLUE_PLAYER] = keyboard.nextLine();
+        System.out.println();
 
         char[][] board = createBoard();
 
-        boolean didRedPlayerWin = false;
-        boolean didBluePlayerWin = false;
-        boolean didDraw = false;
+        boolean[] gameResults = playGame(board, keyboard, names);
+        printGameResults(gameResults, names);
 
-        int counter = 0;
-        int chosenColumn;
-        while (!(didRedPlayerWin || didBluePlayerWin || didDraw)) {
+        System.out.println("Final Board");
+        printBoard(board);
+        System.out.println();
 
-            System.out.println("\nCurrent Board");
+        keyboard.close();
+    }
+
+    /**
+     * 
+     * @param board
+     * @param keyboard
+     * @param names
+     * @return
+     */
+    public static boolean[] playGame(char[][] board, Scanner keyboard, String[] names) {
+
+        boolean[] conditions = { false, false, false };
+        boolean didPlayerWin = false;
+        int counter = 0, chosenColumn;
+
+        while (!(didPlayerWin || conditions[DRAW_CONDITION])) {
+            System.out.println("Current Board");
             printBoard(board);
 
             int playerTurn = counter % 2;
             chosenColumn = getPlayerResponse(keyboard, names, playerTurn, board);
             updateBoard(board, chosenColumn, playerTurn);
 
-            didRedPlayerWin = checkWinConditions(board, TOKENS_TYPES[RED_PLAYER]);
-            didBluePlayerWin = checkWinConditions(board, TOKENS_TYPES[BLUE_PLAYER]);
+            conditions[RED_PLAYER] = checkWinConditions(board, TOKENS_TYPES[RED_PLAYER]);
+            conditions[BLUE_PLAYER] = checkWinConditions(board, TOKENS_TYPES[BLUE_PLAYER]);
 
-            didDraw = drawConditions(board);
+            conditions[DRAW_CONDITION] = checkDrawCondition(counter);
 
             counter++;
+            didPlayerWin = conditions[RED_PLAYER] || conditions[BLUE_PLAYER];
         }
 
-        if (didRedPlayerWin) {
+        return conditions;
+    }
+
+    /**
+     * 
+     * @param gameResults
+     * @param names
+     */
+    public static void printGameResults(boolean[] gameResults, String[] names) {
+        if (gameResults[RED_PLAYER]) {
             System.out.println(names[RED_PLAYER] + " wins!!\n");
-        } else if (didBluePlayerWin) {
+        } else if (gameResults[BLUE_PLAYER]) {
             System.out.println(names[BLUE_PLAYER] + " wins!!\n");
         } else {
             System.out.println("The game is a draw.\n");
         }
-
-        System.out.println("Final Board");
-        printBoard(board);
-
-        keyboard.close();
     }
 
     /**
@@ -95,19 +118,23 @@ public class ConnectFour {
         String prompt = names[turn] + ", enter the column to drop your checker: ";
 
         int column = 0;
-        boolean isNotValidAnswer = true;
+        boolean notValidColumn = false;
         boolean isColumnFull = false;
 
-        while (isNotValidAnswer || isColumnFull) {
+        do {
 
             System.out.print(prompt);
             column = getInt(keyboard, prompt);
-            column--;
+            System.out.println();
 
-            isNotValidAnswer = column < 0 || column >= NUM_COLUMNS;
-            if (!isNotValidAnswer)
+            notValidColumn = column < 1 || column > NUM_COLUMNS;
+            if (!notValidColumn) {
+                column--;
                 isColumnFull = board[0][column] != TOKENS_TYPES[EMPTY];
-        }
+            } else {
+                System.out.println(column + " is not a valid column.");
+            }
+        } while (notValidColumn || isColumnFull);
 
         return column;
     }
@@ -165,24 +192,29 @@ public class ConnectFour {
             }
             System.out.println();
         }
+
+        System.out.println();
+    }
+
+    /**
+     * 
+     * @param turn
+     * @return
+     */
+    public static boolean checkDrawCondition(int turn) {
+        int totalPossibleTurns = NUM_COLUMNS * NUM_ROWS;
+        if (totalPossibleTurns <= turn) {
+            return true;
+        }
+        return false;
     }
 
     /**
      * 
      * @param board
+     * @param playerChar
      * @return
      */
-    public static boolean drawConditions(char[][] board) {
-
-        for (int col = 0; col < NUM_COLUMNS; col++) {
-            if (board[0][col] == TOKENS_TYPES[EMPTY]) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public static boolean checkWinConditions(char[][] board, char playerChar) {
 
         boolean didWin = false;
@@ -201,6 +233,14 @@ public class ConnectFour {
         return didWin;
     }
 
+    /**
+     * 
+     * @param board
+     * @param playerChar
+     * @param row
+     * @param col
+     * @return
+     */
     public static boolean checkRight(char[][] board, char playerChar, int row, int col) {
 
         int horizontalRange = col + WIN_SIZE;
@@ -221,6 +261,14 @@ public class ConnectFour {
         return false;
     }
 
+    /**
+     * 
+     * @param board
+     * @param playerChar
+     * @param row
+     * @param col
+     * @return
+     */
     public static boolean checkDown(char[][] board, char playerChar, int row, int col) {
 
         int verticalRange = row + WIN_SIZE;
@@ -241,6 +289,14 @@ public class ConnectFour {
         return false;
     }
 
+    /**
+     * 
+     * @param board
+     * @param playerChar
+     * @param row
+     * @param col
+     * @return
+     */
     public static boolean checkDownRight(char[][] board, char playerChar, int row, int col) {
 
         int horizontalRange = col + WIN_SIZE;
@@ -262,8 +318,16 @@ public class ConnectFour {
         return false;
     }
 
+    /**
+     * 
+     * @param board
+     * @param playerChar
+     * @param row
+     * @param col
+     * @return
+     */
     public static boolean checkDownLeft(char[][] board, char playerChar, int row, int col) {
-        
+
         int horizontalRange = col - WIN_SIZE + 1;
         int verticalRange = row + WIN_SIZE;
         if (horizontalRange >= 0 && verticalRange <= NUM_ROWS) {
