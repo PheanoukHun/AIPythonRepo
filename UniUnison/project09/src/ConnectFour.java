@@ -49,7 +49,6 @@ public class ConnectFour {
 
         System.out.println("Final Board");
         printBoard(board);
-        System.out.println();
 
         keyboard.close();
     }
@@ -78,7 +77,7 @@ public class ConnectFour {
             conditions[RED_PLAYER] = checkWinConditions(board, TOKENS_TYPES[RED_PLAYER]);
             conditions[BLUE_PLAYER] = checkWinConditions(board, TOKENS_TYPES[BLUE_PLAYER]);
 
-            conditions[DRAW_CONDITION] = checkDrawCondition(counter);
+            conditions[DRAW_CONDITION] = checkDrawCondition(board);
 
             counter++;
             didPlayerWin = conditions[RED_PLAYER] || conditions[BLUE_PLAYER];
@@ -131,6 +130,10 @@ public class ConnectFour {
             if (!notValidColumn) {
                 column--;
                 isColumnFull = board[0][column] != TOKENS_TYPES[EMPTY];
+                if (isColumnFull) {
+                    System.out.print((column + 1) + " is not a legal column.");
+                    System.out.println(" That column is full");
+                }
             } else {
                 System.out.println(column + " is not a valid column.");
             }
@@ -198,15 +201,18 @@ public class ConnectFour {
 
     /**
      * 
-     * @param turn
+     * @param board
      * @return
      */
-    public static boolean checkDrawCondition(int turn) {
-        int totalPossibleTurns = NUM_COLUMNS * NUM_ROWS;
-        if (totalPossibleTurns <= turn) {
-            return true;
+    public static boolean checkDrawCondition(char[][] board) {
+        for (int row = 0; row < NUM_ROWS; row++) {
+            for (int col = 0; col < NUM_COLUMNS; col++) {
+                if (board[row][col] == TOKENS_TYPES[EMPTY]) {
+                    return false;
+                }
+            }
         }
-        return false;
+        return true;
     }
 
     /**
