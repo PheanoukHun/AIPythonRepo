@@ -75,6 +75,7 @@ public class ConnectFour {
         boolean didPlayerWin = false;
         int counter = 0, chosenColumn;
 
+        // Loop runs once per player turn
         while (!(didPlayerWin || conditions[DRAW_CONDITION])) {
             System.out.println("Current Board");
             printBoard(board);
@@ -105,10 +106,15 @@ public class ConnectFour {
      *                    name of the two players.
      */
     public static void printGameResults(boolean[] gameResults, String[] names) {
+        // IF: The RED PLAYER wins, then prints out their names.
         if (gameResults[RED_PLAYER]) {
             System.out.println(names[RED_PLAYER] + " wins!!\n");
+
+            // ELSE IF: The BLUE PLAYER wins, then prints out their name
         } else if (gameResults[BLUE_PLAYER]) {
             System.out.println(names[BLUE_PLAYER] + " wins!!\n");
+
+            // ELSE: It is a draw and prints out the draw message.
         } else {
             System.out.println("The game is a draw.\n");
         }
@@ -150,16 +156,24 @@ public class ConnectFour {
             System.out.println();
 
             notValidColumn = column < 1 || column > NUM_COLUMNS;
+
+            // IF: The Responds with a valid column number
             if (!notValidColumn) {
                 column--;
                 isColumnFull = board[0][column] != TOKENS_TYPES[EMPTY];
+
+                // IF: The column the user placed it in is full tell the user that.
                 if (isColumnFull) {
                     System.out.print((column + 1) + " is not a legal column.");
                     System.out.println(" That column is full");
                 }
+
+                // ELSE: Ask the User to print a valid character.
             } else {
                 System.out.println(column + " is not a valid column.");
             }
+
+            // Repeats until the player gives a valid and free column.
         } while (notValidColumn || isColumnFull);
 
         return column;
@@ -179,7 +193,10 @@ public class ConnectFour {
 
         char[][] board = new char[NUM_ROWS][NUM_COLUMNS];
 
+        // Runs once per row of the board.
         for (int row = 0; row < NUM_ROWS; row++) {
+
+            // Runs once per column of the row.
             for (int col = 0; col < NUM_COLUMNS; col++) {
                 board[row][col] = TOKENS_TYPES[EMPTY];
             }
@@ -205,10 +222,13 @@ public class ConnectFour {
     public static void updateBoard(char[][] board, int chosenColumn, int playerTurn) {
 
         int currRow = NUM_ROWS - 1;
+
+        // Runs until you get the lowest empty spot in the column.
         while (currRow >= 0 && board[currRow][chosenColumn] != TOKENS_TYPES[EMPTY]) {
             currRow--;
         }
 
+        // Place the player's token in the first empty row found.
         if (currRow >= 0) {
             board[currRow][chosenColumn] = TOKENS_TYPES[playerTurn];
         }
@@ -225,16 +245,22 @@ public class ConnectFour {
      */
     public static void printBoard(char[][] board) {
 
+        // Runs once per from 1-7 to signify the column numbers
         for (int col = 1; col <= NUM_COLUMNS; col++) {
             System.out.print(col + " ");
         }
 
         System.out.println(" column numbers");
 
+        // Runs once per row
         for (int row = 0; row < NUM_ROWS; row++) {
+
+            // Runs once per column and prints out the token at that point with an
+            // additional space.
             for (int col = 0; col < NUM_COLUMNS; col++) {
                 System.out.print(board[row][col] + " ");
             }
+
             System.out.println();
         }
 
@@ -252,11 +278,16 @@ public class ConnectFour {
      * @return - A Boolean Value that tells the program if there is a draw or not.
      */
     public static boolean checkDrawCondition(char[][] board) {
+
+        // Loop runs once to check whether there is any empty spots left.
         for (int col = 0; col < NUM_COLUMNS; col++) {
+
+            // IF: The token given is an empty token, then return false for a draw.
             if (board[0][col] == TOKENS_TYPES[EMPTY]) {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -277,8 +308,14 @@ public class ConnectFour {
 
         boolean didWin = false;
 
+        // Runs once per row of the game board.
         for (int row = 0; row < NUM_ROWS; row++) {
+
+            // Runs once per column of the game board.
             for (int col = 0; col < NUM_COLUMNS; col++) {
+
+                // IF: The current character at the current row and column index equals to the
+                // player character, check the win conditions.
                 if (board[row][col] == playerChar) {
                     didWin = didWin || checkRight(board, playerChar, row, col);
                     didWin = didWin || checkDown(board, playerChar, row, col);
@@ -311,15 +348,22 @@ public class ConnectFour {
     public static boolean checkRight(char[][] board, char playerChar, int row, int col) {
 
         int horizontalRange = col + WIN_SIZE;
+
+        // IF: It is possible to get 4 character connection.
         if (horizontalRange <= NUM_COLUMNS) {
             int count = 0;
 
+            // Runs for the number of times it takes to win.
             for (int i = 0; i < WIN_SIZE; i++) {
+
+                // IF: the current char is the same as the player character, then increment the
+                // counter.
                 if (board[row][col + i] == playerChar) {
                     count++;
                 }
             }
 
+            // IF: the count variable is the same as the winning number, return true.
             if (count == WIN_SIZE) {
                 return true;
             }
@@ -348,15 +392,22 @@ public class ConnectFour {
     public static boolean checkDown(char[][] board, char playerChar, int row, int col) {
 
         int verticalRange = row + WIN_SIZE;
+
+        // IF: It is possible to get 4 character connection.
         if (verticalRange <= NUM_ROWS) {
             int count = 0;
 
+            // Runs for the number of times it takes to win.
             for (int i = 0; i < WIN_SIZE; i++) {
+
+                // IF: the current char is the same as the player character, then increment the
+                // counter.
                 if (board[row + i][col] == playerChar) {
                     count++;
                 }
             }
 
+            // IF: the count variable is the same as the winning number, return true.
             if (count == WIN_SIZE) {
                 return true;
             }
@@ -386,15 +437,22 @@ public class ConnectFour {
 
         int horizontalRange = col + WIN_SIZE;
         int verticalRange = row + WIN_SIZE;
+
+        // IF: It is possible to get 4 character connection.
         if (horizontalRange <= NUM_COLUMNS && verticalRange <= NUM_ROWS) {
             int count = 0;
 
+            // Runs for the number of times it takes to win.
             for (int i = 0; i < WIN_SIZE; i++) {
+
+                // IF: the current char is the same as the player character, then increment the
+                // counter.
                 if (board[row + i][col + i] == playerChar) {
                     count++;
                 }
             }
 
+            // IF: the count variable is the same as the winning number, return true.
             if (count == WIN_SIZE) {
                 return true;
             }
@@ -424,15 +482,20 @@ public class ConnectFour {
 
         int horizontalRange = col - WIN_SIZE + 1;
         int verticalRange = row + WIN_SIZE;
+
+        // IF: It is possible to get 4 character connection.
         if (horizontalRange >= 0 && verticalRange <= NUM_ROWS) {
             int count = 0;
 
+            // IF: the current char is the same as the player character, then increment the
+            // counter.
             for (int i = 0; i < WIN_SIZE; i++) {
                 if (board[row + i][col - i] == playerChar) {
                     count++;
                 }
             }
 
+            // IF: the count variable is the same as the winning number, return true.
             if (count == WIN_SIZE) {
                 return true;
             }
