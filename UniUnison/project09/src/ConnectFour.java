@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.Arrays;
 
 /**
  * CS312 Assignment 9 - Connect Four
@@ -55,7 +54,7 @@ public class ConnectFour {
             printBoard(board);
 
             int playerTurn = counter % 2;
-            chosenColumn = getPlayerResponse(keyboard, names, playerTurn);
+            chosenColumn = getPlayerResponse(keyboard, names, playerTurn, board);
             updateBoard(board, chosenColumn, playerTurn);
 
             didRedPlayerWin = checkWinConditions(board, TOKENS_TYPES[RED_PLAYER]);
@@ -66,6 +65,17 @@ public class ConnectFour {
             counter++;
         }
 
+        if (didRedPlayerWin) {
+            System.out.println(names[RED_PLAYER] + " wins!!\n");
+        } else if (didBluePlayerWin) {
+            System.out.println(names[BLUE_PLAYER] + " wins!!\n");
+        } else {
+            System.out.println("The game is a draw.\n");
+        }
+
+        System.out.println("Final Board");
+        printBoard(board);
+
         keyboard.close();
     }
 
@@ -73,18 +83,33 @@ public class ConnectFour {
      * 
      * @param keyboard
      * @param names
-     * @param playerTurn
+     * @param turn
      * @return
      */
-    public static int getPlayerResponse(Scanner keyboard, String[] names, int playerTurn) {
+    public static int getPlayerResponse(Scanner keyboard, String[] names,
+            int turn, char[][] board) {
 
-        System.out.println(names[playerTurn] + "it is your turn.");
-        System.out.println("Your pieces are the " + TOKENS_TYPES[playerTurn] + "'s.");
+        System.out.println(names[turn] + " it is your turn.");
+        System.out.println("Your pieces are the " + TOKENS_TYPES[turn] + "'s.");
 
-        String prompt = names[playerTurn] + ", enter the column to drop your checker: ";
-        int playerChoice = getInt(keyboard, prompt);
+        String prompt = names[turn] + ", enter the column to drop your checker: ";
 
-        return playerChoice;
+        int column = 0;
+        boolean isNotValidAnswer = true;
+        boolean isColumnFull = false;
+
+        while (isNotValidAnswer || isColumnFull) {
+
+            System.out.print(prompt);
+            column = getInt(keyboard, prompt);
+            column--;
+
+            isNotValidAnswer = column < 0 || column >= NUM_COLUMNS;
+            if (!isNotValidAnswer)
+                isColumnFull = board[0][column] != TOKENS_TYPES[EMPTY];
+        }
+
+        return column;
     }
 
     /**
@@ -112,12 +137,14 @@ public class ConnectFour {
      */
     public static void updateBoard(char[][] board, int chosenColumn, int playerTurn) {
 
-        int currRow = 0;
-        while (board[currRow][chosenColumn] == TOKENS_TYPES[EMPTY] && currRow < NUM_ROWS) {
-            currRow++;
+        int currRow = NUM_ROWS - 1;
+        while (currRow >= 0 && board[currRow][chosenColumn] != TOKENS_TYPES[EMPTY]) {
+            currRow--;
         }
 
-        board[currRow][chosenColumn] = TOKENS_TYPES[playerTurn];
+        if (currRow >= 0) {
+            board[currRow][chosenColumn] = TOKENS_TYPES[playerTurn];
+        }
     }
 
     /**
@@ -132,8 +159,11 @@ public class ConnectFour {
 
         System.out.println(" column numbers");
 
-        for (int i = 0; i < NUM_ROWS; i++) {
-            System.out.println(board[i].toString());
+        for (int row = 0; row < NUM_ROWS; row++) {
+            for (int col = 0; col < NUM_COLUMNS; col++) {
+                System.out.print(board[row][col] + " ");
+            }
+            System.out.println();
         }
     }
 
@@ -144,11 +174,9 @@ public class ConnectFour {
      */
     public static boolean drawConditions(char[][] board) {
 
-        for (int row = 0; row < NUM_ROWS; row++) {
-            for (int col = 0; col < NUM_COLUMNS; col++) {
-                if (board[row][col] == TOKENS_TYPES[EMPTY]) {
-                    return false;
-                }
+        for (int col = 0; col < NUM_COLUMNS; col++) {
+            if (board[0][col] == TOKENS_TYPES[EMPTY]) {
+                return false;
             }
         }
 
@@ -156,30 +184,36 @@ public class ConnectFour {
     }
 
     public static boolean checkWinConditions(char[][] board, char playerChar) {
+
         boolean didWin = false;
-        didWin = didWin || checkWinHorizontally(board, playerChar);
-        didWin = didWin || checkWinDownwards(board, playerChar);
-        didWin = didWin || checkDiagonallyLeft(board, playerChar);
-        didWin = didWin || checkDiagonallyRight(board, playerChar);
+
+        for (int row = 0; row < NUM_ROWS; row++) {
+            for (int col = 0; col < NUM_COLUMNS; col++) {
+                if (board[row][col] == playerChar) {
+                    didWin = didWin || checkRight(board, playerChar, row, col);
+                    didWin = didWin || checkDown(board, playerChar, row, col);
+                    didWin = didWin || checkDownRight(board, playerChar, row, col);
+                    didWin = didWin || checkDownLeft(board, playerChar, row, col);
+                }
+            }
+        }
+
         return didWin;
     }
 
-    public static boolean checkWinHorizontally(char[][] charRow, char playerChar) {
-        int verticalRange = NUM_ROWS - WIN_SIZE;
-        int[] playerTokenPlaced = new int[WIN_SIZE];
+    public static boolean checkRight(char[][] board, char playerChar, int row, int col) {
 
-        for (int col = 0; col < NUM_COLUMNS; col++) {
+        int horizontalRange = col + WIN_SIZE;
+        if (horizontalRange <= NUM_COLUMNS) {
             int count = 0;
-            Arrays.fill(playerTokenPlaced, 0);
-            for (int row = 0; row <= verticalRange; row++) {
-                if (charRow[row][col] == playerChar) {
-                    playerTokenPlaced[count]++;
+
+            for (int i = 0; i < WIN_SIZE; i++) {
+                if (board[row][col + i] == playerChar) {
                     count++;
                 }
             }
 
-            int totalTokens = getArraySum(playerTokenPlaced, playerChar);
-            if (totalTokens == WIN_SIZE) {
+            if (count == WIN_SIZE) {
                 return true;
             }
         }
@@ -187,20 +221,19 @@ public class ConnectFour {
         return false;
     }
 
-    public static boolean checkWinDownwards(char[][] charRow, char playerChar) {
-        int horizontalRange = NUM_COLUMNS - WIN_SIZE;
-        int[] playerTokenPlaced = new int[WIN_SIZE];
+    public static boolean checkDown(char[][] board, char playerChar, int row, int col) {
 
-        for (int row = 0; row < NUM_ROWS; row++) {
+        int verticalRange = row + WIN_SIZE;
+        if (verticalRange <= NUM_ROWS) {
             int count = 0;
-            Arrays.fill(playerTokenPlaced, 0);
-            for (int col = 0; col <= horizontalRange; col++) {
-                playerTokenPlaced[count]++;
-                count++;
+
+            for (int i = 0; i < WIN_SIZE; i++) {
+                if (board[row + i][col] == playerChar) {
+                    count++;
+                }
             }
 
-            int totalTokens = getArraySum(playerTokenPlaced, playerChar);
-            if (totalTokens == WIN_SIZE) {
+            if (count == WIN_SIZE) {
                 return true;
             }
         }
@@ -208,23 +241,46 @@ public class ConnectFour {
         return false;
     }
 
-    public static boolean checkDiagonallyRight(char[][] board, char playerChar) {
-        
-    }
+    public static boolean checkDownRight(char[][] board, char playerChar, int row, int col) {
 
-    public static boolean checkDiagonallyLeft(char[][] board, char playerChar) {
+        int horizontalRange = col + WIN_SIZE;
+        int verticalRange = row + WIN_SIZE;
+        if (horizontalRange <= NUM_COLUMNS && verticalRange <= NUM_ROWS) {
+            int count = 0;
 
-    }
+            for (int i = 0; i < WIN_SIZE; i++) {
+                if (board[row + i][col + i] == playerChar) {
+                    count++;
+                }
+            }
 
-    public static int getArraySum(int[] playerTokenPlaced, char playerChar) {
-        
-        int sum = 0;
-        for (int i = 0; i < playerTokenPlaced.length; i++) {
-            if (playerTokenPlaced[i] == playerChar) {
-                sum++;
+            if (count == WIN_SIZE) {
+                return true;
             }
         }
-        return sum;
+
+        return false;
+    }
+
+    public static boolean checkDownLeft(char[][] board, char playerChar, int row, int col) {
+        
+        int horizontalRange = col - WIN_SIZE + 1;
+        int verticalRange = row + WIN_SIZE;
+        if (horizontalRange >= 0 && verticalRange <= NUM_ROWS) {
+            int count = 0;
+
+            for (int i = 0; i < WIN_SIZE; i++) {
+                if (board[row + i][col - i] == playerChar) {
+                    count++;
+                }
+            }
+
+            if (count == WIN_SIZE) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // show the intro
