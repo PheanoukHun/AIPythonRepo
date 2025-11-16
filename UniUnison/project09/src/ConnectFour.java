@@ -302,7 +302,8 @@ public class ConnectFour {
      *                   red player, and b being blue player.
      * @param playerChar - An char value that represents what the method have to
      *                   look for when trying to check for the win condition.
-     * @return
+     * @return - Returns a boolean value stating whether the player won in any
+     *         directions at all.
      */
     public static boolean checkWinConditions(char[][] board, char playerChar) {
 

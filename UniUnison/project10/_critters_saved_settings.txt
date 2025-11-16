@@ -1,0 +1,14 @@
+#CSE 142 Critters saved settings
+#Sat Nov 15 20:19:48 CST 2025
+Height=50
+Number\ of\ each\ critter=25
+Network\ features=false
+Vulture=true
+Secure\ tournament\ mode=true
+Bird=true
+Debug\ output=false
+Falcon=true
+Ant=true
+Hippo=true
+Width=60
+Stone=true
