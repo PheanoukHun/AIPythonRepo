@@ -3,9 +3,10 @@ import java.awt.Color;
 public class Ant extends Critter {
     
     private boolean moveSouth;
-    private int counter = -1;
+    private int counter;
     
     public Ant(boolean walkSouth) {
+        counter = 0;
         moveSouth = walkSouth;
     }
 
@@ -22,8 +23,8 @@ public class Ant extends Critter {
     }
 
     public Direction getMove() {
-        counter++;
         boolean isEven = counter % 2 == 0;
+        counter++;
         
         if (moveSouth && isEven) {
             return Direction.SOUTH;

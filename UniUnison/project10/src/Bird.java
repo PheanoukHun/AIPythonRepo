@@ -2,10 +2,7 @@ import java.awt.Color;
 
 public class Bird extends Critter {
 
-    private int moveCounter = 0;
-    private int stringCounter = 0;
-
-    private int currentDirectionInt = 0;
+    private int moveCount = 0;
 
     private final Direction[] CLOCKWISE_MOVEMENT = {
             Direction.NORTH, Direction.EAST,
@@ -28,14 +25,13 @@ public class Bird extends Critter {
     }
 
     public Direction getMove() {
-        int currentTurn = (moveCounter % 12) / 3;
-        moveCounter++;
+        int currentTurn = ((moveCount - 1) / 3) % 4;
+        moveCount++;
         return CLOCKWISE_MOVEMENT[currentTurn];
     }
 
     public String toString() {
-        int currentTurn = (stringCounter % 12) / 3;
-        stringCounter++;
+        int currentTurn = ((moveCount - 1) / 3) % 4;
         return SYMBOL_DIRECTION[currentTurn];
     }
 }

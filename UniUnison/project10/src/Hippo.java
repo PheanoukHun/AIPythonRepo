@@ -4,7 +4,6 @@ import java.lang.Math;
 public class Hippo extends Critter {
     
     private int hunger;
-    private boolean isHungry;
     
     private final Direction[] DIRECTIONS = {
         Direction.NORTH, Direction.SOUTH,
@@ -12,32 +11,28 @@ public class Hippo extends Critter {
     };
 
     private Direction currDirection;
-    private final int DIRECTION_CHANGE = 4;
+    private final int DIRECTION_CHANGE = 5;
     
     private int stepCounter = 0;
     
     public Hippo (int hunger) {
         this.hunger = hunger;
-        if (hunger > 0) {
-            isHungry = true;
-        }
+        resetDirection();
     }
 
     public boolean eat() {
         
         if (hunger > 0) {
             hunger--;
-            isHungry = true;
-            return isHungry;
+            return true;
         }
 
-        isHungry = false;
-        return isHungry;
+        return false;
     }
 
     public Attack fight(String opp) {
         
-        if (isHungry) {
+        if (hunger > 0) {
             return Attack.SCRATCH;
         }
 
@@ -46,7 +41,7 @@ public class Hippo extends Critter {
 
     public Color getColor() {
         
-        if (isHungry) {
+        if (hunger > 0) {
             return Color.GRAY;
         }
 
@@ -55,18 +50,26 @@ public class Hippo extends Critter {
 
     public Direction getMove() {
         
-        if (stepCounter == 0) {
-            int randomInt = (int) (Math.random() * 4);
-            currDirection = DIRECTIONS[randomInt];
-            return currDirection;
+        if (stepCounter == DIRECTION_CHANGE) {
+            resetDirection();
         }
 
         stepCounter++;
-        if (stepCounter == DIRECTION_CHANGE) {
-            stepCounter = 0;
-        }
-                
         return currDirection;
+    }
+
+    private void resetDirection() {
+
+        stepCounter = 0;
+        int randomInt = (int) (Math.random() * DIRECTIONS.length);
+        Direction next = DIRECTIONS[randomInt];
+
+        while (next == currDirection) {
+            randomInt = (int) (Math.random() * DIRECTIONS.length);
+            next = DIRECTIONS[randomInt];
+        }
+
+        currDirection = next;
     }
 
     public String toString() {
