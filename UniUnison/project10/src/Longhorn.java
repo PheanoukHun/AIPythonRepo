@@ -1,3 +1,26 @@
+/**
+ * CS312 Assignment 10 - Critters - Longhorn
+ *
+ * On my honor, Pheanouk Hun, this programming assignment is my own work, 
+ * I have not shared it with others and I will not share it in the future.
+ *
+ *  Description: This class creates a Critter Object based on the Longhorn Animal.
+ *               It has a random set of movements that is based on its environment.
+ *               Its eating and attacking behavior is based on its neighbor and opponent.
+ *               It extends from the Critter Class.
+ * 
+ * Creative Stratgey: The Longhorn will only eat if they have no neighbor.
+ *                    The longhorn will actively look for a mate if it is ready to mate.
+ *                    The longhorn will move toward food or a mate if either appears as
+ *                    a mate. Otherwise it choose to move in a random direction for a
+ *                    random number of times. The longhorn will also change its attack
+ *                    based on the opponent it is facing.
+ * 
+ *  Name: Pheanouk Hun
+ *  UT EID: ph23434
+ * 
+ */
+
 import java.lang.Math;
 import java.awt.Color;
 
@@ -39,8 +62,8 @@ public class Longhorn extends Critter {
         for (Direction direction : DIRECTIONS) {
             String currentNeighbor = getNeighbor(direction);
 
-            // IF: the Neighbor is not Empty and not an Ant, don't eat
-            if (!currentNeighbor.equals(" ") && currentNeighbor.equals("%")) {
+            // IF: there is a Neighbor nearby, don't eat
+            if (!currentNeighbor.equals(" ")) {
                 return false;
             }
         }
@@ -144,7 +167,7 @@ public class Longhorn extends Critter {
      */
     private void getNewDirection() {
 
-        randNumMoves = (int) (Math.random() * 4) + 3;
+        randNumMoves = (int) (Math.random() * 6) + 3;
         counter = 0;
 
         int randomNum = (int) (Math.random() * DIRECTIONS.length);

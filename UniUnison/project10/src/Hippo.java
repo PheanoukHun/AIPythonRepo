@@ -1,3 +1,18 @@
+/**
+ * CS312 Assignment 10 - Critters - Hippo
+ *
+ * On my honor, Pheanouk Hun, this programming assignment is my own work, 
+ * I have not shared it with others and I will not share it in the future.
+ *
+ *  Description: This class creates a Critter object that simulates the Hippo animal.
+ *               It moves in a random structure, and eats and attacks based on its 
+ *               hunger level. It extends from the Critter class.
+ * 
+ *  Name: Pheanouk Hun
+ *  UT EID: ph23434
+ * 
+ */
+
 import java.awt.Color;
 import java.lang.Math;
 

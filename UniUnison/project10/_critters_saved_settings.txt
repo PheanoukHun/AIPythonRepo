@@ -1,5 +1,5 @@
 #CSE 142 Critters saved settings
-#Wed Nov 19 12:17:17 CST 2025
+#Wed Nov 19 23:42:38 CST 2025
 Ant=true
 Bird=true
 Debug\ output=false

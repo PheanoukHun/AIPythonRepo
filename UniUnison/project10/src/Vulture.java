@@ -1,3 +1,19 @@
+/**
+ * CS312 Assignment 10 - Critters - Vulture
+ *
+ * On my honor, Pheanouk Hun, this programming assignment is my own work, 
+ * I have not shared it with others and I will not share it in the future.
+ *
+ *  Description: This class creates a critter object modeled after the Vulture Animal. 
+ *               It has a set movement structure, attack, and eating behavior.
+ *               It extends from the Bird class.
+ * 
+ *  Name: Pheanouk Hun
+ *  UT EID: ph23434
+ * 
+ */
+
+
 import java.awt.Color;
 
 public class Vulture extends Bird {
