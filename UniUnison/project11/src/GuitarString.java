@@ -29,7 +29,7 @@ public class GuitarString {
      * @param frequency - The frequency in which the string vibrates at.
      */
     public GuitarString(double frequency) {
-        int desiredCapacity = (int) (SAMPLING_RATE / frequency);
+        int desiredCapacity = (int) Math.ceil(SAMPLING_RATE / frequency);;
         string = new RingBuffer(desiredCapacity);
 
         // Loop to Fill the Queue
@@ -49,7 +49,7 @@ public class GuitarString {
         string = new RingBuffer(init.length);
 
         // Loop to Fill the Queue
-        for (int i = 0; i < string.size(); i++) {
+        for (int i = 0; i < init.length; i++) {
             string.enqueue(init[i]);
         }
     }

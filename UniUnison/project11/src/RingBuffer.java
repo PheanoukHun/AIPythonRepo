@@ -26,6 +26,7 @@ public class RingBuffer {
 
     /**
      * Creates the Ringbuffer Object that contains a queue and can loop around.
+     * 
      * @param capacity - The max size of the Double Array.
      */
     public RingBuffer(int capacity) {
@@ -91,10 +92,7 @@ public class RingBuffer {
      */
     public double dequeue() {
 
-        // IF: the Queue is Empty
-        if (isEmpty()) {
-            emptyIssue("dequeue");
-        }
+        checkAndRaiseEmpty("dequeue");
 
         double selectedItem = buffer[first];
         first = (first + 1) % capacity;
@@ -109,12 +107,7 @@ public class RingBuffer {
      * @return - A double that represents the first item in the queue.
      */
     public double peek() {
-
-        // IF: the Queue is Empty.
-        if (isEmpty()) {
-            emptyIssue("peek");
-        }
-
+        checkAndRaiseEmpty("peek");
         return buffer[first];
     }
 
@@ -123,9 +116,13 @@ public class RingBuffer {
      * 
      * @param issue - The String of the method that flagged the problem
      */
-    private void emptyIssue(String issue) {
-        String prompt = "Cannot call peek on " + issue + " on an empty RingBuffer.";
-        throw new NoSuchElementException(prompt);
+    private void checkAndRaiseEmpty(String issue) {
+
+        // IF: the Queue is Empty.
+        if (isEmpty()) {
+            String prompt = "Cannot call " + issue + " on an empty RingBuffer.";
+            throw new NoSuchElementException(prompt);
+        }
     }
 
     /**
