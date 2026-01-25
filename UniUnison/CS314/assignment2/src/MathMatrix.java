@@ -4,9 +4,9 @@
  * By signing my name below, I affirm that this assignment is my own work. I
  * have neither given nor received unauthorized assistance on this assignment.
  *
- * Name:
- * Email address:
- * UTEID:
+ * Name: Pheanouk Hun
+ * Email address: ph23434
+ * UTEID: ph23434
  */
 
 import java.util.Arrays;
