@@ -53,13 +53,18 @@ public class MathMatrix {
     public MathMatrix(int numRows, int numCols, int initialVal) {
 
         // Checking Preconditions
-        if (numRows <= 0 || numCols <= 0 || initialVal == null) {
+        if (numRows <= 0 || numCols <= 0) {
             throw new IllegalArgumentException("Violation of precondition: "
                     + "MathMatrix Constructor neither parameter may equal null, arrays"
                     + " lenght and a rectangular matrix.");
         }
 
         int[][] mat = new int[numRows][numCols];
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numCols; col++) {
+                mat[row][col] = initialVal;
+            }
+        }
     }
 
     /**
