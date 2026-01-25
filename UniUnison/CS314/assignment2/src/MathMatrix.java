@@ -81,10 +81,9 @@ public class MathMatrix {
     }
 
     /**
-     * 
-     * @param row - 0 <= row < getNumRows() 
-     * @param col - 0 <= col < getNumColumns()
-     * @return - the value at the specified position
+     *
+     * @param row - 0 <= row < getNumRows() @param col - 0 <= col <
+     * getNumColumns() @return - the value at the specified position
      */
     public int getVal(int row, int col) {
 
@@ -114,6 +113,17 @@ public class MathMatrix {
      * Matrix is equal to the number of columns in this MathMatrix.
      */
     public MathMatrix add(MathMatrix rightHandSide) {
+
+        // Checking Proconditions
+        if (rightHandSide == null || rightHandSide.getNumRows() != getNumRows()) {
+            throw new IllegalArgumentException("Violation of precondition: "
+                    + "rightHandSide may not be null or "
+                    + " rightHandSide num of rows must equals current object num of rows");
+        } else if (rightHandSide.getNumColumns() != getNumColumns()) {
+            throw new IllegalArgumentException("Violation of precondition: "
+                    + " rightHandSide num of columns must equals current object num of columns");
+        }
+
         return null;
     }
 
