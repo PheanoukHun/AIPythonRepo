@@ -351,7 +351,7 @@ public class MathMatrix {
             int max = 0;
             for (int row = 0; row < getNumRows(); row++) {
                 int newLen = ("" + getVal(row, col)).length();
-                if (newLen < max) {
+                if (newLen > max) {
                     max = newLen;
                 }
             }
@@ -361,14 +361,16 @@ public class MathMatrix {
         // Building the String
         for (int row = 0; row < getNumRows(); row++) {
             
-            returnedString += "|  ";
+            returnedString += "|";
             
             for (int col = 0; col < getNumColumns(); col++) {
-                
+                String format = "%-" + longestIntPerCol[col] + "d";
+                returnedString += String.format(format, values[row][col]);
             }
             returnedString += "|\n";
         }
 
+        // Returned the String of the Matrix
         return returnedString;
     }
 
