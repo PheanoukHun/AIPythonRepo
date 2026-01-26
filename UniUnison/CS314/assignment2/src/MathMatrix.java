@@ -17,13 +17,17 @@ import java.util.Arrays;
 public class MathMatrix {
 
     // TODO: INCLUDE INSTANCE VARIABLES HERE AND DELETE COMMENT
+
+    private int numRows, numCols;
+    private int[][] values;
+
     /**
      * Create a MathMatrix with cells equal to the values in mat. A "deep" copy
      * of mat is made. Changes to mat after this constructor do not affect this
      * Matrix and changes to this MathMatrix do not affect mat
      *
      * @param mat mat !=null, mat.length > 0, mat[0].length > 0, mat is a
-     * rectangular matrix
+     *            rectangular matrix
      */
     public MathMatrix(int[][] mat) {
 
@@ -32,6 +36,16 @@ public class MathMatrix {
             throw new IllegalArgumentException("Violation of precondition: "
                     + "MathMatrix Constructor neither parameter may equal null, arrays"
                     + " lenght and a rectangular matrix.");
+        }
+
+        values = new int[mat.length][mat[0].length];
+        numRows = mat.length;
+        numCols = mat[0].length;
+
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numRows; col++) {
+                values[row][col] = mat[row][col];
+            }
         }
 
     }
@@ -46,8 +60,8 @@ public class MathMatrix {
      * of this matrix equal initialVal. In other words after this method has
      * been called getVal(r,c) = initialVal for all valid r and c.
      *
-     * @param numRows numRows > 0
-     * @param numCols numCols > 0
+     * @param numRows    numRows > 0
+     * @param numCols    numCols > 0
      * @param initialVal all cells of this Matrix are set to initialVal
      */
     public MathMatrix(int numRows, int numCols, int initialVal) {
@@ -59,10 +73,13 @@ public class MathMatrix {
                     + " lenght and a rectangular matrix.");
         }
 
-        int[][] mat = new int[numRows][numCols];
+        values = new int[numRows][numCols];
+        this.numRows = numRows;
+        this.numCols = numCols;
+
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
-                mat[row][col] = initialVal;
+                values[row][col] = initialVal;
             }
         }
     }
@@ -73,7 +90,7 @@ public class MathMatrix {
      * @return the number of rows in this MathMatrix
      */
     public int getNumRows() {
-        return 0;
+        return numRows;
     }
 
     /**
@@ -82,13 +99,15 @@ public class MathMatrix {
      * @return the number of columns in this MathMatrix
      */
     public int getNumColumns() {
-        return 0;
+        return numCols;
     }
 
     /**
+     * Gets the Value from the matrix at the position given.
      *
-     * @param row - 0 <= row < getNumRows() @param col - 0 <= col <
-     * getNumColumns() @return - the value at the specified position
+     * @param row - 0 <= row < getNumRows()
+     * @param col - 0 <= col < getNumColumns()
+     * @return - the value at the specified position
      */
     public int getVal(int row, int col) {
 
@@ -99,7 +118,7 @@ public class MathMatrix {
                     + " Column is Less than 0 or Greater than the Num of Columns");
         }
 
-        return 0;
+        return values[row][col];
     }
 
     /**
@@ -111,25 +130,34 @@ public class MathMatrix {
      * post: This method does not alter the calling object or rightHandSide
      *
      * @param rightHandSide rightHandSide.getNumRows() = getNumRows(),
-     * rightHandSide.getNumColumns() = getNumColumns()
+     *                      rightHandSide.getNumColumns() = getNumColumns()
      * @return a new MathMatrix that is the result of adding this Matrix to
-     * rightHandSide. The number of rows in the returned Matrix is equal to the
-     * number of rows in this MathMatrix. The number of columns in the returned
-     * Matrix is equal to the number of columns in this MathMatrix.
+     *         rightHandSide. The number of rows in the returned Matrix is equal to
+     *         the number of rows in this MathMatrix. The number of columns in the
+     *         returned Matrix is equal to the number of columns in this MathMatrix.
      */
     public MathMatrix add(MathMatrix rightHandSide) {
 
         // Checking Proconditions
-        if (rightHandSide == null || rightHandSide.getNumRows() != getNumRows()) {
+        if (rightHandSide == null || rightHandSide.getNumRows() != getNumRows() ||
+                rightHandSide.getNumColumns() != getNumColumns()) {
             throw new IllegalArgumentException("Violation of precondition: "
                     + "rightHandSide may not be null or "
-                    + " rightHandSide num of rows must equals current object num of rows");
-        } else if (rightHandSide.getNumColumns() != getNumColumns()) {
-            throw new IllegalArgumentException("Violation of precondition: "
+                    + " rightHandSide num of rows must equals current object num of rows"
                     + " rightHandSide num of columns must equals current object num of columns");
         }
 
-        return null;
+        // Adding the Values together.
+        int[][] results = new int[getNumRows()][getNumColumns()];
+
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numCols; col++) {
+                results[row][col] = this.getVal(row, col) + rightHandSide.getVal(row, col);
+            }
+        }
+
+        // Returning the New Matrix
+        return (new MathMatrix(results));
     }
 
     /**
@@ -141,15 +169,35 @@ public class MathMatrix {
      * post: This method does not alter the calling object or rightHandSide
      *
      * @param rightHandSide rightHandSide.getNumRows() = getNumRows(),
-     * rightHandSide.getNumColumns() = getNumColumns()
+     *                      rightHandSide.getNumColumns() = getNumColumns()
      * @return a new MathMatrix that is the result of subtracting rightHandSide
-     * from this MathMatrix. The number of rows in the returned MathMatrix is
-     * equal to the number of rows in this MathMatrix.The number of columns in
-     * the returned MathMatrix is equal to the number of columns in this
-     * MathMatrix.
+     *         from this MathMatrix. The number of rows in the returned MathMatrix
+     *         is equal to the number of rows in this MathMatrix.The number of
+     *         columns in the returned MathMatrix is equal to the number of columns
+     *         in this MathMatrix.
      */
     public MathMatrix subtract(MathMatrix rightHandSide) {
-        return null;
+
+        // Checking Proconditions
+        if (rightHandSide == null || rightHandSide.getNumRows() != getNumRows() ||
+                rightHandSide.getNumColumns() != getNumColumns()) {
+            throw new IllegalArgumentException("Violation of precondition: "
+                    + "rightHandSide may not be null or "
+                    + " rightHandSide num of rows must equals current object num of rows"
+                    + " rightHandSide num of columns must equals current object num of columns");
+        }
+
+        // Subtracting the Values From The Object
+        int[][] results = new int[getNumRows()][getNumColumns()];
+
+        for (int row = 0; row < getNumRows(); row++) {
+            for (int col = 0; col < getNumColumns(); col++) {
+                results[row][col] = this.getVal(row, col) - rightHandSide.getVal(row, col);
+            }
+        }
+
+        // Returning the New Matrix
+        return (new MathMatrix(results));
     }
 
     /**
@@ -161,12 +209,22 @@ public class MathMatrix {
      *
      * @param rightHandSide rightHandSide.getNumRows() = getNumColumns()
      * @return a new MathMatrix that is the result of multiplying this
-     * MathMatrix and rightHandSide. The number of rows in the returned
-     * MathMatrix is equal to the number of rows in this MathMatrix. The number
-     * of columns in the returned MathMatrix is equal to the number of columns
-     * in rightHandSide.
+     *         MathMatrix and rightHandSide. The number of rows in the returned
+     *         MathMatrix is equal to the number of rows in this MathMatrix. The
+     *         number of columns in the returned MathMatrix is equal to the number
+     *         of columns in rightHandSide.
      */
     public MathMatrix multiply(MathMatrix rightHandSide) {
+
+        // Checking Proconditions
+        if (rightHandSide == null || rightHandSide.getNumRows() != getNumColumns()) {
+            throw new IllegalArgumentException("Violation of precondition: "
+                    + "rightHandSide may not be null or "
+                    + " rightHandSide num of rows must equals current object num of columns");
+        }
+
+        // TODO: Implement the Multiply Method
+
         return null;
     }
 
@@ -183,10 +241,20 @@ public class MathMatrix {
      *
      * @param factor the value to multiply every cell in this Matrix by.
      * @return a MathMatrix that is a copy of this MathMatrix, but with all
-     * values in the result multiplied by factor.
+     *         values in the result multiplied by factor.
      */
     public MathMatrix getScaledMatrix(int factor) {
-        return null;
+
+        // Scaling the Values of the Matrix
+        int[][] results = new int[getNumRows()][getNumColumns()];
+        for (int row = 0; row < getNumRows(); row++) {
+            for (int col = 0; col < getNumColumns(); col++) {
+                results[row][col] = this.getVal(row, col) * factor;
+            }
+        }
+
+        // Returning the New Matrix
+        return (new MathMatrix(results));
     }
 
     /**
@@ -197,14 +265,24 @@ public class MathMatrix {
      * @return a transpose of this MathMatrix
      */
     public MathMatrix getTranspose() {
-        return null;
+
+        // Transposing the Values of the Matrix
+        int[][] results = new int[getNumColumns()][getNumRows()];
+        for (int row = 0; row < getNumRows(); row++) {
+            for (int col = 0; col < getNumColumns(); col++) {
+                results[col][row] = this.getVal(row, col);
+            }
+        }
+
+        // Returning the New Matrix
+        return (new MathMatrix(results));
     }
 
     /**
      * Override equals.
      *
      * @return true if rightHandSide is the same size as this MathMatrix and all
-     * values in the two MathMatrix objects are the same, false otherwise
+     *         values in the two MathMatrix objects are the same, false otherwise
      */
     public boolean equals(Object rightHandSide) {
         /*
@@ -234,7 +312,7 @@ public class MathMatrix {
      * Override toString.
      *
      * @return a String with all elements of this MathMatrix. Each row is on a
-     * separate line. Spacing based on longest element in this Matrix.
+     *         separate line. Spacing based on longest element in this Matrix.
      */
     public String toString() {
         return "";
@@ -257,8 +335,9 @@ public class MathMatrix {
      * can also use it.
      *
      * @param mat mat != null, mat must have at least one row, there must be at
-     * least one column in the first row, and all rows in mat must have the same
-     * number of columns.
+     *            least one column in the first row, and all rows in mat must have
+     *            the same
+     *            number of columns.
      * @return true if mat is rectangular, false otherwise.
      */
     public static boolean rectangularMatrix(int[][] mat) {

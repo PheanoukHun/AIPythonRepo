@@ -4,9 +4,9 @@
  * By signing my name below, I affirm that this assignment is my own work. I
  * have neither given nor received unauthorized assistance on this assignment.
  *
- * Name:
- * Email address:
- * UTEID:
+ * Name: Pheanouk Hun
+ * Email address: ph23434@my.utexas.edu
+ * UTEID: ph23434
  */
 
 import java.util.Random;
@@ -24,10 +24,14 @@ public class MathMatrixTester {
      * @param args not used
      */
     public static void main(String[] args) {
-        int[][] data1 = { { 1, 2, 3 },
-                { 2, 3, 4 } };
-        int[][] data2 = { { 2, 1, 1 },
-                { 2, 3, 1 } };
+        int[][] data1 = {
+                { 1, 2, 3 },
+                { 2, 3, 4 }
+        };
+        int[][] data2 = {
+                { 2, 1, 1 },
+                { 2, 3, 1 }
+        };
         int[][] e1;
 
         // test 1, specify size and values constructor
@@ -160,7 +164,7 @@ public class MathMatrixTester {
     // create a matrix with random values
     // pre: rows > 0, cols > 0, randNumGen != null
     public static MathMatrix createMat(Random randNumGen, int rows,
-                                       int cols, final int LIMIT) {
+            int cols, final int LIMIT) {
 
         if (randNumGen == null) {
             throw new IllegalArgumentException("randomNumGen variable may no be null");
