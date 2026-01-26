@@ -223,9 +223,21 @@ public class MathMatrix {
                     + " rightHandSide num of rows must equals current object num of columns");
         }
 
-        // TODO: Implement the Multiply Method
+        // Multiplying the two Matrixes Together
+        int[][] results = new int[this.getNumRows()][rightHandSide.getNumColumns()];
 
-        return null;
+        for (int i = 0; i < this.getNumRows(); i++) {
+            for (int j = 0; j < rightHandSide.getNumColumns(); j++) {
+                int sum = 0;
+                for (int k = 0; k < this.getNumColumns(); k++) {
+                    sum += this.getVal(i, k) * rightHandSide.getVal(k, i);
+                }
+                results[i][j] = sum;
+            }
+        }
+
+        // Returing the New Matriz
+        return (new MathMatrix(results));
     }
 
     /**
@@ -305,7 +317,22 @@ public class MathMatrix {
         // Now, we can access the private instance variables of otherMathMatrix
         // and/or call MathMatrix methods on otherMathMatrix.
 
-        return true; // TODO: ALTER AS NEEDED AND DELETE THIS COMMENT
+        // Checks to see if the two matrixes have the same dimensions
+        if (otherMathMatrix.getNumRows() != getNumRows() &&
+                otherMathMatrix.getNumColumns() != getNumColumns()) {
+            return false;
+        }
+
+        // Checks to see if they all have the same value
+        for (int row = 0; row < getNumRows(); row++) {
+            for (int col = 0; col < getNumColumns(); col++) {
+                if (otherMathMatrix.getVal(row, col) != this.getVal(row, col)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -315,7 +342,34 @@ public class MathMatrix {
      *         separate line. Spacing based on longest element in this Matrix.
      */
     public String toString() {
-        return "";
+
+        String returnedString = "";
+
+        // Getting the Length of the Longest Int Per Column
+        int[] longestIntPerCol = new int[getNumColumns()];
+        for (int col = 0; col < getNumColumns(); col++) {
+            int max = 0;
+            for (int row = 0; row < getNumRows(); row++) {
+                int newLen = ("" + getVal(row, col)).length();
+                if (newLen < max) {
+                    max = newLen;
+                }
+            }
+            longestIntPerCol[col] = max;
+        }
+
+        // Building the String
+        for (int row = 0; row < getNumRows(); row++) {
+            
+            returnedString += "|  ";
+            
+            for (int col = 0; col < getNumColumns(); col++) {
+                
+            }
+            returnedString += "|\n";
+        }
+
+        return returnedString;
     }
 
     /**
@@ -327,7 +381,23 @@ public class MathMatrix {
      * @return true if this MathMatrix is upper triangular, false otherwise.
      */
     public boolean isUpperTriangular() {
-        return false;
+
+        // Checking the Preconditions
+        if (getNumRows() != getNumColumns()) {
+            throw new IllegalArgumentException("Violation of precondition: "
+                    + "the number of rows must equal to the number of columns");
+        }
+
+        // Checking all Items Below the Diagonals
+        for (int row = 0; row < getNumRows(); row++) {
+            for (int col = 0; col < row; col++) {
+                if (getVal(row, col) != 0) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
