@@ -16,8 +16,6 @@ import java.util.Arrays;
  */
 public class MathMatrix {
 
-    // TODO: INCLUDE INSTANCE VARIABLES HERE AND DELETE COMMENT
-
     private int numRows, numCols;
     private int[][] values;
 
@@ -42,8 +40,8 @@ public class MathMatrix {
         numRows = mat.length;
         numCols = mat[0].length;
 
-        for (int row = 0; row < numRows; row++) {
-            for (int col = 0; col < numRows; col++) {
+        for (int row = 0; row < getNumRows(); row++) {
+            for (int col = 0; col < getNumColumns(); col++) {
                 values[row][col] = mat[row][col];
             }
         }
@@ -73,12 +71,14 @@ public class MathMatrix {
                     + " lenght and a rectangular matrix.");
         }
 
+        // Initialing the Variables
         values = new int[numRows][numCols];
         this.numRows = numRows;
         this.numCols = numCols;
 
-        for (int row = 0; row < numRows; row++) {
-            for (int col = 0; col < numCols; col++) {
+        // Setting the Values
+        for (int row = 0; row < getNumRows(); row++) {
+            for (int col = 0; col < getNumColumns(); col++) {
                 values[row][col] = initialVal;
             }
         }
@@ -112,12 +112,13 @@ public class MathMatrix {
     public int getVal(int row, int col) {
 
         // Checking Preconditions
-        if (row < 0 || col < 0 || col >= getNumColumns() || row >= getNumRows()) {
+        if (row < 0 || row >= getNumRows() || col < 0 || col >= getNumColumns()) {
             throw new IllegalArgumentException("Violation of precondition: "
                     + "Row is Less than 0, or Greater than the Num of Rows"
                     + " Column is Less than 0 or Greater than the Num of Columns");
         }
 
+        // Returning the Values
         return values[row][col];
     }
 
@@ -227,11 +228,15 @@ public class MathMatrix {
         int[][] results = new int[this.getNumRows()][rightHandSide.getNumColumns()];
 
         for (int i = 0; i < this.getNumRows(); i++) {
+
             for (int j = 0; j < rightHandSide.getNumColumns(); j++) {
+
                 int sum = 0;
+
                 for (int k = 0; k < this.getNumColumns(); k++) {
-                    sum += this.getVal(i, k) * rightHandSide.getVal(k, i);
+                    sum += this.getVal(i, k) * rightHandSide.getVal(k, j);
                 }
+
                 results[i][j] = sum;
             }
         }
@@ -346,26 +351,24 @@ public class MathMatrix {
         String returnedString = "";
 
         // Getting the Length of the Longest Int Per Column
-        int[] longestIntPerCol = new int[getNumColumns()];
-        for (int col = 0; col < getNumColumns(); col++) {
-            int max = 0;
-            for (int row = 0; row < getNumRows(); row++) {
-                int newLen = ("" + getVal(row, col)).length();
-                if (newLen > max) {
-                    max = newLen;
+        int numSpaces = 0;
+        for (int row = 0; row < getNumRows(); row++) {
+            for (int col = 0; col < getNumColumns(); col++) {
+                int currLen = (" " + getVal(row, col)).length();
+                if (currLen > numSpaces) {
+                    numSpaces = currLen;
                 }
             }
-            longestIntPerCol[col] = max;
         }
 
         // Building the String
         for (int row = 0; row < getNumRows(); row++) {
-            
+
             returnedString += "|";
-            
+
             for (int col = 0; col < getNumColumns(); col++) {
-                String format = "%-" + longestIntPerCol[col] + "d";
-                returnedString += String.format(format, values[row][col]);
+                String format = "%" + numSpaces + "d";
+                returnedString += String.format(format, getVal(row, col));
             }
             returnedString += "|\n";
         }
@@ -390,10 +393,14 @@ public class MathMatrix {
                     + "the number of rows must equal to the number of columns");
         }
 
+        if (getNumRows() == 1) {
+            return true;
+        }
+
         // Checking all Items Below the Diagonals
         for (int row = 0; row < getNumRows(); row++) {
             for (int col = 0; col < row; col++) {
-                if (getVal(row, col) != 0) {
+                if (values[row][col] != 0) {
                     return false;
                 }
             }

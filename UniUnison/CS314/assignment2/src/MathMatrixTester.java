@@ -188,7 +188,7 @@ public class MathMatrixTester {
             String testingWhat) {
         System.out.print("Test number " + testNum + " tests the " + testingWhat + ". The test ");
         String result = equals(data1, data2) ? "passed" : "failed";
-        System.out.println(result);
+        System.out.println(result + "\n");
     }
 
     // pre: m != null, m is at least 1 by 1 in size
