@@ -1,9 +1,7 @@
 public class PrintStrings {
     public static void main(String[] args) {
 
-        int[][] matVals = { { 1, 2, 3, 0 }, { 0, 3, 2, 3 }, { 0, 0, 4, -1 }, { 1, 2, 3, 4 } };
-
-        MathMatrix mat = new MathMatrix(matVals);
+        MathMatrix mat = new MathMatrix(1000, 1000, 5);
         System.out.println(mat);
     }
 }
