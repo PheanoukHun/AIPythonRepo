@@ -354,12 +354,14 @@ public class MathMatrix {
         int numSpaces = 0;
         for (int row = 0; row < getNumRows(); row++) {
             for (int col = 0; col < getNumColumns(); col++) {
-                int currLen = (" " + getVal(row, col)).length();
+                int currLen = ("" + getVal(row, col)).length();
                 if (currLen > numSpaces) {
                     numSpaces = currLen;
                 }
             }
         }
+        
+        numSpaces++;
 
         // Building the String
         for (int row = 0; row < getNumRows(); row++) {
