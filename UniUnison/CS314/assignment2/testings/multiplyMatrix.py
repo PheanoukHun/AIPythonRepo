@@ -1,10 +1,14 @@
 import random
 import time
 
-arr1 = [[random.randint(1,10) for i in range(500)] for i in range(1000)]
-arr2 = [[random.randint(1,10) for i in range(1000)] for i in range(500)]
+n = 1000
+m = 1000
+p = 500
 
-arr3 = [[0 for i in range (750)] for i in range(1000)]
+arr1 = [[random.randint(1,10) for i in range(p)] for i in range(n)]
+arr2 = [[random.randint(1,10) for i in range(m)] for i in range(p)]
+
+arr3 = [[0 for i in range (n)] for i in range(m)]
 
 start = time.time()
 for i in range(len(arr1)):
