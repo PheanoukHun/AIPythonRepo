@@ -354,12 +354,14 @@ public class MathMatrix {
         int numSpaces = 0;
         for (int row = 0; row < getNumRows(); row++) {
             for (int col = 0; col < getNumColumns(); col++) {
-                int currLen = (" " + getVal(row, col)).length();
+                int currLen = ("" + getVal(row, col)).length();
                 if (currLen > numSpaces) {
                     numSpaces = currLen;
                 }
             }
         }
+        
+        numSpaces++;
 
         // Building the String
         for (int row = 0; row < getNumRows(); row++) {
@@ -393,6 +395,7 @@ public class MathMatrix {
                     + "the number of rows must equal to the number of columns");
         }
 
+        // Returns if it is a 1x1 Matrix
         if (getNumRows() == 1) {
             return true;
         }
@@ -445,4 +448,36 @@ public class MathMatrix {
         return isRectangular;
     }
 
+    public static void experimentOneAdd() {
+        Stopwatch st = new Stopwatch();
+        
+        final int SIZE = 1000;
+
+        int[][] arr1 = new int[SIZE][SIZE];
+        int[][] arr2 = new int[SIZE][SIZE];
+
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                arr1[row][col] = (int) (Math.random() * SIZE);
+                arr2[row][col] = (int) (Math.random() * SIZE);
+            }
+        }
+
+        MathMatrix mat1 = new MathMatrix(arr1);
+        MathMatrix mat2 = new MathMatrix(arr2);
+
+        st.start();
+        MathMatrix mat3 = mat1.add(mat2);
+        // st.stop();
+
+        // System.out.println("Runtime Once: " + st.time());
+
+        // st.start();
+        for (int i = 1; i < 1000; i++) {
+            mat3 = mat1.add(mat2);
+        }
+        st.stop();
+
+        System.out.println("Runtime x999: " + st.time());
+    }
 }
