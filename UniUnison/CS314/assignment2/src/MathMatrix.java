@@ -448,38 +448,64 @@ public class MathMatrix {
         return isRectangular;
     }
 
-    public static void experimentOneAdd() {
+    public static void experimentOne() {
+        
+        // Step 1 and Step 4
+        final int SIZE = 775;
+        
+        // Step 1
+        MathMatrix mat1 = createRandomMatrixes(SIZE);
+        MathMatrix mat2 = createRandomMatrixes(SIZE);
+        
+        // Step 2
         Stopwatch st = new Stopwatch();
 
-        final int SIZE = 775;
-
-        int[][] arr1 = new int[SIZE][SIZE];
-        int[][] arr2 = new int[SIZE][SIZE];
-
-        for (int row = 0; row < SIZE; row++) {
-            for (int col = 0; col < SIZE; col++) {
-                arr1[row][col] = (int) (Math.random() * SIZE);
-                arr2[row][col] = (int) (Math.random() * SIZE);
-            }
-        }
-
-        MathMatrix mat1 = new MathMatrix(arr1);
-        MathMatrix mat2 = new MathMatrix(arr2);
-
+        // Step 3
         st.start();
         MathMatrix mat3 = mat1.add(mat2);
         st.stop();
 
+        System.out.println("\nStep 1-6:");
         System.out.println("Runtime Once: " + st.time());
 
+        // Step 5
         st.start();
 
-        int NUM_REPETITION = 1000;
+        final int NUM_REPETITION = 1000;
         for (int i = 1; i < NUM_REPETITION; i++) {
             mat3 = mat1.add(mat2);
         }
         st.stop();
 
-        System.out.println("Runtime x999: " + st.time());
+        System.out.println("Runtime x999: " + st.time() + "\n");
+
+        // Step 6
+        mat1 = createRandomMatrixes(SIZE * 2);
+        mat2 = createRandomMatrixes(SIZE * 2);
+
+        // Step 7
+        st = new Stopwatch();
+
+        st.start();
+        for (int i = 0; i < NUM_REPETITION; i++) {
+            mat3 = mat1.add(mat2);
+        }
+        st.stop();
+
+        System.out.println("Step 7:");
+        System.out.println("Runtime x1000: " + st.time());
+    }
+
+    private static MathMatrix createRandomMatrixes(int size) {
+
+        int[][] arr = new int[size][size];
+
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                arr[row][col] = (int) (Math.random() * size);
+            }
+        }
+
+        return new MathMatrix(arr);
     }
 }
