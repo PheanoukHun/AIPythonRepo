@@ -360,7 +360,7 @@ public class MathMatrix {
                 }
             }
         }
-        
+
         numSpaces++;
 
         // Building the String
@@ -450,8 +450,8 @@ public class MathMatrix {
 
     public static void experimentOneAdd() {
         Stopwatch st = new Stopwatch();
-        
-        final int SIZE = 1000;
+
+        final int SIZE = 775;
 
         int[][] arr1 = new int[SIZE][SIZE];
         int[][] arr2 = new int[SIZE][SIZE];
@@ -468,12 +468,14 @@ public class MathMatrix {
 
         st.start();
         MathMatrix mat3 = mat1.add(mat2);
-        // st.stop();
+        st.stop();
 
-        // System.out.println("Runtime Once: " + st.time());
+        System.out.println("Runtime Once: " + st.time());
 
-        // st.start();
-        for (int i = 1; i < 1000; i++) {
+        st.start();
+
+        int NUM_REPETITION = 1000;
+        for (int i = 1; i < NUM_REPETITION; i++) {
             mat3 = mat1.add(mat2);
         }
         st.stop();

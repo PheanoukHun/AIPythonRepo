@@ -14,6 +14,15 @@ import java.util.Random;
 // TODO: Put your experiment results and answers to questions here.
 
 /**
+ * Experiment 1:
+ * - Part 2: It takes 0.014776633 Seconds to Run
+ * - Part 3: It takes 0.286520656 Seconds to Run
+ * - Part 4: It takes a 775 by 775 ran 1000 times for it to take 1 second to run.
+ *  - Part 5:  
+ *    
+ */
+
+/**
  * A class to run tests on the MathMatrix class
  */
 public class MathMatrixTester {
