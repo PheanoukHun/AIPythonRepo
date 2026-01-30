@@ -348,7 +348,7 @@ public class MathMatrix {
      */
     public String toString() {
 
-        String returnedString = "";
+        StringBuilder totalString = new StringBuilder();
 
         // Getting the Length of the Longest Int Per Column
         int numSpaces = 0;
@@ -362,21 +362,20 @@ public class MathMatrix {
         }
 
         numSpaces++;
+        String format = "%" + numSpaces + "d";
 
         // Building the String
         for (int row = 0; row < getNumRows(); row++) {
 
-            returnedString += "|";
-
+            totalString.append("|");
             for (int col = 0; col < getNumColumns(); col++) {
-                String format = "%" + numSpaces + "d";
-                returnedString += String.format(format, getVal(row, col));
+                totalString.append(String.format(format, getVal(row, col)));
             }
-            returnedString += "|\n";
+            totalString.append("|\n");
         }
 
         // Returned the String of the Matrix
-        return returnedString;
+        return totalString.toString();
     }
 
     /**
@@ -449,14 +448,14 @@ public class MathMatrix {
     }
 
     public static void experimentOne() {
-        
+
         // Step 1 and Step 4
         final int SIZE = 775;
-        
+
         // Step 1
         MathMatrix mat1 = createRandomMatrixes(SIZE);
         MathMatrix mat2 = createRandomMatrixes(SIZE);
-        
+
         // Step 2
         Stopwatch st = new Stopwatch();
 
@@ -465,8 +464,7 @@ public class MathMatrix {
         MathMatrix mat3 = mat1.add(mat2);
         st.stop();
 
-        System.out.println("\nStep 1-6:");
-        System.out.println("Runtime Once: " + st.time());
+        System.out.println("\nStep 1-6:\nRuntime Once: " + st.time());
 
         // Step 5
         st.start();
@@ -484,16 +482,22 @@ public class MathMatrix {
         mat2 = createRandomMatrixes(SIZE * 2);
 
         // Step 7
-        st = new Stopwatch();
 
+        st.start();
+        mat3 = mat1.add(mat2);
+        st.stop();
+
+        System.out.println("Step 7:\nRuntime Once: " + st.time() + "\n");
+
+        // Step 8
+        System.out.println("Step 8:\nDimensions: " + mat1.getNumRows() + " x " + mat1.getNumColumns());
         st.start();
         for (int i = 0; i < NUM_REPETITION; i++) {
             mat3 = mat1.add(mat2);
         }
         st.stop();
 
-        System.out.println("Step 7:");
-        System.out.println("Runtime x1000: " + st.time());
+        System.out.println("Runtime x1000: " + st.time() + "\n");
     }
 
     private static MathMatrix createRandomMatrixes(int size) {
