@@ -447,21 +447,28 @@ public class MathMatrix {
         return isRectangular;
     }
 
-    public static void experimentOne() {
+    /**
+     * This method runs a Experiment 2 of Assignment 1. From Steps 1-5.
+     * It checks how the how increasing the dimension of the Matrix increases the
+     * runtime of the experiment with respects to the add method.
+     */
+    public static void experimentOnePartOne() {
 
         // Step 1 and Step 4
         final int SIZE = 775;
+        final int NUM_REPETITION = 1000;
 
         // Step 1
         MathMatrix mat1 = createRandomMatrixes(SIZE);
         MathMatrix mat2 = createRandomMatrixes(SIZE);
+        MathMatrix mat3;
 
         // Step 2
         Stopwatch st = new Stopwatch();
 
         // Step 3
         st.start();
-        MathMatrix mat3 = mat1.add(mat2);
+        mat3 = mat1.add(mat2);
         st.stop();
 
         System.out.println("\nStep 1-6:\nRuntime Once: " + st.time());
@@ -469,17 +476,30 @@ public class MathMatrix {
         // Step 5
         st.start();
 
-        final int NUM_REPETITION = 1000;
-        for (int i = 1; i < NUM_REPETITION; i++) {
+        for (int i = 0; i < NUM_REPETITION; i++) {
             mat3 = mat1.add(mat2);
         }
         st.stop();
 
-        System.out.println("Runtime x999: " + st.time() + "\n");
+        System.out.println("Runtime x1000: " + st.time() + "\n");
+    }
+
+    /**
+     * This method runs a Experiment 2 of Assignment 1. From Steps 6-8.
+     * It checks how the how increasing the dimension of the Matrix increases the
+     * runtime of the experiment with respects to the add method.
+     */
+    public static void experimentOnePartTwo() {
+
+        // Constants and Variables
+        final int SIZE = 775;
+        final int NUM_REPETITION = 1000;
+        Stopwatch st = new Stopwatch();
 
         // Step 6
-        mat1 = createRandomMatrixes(SIZE * 2);
-        mat2 = createRandomMatrixes(SIZE * 2);
+        MathMatrix mat1 = createRandomMatrixes(SIZE * 2);
+        MathMatrix mat2 = createRandomMatrixes(SIZE * 2);
+        MathMatrix mat3;
 
         // Step 7
 
@@ -498,10 +518,168 @@ public class MathMatrix {
         st.stop();
 
         System.out.println("Runtime x1000: " + st.time() + "\n");
+
     }
 
+    /**
+     * This method runs a Experiment 2 of Assignment 1. For Steps 9.
+     * It checks how the how increasing the dimension of the Matrix increases the
+     * runtime of the experiment with respects to the add method.
+     */
+    public static void experimentOnePartThree() {
+
+        // Constants and Variables
+        final int SIZE = 775;
+        final int NUM_REPETITION = 1000;
+        Stopwatch st = new Stopwatch();
+
+        // Step 9
+        MathMatrix mat1 = createRandomMatrixes(SIZE * 4);
+        MathMatrix mat2 = createRandomMatrixes(SIZE * 4);
+        MathMatrix mat3;
+
+        st.start();
+        mat3 = mat1.add(mat2);
+        st.stop();
+
+        System.out.println("Step 9:");
+        System.out.println("Dimensions: " + mat1.getNumRows() + " x " + mat1.getNumColumns());
+        System.out.println("Runtime Once: " + st.time());
+
+        st.start();
+        for (int i = 0; i < NUM_REPETITION; i++) {
+            mat3 = mat1.add(mat2);
+        }
+        st.stop();
+
+        System.out.println("Runtime x100: " + st.time() + "\n");
+    }
+
+    /**
+     * This method runs a Experiment 2 of Assignment 2. From Steps 1-5.
+     * It checks how the how increasing the dimension of the Matrix increases the
+     * runtime of the experiment with respects to the multiplication method.
+     */
+    public static void experimentTwoPartOne() {
+
+        // Step 1 and Step 4
+        final int SIZE = 260;
+        final int NUM_REPETITION = 100;
+
+        // Step 1
+        MathMatrix mat1 = createRandomMatrixes(SIZE);
+        MathMatrix mat2 = createRandomMatrixes(SIZE);
+        MathMatrix mat3;
+
+        // Step 2
+        Stopwatch st = new Stopwatch();
+
+        // Step 3
+        st.start();
+        mat3 = mat1.multiply(mat2);
+        st.stop();
+
+        System.out.println("\nStep 1-6:\nRuntime Once: " + st.time());
+
+        // Step 5
+        st.start();
+        for (int i = 0; i < NUM_REPETITION; i++) {
+            mat3 = mat1.multiply(mat2);
+        }
+        st.stop();
+
+        System.out.println("Runtime x100: " + st.time() + "\n");
+    }
+
+    /**
+     * This method runs a Experiment 2 of Assignment 2. From Steps 6-9.
+     * It checks how the how increasing the dimension of the Matrix increases the
+     * runtime of the experiment with respects to the multiplication method.
+     */
+    public static void experimentTwoPartTwo() {
+
+        // Constants and Variables
+        Stopwatch st = new Stopwatch();
+        final int SIZE = 260;
+        final int NUM_REPETITION = 100;
+
+        // Step 6
+        MathMatrix mat1 = createRandomMatrixes(SIZE * 2);
+        MathMatrix mat2 = createRandomMatrixes(SIZE * 2);
+        MathMatrix mat3;
+
+        // Step 7
+
+        st.start();
+        mat3 = mat1.multiply(mat2);
+        st.stop();
+
+        System.out.println("Step 7:\nRuntime Once: " + st.time() + "\n");
+
+        // Step 8
+        System.out.println("Step 8:\nDimensions: " + mat1.getNumRows() + " x " + mat1.getNumColumns());
+        st.start();
+        for (int i = 0; i < NUM_REPETITION; i++) {
+            mat3 = mat1.multiply(mat2);
+        }
+        st.stop();
+
+        System.out.println("Runtime x100: " + st.time() + "\n");
+    }
+
+    /**
+     * This method runs a Experiment 2 of Assignment 2. From Steps 6-9.
+     * It checks how the how increasing the dimension of the Matrix increases the
+     * runtime of the experiment with respects to the multiplication method.
+     */
+    public static void experimentTwoPartThree() {
+        // Constants and Variables
+        Stopwatch st = new Stopwatch();
+        final int SIZE = 260;
+        final int NUM_REPETITION = 100;
+
+        // Step 6
+        MathMatrix mat1 = createRandomMatrixes(SIZE * 2);
+        MathMatrix mat2 = createRandomMatrixes(SIZE * 2);
+        MathMatrix mat3;
+
+        // Step 9
+        mat1 = createRandomMatrixes(SIZE * 4);
+        mat2 = createRandomMatrixes(SIZE * 4);
+
+        st.start();
+        mat3 = mat1.multiply(mat2);
+        st.stop();
+
+        System.out.println("Step 9:");
+        System.out.println("Dimensions: " + mat1.getNumRows() + " x " + mat1.getNumColumns());
+        System.out.println("Runtime Once: " + st.time());
+
+        st.start();
+        for (int i = 0; i < NUM_REPETITION; i++) {
+            mat3 = mat1.multiply(mat2);
+        }
+        st.stop();
+
+        System.out.println("Runtime x100: " + st.time() + "\n");
+    }
+
+    /**
+     * Creates a Random MathMatrix Operations to filled with Random Values.
+     * 
+     * @param size - The Size of the Square Matrix and the size > 0
+     * @return - Returns the Random Valued MathMatrix Object with the dimension
+     *         size x size.
+     */
     private static MathMatrix createRandomMatrixes(int size) {
 
+        // Checking Preconditions
+        if (size <= 0) {
+            throw new IllegalArgumentException("Violation of precondition: "
+                    + "size must be greater than 0.");
+        }
+
+        // Creating the Object and Returns it
         int[][] arr = new int[size][size];
 
         for (int row = 0; row < size; row++) {
