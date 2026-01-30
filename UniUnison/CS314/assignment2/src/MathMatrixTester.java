@@ -282,18 +282,57 @@ public class MathMatrixTester {
         }
 
         // Testcase 1 For Multiply
+        // 1x4 and 4x1 creating a 1x1 New Matrix
         a = new int[][] {
-            {1, 2, 3, 4}
-        }
-
-        b = new int[][] {
-            {1}, {2}, {3}, {4}
+                { 1, 2, 3, 4 }
         };
 
-        expected = new int[][] {{30}};
+        b = new int[][] {
+                { 1 }, { 2 }, { 3 }, { 4 }
+        };
+
+        expected = new int[][] { { 30 } };
 
         m1 = new MathMatrix(a);
         m2 = new MathMatrix(b);
-        resultMat 
+        resultMat = m1.multiply(m2);
+
+        System.out.println("\nMultiply Test 1.");
+        if (resultMat.getVal(0, 0) == expected[0][0]) {
+            System.out.println("\tTest 1 (Multiply) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Testcase 2 For Multiply
+        // 4x1 and 1x4 creating a 4x4 New Matrix
+        a = new int[][] {
+                { 1, 2, 3, 4 }
+        };
+
+        b = new int[][] {
+                { 1 }, { 2 }, { 3 }, { 4 }
+        };
+
+        expected = new int[][] { { 1, 2, 3, 4 },
+                { 2, 4, 6, 8 },
+                { 3, 6, 9, 12 },
+                { 4, 8, 12, 16 } };
+
+        m1 = new MathMatrix(a);
+        m2 = new MathMatrix(b);
+        expectedMathMatrix = new MathMatrix(expected);
+        resultMat = m2.multiply(m1);
+
+        System.out.println("\nMultiply Test 2.");
+        if (expectedMathMatrix.equals(resultMat)) {
+            System.out.println("\tTest 2 (Multiply) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Testcase 3 For Multiply
+        // Multiplying a Square Matrix by Itself,
+        
     }
 }
