@@ -39,10 +39,12 @@ public class MathMatrix {
                     + " lenght and a rectangular matrix.");
         }
 
+        // Initializing the Variables
         values = new int[mat.length][mat[0].length];
         numRows = mat.length;
         numCols = mat[0].length;
 
+        // Setting the Variables
         for (int row = 0; row < getNumRows(); row++) {
             for (int col = 0; col < getNumColumns(); col++) {
                 values[row][col] = mat[row][col];
@@ -378,11 +380,6 @@ public class MathMatrix {
         if (getNumRows() != getNumColumns()) {
             throw new IllegalArgumentException("Violation of precondition: "
                     + "the number of rows must equal to the number of columns");
-        }
-
-        // Returns if it is a 1x1 Matrix
-        if (getNumRows() == 1) {
-            return true;
         }
 
         // Checking all Items Below the Diagonals
