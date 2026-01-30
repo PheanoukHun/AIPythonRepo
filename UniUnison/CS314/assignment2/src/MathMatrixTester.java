@@ -223,7 +223,7 @@ public class MathMatrixTester {
         // }
         // st.stop();
 
-        System.out.println("Runtime x100: " + st.time() + "\n");
+        // System.out.println("Runtime x100: " + st.time() + "\n");
 
         // Testcases Code
         int size = 1;
