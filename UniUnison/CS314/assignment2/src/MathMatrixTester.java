@@ -37,6 +37,7 @@
  * Runtime x100: 1.057259393
  * 
  * Step 7:
+ * Dimensions: 260 x 260
  * Runtime Once: 0.144385615
  * 
  * Step 8:
@@ -78,6 +79,153 @@ public class MathMatrixTester {
      */
     public static void main(String[] args) {
 
+        // Experiment Code
+
+        // Experiment 1
+        // Step 1 and Step 4
+        // final int SIZE = 775;
+        // final int NUM_REPETITION = 1000;
+
+        // // Step 1
+        // MathMatrix mat1 = createRandomMatrices(SIZE);
+        // MathMatrix mat2 = createRandomMatrices(SIZE);
+        // MathMatrix mat3;
+
+        // // Step 2
+        // Stopwatch st = new Stopwatch();
+
+        // // Step 3
+        // st.start();
+        // mat3 = mat1.add(mat2);
+        // st.stop();
+
+        // System.out.println("\nStep 1-6:\nRuntime Once: " + st.time());
+
+        // // Step 5
+        // st.start();
+
+        // for (int i = 0; i < NUM_REPETITION; i++) {
+        // mat3 = mat1.add(mat2);
+        // }
+        // st.stop();
+
+        // System.out.println("Runtime x1000: " + st.time() + "\n");
+
+        // // Step 6
+        // mat1 = createRandomMatrices(SIZE * 2);
+        // mat2 = createRandomMatrices(SIZE * 2);
+
+        // // Step 7
+
+        // st.start();
+        // mat3 = mat1.add(mat2);
+        // st.stop();
+
+        // System.out.println("Step 7:\nRuntime Once: " + st.time() + "\n");
+
+        // // Step 8
+        // System.out.println("Step 8:\nDimensions: " + mat1.getNumRows() + " x " + mat1.getNumColumns());
+        // st.start();
+        // for (int i = 0; i < NUM_REPETITION; i++) {
+        //     mat3 = mat1.add(mat2);
+        // }
+        // st.stop();
+
+        // System.out.println("Runtime x1000: " + st.time() + "\n");
+
+        // // Step 9
+        // mat1 = createRandomMatrices(SIZE * 4);
+        // mat2 = createRandomMatrices(SIZE * 4);
+
+        // st.start();
+        // mat3 = mat1.add(mat2);
+        // st.stop();
+
+        // System.out.println("Step 9:");
+        // System.out.println("Dimensions: " + mat1.getNumRows() + " x " + mat1.getNumColumns());
+        // System.out.println("Runtime Once: " + st.time());
+
+        // st.start();
+        // for (int i = 0; i < NUM_REPETITION; i++) {
+        //     mat3 = mat1.add(mat2);
+        // }
+        // st.stop();
+
+        // System.out.println("Runtime x100: " + st.time() + "\n");
+
+        // Experiment 2
+        // // Step 1 and Step 4
+        // final int SIZE = 260;
+        // final int NUM_REPETITION = 100;
+
+        // // Step 1
+        // MathMatrix mat1 = createRandomMatrices(SIZE);
+        // MathMatrix mat2 = createRandomMatrices(SIZE);
+        // MathMatrix mat3;
+
+        // // Step 2
+        // Stopwatch st = new Stopwatch();
+
+        // // Step 3
+        // st.start();
+        // mat3 = mat1.multiply(mat2);
+        // st.stop();
+
+        // System.out.println("\nStep 1-6:\nRuntime Once: " + st.time());
+
+        // // Step 5
+        // st.start();
+        // for (int i = 0; i < NUM_REPETITION; i++) {
+        //     mat3 = mat1.multiply(mat2);
+        // }
+        // st.stop();
+
+        // System.out.println("Runtime x100: " + st.time() + "\n");
+
+        // // Step 6
+        // mat1 = createRandomMatrices(SIZE * 2);
+        // mat2 = createRandomMatrices(SIZE * 2);
+
+
+        // // Step 7
+
+        // st.start();
+        // mat3 = mat1.multiply(mat2);
+        // st.stop();
+
+        // System.out.println("Step 7:\nRuntime Once: " + st.time() + "\n");
+
+        // // Step 8
+        // System.out.println("Step 8:\nDimensions: " + mat1.getNumRows() + " x " + mat1.getNumColumns());
+        // st.start();
+        // for (int i = 0; i < NUM_REPETITION; i++) {
+        //     mat3 = mat1.multiply(mat2);
+        // }
+        // st.stop();
+
+        // System.out.println("Runtime x100: " + st.time() + "\n");
+
+        // // Step 9
+        // mat1 = createRandomMatrices(SIZE * 4);
+        // mat2 = createRandomMatrices(SIZE * 4);
+
+        // st.start();
+        // mat3 = mat1.multiply(mat2);
+        // st.stop();
+
+        // System.out.println("Step 9:");
+        // System.out.println("Dimensions: " + mat1.getNumRows() + " x " + mat1.getNumColumns());
+        // System.out.println("Runtime Once: " + st.time());
+
+        // st.start();
+        // for (int i = 0; i < NUM_REPETITION; i++) {
+        //     mat3 = mat1.multiply(mat2);
+        // }
+        // st.stop();
+
+        System.out.println("Runtime x100: " + st.time() + "\n");
+
+        // Testcases Code
         int size = 1;
 
         System.out.println("\nMy Testcases:");
@@ -517,5 +665,32 @@ public class MathMatrixTester {
         } else {
             System.out.println("*************** TEST FAILED ***************");
         }
+    }
+
+    /**
+     * Creates a Random MathMatrix Operations to filled with Random Values.
+     * 
+     * @param size - The Size of the Square Matrix and the size > 0
+     * @return - Returns the Random Valued MathMatrix Object with the dimension
+     *         size x size.
+     */
+    public static MathMatrix createRandomMatrices(int size) {
+
+        // Checking Preconditions
+        if (size <= 0) {
+            throw new IllegalArgumentException("Violation of precondition: "
+                    + "size must be greater than 0.");
+        }
+
+        // Creating the Object and Returns it
+        int[][] arr = new int[size][size];
+
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                arr[row][col] = (int) (Math.random() * size);
+            }
+        }
+
+        return new MathMatrix(arr);
     }
 }
