@@ -7,6 +7,8 @@
  * Name: Pheanouk Hun
  * Email address: ph23434@my.utexas.edu
  * UTEID: ph23434
+ * 
+ * Description: This Class Tests the MathMatrix Class.
  */
 
 /*
@@ -297,7 +299,7 @@ public class MathMatrixTester {
         m2 = new MathMatrix(b);
         resultMat = m1.multiply(m2);
 
-        System.out.println("\nMultiply Test 1.");
+        System.out.println("\nMultiply Test 1:");
         if (resultMat.getVal(0, 0) == expected[0][0]) {
             System.out.println("\tTest 1 (Multiply) Has Passed.");
         } else {
@@ -314,7 +316,8 @@ public class MathMatrixTester {
                 { 1 }, { 2 }, { 3 }, { 4 }
         };
 
-        expected = new int[][] { { 1, 2, 3, 4 },
+        expected = new int[][] {
+                { 1, 2, 3, 4 },
                 { 2, 4, 6, 8 },
                 { 3, 6, 9, 12 },
                 { 4, 8, 12, 16 } };
@@ -324,7 +327,7 @@ public class MathMatrixTester {
         expectedMathMatrix = new MathMatrix(expected);
         resultMat = m2.multiply(m1);
 
-        System.out.println("\nMultiply Test 2.");
+        System.out.println("\nMultiply Test 2:");
         if (expectedMathMatrix.equals(resultMat)) {
             System.out.println("\tTest 2 (Multiply) Has Passed.");
         } else {
@@ -333,6 +336,186 @@ public class MathMatrixTester {
 
         // Testcase 3 For Multiply
         // Multiplying a Square Matrix by Itself,
-        
+        a = new int[][] {
+                { 1, 2, 3 },
+                { 4, 5, 6 },
+                { 7, 8, 9 }
+        };
+
+        expected = new int[][] {
+                { 30, 36, 42 },
+                { 66, 81, 96 },
+                { 102, 126, 150 }
+        };
+
+        m1 = new MathMatrix(a);
+        expectedMathMatrix = new MathMatrix(expected);
+        resultMat = m1.multiply(m1);
+
+        System.out.println("\nMultiply Test 3:");
+        if (expectedMathMatrix.equals(resultMat)) {
+            System.out.println("\tTest 3 (Multiply) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Testcase 1 For getScaledMatrix
+        // Multiply By 0
+        a = new int[][] {
+                { 1_000_000, 1_000_000, 1_000_000 },
+                { 1_000_000, 1_000_000, 1_000_000 },
+                { 1_000_000, 1_000_000, 1_000_000 }
+        };
+
+        expected = new int[][] {
+                { 0, 0, 0 },
+                { 0, 0, 0 },
+                { 0, 0, 0 }
+        };
+
+        m1 = new MathMatrix(a);
+        expectedMathMatrix = new MathMatrix(expected);
+        resultMat = m1.getScaledMatrix(0);
+
+        System.out.println("\nGetScaledMatrix Test 1:");
+        if (expectedMathMatrix.equals(resultMat)) {
+            System.out.println("\tTest 1 (GetScaledMatrix) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Testcase 2 For getScaledMatrix
+        // Multiply By Really Negative Number
+
+        expected = new int[][] {
+                { -2_000_000_000, -2_000_000_000, -2_000_000_000 },
+                { -2_000_000_000, -2_000_000_000, -2_000_000_000 },
+                { -2_000_000_000, -2_000_000_000, -2_000_000_000 }
+        };
+
+        expectedMathMatrix = new MathMatrix(expected);
+        resultMat = m1.getScaledMatrix(-2000);
+
+        System.out.println("\nGetScaledMatrix Test 2:");
+        if (expectedMathMatrix.equals(resultMat)) {
+            System.out.println("\tTest 2 (GetScaledMatrix) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Testcase 1 For getTranspose
+        // 1x100_000_000 Size
+
+        size = 1_000_000;
+        a = new int[1][size];
+        m1 = new MathMatrix(a);
+        expectedMathMatrix = m1.getTranspose();
+
+        System.out.println("\ngetTranspose Test 1:");
+        if (expectedMathMatrix.getNumRows() == size) {
+            System.out.println("\tTest 1 (getTranspose) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Testcase 2 For getTranspose
+        // 1x1 Size
+
+        a = new int[][] { { 1 } };
+        m1 = new MathMatrix(a);
+        expectedMathMatrix = m1.getTranspose();
+
+        System.out.println("\ngetTranspose Test 2:");
+        if (expectedMathMatrix.equals(m1)) {
+            System.out.println("\tTest 2 (getTranspose) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Testcase 1 For Equals Method
+        // Same Matrix
+
+        System.out.println("\nEquals Test 1:");
+        if (randMat.equals(randMat)) {
+            System.out.println("\tTest 1 (Equals) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Testcase 2 For Equals Method
+        // Matrixes of Different Sizes
+        System.out.println("\nEquals Test 2:");
+        if (!randMat.equals(m1)) {
+            System.out.println("\tTest 2 (Equals) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Testcase 1 For toString
+
+        a = new int[1][1];
+        m1 = new MathMatrix(a);
+        int strLen = 5;
+
+        System.out.println("\ntoString Test 1:");
+        if (m1.toString().length() == strLen) {
+            System.out.println("\tTest 1 (toString) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Testcase 2 For toString
+
+        a = new int[100][100];
+        m1 = new MathMatrix(a);
+        strLen = 20_300;
+
+        System.out.println("\ntoString Test 2:");
+        if (m1.toString().length() == strLen) {
+            System.out.println("\tTest 2 (toString) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Testcase 2 For toString
+
+        // Testcase 1 For isUpperTriangle
+        a = new int[][] {
+                { 1, 2, 3, 4 },
+                { 0, 2, 3, 4 },
+                { 0, 0, 3, 4 },
+                { 0, 0, 1, 4 }
+        };
+
+        m1 = new MathMatrix(a);
+        System.out.println("\nisUpperTriangle Test 1:");
+        if (!m1.isUpperTriangular()) {
+            System.out.println("\tTest 1 (isUpperTriangle) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Testcase 2 For isUpperTriangle
+
+        size = 5_000;
+
+        a = new int[size][size];
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                if (col < size) {
+                    a[row][col] = 0;
+                } else {
+                    a[row][col] = 1;
+                }
+            }
+        }
+
+        m1 = new MathMatrix(a);
+        System.out.println("\nisUpperTriangle Test 2:");
+        if (m1.isUpperTriangular()) {
+            System.out.println("\tTest 2 (isUpperTriangle) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
     }
 }

@@ -7,6 +7,9 @@
  * Name: Pheanouk Hun
  * Email address: ph23434
  * UTEID: ph23434
+ * 
+ * Description: The Data Structure Represents the Math Matrix and has a list of operations that
+ * could be used on normal matrixes
  */
 
 import java.util.Arrays;
@@ -52,15 +55,13 @@ public class MathMatrix {
      * Create a MathMatrix of the specified size with all cells set to the
      * intialValue.
      *
-     * pre: numRows > 0, numCols > 0
-     *
-     * post: create a matrix with numRows rows and numCols columns. All elements
-     * of this matrix equal initialVal. In other words after this method has
-     * been called getVal(r,c) = initialVal for all valid r and c.
-     *
      * @param numRows    numRows > 0
      * @param numCols    numCols > 0
-     * @param initialVal all cells of this Matrix are set to initialVal
+     * @param initialVal all cells of this Matrix are set to initialVal. Create a
+     *                   matrix with numRows rows and numCols columns. All elements
+     *                   of this matrix equal initialVal. In other words after this
+     *                   method has been called getVal(r,c) = initialVal for all
+     *                   valid r and c.
      */
     public MathMatrix(int numRows, int numCols, int initialVal) {
 
@@ -125,17 +126,14 @@ public class MathMatrix {
     /**
      * Implements MathMatrix addition, (this MathMatrix) + rightHandSide.
      *
-     * pre: rightHandSide != null, rightHandSide.getNumRows() = getNumRows(),
-     * rightHandSide.getNumColumns() = getNumColumns()
-     *
-     * post: This method does not alter the calling object or rightHandSide
-     *
-     * @param rightHandSide rightHandSide.getNumRows() = getNumRows(),
+     * @param rightHandSide rightHandSide != null,
+     *                      rightHandSide.getNumRows() = getNumRows(),
      *                      rightHandSide.getNumColumns() = getNumColumns()
      * @return a new MathMatrix that is the result of adding this Matrix to
      *         rightHandSide. The number of rows in the returned Matrix is equal to
      *         the number of rows in this MathMatrix. The number of columns in the
      *         returned Matrix is equal to the number of columns in this MathMatrix.
+     *         This method does not alter the calling object or rightHandSide
      */
     public MathMatrix add(MathMatrix rightHandSide) {
 
@@ -164,18 +162,15 @@ public class MathMatrix {
     /**
      * Implements MathMatrix subtraction, (this MathMatrix) - rightHandSide.
      *
-     * pre: rightHandSide != null, rightHandSide.getNumRows() = getNumRows(),
-     * rightHandSide.getNumColumns() = getNumColumns()
-     *
-     * post: This method does not alter the calling object or rightHandSide
-     *
-     * @param rightHandSide rightHandSide.getNumRows() = getNumRows(),
+     * @param rightHandSide rightHandSide != null,
+     *                      rightHandSide.getNumRows() = getNumRows(),
      *                      rightHandSide.getNumColumns() = getNumColumns()
      * @return a new MathMatrix that is the result of subtracting rightHandSide
      *         from this MathMatrix. The number of rows in the returned MathMatrix
      *         is equal to the number of rows in this MathMatrix.The number of
      *         columns in the returned MathMatrix is equal to the number of columns
-     *         in this MathMatrix.
+     *         in this MathMatrix. This method does not alter the calling object or
+     *         rightHandSide
      */
     public MathMatrix subtract(MathMatrix rightHandSide) {
 
@@ -204,16 +199,14 @@ public class MathMatrix {
     /**
      * Implements matrix multiplication, (this MathMatrix) * rightHandSide.
      *
-     * pre: rightHandSide != null, rightHandSide.getNumRows() = getNumColumns()
-     *
-     * post: This method should not alter the calling object or rightHandSide
-     *
-     * @param rightHandSide rightHandSide.getNumRows() = getNumColumns()
+     * @param rightHandSide rightHandSide != null,
+     *                      rightHandSide.getNumRows() = getNumColumns()
      * @return a new MathMatrix that is the result of multiplying this
      *         MathMatrix and rightHandSide. The number of rows in the returned
      *         MathMatrix is equal to the number of rows in this MathMatrix. The
      *         number of columns in the returned MathMatrix is equal to the number
-     *         of columns in rightHandSide.
+     *         of columns in rightHandSide.This method should not alter the calling
+     *         object or rightHandSide
      */
     public MathMatrix multiply(MathMatrix rightHandSide) {
 
@@ -242,23 +235,18 @@ public class MathMatrix {
         }
 
         // Returing the New Matriz
-        return (new MathMatrix(results));
+        return new MathMatrix(results);
     }
 
     /**
      * Create and return a new Matrix that is a copy of this matrix, but with
      * all values multiplied by a scale value.
      *
-     * pre: none
-     *
-     * post: returns a new Matrix with all elements in this matrix multiplied by
-     * factor. In other words after this method has been called
-     * returned_matrix.getVal(r,c) = original_matrix.getVal(r, c) * factor for
-     * all valid r and c.
-     *
      * @param factor the value to multiply every cell in this Matrix by.
-     * @return a MathMatrix that is a copy of this MathMatrix, but with all
-     *         values in the result multiplied by factor.
+     * @return returns a new Matrix with all elements in this matrix multiplied by
+     *         factor. In other words after this method has been called
+     *         returned_matrix.getVal(r,c) = original_matrix.getVal(r, c) * factor
+     *         for all valid r and c.
      */
     public MathMatrix getScaledMatrix(int factor) {
 
@@ -266,18 +254,16 @@ public class MathMatrix {
         int[][] results = new int[getNumRows()][getNumColumns()];
         for (int row = 0; row < getNumRows(); row++) {
             for (int col = 0; col < getNumColumns(); col++) {
-                results[row][col] = this.getVal(row, col) * factor;
+                results[row][col] = getVal(row, col) * factor;
             }
         }
 
         // Returning the New Matrix
-        return (new MathMatrix(results));
+        return new MathMatrix(results);
     }
 
     /**
      * Get a transpose of this MathMatrix, this Matrix is not changed.
-     *
-     * pre: none
      *
      * @return a transpose of this MathMatrix
      */
@@ -292,7 +278,7 @@ public class MathMatrix {
         }
 
         // Returning the New Matrix
-        return (new MathMatrix(results));
+        return new MathMatrix(results);
     }
 
     /**
@@ -323,7 +309,7 @@ public class MathMatrix {
         // and/or call MathMatrix methods on otherMathMatrix.
 
         // Checks to see if the two matrixes have the same dimensions
-        if (otherMathMatrix.getNumRows() != getNumRows() &&
+        if (otherMathMatrix.getNumRows() != getNumRows() ||
                 otherMathMatrix.getNumColumns() != getNumColumns()) {
             return false;
         }
@@ -402,7 +388,7 @@ public class MathMatrix {
         // Checking all Items Below the Diagonals
         for (int row = 0; row < getNumRows(); row++) {
             for (int col = 0; col < row; col++) {
-                if (values[row][col] != 0) {
+                if (getVal(row, col) != 0) {
                     return false;
                 }
             }
@@ -459,8 +445,8 @@ public class MathMatrix {
         final int NUM_REPETITION = 1000;
 
         // Step 1
-        MathMatrix mat1 = createRandomMatrixes(SIZE);
-        MathMatrix mat2 = createRandomMatrixes(SIZE);
+        MathMatrix mat1 = createRandomMatrices(SIZE);
+        MathMatrix mat2 = createRandomMatrices(SIZE);
         MathMatrix mat3;
 
         // Step 2
@@ -497,8 +483,8 @@ public class MathMatrix {
         Stopwatch st = new Stopwatch();
 
         // Step 6
-        MathMatrix mat1 = createRandomMatrixes(SIZE * 2);
-        MathMatrix mat2 = createRandomMatrixes(SIZE * 2);
+        MathMatrix mat1 = createRandomMatrices(SIZE * 2);
+        MathMatrix mat2 = createRandomMatrices(SIZE * 2);
         MathMatrix mat3;
 
         // Step 7
@@ -534,8 +520,8 @@ public class MathMatrix {
         Stopwatch st = new Stopwatch();
 
         // Step 9
-        MathMatrix mat1 = createRandomMatrixes(SIZE * 4);
-        MathMatrix mat2 = createRandomMatrixes(SIZE * 4);
+        MathMatrix mat1 = createRandomMatrices(SIZE * 4);
+        MathMatrix mat2 = createRandomMatrices(SIZE * 4);
         MathMatrix mat3;
 
         st.start();
@@ -567,8 +553,8 @@ public class MathMatrix {
         final int NUM_REPETITION = 100;
 
         // Step 1
-        MathMatrix mat1 = createRandomMatrixes(SIZE);
-        MathMatrix mat2 = createRandomMatrixes(SIZE);
+        MathMatrix mat1 = createRandomMatrices(SIZE);
+        MathMatrix mat2 = createRandomMatrices(SIZE);
         MathMatrix mat3;
 
         // Step 2
@@ -604,8 +590,8 @@ public class MathMatrix {
         final int NUM_REPETITION = 100;
 
         // Step 6
-        MathMatrix mat1 = createRandomMatrixes(SIZE * 2);
-        MathMatrix mat2 = createRandomMatrixes(SIZE * 2);
+        MathMatrix mat1 = createRandomMatrices(SIZE * 2);
+        MathMatrix mat2 = createRandomMatrices(SIZE * 2);
         MathMatrix mat3;
 
         // Step 7
@@ -639,13 +625,13 @@ public class MathMatrix {
         final int NUM_REPETITION = 100;
 
         // Step 6
-        MathMatrix mat1 = createRandomMatrixes(SIZE * 2);
-        MathMatrix mat2 = createRandomMatrixes(SIZE * 2);
+        MathMatrix mat1 = createRandomMatrices(SIZE * 2);
+        MathMatrix mat2 = createRandomMatrices(SIZE * 2);
         MathMatrix mat3;
 
         // Step 9
-        mat1 = createRandomMatrixes(SIZE * 4);
-        mat2 = createRandomMatrixes(SIZE * 4);
+        mat1 = createRandomMatrices(SIZE * 4);
+        mat2 = createRandomMatrices(SIZE * 4);
 
         st.start();
         mat3 = mat1.multiply(mat2);
@@ -671,7 +657,7 @@ public class MathMatrix {
      * @return - Returns the Random Valued MathMatrix Object with the dimension
      *         size x size.
      */
-    private static MathMatrix createRandomMatrixes(int size) {
+    private static MathMatrix createRandomMatrices(int size) {
 
         // Checking Preconditions
         if (size <= 0) {
