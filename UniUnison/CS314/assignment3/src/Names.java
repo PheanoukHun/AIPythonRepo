@@ -19,7 +19,7 @@ import java.util.Scanner;
  */
 public class Names {
 
-    private ArrayList<NameRecord> nameRecords;
+    private ArrayList<NameRecord> names;
 
     /**
      * Construct a new Names object based on the data source the Scanner sc is
@@ -41,7 +41,7 @@ public class Names {
             String rawRecords = sc.nextLine();
             NameRecord currName = new NameRecord(baseYear, numDecades, rawRecords);
             if (currName.getNumDecades() == numDecades && currName.getName().equals(emptyLine)) {
-                nameRecords.add(currName);
+                names.add(currName);
             }
         }
     }

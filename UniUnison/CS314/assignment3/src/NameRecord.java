@@ -12,12 +12,13 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class NameRecord {
+public class NameRecord implements Comparable<NameRecord> {
 
     private String name;
     private int baseYear;
     private ArrayList<Integer> rankings;
     private int numRankedYears;
+    private int numDecades;
 
     public NameRecord(int baseYear, int numRankedYears, String rawData) {
 
@@ -27,12 +28,14 @@ public class NameRecord {
 
         Scanner scLine = new Scanner(rawData);
         name = scLine.next();
-        
+
         while (scLine.hasNextInt()) {
             rankings.add(scLine.nextInt());
+
         }
 
         scLine.close();
+        numDecades = rankings.size();
     }
 
     public String getName() {
@@ -44,10 +47,17 @@ public class NameRecord {
     }
 
     public int getNumDecades() {
-        return rankings.size();
+        return numDecades;
     }
 
     public int getSpecificDecadeRank(int decade) {
+
+        // Checking Preconditions
+        if (decade < 0 || decade >= getNumDecades()) {
+            throw new IllegalArgumentException("The decade parameter must be greater "
+            +"than or equal to 0 and less than getNumDecades()");
+        }
+
         return rankings.get(decade);
     }
 
@@ -61,5 +71,9 @@ public class NameRecord {
             results.append((baseYear + (i * 10)) + ": " + getSpecificDecadeRank(i) + "\n");
         }
         return results.toString();
+    }
+
+    public int compareTo(NameRecord other) {
+        return name.compareTo(other.getName());
     }
 }
