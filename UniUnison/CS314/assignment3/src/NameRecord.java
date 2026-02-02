@@ -17,6 +17,14 @@ public class NameRecord {
     private String name;
     private int baseYear;
     private ArrayList<Integer> rankings;
+    private int numRankedYears;
+
+    public NameRecord(String name, int baseYear, int numRankedYears, ArrayList<Integer> rankings) {
+        this.name = name;
+        this.baseYear = baseYear;
+        this.rankings = rankings;
+        this.numRankedYears = numRankedYears;
+    }
 
     public String getName() {
         return name;
@@ -28,5 +36,23 @@ public class NameRecord {
 
     public int getNumDecades() {
         return rankings.size();
+    }
+
+    public int getSpecificDecadeRank(int decade) {
+        return rankings.get(decade);
+    }
+
+    public int getNumRankedYears() {
+        return numRankedYears;
+    }
+
+
+
+    public String toString() {
+        StringBuilder results = new StringBuilder(name + "\n");
+        for (int i = 0; i < getNumDecades(); i++) {
+            results.append((baseYear + (i * 10)) + ": " + getSpecificDecadeRank(i) + "\n");
+        }
+        return results.toString();
     }
 }

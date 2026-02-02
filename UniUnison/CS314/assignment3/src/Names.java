@@ -19,8 +19,7 @@ import java.util.Scanner;
  */
 public class Names {
 
-    private int baseYear;
-    private int numDecades;
+    private ArrayList<NameRecord> nameRecords;
 
     /**
      * Construct a new Names object based on the data source the Scanner sc is
@@ -34,18 +33,40 @@ public class Names {
      *           and positioned at the start of the data source.
      */
     public Names(Scanner sc) {
-        baseYear = sc.nextInt();
-        numDecades = sc.nextInt();
+        
+        String emptyLine = "\n";
+        
+        int baseYear = sc.nextInt();
+        int numDecades = sc.nextInt();
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            Scanner scLine = new Scanner(line);
+
+            String name = scLine.next();
+            ArrayList<Integer> rankings = new ArrayList<>();
+
+            while (scLine.hasNextInt() && !name.equals(emptyLine)) {
+                rankings.add(scLine.nextInt());
+            }
+
+            scLine.close();
+
+            if (rankings.size() == numDecades) {
+                NameRecord currName = new NameRecord(name, baseYear, numDecades, rankings);
+                nameRecords.add(currName);
+            }
+        }
     }
 
     /**
      * Returns an ArrayList of NameRecord objects that contain a given
-     * substring, ignoring case.  The names must be in sorted order based on
+     * substring, ignoring case. The names must be in sorted order based on
      * the names of the NameRecords.
      *
      * @param partialName != null, partialName.length() > 0
      * @return an ArrayList of NameRecords whose names contains partialName. If
-     * there are no NameRecords that meet this criteria, returns an empty list.
+     *         there are no NameRecords that meet this criteria, returns an empty
+     *         list.
      */
     public ArrayList<NameRecord> getMatches(String partialName) {
 
@@ -53,12 +74,13 @@ public class Names {
 
     /**
      * Returns an ArrayList of Strings of names that have been ranked in the
-     * top 1000 or better for every decade. The Strings  must be in sorted
+     * top 1000 or better for every decade. The Strings must be in sorted
      * order based on the name of the NameRecords.
      *
      * @return A list of the names that have been ranked in the top 1000 or
-     * better in every decade. The list is in sorted ascending order. If there
-     * are no NameRecords that meet this criteria, returns an empty list.
+     *         better in every decade. The list is in sorted ascending order. If
+     *         there
+     *         are no NameRecords that meet this criteria, returns an empty list.
      */
     public ArrayList<String> rankedEveryDecade() {
 
@@ -70,8 +92,10 @@ public class Names {
      * order based on the name of the NameRecords.
      *
      * @return A list of the names that have been ranked in the top 1000 or
-     * better in exactly one decade. The list is in sorted ascending order. If
-     * there are no NameRecords that meet this criteria, returns an empty list.
+     *         better in exactly one decade. The list is in sorted ascending order.
+     *         If
+     *         there are no NameRecords that meet this criteria, returns an empty
+     *         list.
      */
     public ArrayList<String> rankedOnlyOneDecade() {
 
@@ -83,8 +107,8 @@ public class Names {
      * name of the NameRecords.
      *
      * @return A list of the names that have been getting more popular in every
-     * decade. The list is in sorted ascending order. If there are no
-     * NameRecords that meet this criteria, returns an empty list.
+     *         decade. The list is in sorted ascending order. If there are no
+     *         NameRecords that meet this criteria, returns an empty list.
      */
     public ArrayList<String> alwaysMorePopular() {
 
@@ -92,12 +116,12 @@ public class Names {
 
     /**
      * Returns an ArrayList of Strings of names that have been getting less
-     * popular every decade. The Strings  must be in sorted order based on the
+     * popular every decade. The Strings must be in sorted order based on the
      * name of the NameRecords.
      *
      * @return A list of the names that have been getting less popular in every
-     * decade. The list is in sorted ascending order. If there are no
-     * NameRecords that meet this criteria, returns an empty list.
+     *         decade. The list is in sorted ascending order. If there are no
+     *         NameRecords that meet this criteria, returns an empty list.
      */
     public ArrayList<String> alwaysLessPopular() {
 
@@ -111,7 +135,7 @@ public class Names {
      *
      * @param name The name to search for.
      * @return The name record with the given name or null if no NameRecord in
-     * this Names object contains the given name.
+     *         this Names object contains the given name.
      */
     public NameRecord getName(String name) {
         if (name == null) {
