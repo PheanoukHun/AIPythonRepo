@@ -31,7 +31,18 @@ public class NameSurfer {
         // raw data for Jake. Alter as necessary for your NameRecord
         String jakeRawData = "Jake 262 312 323 479 484 630 751 453 225 117 97";
         int baseDecade = 1900;
-        NameRecord jakeRecord =  // complete with your constructor
+        NameRec/*
+        * Names.java - CS 314 Assignment 3
+        *
+        *Amrita Kaur By signing my name below, I affirm that this assignment is my own work. I
+        * have neither given nor received unauthorized assistance on this assignment.
+        *
+        * Name:
+        * Email address:
+        * UTEID:
+        */
+       
+       import java.util.ArrayList;ord jakeRecord =  // complete with your constructor
         String expected = "Jake\n1900: 262\n1910: 312\n1920: 323\n1930: 479\n1940: "
                         + "484\n1950: 630\n1960: 751\n1970: 453\n1980: 225\n1990: "
                         + "117\n2000: 97\n";
