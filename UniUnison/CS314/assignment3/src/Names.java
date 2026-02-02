@@ -35,24 +35,12 @@ public class Names {
     public Names(Scanner sc) {
         
         String emptyLine = "\n";
-        
         int baseYear = sc.nextInt();
         int numDecades = sc.nextInt();
         while (sc.hasNextLine()) {
-            String line = sc.nextLine();
-            Scanner scLine = new Scanner(line);
-
-            String name = scLine.next();
-            ArrayList<Integer> rankings = new ArrayList<>();
-
-            while (scLine.hasNextInt() && !name.equals(emptyLine)) {
-                rankings.add(scLine.nextInt());
-            }
-
-            scLine.close();
-
-            if (rankings.size() == numDecades) {
-                NameRecord currName = new NameRecord(name, baseYear, numDecades, rankings);
+            String rawRecords = sc.nextLine();
+            NameRecord currName = new NameRecord(baseYear, numDecades, rawRecords);
+            if (currName.getNumDecades() == numDecades && currName.getName().equals(emptyLine)) {
                 nameRecords.add(currName);
             }
         }

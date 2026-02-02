@@ -10,20 +10,29 @@
  */
 
 import java.util.ArrayList;
-
+import java.util.Scanner;
 
 public class NameRecord {
-    
+
     private String name;
     private int baseYear;
     private ArrayList<Integer> rankings;
     private int numRankedYears;
 
-    public NameRecord(String name, int baseYear, int numRankedYears, ArrayList<Integer> rankings) {
-        this.name = name;
+    public NameRecord(int baseYear, int numRankedYears, String rawData) {
+
         this.baseYear = baseYear;
-        this.rankings = rankings;
+        rankings = new ArrayList<>();
         this.numRankedYears = numRankedYears;
+
+        Scanner scLine = new Scanner(rawData);
+        name = scLine.next();
+        
+        while (scLine.hasNextInt()) {
+            rankings.add(scLine.nextInt());
+        }
+
+        scLine.close();
     }
 
     public String getName() {
@@ -45,8 +54,6 @@ public class NameRecord {
     public int getNumRankedYears() {
         return numRankedYears;
     }
-
-
 
     public String toString() {
         StringBuilder results = new StringBuilder(name + "\n");
