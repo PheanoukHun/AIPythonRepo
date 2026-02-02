@@ -152,6 +152,34 @@ public class NameRecord implements Comparable<NameRecord> {
         return top1000NumTimes == 1;
     }
 
+    public boolean isIncreasingInPopularity() {
+
+        int prev = getDecadeNameRank(0);
+        for (int i = 1; i < getNumDecades(); i++) {
+            int curr = getDecadeNameRank(i);
+            if (prev < curr || (prev != 0 && curr == 0)) {
+                return false;
+            }
+            prev = curr;
+        }
+        return true;
+    }
+    
+
+    // TODO: ASK ABOUT THE EXAMPLE GIVEN IN THE ASSIGNMENT PDF AND WHYIT IS FALSE;
+    public boolean isDecreasingInPopularity() {
+
+        int prev = getDecadeNameRank(0);
+        for (int i = 1; i < getNumDecades(); i++) {
+            int curr = getDecadeNameRank(i);
+            if (prev > curr || (prev == 0 && curr == 0) || (curr != 0 && prev > curr)) {
+                return false;
+            }
+            prev = curr;
+        }
+        return true;
+    }
+
     public String toString() {
         StringBuilder results = new StringBuilder(name + "\n");
         for (int i = 0; i < getNumDecades(); i++) {

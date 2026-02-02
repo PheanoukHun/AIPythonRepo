@@ -57,7 +57,15 @@ public class Names {
      *         list.
      */
     public ArrayList<NameRecord> getMatches(String partialName) {
+        
+        ArrayList<NameRecord> matches = new ArrayList<>();
+        for (int i = 0; i < names.size(); i++) {
+            if (matches.get(i).getName().toLowerCase().contains(partialName)) {
+                matches.add(names.get(i));
+            }
+        }
 
+        return matches;
     }
 
     /**
