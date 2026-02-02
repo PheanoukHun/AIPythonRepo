@@ -4,9 +4,9 @@
  * By signing my name below, I affirm that this assignment is my own work. I
  * have neither given nor received unauthorized assistance on this assignment.
  *
- * Name:
- * Email address:
- * UTEID:
+ * Name: Pheanouk Hun
+ * Email address: ph23434@my.utexas.edu
+ * UTEID: ph23434
  */
 
 import java.util.ArrayList;
@@ -18,6 +18,9 @@ import java.util.Scanner;
  * on various criteria.
  */
 public class Names {
+
+    private int baseYear;
+    private int numDecades;
 
     /**
      * Construct a new Names object based on the data source the Scanner sc is
@@ -31,7 +34,8 @@ public class Names {
      *           and positioned at the start of the data source.
      */
     public Names(Scanner sc) {
-
+        baseYear = sc.nextInt();
+        numDecades = sc.nextInt();
     }
 
     /**
