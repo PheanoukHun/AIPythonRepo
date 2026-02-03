@@ -38,7 +38,7 @@ public class Names {
         int numDecades = sc.nextInt();
         
         while (sc.hasNextLine()) {
-            String rawRecords = sc.nextLine();
+            String rawRecords = sc.nextLine().trim();
             NameRecord currName = new NameRecord(baseYear, rawRecords);
             if (isValidNameRecord(currName, numDecades)) {
                 System.out.println(currName);
