@@ -129,11 +129,13 @@ public class NameRecord implements Comparable<NameRecord> {
     }
 
     public boolean isAlwaysRanked() {
-        return getNumRanked() == getNumDecades();
+        boolean result = getNumRanked() == getNumDecades();
+        return result;
     }
 
     public boolean isOnlyRankedOnce() {
-        return getNumRanked() == 1;
+        boolean result = getNumRanked() == 1;
+        return result;
     }
 
     public boolean isIncreasingInPopularity() {
