@@ -46,8 +46,6 @@ public class Names {
                 names.add(currName);
             }
         }
-
-        System.out.println(names.size());
     }
 
     /**

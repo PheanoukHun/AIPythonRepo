@@ -39,13 +39,15 @@ public class NameSurfer {
                 + "484\n1950: 630\n1960: 751\n1970: 453\n1980: 225\n1990: "
                 + "117\n2000: 97\n";
         String actual = jakeRecord.toString();
-        System.out.println("expected string:\n" + expected);
+        System.out.println("\nExpected string:\n" + expected);
         System.out.println("actual string:\n" + actual);
         if (expected.equals(actual)) {
             System.out.println("passed Jake toString test.");
         } else {
             System.out.println("FAILED Jake toString test.");
         }
+
+        System.out.println();
 
         // Some getName Tests
         Names names = new Names(getFileScannerForNames(NAME_FILE));
