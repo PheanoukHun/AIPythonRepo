@@ -115,7 +115,7 @@ public class NameRecord implements Comparable<NameRecord> {
         return mostRecentYear;
     }
 
-    public int getNumRankedTop1000() {
+    public int getNumRanked() {
         
         int numTimes = 0;
 
@@ -128,28 +128,12 @@ public class NameRecord implements Comparable<NameRecord> {
         return numTimes;
     }
 
-    public boolean neverBelowTop1000() {
-
-        for (int i = 0; i < getNumDecades(); i++) {
-            if (getDecadeNameRank(i) == 0) {
-                return false;
-            }
-        }
-
-        return true;
+    public boolean isAlwaysRanked() {
+        return getNumRanked() == getNumDecades();
     }
 
-    public boolean rankedInTop1000Once() {
-
-        int top1000NumTimes = 0;
-
-        for (int i = 0; i < getNumDecades(); i++) {
-            if (getDecadeNameRank(i) != 0) {
-                top1000NumTimes++;
-            }
-        }
-
-        return top1000NumTimes == 1;
+    public boolean isOnlyRankedOnce() {
+        return getNumRanked() == 1;
     }
 
     public boolean isIncreasingInPopularity() {
@@ -166,7 +150,7 @@ public class NameRecord implements Comparable<NameRecord> {
     }
     
 
-    // TODO: ASK ABOUT THE EXAMPLE GIVEN IN THE ASSIGNMENT PDF AND WHYIT IS FALSE;
+    // TODO: ASK ABOUT THE EXAMPLE GIVEN IN THE ASSIGNMENT PDF AND WHY IS IT FALSE;
     public boolean isDecreasingInPopularity() {
 
         int prev = getDecadeNameRank(0);

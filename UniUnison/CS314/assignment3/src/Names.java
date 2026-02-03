@@ -80,6 +80,16 @@ public class Names {
      */
     public ArrayList<String> rankedEveryDecade() {
         
+        ArrayList<String> alwaysRankedNames = new ArrayList<>();
+        
+        for (int i = 0; i < names.size(); i++) {
+            NameRecord currName = names.get(i);
+            if (currName.isAlwaysRanked()) {
+                alwaysRankedNames.add(currName.getName());
+            }
+        }
+
+        return alwaysRankedNames;
     }
 
     /**
