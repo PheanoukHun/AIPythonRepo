@@ -14,31 +14,30 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class NameSurfer {
-    
+
     // TODO: explain your novel menu option here
-    
+
     // TODO: explain your interesting search / trend here
-    
+
     // TODO: add test code for NameRecord class here
-    
-    
+
     // One of the basic data files given on the assignment.
     // Alter this to try different data files.
     private static final String NAME_FILE = "names.txt";
-    
+
     // A few simple tests for the Names and NameRecord class.
     public static void simpleTest() {
-        
+
         // raw data for Jake. Alter as necessary for your NameRecord
         String jakeRawData = "Jake 262 312 323 479 484 630 751 453 225 117 97";
         int baseDecade = 1900;
-        
+
         // complete with your constructor
-        NameRecord jakeRecord =  new NameRecord(baseDecade, baseDecade, jakeRawData);
-        
+        NameRecord jakeRecord = new NameRecord(baseDecade, baseDecade, jakeRawData);
+
         String expected = "Jake\n1900: 262\n1910: 312\n1920: 323\n1930: 479\n1940: "
-        + "484\n1950: 630\n1960: 751\n1970: 453\n1980: 225\n1990: "
-        + "117\n2000: 97\n";
+                + "484\n1950: 630\n1960: 751\n1970: 453\n1980: 225\n1990: "
+                + "117\n2000: 97\n";
         String actual = jakeRecord.toString();
         System.out.println("expected string:\n" + expected);
         System.out.println("actual string:\n" + actual);
@@ -50,9 +49,9 @@ public class NameSurfer {
 
         // Some getName Tests
         Names names = new Names(getFileScannerForNames(NAME_FILE));
-        String[] testNames = {"Isabelle", "isabelle", "sel",
-                "X1178", "ZZ", "via", "kelly"};
-        boolean[] expectNull = {false, false, true, true, true, true, false};
+        String[] testNames = { "Isabelle", "isabelle", "sel",
+                "X1178", "ZZ", "via", "kelly" };
+        boolean[] expectNull = { false, false, true, true, true, true, false };
         for (int i = 0; i < testNames.length; i++) {
             performGetNameTest(names, testNames[i], expectNull[i]);
         }
@@ -60,7 +59,7 @@ public class NameSurfer {
 
     // Checks if given name is present in Names.
     private static void performGetNameTest(Names names, String name,
-                                           boolean expectNull) {
+            boolean expectNull) {
 
         System.out.println("Performing test for this name: " + name);
         if (expectNull) {
@@ -87,7 +86,8 @@ public class NameSurfer {
         runOptions(namesDatabase);
     }
 
-    /* pre: namesDatabase != null
+    /*
+     * pre: namesDatabase != null
      * Ask user for options to perform on the given Names object.
      * Creates a Scanner connected to System.in.
      */
@@ -99,7 +99,7 @@ public class NameSurfer {
             showMenu();
             int userChoice = getChoice(keyboard) - 1;
             menuChoice = menuChoices[userChoice];
-            if(menuChoice == MenuChoices.SEARCH) {
+            if (menuChoice == MenuChoices.SEARCH) {
                 search(namesDatabase, keyboard);
             } else if (menuChoice == MenuChoices.ONE_NAME) {
                 oneName(namesDatabase, keyboard);
@@ -114,11 +114,12 @@ public class NameSurfer {
             } else if (menuChoice == MenuChoices.STUDENT_SEARCH) {
                 // CS314 students, call your search method here
             }
-        } while(menuChoice != MenuChoices.QUIT);
+        } while (menuChoice != MenuChoices.QUIT);
         keyboard.close();
     }
 
-    /* Create a Scanner and return connected to a File with the given name.
+    /*
+     * Create a Scanner and return connected to a File with the given name.
      * pre: fileName != null
      * post: Return a Scanner connected to the file or null
      * if the File does not exist in the current directory.
@@ -141,7 +142,8 @@ public class NameSurfer {
         return sc;
     }
 
-    /* Display the names that have appeared in every decade.
+    /*
+     * Display the names that have appeared in every decade.
      * pre: n != null
      * post: print out names that have appeared in ever decade
      */
@@ -152,7 +154,8 @@ public class NameSurfer {
 
     }
 
-    /* Display the names that have appeared in only one decade.
+    /*
+     * Display the names that have appeared in only one decade.
      * pre: n != null
      * post: print out names that have appeared in only one decade
      */
@@ -164,7 +167,8 @@ public class NameSurfer {
 
     }
 
-    /* Display the names that have gotten more popular
+    /*
+     * Display the names that have gotten more popular
      * in each successive decade.
      * pre: n != null
      * post: print out names that have gotten more popular in each decade
@@ -177,7 +181,8 @@ public class NameSurfer {
 
     }
 
-    /* Display the names that have gotten less popular
+    /*
+     * Display the names that have gotten less popular
      * in each successive decade.
      * pre: n != null
      * post: print out names that have gotten less popular in each decade
@@ -190,7 +195,8 @@ public class NameSurfer {
 
     }
 
-    /* Display the data for one name or state that name has never been ranked.
+    /*
+     * Display the data for one name or state that name has never been ranked.
      * pre: n != null, keyboard != null and is connected to System.in
      * post: print out the data for n or a message that n has never been in the
      * top 1000 for any decade
@@ -204,7 +210,8 @@ public class NameSurfer {
 
     }
 
-    /* Display all names that contain a substring from the user
+    /*
+     * Display all names that contain a substring from the user
      * and the decade they were most popular.
      * pre: n != null, keyboard != null and is connected to System.in
      * post: display the data for each name.
@@ -218,9 +225,10 @@ public class NameSurfer {
 
     }
 
-    /* Get choice from the user keyboard != null and is connected to System.in
+    /*
+     * Get choice from the user keyboard != null and is connected to System.in
      * return an int that is >= MenuChoices.SEARCH.ordinal()
-     *  and <= MenuChoices.QUIT.ordinal().
+     * and <= MenuChoices.QUIT.ordinal().
      */
     private static int getChoice(Scanner keyboard) {
         // Note, no way to check if keyboard actually connected to System.in
@@ -232,7 +240,7 @@ public class NameSurfer {
         keyboard.nextLine();
         // Add one due to zero based indexing of enums, but 1 based indexing of menu.
         final int MAX_CHOICE = MenuChoices.QUIT.ordinal() + 1;
-        while (choice < 1  || choice > MAX_CHOICE) {
+        while (choice < 1 || choice > MAX_CHOICE) {
             System.out.println();
             System.out.println(choice + " is not a valid choice");
             choice = getInt(keyboard, "Enter choice: ");
@@ -241,7 +249,8 @@ public class NameSurfer {
         return choice;
     }
 
-    /* Ensure an int is entered from the keyboard.
+    /*
+     * Ensure an int is entered from the keyboard.
      * pre: s != null and is connected to System.in
      * post: return the int typed in by the user.
      */

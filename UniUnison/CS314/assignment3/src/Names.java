@@ -11,6 +11,7 @@
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.jar.Attributes.Name;
 
 /**
  * A collection of NameRecords.
@@ -33,14 +34,15 @@ public class Names {
      *           and positioned at the start of the data source.
      */
     public Names(Scanner sc) {
-        
+
         String emptyLine = "\n";
         int baseYear = sc.nextInt();
         int numDecades = sc.nextInt();
+
         while (sc.hasNextLine()) {
             String rawRecords = sc.nextLine();
             NameRecord currName = new NameRecord(baseYear, numDecades, rawRecords);
-            if (currName.getNumDecades() == numDecades && currName.getName().equals(emptyLine)) {
+            if (currName.getNumDecades() == numDecades && !currName.getName().equals(emptyLine)) {
                 names.add(currName);
             }
         }
@@ -57,7 +59,7 @@ public class Names {
      *         list.
      */
     public ArrayList<NameRecord> getMatches(String partialName) {
-        
+
         ArrayList<NameRecord> matches = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
             if (matches.get(i).getName().toLowerCase().contains(partialName)) {
@@ -79,9 +81,9 @@ public class Names {
      *         are no NameRecords that meet this criteria, returns an empty list.
      */
     public ArrayList<String> rankedEveryDecade() {
-        
+
         ArrayList<String> alwaysRankedNames = new ArrayList<>();
-        
+
         for (int i = 0; i < names.size(); i++) {
             NameRecord currName = names.get(i);
             if (currName.isAlwaysRanked()) {
@@ -104,7 +106,17 @@ public class Names {
      *         list.
      */
     public ArrayList<String> rankedOnlyOneDecade() {
+        
+        ArrayList<String> rankedOnlyOnceNames = new ArrayList<>();
+        
+        for (int i = 0; i < names.size(); i++) {
+            NameRecord currName = names.get(i);
+            if (currName.isOnlyRankedOnce()) {
+                rankedOnlyOnceNames.add(currName.getName());
+            }
+        }
 
+        return rankedOnlyOnceNames;
     }
 
     /**
@@ -118,6 +130,16 @@ public class Names {
      */
     public ArrayList<String> alwaysMorePopular() {
 
+        ArrayList<String> alwaysIncreasePopNames = new ArrayList<>();
+
+        for (int i = 0; i < names.size(); i++) {
+            NameRecord currName = names.get(i);
+            if (currName.isIncreasingInPopularity()) {
+                alwaysIncreasePopNames.add(currName.getName());
+            }
+        }
+
+        return alwaysIncreasePopNames;
     }
 
     /**
@@ -130,7 +152,17 @@ public class Names {
      *         NameRecords that meet this criteria, returns an empty list.
      */
     public ArrayList<String> alwaysLessPopular() {
+        
+        ArrayList<String> alwaysDecreasePopNames = new ArrayList<>();
 
+        for (int i = 0; i < names.size(); i++) {
+            NameRecord currName = names.get(i);
+            if (currName.isDecreasingInPopularity()) {
+                alwaysDecreasePopNames.add(currName.getName());
+            }
+        }
+
+        return alwaysDecreasePopNames;
     }
 
     /**

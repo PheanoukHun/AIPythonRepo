@@ -91,7 +91,7 @@ public class NameRecord implements Comparable<NameRecord> {
         // Checking Preconditions
         if (decade < 0 || decade >= getNumDecades()) {
             throw new IllegalArgumentException("The decade parameter must be greater "
-            +"than or equal to 0 and less than getNumDecades()");
+                    + "than or equal to 0 and less than getNumDecades()");
         }
 
         return rankings.get(decade);
@@ -116,7 +116,7 @@ public class NameRecord implements Comparable<NameRecord> {
     }
 
     public int getNumRanked() {
-        
+
         int numTimes = 0;
 
         for (int i = 0; i < getNumDecades(); i++) {
@@ -150,7 +150,6 @@ public class NameRecord implements Comparable<NameRecord> {
         }
         return true;
     }
-    
 
     // TODO: ASK ABOUT THE EXAMPLE GIVEN IN THE ASSIGNMENT PDF AND WHY IS IT FALSE;
     public boolean isDecreasingInPopularity() {
