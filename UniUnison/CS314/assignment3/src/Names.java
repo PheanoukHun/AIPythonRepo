@@ -60,10 +60,21 @@ public class Names {
      */
     public ArrayList<NameRecord> getMatches(String partialName) {
 
+        // Checking Preconditions
+        if (partialName == null || partialName.length() == 0) {
+            throw new IllegalArgumentException("The Partial Name String cannot "
+                    + "be null or empty.");
+        }
+
+        partialName = partialName.toLowerCase();
         ArrayList<NameRecord> matches = new ArrayList<>();
+
+        // Adding all the Matches to the Array List
         for (int i = 0; i < names.size(); i++) {
-            if (matches.get(i).getName().toLowerCase().contains(partialName)) {
-                matches.add(names.get(i));
+            NameRecord currName = names.get(i);
+            String currNameStr = currName.getName().toLowerCase();
+            if (currNameStr.indexOf(partialName) != -1) {
+                matches.add(currName);
             }
         }
 
@@ -77,13 +88,14 @@ public class Names {
      *
      * @return A list of the names that have been ranked in the top 1000 or
      *         better in every decade. The list is in sorted ascending order. If
-     *         there
-     *         are no NameRecords that meet this criteria, returns an empty list.
+     *         there are no NameRecords that meet this criteria, returns an empty
+     *         list.
      */
     public ArrayList<String> rankedEveryDecade() {
 
         ArrayList<String> alwaysRankedNames = new ArrayList<>();
 
+        // Searching Through the Names List
         for (int i = 0; i < names.size(); i++) {
             NameRecord currName = names.get(i);
             if (currName.isAlwaysRanked()) {
@@ -101,14 +113,14 @@ public class Names {
      *
      * @return A list of the names that have been ranked in the top 1000 or
      *         better in exactly one decade. The list is in sorted ascending order.
-     *         If
-     *         there are no NameRecords that meet this criteria, returns an empty
+     *         If there are no NameRecords that meet this criteria, returns an empty
      *         list.
      */
     public ArrayList<String> rankedOnlyOneDecade() {
-        
+
         ArrayList<String> rankedOnlyOnceNames = new ArrayList<>();
-        
+
+        // Searching Through the Names List
         for (int i = 0; i < names.size(); i++) {
             NameRecord currName = names.get(i);
             if (currName.isOnlyRankedOnce()) {
@@ -132,6 +144,7 @@ public class Names {
 
         ArrayList<String> alwaysIncreasePopNames = new ArrayList<>();
 
+        // Searching Through the Names List
         for (int i = 0; i < names.size(); i++) {
             NameRecord currName = names.get(i);
             if (currName.isIncreasingInPopularity()) {
@@ -152,9 +165,10 @@ public class Names {
      *         NameRecords that meet this criteria, returns an empty list.
      */
     public ArrayList<String> alwaysLessPopular() {
-        
+
         ArrayList<String> alwaysDecreasePopNames = new ArrayList<>();
 
+        // Searching Through the Names List
         for (int i = 0; i < names.size(); i++) {
             NameRecord currName = names.get(i);
             if (currName.isDecreasingInPopularity()) {
@@ -165,19 +179,34 @@ public class Names {
         return alwaysDecreasePopNames;
     }
 
+    // TODO: Ask TA whether we should test whether there should be a precondition
+    // for name being a length of 0.
+
     /**
      * Return the NameRecord in this Names object that matches the given String
      * ignoring case.
      *
-     * pre: name != null
-     *
-     * @param name The name to search for.
+     * @param name The name to search for. name != null
      * @return The name record with the given name or null if no NameRecord in
      *         this Names object contains the given name.
      */
     public NameRecord getName(String name) {
+
+        // Checking Proconditions
         if (name == null) {
             throw new IllegalArgumentException("The parameter name cannot be null");
         }
+
+        // Searching Through the Names List
+        for (int i = 0; i < names.size(); i++) {
+            NameRecord currName = names.get(i);
+            String currNameStr = currName.getName().toLowerCase();
+            if (currNameStr.equals(name.toLowerCase())) {
+                return currName;
+            }
+        }
+
+        // When there are No Name Records Found
+        return null;
     }
 }

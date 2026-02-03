@@ -110,9 +110,8 @@ public class NameRecord implements Comparable<NameRecord> {
             }
         }
 
-        int mostRecentYear = getBaseYear() + (mostPopularIndex * 10);
-
-        return mostRecentYear;
+        int mostRecentPopYear = getBaseYear() + (mostPopularIndex * 10);
+        return mostRecentPopYear;
     }
 
     public int getNumRanked() {
