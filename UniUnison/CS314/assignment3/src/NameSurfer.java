@@ -23,7 +23,7 @@ public class NameSurfer {
 
     // One of the basic data files given on the assignment.
     // Alter this to try different data files.
-    private static final String NAME_FILE = "names.txt";
+    private static final String NAME_FILE = "test.txt";
 
     // A few simple tests for the Names and NameRecord class.
     public static void simpleTest() {
@@ -33,7 +33,7 @@ public class NameSurfer {
         int baseDecade = 1900;
 
         // complete with your constructor
-        NameRecord jakeRecord = new NameRecord(baseDecade, baseDecade, jakeRawData);
+        NameRecord jakeRecord = new NameRecord(baseDecade, jakeRawData);
 
         String expected = "Jake\n1900: 262\n1910: 312\n1920: 323\n1930: 479\n1940: "
                 + "484\n1950: 630\n1960: 751\n1970: 453\n1980: 225\n1990: "

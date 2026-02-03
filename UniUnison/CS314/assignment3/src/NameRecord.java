@@ -18,7 +18,6 @@ public class NameRecord implements Comparable<NameRecord> {
     private String name;
     private int baseYear;
     private ArrayList<Integer> rankings;
-    private int numRankedYears;
     private int numDecades;
 
     // Constructor
@@ -26,21 +25,20 @@ public class NameRecord implements Comparable<NameRecord> {
     /**
      * 
      * @param baseYear
-     * @param numRankedYears
      * @param rawData
      */
-    public NameRecord(int baseYear, int numRankedYears, String rawData) {
+    public NameRecord(int baseYear, String rawData) {
 
         this.baseYear = baseYear;
         rankings = new ArrayList<>();
-        this.numRankedYears = numRankedYears;
 
         Scanner scLine = new Scanner(rawData);
-        name = scLine.next();
-
-        while (scLine.hasNextInt()) {
-            rankings.add(scLine.nextInt());
-
+        System.out.println("test");
+        if (scLine.hasNext()) {
+            name = scLine.next();
+            while (scLine.hasNextInt()) {
+                rankings.add(scLine.nextInt());
+            }
         }
 
         scLine.close();
@@ -75,14 +73,6 @@ public class NameRecord implements Comparable<NameRecord> {
 
     /**
      * 
-     * @return
-     */
-    public int getNumRankedYears() {
-        return numRankedYears;
-    }
-
-    /**
-     * 
      * @param decade - Int value; 0 <= decade < getNumDecades()
      * @return
      */
@@ -98,7 +88,7 @@ public class NameRecord implements Comparable<NameRecord> {
     }
 
     public int getMostPopularDecade() {
-        
+
         int mostPopularIndex = 0;
 
         while (getDecadeNameRank(mostPopularIndex) == 0 && mostPopularIndex < getNumDecades()) {

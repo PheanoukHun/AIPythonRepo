@@ -11,7 +11,6 @@
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.jar.Attributes.Name;
 
 /**
  * A collection of NameRecords.
@@ -40,11 +39,9 @@ public class Names {
         
         while (sc.hasNextLine()) {
             String rawRecords = sc.nextLine();
-            System.out.println("Debug");
-            NameRecord currName = new NameRecord(baseYear, numDecades, rawRecords);
-           
-           
+            NameRecord currName = new NameRecord(baseYear, rawRecords);
             if (isValidNameRecord(currName, numDecades)) {
+                System.out.println(currName);
                 names.add(currName);
             }
         }
