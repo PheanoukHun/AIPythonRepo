@@ -34,13 +34,16 @@ public class Names {
      *           and positioned at the start of the data source.
      */
     public Names(Scanner sc) {
-        
+
         int baseYear = sc.nextInt();
         int numDecades = sc.nextInt();
-
+        
         while (sc.hasNextLine()) {
             String rawRecords = sc.nextLine();
+            System.out.println("Debug");
             NameRecord currName = new NameRecord(baseYear, numDecades, rawRecords);
+           
+           
             if (isValidNameRecord(currName, numDecades)) {
                 names.add(currName);
             }
