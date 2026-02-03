@@ -33,7 +33,6 @@ public class NameRecord implements Comparable<NameRecord> {
         rankings = new ArrayList<>();
 
         Scanner scLine = new Scanner(rawData);
-        System.out.println("test");
         if (scLine.hasNext()) {
             name = scLine.next();
             while (scLine.hasNextInt()) {
