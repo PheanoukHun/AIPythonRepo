@@ -98,6 +98,7 @@ public class NameRecord implements Comparable<NameRecord> {
     }
 
     public int getMostPopularDecade() {
+        
         int mostPopularIndex = 0;
 
         while (getDecadeNameRank(mostPopularIndex) == 0 && mostPopularIndex < getNumDecades()) {

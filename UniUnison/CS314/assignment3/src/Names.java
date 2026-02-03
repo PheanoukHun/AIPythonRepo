@@ -34,15 +34,14 @@ public class Names {
      *           and positioned at the start of the data source.
      */
     public Names(Scanner sc) {
-
-        String emptyLine = "\n";
+        
         int baseYear = sc.nextInt();
         int numDecades = sc.nextInt();
 
         while (sc.hasNextLine()) {
             String rawRecords = sc.nextLine();
             NameRecord currName = new NameRecord(baseYear, numDecades, rawRecords);
-            if (currName.getNumDecades() == numDecades && !currName.getName().equals(emptyLine)) {
+            if (isValidNameRecord(currName, numDecades)) {
                 names.add(currName);
             }
         }
@@ -208,5 +207,14 @@ public class Names {
 
         // When there are No Name Records Found
         return null;
+    }
+
+    private boolean isValidNameRecord(NameRecord name, int numDecades) {
+
+        if (name.getNumDecades() != 1 && name.getNumRanked() == 0) {
+            return false;
+        }
+
+        return true;
     }
 }
