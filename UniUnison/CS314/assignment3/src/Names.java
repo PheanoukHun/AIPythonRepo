@@ -211,7 +211,7 @@ public class Names {
 
     private boolean isValidNameRecord(NameRecord name, int numDecades) {
 
-        if (name.getNumDecades() != 1 && name.getNumRanked() == 0) {
+        if (name.getNumDecades() != numDecades && name.getNumRanked() == 0) {
             return false;
         }
 
