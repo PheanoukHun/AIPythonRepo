@@ -34,18 +34,20 @@ public class Names {
      */
     public Names(Scanner sc) {
 
+        names = new ArrayList<>();
+
         int baseYear = sc.nextInt();
         int numDecades = sc.nextInt();
         
         while (sc.hasNextLine()) {
             String rawRecords = sc.nextLine().trim();
-            System.out.println(rawRecords);
             NameRecord currName = new NameRecord(baseYear, rawRecords);
             if (isValidNameRecord(currName, numDecades)) {
-                System.out.println(currName);
                 names.add(currName);
             }
         }
+
+        System.out.println(names.size());
     }
 
     /**
@@ -212,7 +214,7 @@ public class Names {
 
     private boolean isValidNameRecord(NameRecord name, int numDecades) {
 
-        if (name.getNumDecades() != numDecades && name.getNumRanked() == 0) {
+        if (name.getNumDecades() != numDecades || name.getNumRanked() == 0) {
             return false;
         }
 
