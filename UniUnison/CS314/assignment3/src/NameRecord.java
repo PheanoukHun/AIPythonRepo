@@ -95,10 +95,12 @@ public class NameRecord implements Comparable<NameRecord> {
             mostPopularIndex++;
         }
 
+        int currMinRank = getDecadeNameRank(mostPopularIndex);
         for (int i = 0; i < getNumDecades(); i++) {
             int currRank = getDecadeNameRank(i);
-            if (currRank <= mostPopularIndex && currRank != 0) {
+            if (currRank <= currMinRank && currRank != 0) {
                 mostPopularIndex = i;
+                currMinRank = currRank;
             }
         }
 
