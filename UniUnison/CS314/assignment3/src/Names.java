@@ -39,16 +39,16 @@ public class Names {
 
         int baseYear = sc.nextInt();
         int numDecades = sc.nextInt();
-        
+
         while (sc.hasNextLine()) {
             String rawRecords = sc.nextLine().trim();
-            
+
             NameRecord currName = new NameRecord(baseYear, rawRecords);
             if (!(currName.getNumDecades() != numDecades || currName.getNumRanked() == 0)) {
                 names.add(currName);
             }
         }
-        
+
         Collections.sort(names);
     }
 
@@ -209,5 +209,23 @@ public class Names {
 
         // When there are No Name Records Found
         return null;
+    }
+
+    public String mostPopNamePerDecade(int decadeNum) {
+
+        NameRecord mostPop = names.get(0);
+        int mostPopRank = mostPop.getDecadeNameRank(decadeNum);
+        for (int i = 1; i < names.size(); i++) {
+            
+            NameRecord currName = names.get(i);
+            int currNameRank = currName.getDecadeNameRank(decadeNum);
+
+            if (mostPopRank > currNameRank && currName != 0) {
+                        mostPop = currName;
+                        // mostPopRank
+            }
+        }
+
+        return mostPop.getName();
     }
 }
