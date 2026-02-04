@@ -183,9 +183,6 @@ public class Names {
         return alwaysDecreasePopNames;
     }
 
-    // TODO: Ask TA whether we should test whether there should be a precondition
-    // for name being a length of 0.
-
     /**
      * Return the NameRecord in this Names object that matches the given String
      * ignoring case.
