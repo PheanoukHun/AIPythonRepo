@@ -240,7 +240,8 @@ public class NameSurfer {
 
         // Getting the Matches
         ArrayList<NameRecord> matchedNames = namesDatabase.getMatches(partialName);
-        System.out.println("There are " + );
+        System.out.println("\nThere are " + matchedNames.size() + " matches for "
+                + partialName + ".");
 
         // Showing the Results if there are more than 0 Names in the List
         if (matchedNames.size() > 0) {

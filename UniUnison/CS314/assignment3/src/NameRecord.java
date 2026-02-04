@@ -88,19 +88,21 @@ public class NameRecord implements Comparable<NameRecord> {
 
     public int getMostPopularDecade() {
 
+        final int LEN_DECADE = 10;
         int mostPopularIndex = 0;
 
         while (getDecadeNameRank(mostPopularIndex) == 0 && mostPopularIndex < getNumDecades()) {
             mostPopularIndex++;
         }
 
-        for (int i = mostPopularIndex; i < getNumDecades(); i++) {
-            if (getDecadeNameRank(i) <= mostPopularIndex) {
+        for (int i = 0; i < getNumDecades(); i++) {
+            int currRank = getDecadeNameRank(i);
+            if (currRank <= mostPopularIndex && currRank != 0) {
                 mostPopularIndex = i;
             }
         }
 
-        int mostRecentPopYear = getBaseYear() + (mostPopularIndex * 10);
+        int mostRecentPopYear = getBaseYear() + (mostPopularIndex * LEN_DECADE);
         return mostRecentPopYear;
     }
 
@@ -155,9 +157,12 @@ public class NameRecord implements Comparable<NameRecord> {
     }
 
     public String toString() {
+
+        final int LEN_DECADE = 10;
+
         StringBuilder results = new StringBuilder(name + "\n");
         for (int i = 0; i < getNumDecades(); i++) {
-            results.append((baseYear + (i * 10)) + ": " + getDecadeNameRank(i) + "\n");
+            results.append((baseYear + (i * LEN_DECADE)) + ": " + getDecadeNameRank(i) + "\n");
         }
         return results.toString();
     }
