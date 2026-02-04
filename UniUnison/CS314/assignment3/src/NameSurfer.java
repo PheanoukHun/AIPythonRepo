@@ -219,6 +219,19 @@ public class NameSurfer {
             throw new IllegalArgumentException("The parameters cannot be null");
         }
 
+        // Getting User Input
+        System.out.print("Enter a name: ");
+        String nameInput = keyboard.next();
+
+        // Checking the Database
+        NameRecord name = namesDatabase.getName(nameInput);
+        
+        // Releasing the Result
+        if (name != null) {
+            System.out.println("\n" + name);
+        } else {
+            System.out.println("\n" + nameInput + " does not appear in any decade.");
+        }
     }
 
     /*
