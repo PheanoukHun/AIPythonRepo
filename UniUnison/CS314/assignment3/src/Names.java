@@ -10,6 +10,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -41,13 +42,14 @@ public class Names {
         
         while (sc.hasNextLine()) {
             String rawRecords = sc.nextLine().trim();
+            
             NameRecord currName = new NameRecord(baseYear, rawRecords);
             if (isValidNameRecord(currName, numDecades)) {
                 names.add(currName);
             }
         }
-
         
+        Collections.sort(names);
     }
 
     /**
