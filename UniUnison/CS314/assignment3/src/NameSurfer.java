@@ -176,6 +176,12 @@ public class NameSurfer {
                     + " namesDatabase cannot be null");
         }
 
+        ArrayList<String> rankedOnceOnly = namesDatabase.rankedOnlyOneDecade();
+        {
+            for (String name : rankedOnceOnly) {
+            System.out.println(name);
+        }
+    }
     }
 
     /*
