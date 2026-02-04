@@ -213,4 +213,17 @@ public class Names {
         // When there are No Name Records Found
         return null;
     }
+
+    public NameRecord getMostPopularOnAverage() {
+
+        int mostPopularIndex = 0;
+        NameRecord mostPopularName = names.get(mostPopularIndex);
+
+        for (int i = 0; i < names.size(); i++) {
+            Name
+            if (mostPopularName.getAverageRanking() > )
+        }
+
+        return null;
+    }
 }

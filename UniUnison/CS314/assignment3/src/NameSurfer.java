@@ -304,7 +304,6 @@ public class NameSurfer {
         if (namesDatabase == null) {
             throw new IllegalArgumentException("The parameters cannot be null");
         }
-
     }
 
     /*

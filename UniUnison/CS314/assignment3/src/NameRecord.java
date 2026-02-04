@@ -158,6 +158,28 @@ public class NameRecord implements Comparable<NameRecord> {
         return true;
     }
 
+    public int getAverageRanking() {
+
+        final int TOP_THOUSAND_RANK = 1000;
+        int average = 0;
+
+        for (int i = 0; i < getNumDecades(); i++) {
+            if (getDecadeNameRank(i) == 0) {
+                average += 1200;
+            } else {
+                average += getDecadeNameRank(i);
+            }
+        }
+
+        average /= getNumDecades();
+
+        if (average > TOP_THOUSAND_RANK) {
+            return 0;
+        }
+
+        return average;
+    }
+
     public String toString() {
 
         final int LEN_DECADE = 10;
@@ -170,6 +192,12 @@ public class NameRecord implements Comparable<NameRecord> {
     }
 
     public int compareTo(NameRecord other) {
+
+        // Checking Precondition
+        if (other == null) {
+            throw new IllegalArgumentException("The parameter cannot be null.");
+        }
+
         int result = getName().compareTo(other.getName());
         return result;
     }
