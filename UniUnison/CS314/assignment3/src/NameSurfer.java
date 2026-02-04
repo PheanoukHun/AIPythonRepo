@@ -124,7 +124,7 @@ public class NameSurfer {
             } else if (menuChoice == MenuChoices.ALWAYS_LESS) {
                 alwaysLess(namesDatabase);
             } else if (menuChoice == MenuChoices.STUDENT_SEARCH) {
-
+                mostPopAlphabetLetter(namesDatabase);
             }
         } while (menuChoice != MenuChoices.QUIT);
         keyboard.close();
@@ -210,7 +210,7 @@ public class NameSurfer {
 
         ArrayList<String> alwaysMorePop = namesDatabase.alwaysMorePopular();
         if (alwaysMorePop.size() > 0) {
-            System.out.println(alwaysMorePop.size() + " names are more popular in every decade. ");
+            System.out.println(alwaysMorePop.size() + " names are more popular in every decade.");
             for (String name : alwaysMorePop) {
                 System.out.println(name);
             }
@@ -231,7 +231,7 @@ public class NameSurfer {
 
         ArrayList<String> alwaysLessPop = namesDatabase.alwaysLessPopular();
         if (alwaysLessPop.size() > 0) {
-            System.out.println(alwaysLessPop.size() + " names are less popular in every decade. ");
+            System.out.println(alwaysLessPop.size() + " names are less popular in every decade.");
             for (String name : alwaysLessPop) {
                 System.out.println(name);
             }
@@ -298,11 +298,18 @@ public class NameSurfer {
         }
     }
 
-    private static void mostPopAlphabetLetter(Names namesDatabase, Scanner keyboard) {
+    private static void mostPopAlphabetLetter(Names namesDatabase) {
         
         // Checking Preconditions
-        if (namesDatabase == null || keyboard == null) {
+        if (namesDatabase == null) {
             throw new IllegalArgumentException("The parameters cannot be null");
+        }
+
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        int[] numOcccurrence = new int[alphabet.length()];
+        for (int i = 0; i < alphabet.length(); i++) {
+            String currChar = "" + alphabet.charAt(i);
+            numOcccurrence[i] = namesDatabase.getMatches(currChar).size();
         }
 
     }
