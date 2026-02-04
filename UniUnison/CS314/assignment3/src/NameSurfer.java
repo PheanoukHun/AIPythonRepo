@@ -11,6 +11,7 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class NameSurfer {
@@ -122,7 +123,7 @@ public class NameSurfer {
             } else if (menuChoice == MenuChoices.ALWAYS_LESS) {
                 alwaysLess(namesDatabase);
             } else if (menuChoice == MenuChoices.STUDENT_SEARCH) {
-                
+
             }
         } while (menuChoice != MenuChoices.QUIT);
         keyboard.close();
@@ -233,6 +234,22 @@ public class NameSurfer {
             throw new IllegalArgumentException("The parameters cannot be null");
         }
 
+        // Getting User Input
+        System.out.print("Enter a partial name: ");
+        String partialName = keyboard.next();
+
+        // Getting the Matches
+        ArrayList<NameRecord> matchedNames = namesDatabase.getMatches(partialName);
+        System.out.println("There are " + );
+
+        // Showing the Results if there are more than 0 Names in the List
+        if (matchedNames.size() > 0) {
+            System.out.println("\nThe matches with their highest ranking decade are: ");
+            for (int i = 0; i < matchedNames.size(); i++) {
+                NameRecord currName = matchedNames.get(i);
+                System.out.println(currName.getName() + " " + currName.getMostPopularDecade());
+            }
+        }
     }
 
     /*
