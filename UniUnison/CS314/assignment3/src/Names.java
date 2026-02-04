@@ -44,7 +44,7 @@ public class Names {
             String rawRecords = sc.nextLine().trim();
             
             NameRecord currName = new NameRecord(baseYear, rawRecords);
-            if (isValidNameRecord(currName, numDecades)) {
+            if (!(currName.getNumDecades() != numDecades || currName.getNumRanked() == 0)) {
                 names.add(currName);
             }
         }
@@ -212,14 +212,5 @@ public class Names {
 
         // When there are No Name Records Found
         return null;
-    }
-
-    private boolean isValidNameRecord(NameRecord name, int numDecades) {
-
-        if (name.getNumDecades() != numDecades || name.getNumRanked() == 0) {
-            return false;
-        }
-
-        return true;
     }
 }

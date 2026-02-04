@@ -308,8 +308,10 @@ public class NameSurfer {
         if (keyboard == null) {
             throw new IllegalArgumentException("The parameter keyboard cannot be null");
         }
+        
         int choice = getInt(keyboard, "Enter choice: ");
         keyboard.nextLine();
+
         // Add one due to zero based indexing of enums, but 1 based indexing of menu.
         final int MAX_CHOICE = MenuChoices.QUIT.ordinal() + 1;
         while (choice < 1 || choice > MAX_CHOICE) {
@@ -332,6 +334,7 @@ public class NameSurfer {
         if (s == null) {
             throw new IllegalArgumentException("The parameter s cannot be null");
         }
+        
         System.out.print(prompt);
         while (!s.hasNextInt()) {
             s.next();
