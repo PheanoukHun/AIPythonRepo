@@ -163,6 +163,15 @@ public class NameSurfer {
             throw new IllegalArgumentException("The parameter namesDatabase cannot be null");
         }
 
+        ArrayList<String> alwaysRanked = namesDatabase.rankedEveryDecade();
+        if (alwaysRanked.size() > 0) {
+            System.out.println(alwaysRanked.size()
+                    + " names appear in every decade. The names are:");
+            for (String name : alwaysRanked) {
+                System.out.println(name);
+            }
+        }
+
     }
 
     /*
@@ -177,11 +186,13 @@ public class NameSurfer {
         }
 
         ArrayList<String> rankedOnceOnly = namesDatabase.rankedOnlyOneDecade();
-        {
+        if (rankedOnceOnly.size() > 0) {
+            System.out.println(rankedOnceOnly.size()
+                    + " names appear in exactly one decade. The names are:");
             for (String name : rankedOnceOnly) {
-            System.out.println(name);
+                System.out.println(name);
+            }
         }
-    }
     }
 
     /*
@@ -196,6 +207,13 @@ public class NameSurfer {
                     + " namesDatabase cannot be null");
         }
 
+        ArrayList<String> alwaysMorePop = namesDatabase.alwaysMorePopular();
+        if (alwaysMorePop.size() > 0) {
+            System.out.println(alwaysMorePop.size() + " names are more popular in every decade. ");
+            for (String name : alwaysMorePop) {
+                System.out.println(name);
+            }
+        }
     }
 
     /*
@@ -210,6 +228,13 @@ public class NameSurfer {
                     + " namesDatabase cannot be null");
         }
 
+        ArrayList<String> alwaysLessPop = namesDatabase.alwaysLessPopular();
+        if (alwaysLessPop.size() > 0) {
+            System.out.println(alwaysLessPop.size() + " names are less popular in every decade. ");
+            for (String name : alwaysLessPop) {
+                System.out.println(name);
+            }
+        }
     }
 
     /*
@@ -231,7 +256,7 @@ public class NameSurfer {
 
         // Checking the Database
         NameRecord name = namesDatabase.getName(nameInput);
-        
+
         // Releasing the Result
         if (name != null) {
             System.out.println("\n" + name);
