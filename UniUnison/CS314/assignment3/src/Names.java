@@ -210,18 +210,4 @@ public class Names {
         // When there are No Name Records Found
         return null;
     }
-
-    public NameRecord getMostPopularOnAverage() {
-
-        NameRecord mostPopularName = names.get(0);
-
-        for (int i = 0; i < names.size(); i++) {
-            NameRecord currName = names.get(i);
-            if (mostPopularName.getAverageRanking() > currName.getAverageRanking() && currName.getAverageRanking() != 0) {
-                mostPopularName = currName;
-            }
-        }
-
-        return mostPopularName;
-    }
 }

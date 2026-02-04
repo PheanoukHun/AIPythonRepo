@@ -124,7 +124,7 @@ public class NameSurfer {
             } else if (menuChoice == MenuChoices.ALWAYS_LESS) {
                 alwaysLess(namesDatabase);
             } else if (menuChoice == MenuChoices.STUDENT_SEARCH) {
-                mostPopularNameOverTheDecade(namesDatabase);
+                mostPopNamePerDecade(namesDatabase);
             }
         } while (menuChoice != MenuChoices.QUIT);
         keyboard.close();
@@ -298,15 +298,14 @@ public class NameSurfer {
         }
     }
 
-    private static void mostPopularNameOverTheDecade(Names namesDatabase) {
+    private static void mostPopNamePerDecade(Names namesDatabase) {
         
         // Checking Preconditions
         if (namesDatabase == null) {
             throw new IllegalArgumentException("The parameters cannot be null");
         }
 
-        if 
-        System.out.println("The Most Popular Name Over All is: ");
+        //
     }
 
     /*
