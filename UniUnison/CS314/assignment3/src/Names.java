@@ -213,19 +213,19 @@ public class Names {
 
     public String mostPopNamePerDecade(int decadeNum) {
 
-        NameRecord mostPop = names.get(0);
-        int mostPopRank = mostPop.getDecadeNameRank(decadeNum);
+        NameRecord mostPopName = names.get(0);
+        int mostPopRank = mostPopName.getDecadeNameRank(decadeNum);
         for (int i = 1; i < names.size(); i++) {
-            
+
             NameRecord currName = names.get(i);
             int currNameRank = currName.getDecadeNameRank(decadeNum);
 
-            if (mostPopRank > currNameRank && currName != 0) {
-                        mostPop = currName;
-                        // mostPopRank
+            if (currNameRank != 0 && (currNameRank < mostPopRank || mostPopRank == 0)) {
+                mostPopName = currName;
+                mostPopRank = currNameRank;
             }
         }
 
-        return mostPop.getName();
+        return mostPopName.getName();
     }
 }

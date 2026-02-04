@@ -47,16 +47,16 @@ public class NameRecord implements Comparable<NameRecord> {
     // Accessor Methods
 
     /**
-     * 
-     * @return
+     * Returns the Name of the NameRecord
+     * @return Returns the Name of the NameRecord
      */
     public String getName() {
         return name;
     }
 
     /**
-     * 
-     * @return
+     * Returns the Base Year the Name was recorded in
+     * @return Returns the Base Year the Name was recorded in
      */
     public int getBaseYear() {
         return baseYear;

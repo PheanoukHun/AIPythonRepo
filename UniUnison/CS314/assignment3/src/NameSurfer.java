@@ -60,6 +60,16 @@ public class NameSurfer {
         }
     }
 
+    public static void myTest() {
+
+        int baseYear = 1900;
+        String rawData = "Alex 1 2 3 4 5 6 7 8 9 10 11 12 13";
+        NameRecord alexRecord = new NameRecord(baseYear, rawData);
+
+        // Test 1 For getName() Method
+        
+    }
+
     // Checks if given name is present in Names.
     private static void performGetNameTest(Names names, String name,
             boolean expectNull) {
