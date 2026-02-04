@@ -124,7 +124,7 @@ public class NameSurfer {
             } else if (menuChoice == MenuChoices.ALWAYS_LESS) {
                 alwaysLess(namesDatabase);
             } else if (menuChoice == MenuChoices.STUDENT_SEARCH) {
-                mostPopAlphabetLetter(namesDatabase);
+                mostPopularNameOverTheDecade(namesDatabase);
             }
         } while (menuChoice != MenuChoices.QUIT);
         keyboard.close();
@@ -298,18 +298,11 @@ public class NameSurfer {
         }
     }
 
-    private static void mostPopAlphabetLetter(Names namesDatabase) {
+    private static void mostPopularNameOverTheDecade(Names namesDatabase) {
         
         // Checking Preconditions
         if (namesDatabase == null) {
             throw new IllegalArgumentException("The parameters cannot be null");
-        }
-
-        String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        int[] numOcccurrence = new int[alphabet.length()];
-        for (int i = 0; i < alphabet.length(); i++) {
-            String currChar = "" + alphabet.charAt(i);
-            numOcccurrence[i] = namesDatabase.getMatches(currChar).size();
         }
 
     }
