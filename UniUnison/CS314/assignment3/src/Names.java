@@ -216,14 +216,15 @@ public class Names {
 
     public NameRecord getMostPopularOnAverage() {
 
-        int mostPopularIndex = 0;
-        NameRecord mostPopularName = names.get(mostPopularIndex);
+        NameRecord mostPopularName = names.get(0);
 
         for (int i = 0; i < names.size(); i++) {
-            Name
-            if (mostPopularName.getAverageRanking() > )
+            NameRecord currName = names.get(i);
+            if (mostPopularName.getAverageRanking() > currName.getAverageRanking() && currName.getAverageRanking() != 0) {
+                mostPopularName = currName;
+            }
         }
 
-        return null;
+        return mostPopularName;
     }
 }
