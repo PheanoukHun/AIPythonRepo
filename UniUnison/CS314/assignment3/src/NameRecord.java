@@ -149,7 +149,7 @@ public class NameRecord implements Comparable<NameRecord> {
         int prev = getDecadeNameRank(0);
         for (int i = 1; i < getNumDecades(); i++) {
             int curr = getDecadeNameRank(i);
-            if (!((prev < curr) )) {
+             if ((prev != 0 && curr != 0 && curr <= prev) || (prev == 0 && curr != 0)) {
                 return false;
             }
             prev = curr;
