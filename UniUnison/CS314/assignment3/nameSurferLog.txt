@@ -630,7 +630,7 @@ Enter 7 to <replace with description of your method / search>.
 Enter 8 to quit.
 
 Enter choice: 5
-2 names are more popular in every decade. 
+
 Eduardo
 Luis
 
