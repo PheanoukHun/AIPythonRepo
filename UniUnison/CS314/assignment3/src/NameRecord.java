@@ -1,5 +1,5 @@
 /*
- * NameSurfer.java - CS 314 Assignment 3
+ * NameRecord.java - CS 314 Assignment 3
  *
  * By signing my name below, I affirm that this assignment is my own work. I
  * have neither given nor received unauthorized assistance on this assignment.

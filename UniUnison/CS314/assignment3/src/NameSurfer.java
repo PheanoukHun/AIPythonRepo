@@ -80,8 +80,9 @@ public class NameSurfer {
 
     // main method. Driver for the whole program
     public static void main(String[] args) {
+        
         // Delete the following line in the final version of your program.
-        simpleTest();
+        // simpleTest();
 
         Scanner fileScanner = getFileScannerForNames(NAME_FILE);
         Names namesDatabase = new Names(fileScanner);
@@ -295,6 +296,15 @@ public class NameSurfer {
                 System.out.println(currName.getName() + " " + currName.getMostPopularDecade());
             }
         }
+    }
+
+    private static void mostPopAlphabetLetter(Names namesDatabase, Scanner keyboard) {
+        
+        // Checking Preconditions
+        if (namesDatabase == null || keyboard == null) {
+            throw new IllegalArgumentException("The parameters cannot be null");
+        }
+
     }
 
     /*
