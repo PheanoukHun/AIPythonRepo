@@ -94,9 +94,17 @@ public class NameSurfer {
      * Creates a Scanner connected to System.in.
      */
     private static void runOptions(Names namesDatabase) {
+
+        // Checking Preconditions
+        if (namesDatabase == null) {
+            throw new IllegalArgumentException("the NamesDataBase Cannot be Null");
+        }
+
         Scanner keyboard = new Scanner(System.in);
         MenuChoices[] menuChoices = MenuChoices.values();
         MenuChoices menuChoice;
+
+        // Continuously Run the Menu
         do {
             showMenu();
             int userChoice = getChoice(keyboard) - 1;
@@ -114,7 +122,7 @@ public class NameSurfer {
             } else if (menuChoice == MenuChoices.ALWAYS_LESS) {
                 alwaysLess(namesDatabase);
             } else if (menuChoice == MenuChoices.STUDENT_SEARCH) {
-                // CS314 students, call your search method here
+                
             }
         } while (menuChoice != MenuChoices.QUIT);
         keyboard.close();
