@@ -144,13 +144,12 @@ public class NameRecord implements Comparable<NameRecord> {
         return true;
     }
 
-    // TODO: ASK ABOUT THE EXAMPLE GIVEN IN THE ASSIGNMENT PDF AND WHY IS IT FALSE;
     public boolean isDecreasingInPopularity() {
 
         int prev = getDecadeNameRank(0);
         for (int i = 1; i < getNumDecades(); i++) {
             int curr = getDecadeNameRank(i);
-            if (prev > curr || (prev == 0 && curr == 0) || (curr != 0 && prev > curr)) {
+            if (!((prev < curr) )) {
                 return false;
             }
             prev = curr;
