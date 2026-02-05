@@ -181,6 +181,25 @@ public class NameRecord implements Comparable<NameRecord> {
         return average;
     }
 
+    public double getStandardDeviation() {
+        
+        final int ZERO_EQUIVALENCE = 1200;
+        double stdev = 0.0;
+        int mean = getAverageRanking();
+
+        for (int i = 0; i < getNumDecades(); i++) {
+            int currRanking = getDecadeNameRank(i);
+            if (currRanking == 0) {
+                currRanking = ZERO_EQUIVALENCE;
+            } 
+            stdev += currRanking - getAverageRanking();
+        }
+
+        stdev *= stdev;
+        
+        return stdev;
+    }
+
     public String toString() {
 
         final int LEN_DECADE = 10;
