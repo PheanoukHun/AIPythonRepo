@@ -1,4 +1,5 @@
 import math
+import random
 import statistics
 
 def getSTDev(arr):
@@ -10,16 +11,7 @@ def getSTDev(arr):
     for num in arr:
         sum_of_squared_diffs += math.pow(num - mean, 2)
     
-    print(f"DEBUG: Sum of squared differences: {sum_of_squared_diffs}")
-    
-    # The standard deviation is the square root of the variance.
-    # The variance is the sum of squared differences divided by N-1 (sample) or N (population).
-    # Since the user compares to statistics.stdev (which is sample N-1 by default),
-    # the correct divisor is N-1.
-    
-    
     variance = sum_of_squared_diffs / (len(arr) - 1)
-    print(f"DEBUG: Variance: {variance}")
     stDev = math.sqrt(variance)
 
     return stDev
@@ -32,7 +24,11 @@ def getMean(arr):
 
     return sum / len(arr)
 
-#print(getMean([1, 2, 3, 4, 5, 6, 7, 8]))
-#print(statistics.mean([1, 2, 3, 4, 5, 6, 7, 8]))
-print(getSTDev([1, 2, 3, 4, 5, 6, 7, 8]))
-print(statistics.stdev([1, 2, 3, 4, 5, 6, 7, 8]))
+randNums = [random.randint(1, 100) for i in range(20)]
+print("\nRandom Array:", *randNums)
+
+print("\nMy Function (Mean):", getMean(randNums))
+print("Python's Function (Mean):", statistics.mean(randNums))
+
+print("\nMy Funciton (Standard Deviation):", getSTDev(randNums))
+print("Python's Funciton (Standard Deviation):", statistics.stdev(randNums), "\n")
