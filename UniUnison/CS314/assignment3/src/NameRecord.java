@@ -156,25 +156,19 @@ public class NameRecord implements Comparable<NameRecord> {
         return true;
     }
 
-    public int getAverageRanking() {
-
-        final int TOP_THOUSAND_RANK = 1000;
-        final int ZERO_EQUIVALENCE = 1200;
-        int average = 0;
+    public double getAverageRanking() {
+        double average = 0;
+        int sum = 0;
+        int count = 0;
 
         for (int i = 0; i < getNumDecades(); i++) {
-            if (getDecadeNameRank(i) == 0) {
-                average += ZERO_EQUIVALENCE;
-            } else {
-                average += getDecadeNameRank(i);
+            if (getDecadeNameRank(i) != 0) {
+                sum += getDecadeNameRank(i);
+                count++;
             }
         }
 
-        average /= getNumDecades();
-
-        if (average > TOP_THOUSAND_RANK) {
-            return 0;
-        }
+        average = sum / count;
 
         return average;
     }
@@ -182,7 +176,7 @@ public class NameRecord implements Comparable<NameRecord> {
     public double getStandardDeviation() {
         
         final int ZERO_EQUIVALENCE = 1200;
-        int mean = getAverageRanking();
+        double mean = getAverageRanking();
         double variance = 0.0;
 
         if (mean == 0) {
@@ -191,14 +185,6 @@ public class NameRecord implements Comparable<NameRecord> {
 
         for (int i = 0; i < getNumDecades(); i++) {
             
-            int currRanking = getDecadeNameRank(i);
-            
-            if (currRanking == 0) {
-                currRanking = ZERO_EQUIVALENCE;
-            } 
-
-            int diff = currRanking - mean;
-            stdev += diff * diff;
         }
 
         return  Math.sqrt(stdev / (getNumDecades() - 1));
