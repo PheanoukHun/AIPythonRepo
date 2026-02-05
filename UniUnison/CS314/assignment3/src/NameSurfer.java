@@ -64,9 +64,28 @@ public class NameSurfer {
 
         int baseYear = 1900;
         String rawData = "Alex 1 2 3 4 5 6 7 8 9 10 11 12 13";
-        NameRecord alexRecord = new NameRecord(baseYear, rawData);
+        NameRecord nameRec = new NameRecord(baseYear, rawData);
 
         // Test 1 For getName() Method
+        String answer = "Alex";
+        if (nameRec.getName().equals(answer)) {
+            System.out.println("\tTest 1 (getName) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 2 For getName() Method
+        rawData = "1 2 3 4 5 6 7 8 9 10";
+        nameRec = new NameRecord(baseYear, rawData);
+        
+        answer = "1";
+        if (nameRec.getName().equals(answer)) {
+            System.out.println("\tTest 2 (getName) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 1 For 
         
     }
 
@@ -93,6 +112,8 @@ public class NameSurfer {
         
         // Delete the following line in the final version of your program.
         // simpleTest();
+
+        myTest();
 
         Scanner fileScanner = getFileScannerForNames(NAME_FILE);
         Names namesDatabase = new Names(fileScanner);
