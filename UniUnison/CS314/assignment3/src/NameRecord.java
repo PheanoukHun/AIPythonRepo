@@ -192,7 +192,7 @@ public class NameRecord implements Comparable<NameRecord> {
             if (currRanking == 0) {
                 currRanking = ZERO_EQUIVALENCE;
             } 
-            stdev += currRanking - getAverageRanking();
+            stdev += currRanking - mean;
         }
 
         stdev *= stdev;

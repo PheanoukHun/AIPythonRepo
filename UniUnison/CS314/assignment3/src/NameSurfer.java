@@ -337,6 +337,14 @@ public class NameSurfer {
         }
 
         // Getting the ArrayList of NameRecord 
+        ArrayList<NameRecord> namesWithAllVowels = namesDatabase.namesWithAllVowels();
+
+        NameRecord mostVolName = namesWithAllVowels.get(0);
+        double mostSTDev = mostVolName.getStandardDeviation();
+        for (int i = 1; i < namesWithAllVowels.size(); i++) {
+            NameRecord currName = namesWithAllVowels.get(i);
+            currVolS
+        }
     }
 
     /*
