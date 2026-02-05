@@ -157,7 +157,7 @@ public class NameSurfer {
             } else if (menuChoice == MenuChoices.ALWAYS_LESS) {
                 alwaysLess(namesDatabase);
             } else if (menuChoice == MenuChoices.STUDENT_SEARCH) {
-                mostVolatileNameForEveryChar(namesDatabase);
+                mostVolatileNames(namesDatabase);
             }
         } while (menuChoice != MenuChoices.QUIT);
         keyboard.close();
@@ -331,12 +331,14 @@ public class NameSurfer {
         }
     }
 
-    private static void mostVolatileNameForEveryChar(Names namesDatabase) {
+    private static void mostVolatileNames(Names namesDatabase) {
         
         // Checking Preconditions
         if (namesDatabase == null) {
             throw new IllegalArgumentException("The parameters cannot be null");
         }
+
+        //
 
         // Getting the ArrayList of NameRecord 
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
