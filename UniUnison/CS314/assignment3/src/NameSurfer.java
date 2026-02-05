@@ -343,8 +343,14 @@ public class NameSurfer {
         double mostSTDev = mostVolName.getStandardDeviation();
         for (int i = 1; i < namesWithAllVowels.size(); i++) {
             NameRecord currName = namesWithAllVowels.get(i);
-            currVolS
+            double currSTDev = currName.getStandardDeviation();
+            if (currSTDev > mostSTDev) {
+                mostVolName = currName;
+                mostSTDev = currSTDev;
+            }
         }
+
+        System.out.println("The Most Volatile Changes in Ranking ");
     }
 
     /*
