@@ -18,7 +18,7 @@ public class NameSurfer {
 
     // TODO: explain your novel menu option here
     /**
-     * For this assignment
+     * For my novel method, I wanted to find the name that had the most 
      */
 
     // TODO: explain your interesting search / trend here
