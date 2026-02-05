@@ -338,7 +338,14 @@ public class NameSurfer {
             throw new IllegalArgumentException("The parameters cannot be null");
         }
 
-        //
+        // Gets only the name that are always ranked
+        ArrayList<String> alwaysRankedArray = namesDatabase.rankedEveryDecade();
+        
+        // Get the NameRecord for Each of those Name
+        ArrayList<NameRecord> filteredDatabase = new ArrayList<>();
+        for (int i = 0; i < alwaysRankedArray.size(); i++) {
+            filteredDatabase.add(namesDatabase.getName(filteredDatabase.get(i)));
+        } 
 
         // Getting the ArrayList of NameRecord 
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
