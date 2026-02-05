@@ -17,6 +17,9 @@ import java.util.Scanner;
 public class NameSurfer {
 
     // TODO: explain your novel menu option here
+    /**
+     * For this assignment
+     */
 
     // TODO: explain your interesting search / trend here
 
