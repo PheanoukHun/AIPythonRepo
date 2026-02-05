@@ -155,7 +155,7 @@ public class NameSurfer {
             } else if (menuChoice == MenuChoices.ALWAYS_LESS) {
                 alwaysLess(namesDatabase);
             } else if (menuChoice == MenuChoices.STUDENT_SEARCH) {
-                mostVolatileNameWithEveryVowels(namesDatabase);
+                mostVolatileNameForEveryChar(namesDatabase);
             }
         } while (menuChoice != MenuChoices.QUIT);
         keyboard.close();
@@ -329,7 +329,7 @@ public class NameSurfer {
         }
     }
 
-    private static void mostVolatileNameWithEveryVowels(Names namesDatabase) {
+    private static void mostVolatileNameForEveryChar(Names namesDatabase) {
         
         // Checking Preconditions
         if (namesDatabase == null) {
@@ -337,23 +337,12 @@ public class NameSurfer {
         }
 
         // Getting the ArrayList of NameRecord 
-        ArrayList<NameRecord> namesWithAllVowels = namesDatabase.namesWithAllVowels();
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-        // NameRecord mostVolName = namesWithAllVowels.get(0);
-        // double mostSTDev = mostVolName.getStandardDeviation();
-        // for (int i = 1; i < namesWithAllVowels.size(); i++) {
-        //     NameRecord currName = namesWithAllVowels.get(i);
-        //     double currSTDev = currName.getStandardDeviation();
-        //     if (currSTDev > mostSTDev) {
-        //         mostVolName = currName;
-        //         mostSTDev = currSTDev;
-        //     }
-        // }
-
-        System.out.println("The Most Volatile Changes in Ranking with Every Vowel in It is:");
-        // System.out.println(mostVolName);
-        for (int i = 0; i < namesWithAllVowels.size(); i++) {
-            System.out.println(namesWithAllVowels.get(i));
+        for (int i = 0; i < alphabetSize; i++) {
+            char charVal = (char) (aCharVal + i);
+            System.out.println("Most Volatile Ranking Name for " + );
+            System.out.println();
         }
 
     }

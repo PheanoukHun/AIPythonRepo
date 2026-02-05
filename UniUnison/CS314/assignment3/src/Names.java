@@ -215,16 +215,21 @@ public class Names {
         return null;
     }
 
-    public ArrayList<NameRecord> namesWithAllVowels() {
-        final String VOWELS = "aeiou"; 
+    public NameRecord mostVolRankPerChar(String charStr) {
+        ArrayList<NameRecord> filteredNames = getMatches(charStr);
         
-        ArrayList<NameRecord> filteredRecords = getMatches(VOWELS.charAt(0) + "");
-        Names filterNamesDB = new Names(filteredRecords);
-        for (int i = 1; i < VOWELS.length(); i++) {
-            filteredRecords = filterNamesDB.getMatches(VOWELS.charAt(i) + "");
-            filterNamesDB = new Names(filteredRecords);
+        NameRecord mostVolName = filteredNames.get(0);
+        double mostVolVal = mostVolName.getStandardDeviation();
+
+        for (int i = 1; i < filteredNames.size(); i++) {
+            NameRecord currName = filteredNames.get(i);
+            double currVolVal = currName.getStandardDeviation();
+            if (mostVolVal < currVolVal) {
+                mostVolName = currName;
+                mostVolVal = currVolVal;
+            }
         }
 
-        return filteredRecords;
+        return mostVolName;
     }
 }
