@@ -51,7 +51,7 @@ public class NameSurfer {
 
     // One of the basic data files given on the assignment.
     // Alter this to try different data files.
-    private static final String NAME_FILE = "names2.txt";
+    private static final String NAME_FILE = "names4.txt";
 
     // A few simple tests for the Names and NameRecord class.
     public static void simpleTest() {
