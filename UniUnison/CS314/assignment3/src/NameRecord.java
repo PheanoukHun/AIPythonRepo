@@ -182,8 +182,8 @@ public class NameRecord implements Comparable<NameRecord> {
     public double getStandardDeviation() {
         
         final int ZERO_EQUIVALENCE = 1200;
-        double stdev = 0.0;
         int mean = getAverageRanking();
+        double variance = 0.0;
 
         if (mean == 0) {
             mean = ZERO_EQUIVALENCE;

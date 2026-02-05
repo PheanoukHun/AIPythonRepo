@@ -6,7 +6,6 @@ def getSTDev(arr):
 
     sum_of_squared_diffs = 0
     mean = getMean(arr)
-    print(f"DEBUG: Mean: {mean}")
 
     for num in arr:
         sum_of_squared_diffs += math.pow(num - mean, 2)
