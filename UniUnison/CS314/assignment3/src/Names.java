@@ -217,7 +217,7 @@ public class Names {
 
     public NameRecord mostVolRankPerChar(String charStr) {
         ArrayList<NameRecord> filteredNames = getMatches(charStr);
-        
+
         NameRecord mostVolName = filteredNames.get(0);
         double mostVolVal = mostVolName.getStandardDeviation();
 
