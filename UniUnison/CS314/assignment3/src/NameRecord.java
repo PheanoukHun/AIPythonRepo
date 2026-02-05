@@ -177,17 +177,16 @@ public class NameRecord implements Comparable<NameRecord> {
         
         final int ZERO_EQUIVALENCE = 1200;
         double mean = getAverageRanking();
-        double variance = 0.0;
-
-        if (mean == 0) {
-            mean = ZERO_EQUIVALENCE;
-        }
-
+        double sum = 0.0;
+ 
+        // Summation of (x_i - mean)^2
         for (int i = 0; i < getNumDecades(); i++) {
-            
+            int currVal = getDecadeNameRank(i);
+            sum += Math.pow(currVal - mean, 2);
         }
 
-        return  Math.sqrt(stdev / (getNumDecades() - 1));
+        double variance = sum / (getNumDecades() - 1);
+        return Math.sqrt(variance);
     }
 
     public String toString() {
