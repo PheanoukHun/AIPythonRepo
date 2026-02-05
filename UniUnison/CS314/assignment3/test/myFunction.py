@@ -3,14 +3,24 @@ import statistics
 
 def getSTDev(arr):
 
-    stDev = 0
+    sum_of_squared_diffs = 0
     mean = getMean(arr)
+    print(f"DEBUG: Mean: {mean}")
 
     for num in arr:
-        stDev = math.pow(num - mean, 2)
+        sum_of_squared_diffs += math.pow(num - mean, 2)
     
-    stDev /= len(arr)
-    stDev = math.sqrt(stDev)
+    print(f"DEBUG: Sum of squared differences: {sum_of_squared_diffs}")
+    
+    # The standard deviation is the square root of the variance.
+    # The variance is the sum of squared differences divided by N-1 (sample) or N (population).
+    # Since the user compares to statistics.stdev (which is sample N-1 by default),
+    # the correct divisor is N-1.
+    
+    
+    variance = sum_of_squared_diffs / (len(arr) - 1)
+    print(f"DEBUG: Variance: {variance}")
+    stDev = math.sqrt(variance)
 
     return stDev
 

@@ -18,7 +18,6 @@ public class NameRecord implements Comparable<NameRecord> {
     private String name;
     private int baseYear;
     private ArrayList<Integer> rankings;
-    private int numDecades;
 
     // Constructor
 
@@ -41,7 +40,6 @@ public class NameRecord implements Comparable<NameRecord> {
         }
 
         scLine.close();
-        numDecades = rankings.size();
     }
 
     // Accessor Methods
@@ -67,7 +65,7 @@ public class NameRecord implements Comparable<NameRecord> {
      * @return
      */
     public int getNumDecades() {
-        return numDecades;
+        return rankings.size();
     }
 
     /**
