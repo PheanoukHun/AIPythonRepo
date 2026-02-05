@@ -216,7 +216,15 @@ public class Names {
     }
 
     public ArrayList<NameRecord> namesWithAllVowels() {
-        String vowels
-        ArrayList<NameRecord> filteredRecords = 
+        final String VOWELS = "aeiou"; 
+        
+        ArrayList<NameRecord> filteredRecords = getMatches(VOWELS.charAt(0) + "");
+        Names filterNamesDB = new Names(filteredRecords);
+        for (int i = 1; i < VOWELS.length(); i++) {
+            filteredRecords = filterNamesDB.getMatches(VOWELS.charAt(i) + "");
+            filterNamesDB = new Names(filteredRecords);
+        }
+
+        return filteredRecords;
     }
 }

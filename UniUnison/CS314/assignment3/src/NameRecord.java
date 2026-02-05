@@ -158,6 +158,29 @@ public class NameRecord implements Comparable<NameRecord> {
         return true;
     }
 
+    public int getAverageRanking() {
+
+        final int TOP_THOUSAND_RANK = 1000;
+        final int ZERO_EQUIVALENCE = 1200;
+        int average = 0;
+
+        for (int i = 0; i < getNumDecades(); i++) {
+            if (getDecadeNameRank(i) == 0) {
+                average += ZERO_EQUIVALENCE;
+            } else {
+                average += getDecadeNameRank(i);
+            }
+        }
+
+        average /= getNumDecades();
+
+        if (average > TOP_THOUSAND_RANK) {
+            return 0;
+        }
+
+        return average;
+    }
+
     public String toString() {
 
         final int LEN_DECADE = 10;
