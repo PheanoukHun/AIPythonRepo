@@ -52,6 +52,10 @@ public class Names {
         Collections.sort(names);
     }
 
+    public Names(ArrayList<NameRecord> names) {
+        this.names = names;
+    }
+
     /**
      * Returns an ArrayList of NameRecord objects that contain a given
      * substring, ignoring case. The names must be in sorted order based on
@@ -211,21 +215,8 @@ public class Names {
         return null;
     }
 
-    public String mostPopNamePerDecade(int decadeNum) {
-
-        NameRecord mostPopName = names.get(0);
-        int mostPopRank = mostPopName.getDecadeNameRank(decadeNum);
-        for (int i = 1; i < names.size(); i++) {
-
-            NameRecord currName = names.get(i);
-            int currNameRank = currName.getDecadeNameRank(decadeNum);
-
-            if (currNameRank != 0 && (currNameRank < mostPopRank || mostPopRank == 0)) {
-                mostPopName = currName;
-                mostPopRank = currNameRank;
-            }
-        }
-
-        return mostPopName.getName();
+    public ArrayList<NameRecord> namesWithAllVowels() {
+        String vowels
+        ArrayList<NameRecord> filteredRecords = 
     }
 }
