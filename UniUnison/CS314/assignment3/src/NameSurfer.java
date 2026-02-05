@@ -20,11 +20,38 @@ public class NameSurfer {
 
     // TODO: explain your interesting search / trend here
 
-    // TODO: add test code for NameRecord class here
+    public static void myTest() {
+
+        int baseYear = 1900;
+        String rawData = "Alex 1 2 3 4 5 6 7 8 9 10 11 12 13";
+        NameRecord nameRec = new NameRecord(baseYear, rawData);
+
+        // Test 1 For getName() Method
+        String answer = "Alex";
+        if (nameRec.getName().equals(answer)) {
+            System.out.println("\tTest 1 (getName) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 2 For getName() Method
+        rawData = "1 2 3 4 5 6 7 8 9 10";
+        nameRec = new NameRecord(baseYear, rawData);
+        
+        answer = "1";
+        if (nameRec.getName().equals(answer)) {
+            System.out.println("\tTest 2 (getName) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 1 For 
+        
+    }
 
     // One of the basic data files given on the assignment.
     // Alter this to try different data files.
-    private static final String NAME_FILE = "names.txt";
+    private static final String NAME_FILE = "names2.txt";
 
     // A few simple tests for the Names and NameRecord class.
     public static void simpleTest() {
@@ -60,34 +87,6 @@ public class NameSurfer {
         }
     }
 
-    public static void myTest() {
-
-        int baseYear = 1900;
-        String rawData = "Alex 1 2 3 4 5 6 7 8 9 10 11 12 13";
-        NameRecord nameRec = new NameRecord(baseYear, rawData);
-
-        // Test 1 For getName() Method
-        String answer = "Alex";
-        if (nameRec.getName().equals(answer)) {
-            System.out.println("\tTest 1 (getName) Has Passed.");
-        } else {
-            System.out.println("*************** TEST FAILED ***************");
-        }
-
-        // Test 2 For getName() Method
-        rawData = "1 2 3 4 5 6 7 8 9 10";
-        nameRec = new NameRecord(baseYear, rawData);
-        
-        answer = "1";
-        if (nameRec.getName().equals(answer)) {
-            System.out.println("\tTest 2 (getName) Has Passed.");
-        } else {
-            System.out.println("*************** TEST FAILED ***************");
-        }
-
-        // Test 1 For 
-        
-    }
 
     // Checks if given name is present in Names.
     private static void performGetNameTest(Names names, String name,
@@ -339,10 +338,13 @@ public class NameSurfer {
         // Getting the ArrayList of NameRecord 
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-        for (int i = 0; i < alphabetSize; i++) {
-            char charVal = (char) (aCharVal + i);
-            System.out.println("Most Volatile Ranking Name for " + );
-            System.out.println();
+        System.out.println("\nThe Most Volatile Name for Each Letter: ");
+
+        // Find the Most Volatile Name For Each Letter
+        for (int i = 0; i < alphabet.length(); i++) {
+            char charVal = alphabet.charAt(i);
+            System.out.print("\t" + charVal + ": ");
+            System.out.println(namesDatabase.mostVolRankPerChar(charVal + "").getName());
         }
 
     }
@@ -408,8 +410,7 @@ public class NameSurfer {
                 + "in every decade.");
         System.out.println("Enter 6 to display all names that are less popular "
                 + "in every decade.");
-        System.out.println("Enter 7 to <replace with description of "
-                + "your method / search>.");
+        System.out.println("Enter 7 to display the most volatile name for each alphabet letter");
         System.out.println("Enter 8 to quit.");
         System.out.println();
     }

@@ -187,17 +187,23 @@ public class NameRecord implements Comparable<NameRecord> {
         double stdev = 0.0;
         int mean = getAverageRanking();
 
+        if (mean == 0) {
+            mean = ZERO_EQUIVALENCE;
+        }
+
         for (int i = 0; i < getNumDecades(); i++) {
+            
             int currRanking = getDecadeNameRank(i);
+            
             if (currRanking == 0) {
                 currRanking = ZERO_EQUIVALENCE;
             } 
-            stdev += currRanking - mean;
+
+            int diff = currRanking - mean;
+            stdev += diff * diff;
         }
 
-        stdev *= stdev;
-        
-        return stdev;
+        return  Math.sqrt(stdev / (getNumDecades() - 1));
     }
 
     public String toString() {
