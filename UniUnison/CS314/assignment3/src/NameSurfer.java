@@ -339,18 +339,23 @@ public class NameSurfer {
         // Getting the ArrayList of NameRecord 
         ArrayList<NameRecord> namesWithAllVowels = namesDatabase.namesWithAllVowels();
 
-        NameRecord mostVolName = namesWithAllVowels.get(0);
-        double mostSTDev = mostVolName.getStandardDeviation();
-        for (int i = 1; i < namesWithAllVowels.size(); i++) {
-            NameRecord currName = namesWithAllVowels.get(i);
-            double currSTDev = currName.getStandardDeviation();
-            if (currSTDev > mostSTDev) {
-                mostVolName = currName;
-                mostSTDev = currSTDev;
-            }
+        // NameRecord mostVolName = namesWithAllVowels.get(0);
+        // double mostSTDev = mostVolName.getStandardDeviation();
+        // for (int i = 1; i < namesWithAllVowels.size(); i++) {
+        //     NameRecord currName = namesWithAllVowels.get(i);
+        //     double currSTDev = currName.getStandardDeviation();
+        //     if (currSTDev > mostSTDev) {
+        //         mostVolName = currName;
+        //         mostSTDev = currSTDev;
+        //     }
+        // }
+
+        System.out.println("The Most Volatile Changes in Ranking with Every Vowel in It is:");
+        // System.out.println(mostVolName);
+        for (int i = 0; i < namesWithAllVowels.size(); i++) {
+            System.out.println(namesWithAllVowels.get(i));
         }
 
-        System.out.println("The Most Volatile Changes in Ranking ");
     }
 
     /*
