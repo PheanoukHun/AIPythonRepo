@@ -102,7 +102,7 @@ public class Names {
         // Searching Through the Names List
         for (int i = 0; i < names.size(); i++) {
             NameRecord currName = names.get(i);
-            if (currName.isAlwaysRanked()) {
+            if (currName.alwaysRanked()) {
                 alwaysRankedNames.add(currName.getName());
             }
         }
@@ -151,7 +151,7 @@ public class Names {
         // Searching Through the Names List
         for (int i = 0; i < names.size(); i++) {
             NameRecord currName = names.get(i);
-            if (currName.isIncreasingInPopularity()) {
+            if (currName.alwayMorePop()) {
                 alwaysIncreasePopNames.add(currName.getName());
             }
         }
@@ -175,7 +175,7 @@ public class Names {
         // Searching Through the Names List
         for (int i = 0; i < names.size(); i++) {
             NameRecord currName = names.get(i);
-            if (currName.isDecreasingInPopularity()) {
+            if (currName.alwaysLessPopular()) {
                 alwaysDecreasePopNames.add(currName.getName());
             }
         }
@@ -211,18 +211,31 @@ public class Names {
         return null;
     }
 
+    /**
+     * 
+     * @param charStr
+     * @return
+     */
     public NameRecord mostVolRankPerChar(String charStr) {
+        
         ArrayList<NameRecord> filteredNames = getMatches(charStr);
 
         NameRecord mostVolName = filteredNames.get(0);
-        double mostVolVal = mostVolName.getStandardDeviation();
+        double mostVolVal = mostVolName.getSDev();
 
         for (int i = 1; i < filteredNames.size(); i++) {
+
             NameRecord currName = filteredNames.get(i);
-            double currVolVal = currName.getStandardDeviation();
-            if (mostVolVal < currVolVal) {
-                mostVolName = currName;
-                mostVolVal = currVolVal;
+
+            // Makes Sure The Name is Always Ranked and Most Volatile
+            if (currName.alwaysRanked()) {
+                
+                double currVolVal = currName.getSDev();
+                
+                if (mostVolVal < currVolVal) {
+                    mostVolName = currName;
+                    mostVolVal = currVolVal;
+                }
             }
         }
 

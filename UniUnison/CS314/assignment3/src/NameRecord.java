@@ -73,7 +73,7 @@ public class NameRecord implements Comparable<NameRecord> {
      * @param decade - Int value; 0 <= decade < getNumDecades()
      * @return
      */
-    public int getDecadeNameRank(int decade) {
+    public int getRank(int decade) {
 
         // Checking Preconditions
         if (decade < 0 || decade >= getNumDecades()) {
@@ -84,18 +84,18 @@ public class NameRecord implements Comparable<NameRecord> {
         return rankings.get(decade);
     }
 
-    public int getMostPopularDecade() {
+    public int getMostPopDec() {
 
         final int LEN_DECADE = 10;
         int mostPopularIndex = 0;
 
-        while (getDecadeNameRank(mostPopularIndex) == 0 && mostPopularIndex < getNumDecades()) {
+        while (getRank(mostPopularIndex) == 0 && mostPopularIndex < getNumDecades()) {
             mostPopularIndex++;
         }
 
-        int currMinRank = getDecadeNameRank(mostPopularIndex);
+        int currMinRank = getRank(mostPopularIndex);
         for (int i = 0; i < getNumDecades(); i++) {
-            int currRank = getDecadeNameRank(i);
+            int currRank = getRank(i);
             if (currRank <= currMinRank && currRank != 0) {
                 mostPopularIndex = i;
                 currMinRank = currRank;
@@ -111,7 +111,7 @@ public class NameRecord implements Comparable<NameRecord> {
         int numTimes = 0;
 
         for (int i = 0; i < getNumDecades(); i++) {
-            if (getDecadeNameRank(i) != 0) {
+            if (getRank(i) != 0) {
                 numTimes++;
             }
         }
@@ -119,7 +119,7 @@ public class NameRecord implements Comparable<NameRecord> {
         return numTimes;
     }
 
-    public boolean isAlwaysRanked() {
+    public boolean alwaysRanked() {
         boolean result = getNumRanked() == getNumDecades();
         return result;
     }
@@ -129,11 +129,11 @@ public class NameRecord implements Comparable<NameRecord> {
         return result;
     }
 
-    public boolean isIncreasingInPopularity() {
+    public boolean alwayMorePop() {
 
-        int prev = getDecadeNameRank(0);
+        int prev = getRank(0);
         for (int i = 1; i < getNumDecades(); i++) {
-            int curr = getDecadeNameRank(i);
+            int curr = getRank(i);
             if (prev < curr || (prev != 0 && curr == 0)) {
                 return false;
             }
@@ -142,11 +142,11 @@ public class NameRecord implements Comparable<NameRecord> {
         return true;
     }
 
-    public boolean isDecreasingInPopularity() {
+    public boolean alwaysLessPopular() {
 
-        int prev = getDecadeNameRank(0);
+        int prev = getRank(0);
         for (int i = 1; i < getNumDecades(); i++) {
-            int curr = getDecadeNameRank(i);
+            int curr = getRank(i);
             if ((prev != 0 && curr != 0 && curr <= prev) || (prev == 0 && curr == 0)
                     || (prev == 0 && curr != 0)) {
                 return false;
@@ -156,14 +156,14 @@ public class NameRecord implements Comparable<NameRecord> {
         return true;
     }
 
-    public double getAverageRanking() {
+    public double getAvgRank() {
         double average = 0;
         int sum = 0;
         int count = 0;
 
         for (int i = 0; i < getNumDecades(); i++) {
-            if (getDecadeNameRank(i) != 0) {
-                sum += getDecadeNameRank(i);
+            if (getRank(i) != 0) {
+                sum += getRank(i);
                 count++;
             }
         }
@@ -173,14 +173,14 @@ public class NameRecord implements Comparable<NameRecord> {
         return average;
     }
 
-    public double getStandardDeviation() {
+    public double getSDev() {
         
-        double mean = getAverageRanking();
+        double mean = getAvgRank();
         double sum = 0.0;
  
         // Summation of (x_i - mean)^2
         for (int i = 0; i < getNumDecades(); i++) {
-            int currVal = getDecadeNameRank(i);
+            int currVal = getRank(i);
             sum += Math.pow(currVal - mean, 2);
         }
 
@@ -194,7 +194,7 @@ public class NameRecord implements Comparable<NameRecord> {
 
         StringBuilder results = new StringBuilder(name + "\n");
         for (int i = 0; i < getNumDecades(); i++) {
-            results.append((baseYear + (i * LEN_DECADE)) + ": " + getDecadeNameRank(i) + "\n");
+            results.append((baseYear + (i * LEN_DECADE)) + ": " + getRank(i) + "\n");
         }
         return results.toString();
     }

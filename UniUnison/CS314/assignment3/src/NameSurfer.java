@@ -17,7 +17,21 @@ import java.util.Scanner;
 public class NameSurfer {
 
     /**
-     * For my novel method, I wanted to find the name per character that had the most volatity when it came to its ranking changes each time the census is taken, especially for the names that are always ranked. As a result I implemented a Standard Deviation function into the NamesRecord class to get standard deviation of each NameRecord, since Standard Deviation is one way the volatility the financial markets are measured. Then I made a method that got the most volatile name in the Names class and I made sure that those names were always ranked by calling the rankedEveryDecade() method from the names 
+     * METHOD EXPLANATION:
+     * For my novel method, I wanted to find the name per character that had the
+     * most volatity when it came to its ranking changes each time the census is
+     * taken, especially for the names that are always ranked. As a result I
+     * implemented a Standard Deviation function into the NamesRecord class to get
+     * standard deviation of each NameRecord, since Standard Deviation is one way
+     * the volatility the financial markets are measured. Then I made a method that
+     * got the most volatile name in the Names class and I made sure that those
+     * names were always ranked by calling the alwaysRank() method from the
+     * NamesRecord class to make sure the name is always Ranked. A name can appear
+     * multiple time because the name can have multiple characters that it is most
+     * volatile for.
+     * 
+     * METHOD RESULTS / INTERESTING TRENDS:
+     * 
      */
 
     // TODO: explain your interesting search / trend here
@@ -53,7 +67,7 @@ public class NameSurfer {
 
     // One of the basic data files given on the assignment.
     // Alter this to try different data files.
-    private static final String NAME_FILE = "names4.txt";
+    private static final String NAME_FILE = "names.txt";
 
     // A few simple tests for the Names and NameRecord class.
     public static void simpleTest() {
@@ -155,7 +169,7 @@ public class NameSurfer {
             } else if (menuChoice == MenuChoices.ALWAYS_LESS) {
                 alwaysLess(namesDatabase);
             } else if (menuChoice == MenuChoices.STUDENT_SEARCH) {
-                mostVolatileNames(namesDatabase);
+                mostVolNames(namesDatabase);
             }
         } while (menuChoice != MenuChoices.QUIT);
         keyboard.close();
@@ -324,20 +338,21 @@ public class NameSurfer {
             System.out.println("\nThe matches with their highest ranking decade are: ");
             for (int i = 0; i < matchedNames.size(); i++) {
                 NameRecord currName = matchedNames.get(i);
-                System.out.println(currName.getName() + " " + currName.getMostPopularDecade());
+                System.out.println(currName.getName() + " " + currName.getMostPopDec());
             }
         }
     }
 
     /**
-     * This method gets and print the most volatile names that are always ranked for
-     * each
-     * alphabetical character.
+     * This method gets and print the most volatile names for each alphabetical
+     * character and the decade where the name was the most popular in. All of the
+     * names are always ranked.
      * 
      * @param namesDatabase - A Names object that cannot equal null and contains the
-     *                      list of names from the text files. pre: namesDatabase != null
+     *                      list of names from the text files. pre: namesDatabase !=
+     *                      null
      */
-    private static void mostVolatileNames(Names namesDatabase) {
+    private static void mostVolNames(Names namesDatabase) {
 
         // Checking Preconditions
         if (namesDatabase == null) {
@@ -355,7 +370,7 @@ public class NameSurfer {
             char charVal = alphabet.charAt(i);
             NameRecord currMostVol = namesDatabase.mostVolRankPerChar(charVal + "");
             System.out.print("\t" + charVal + ": ");
-            System.out.println(currMostVol.getName());
+            System.out.println(currMostVol.getName() + " " + currMostVol.getMostPopDec());
         }
     }
 
