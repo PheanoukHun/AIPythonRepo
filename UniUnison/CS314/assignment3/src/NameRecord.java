@@ -12,8 +12,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.omg.CORBA.UNKNOWN;
-
 public class NameRecord implements Comparable<NameRecord> {
 
     // Private Properties
@@ -187,7 +185,8 @@ public class NameRecord implements Comparable<NameRecord> {
      * This methods returns a boolean value based on whether the rankings is always
      * decreasing or not.
      * 
-     * @return
+     * @return - A boolean values based whether the rankings keeps on decreasing or
+     *         not (getting closer to 1 or not).
      */
     public boolean alwayMorePop() {
 
@@ -198,36 +197,60 @@ public class NameRecord implements Comparable<NameRecord> {
 
         for (int i = 1; i < getNumDecades(); i++) {
 
-            // Getting Rank and Forcing 0 to be UNRANKED_VAL 
+            // Getting Rank and Forcing 0 to be UNRANKED_VAL
             int curr = getRank(i);
             if (curr == 0) {
                 curr = UNRANKED_VAL;
             }
 
-            // Check to See if the rankings stay the same or more causing to be false
+            // Check to See if the ranking stays the same or increase
             if (prev <= curr) {
                 return false;
             }
 
             prev = curr;
         }
+
         return true;
     }
 
+    /**
+     * This methods returns a boolean value based on whether the rankings is always
+     * increasing or not.
+     * 
+     * @return - A boolean values based whether the rankings keeps on increasing or
+     *         not (getting farther from 1 or not).
+     */
     public boolean alwaysLessPopular() {
 
         int prev = getRank(0);
+        if (prev == 0) {
+            prev = UNRANKED_VAL;
+        }
+
         for (int i = 1; i < getNumDecades(); i++) {
+            
+            // Getting Rank and Forcing 0 to be UNRANKED_VAL
             int curr = getRank(i);
-            if ((prev != 0 && curr != 0 && curr <= prev) || (prev == 0 && curr == 0)
-                    || (prev == 0 && curr != 0)) {
+            if (curr == 0) {
+                curr = UNRANKED_VAL;
+            }
+
+            // Check to See if the rankings stays the same or decrease
+            if (prev >= curr) {
                 return false;
             }
+
             prev = curr;
         }
+
         return true;
     }
 
+    /**
+     * This method returns the Average Rank 
+     * @return
+     */
     public double getAvgRank() {
         double average = 0;
         int sum = 0;

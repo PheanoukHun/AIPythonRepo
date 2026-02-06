@@ -41,7 +41,7 @@ public class NameSurfer {
 
     // One of the basic data files given on the assignment.
     // Alter this to try different data files.
-    private static final String NAME_FILE = "names4.txt";
+    private static final String NAME_FILE = "names.txt";
 
     public static void myTest() {
 
@@ -258,7 +258,7 @@ public class NameSurfer {
 
         ArrayList<String> alwaysMorePop = namesDatabase.alwaysMorePopular();
         if (alwaysMorePop.size() > 0) {
-            System.out.println(alwaysMorePop.size() + " names are more popular in every decade.");
+            System.out.println();
             for (String name : alwaysMorePop) {
                 System.out.println(name);
             }
