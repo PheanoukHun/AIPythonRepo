@@ -221,7 +221,7 @@ public class NameRecord implements Comparable<NameRecord> {
      * @return - A boolean values based whether the rankings keeps on increasing or
      *         not (getting farther from 1 or not).
      */
-    public boolean alwaysLessPopular() {
+    public boolean alwaysLessPop() {
 
         // Get Value at 0 and Force 0 to be UNRANKED_VAL
         int prev = getRank(0);

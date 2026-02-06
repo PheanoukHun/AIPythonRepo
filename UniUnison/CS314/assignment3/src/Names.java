@@ -40,9 +40,12 @@ public class Names {
         int baseYear = sc.nextInt();
         int numDecades = sc.nextInt();
 
+        // Scan through Every Line
         while (sc.hasNextLine()) {
+
             String rawRecords = sc.nextLine().trim();
 
+            // Making NameRecord and Whether to add to names arraylist or not.
             NameRecord currName = new NameRecord(baseYear, rawRecords);
             if (!(currName.getNumDecades() != numDecades || currName.getNumRanked() == 0)) {
                 names.add(currName);
@@ -170,17 +173,17 @@ public class Names {
      */
     public ArrayList<String> alwaysLessPopular() {
 
-        ArrayList<String> alwaysDecreasePopNames = new ArrayList<>();
+        ArrayList<String> alwaysLessPopNames = new ArrayList<>();
 
         // Searching Through the Names List
         for (int i = 0; i < names.size(); i++) {
             NameRecord currName = names.get(i);
-            if (currName.alwaysLessPopular()) {
-                alwaysDecreasePopNames.add(currName.getName());
+            if (currName.alwaysLessPop()) {
+                alwaysLessPopNames.add(currName.getName());
             }
         }
 
-        return alwaysDecreasePopNames;
+        return alwaysLessPopNames;
     }
 
     /**

@@ -39,8 +39,6 @@ public class NameSurfer {
      * popularity and recession of popularity.
      */
 
-    // One of the basic data files given on the assignment.
-    // Alter this to try different data files.
     private static final String NAME_FILE = "names.txt";
 
     public static void myTest() {
@@ -58,17 +56,17 @@ public class NameSurfer {
         }
 
         // Test 2 For getName() Method
-        rawData = "1 2 3 4 5 6 7 8 9 10";
-        nameRec = new NameRecord(baseYear, rawData);
+        rawData = "";
+        NameRecord nullNameRec = new NameRecord(baseYear, rawData);
 
-        answer = "1";
-        if (nameRec.getName().equals(answer)) {
+        answer = null;
+        if (nullNameRec.getName() == null) {
             System.out.println("\tTest 2 (getName) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
         }
 
-        // Test 1 For
+        // Test 1 For 
 
     }
 
