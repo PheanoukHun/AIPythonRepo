@@ -12,12 +12,17 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.omg.CORBA.UNKNOWN;
+
 public class NameRecord implements Comparable<NameRecord> {
 
     // Private Properties
     private String name;
     private int baseYear;
     private ArrayList<Integer> rankings;
+
+    // Private Variable
+    final private int UNRANKED_VAL = 5000;
 
     // Constructor
     /**
@@ -83,8 +88,6 @@ public class NameRecord implements Comparable<NameRecord> {
      * This method returns the ranking a name has at in a particular decade
      * specificied by the client.
      * 
-     * pre: 0 <= decade < rankings.getNumDecades() && rankings != null
-     * 
      * @param decade - Int value; 0 <= decade < getNumDecades(); The decade that
      *               user wants to know the ranking of for this particular name.
      * @return - An int value that represents the ranking at that that specific
@@ -93,7 +96,7 @@ public class NameRecord implements Comparable<NameRecord> {
     public int getRank(int decade) {
 
         // Checking Preconditions
-        if (decade < 0 || decade >= getNumDecades() || rankings == null) {
+        if (decade < 0 || decade >= getNumDecades()) {
             throw new IllegalArgumentException("The decade parameter must be greater "
                     + "than or equal to 0 and less than getNumDecades()");
         }
@@ -112,20 +115,19 @@ public class NameRecord implements Comparable<NameRecord> {
 
         // Useful Constants
         final int LEN_DECADE = 10;
-        final int ZERO_EQUIVALENT = 1001;
 
         int mostPopularIndex = 0;
-        int currMinRank = ZERO_EQUIVALENT;
+        int currMinRank = UNRANKED_VAL;
 
         for (int i = 0; i < getNumDecades(); i++) {
 
             // Get Value of Current Decade Rank and Converts ZEROs
             int currRank = getRank(i);
             if (currRank == 0) {
-                currRank = ZERO_EQUIVALENT;
+                currRank = UNRANKED_VAL;
             }
 
-            // Compare
+            // Comparing Values
             if (currRank <= currMinRank) {
                 mostPopularIndex = i;
                 currMinRank = currRank;
@@ -163,25 +165,50 @@ public class NameRecord implements Comparable<NameRecord> {
      * in the top 1000 names during its entire time in the Popularity Data Rankings.
      * 
      * @return - Returns the boolean value based on whether the name has always been
-     *         in the top 1000 the entire time
+     *         in the top 1000 the entire time.
      */
     public boolean alwaysRanked() {
-        return (getNumRanked() == getNumDecades());
+        return getNumRanked() == getNumDecades();
     }
 
+    /**
+     * This method returns a method that checks to see if the name is only ranked
+     * in the top 1000 names once during its entire time in the Popularity Data
+     * Rankings.
+     * 
+     * @return - Returns the boolean value based on whether the name has only been
+     *         in the top 1000 once during the entire time.
+     */
     public boolean isOnlyRankedOnce() {
-        boolean result = getNumRanked() == 1;
-        return result;
+        return getNumRanked() == 1;
     }
 
+    /**
+     * This methods returns a boolean value based on whether the rankings is always
+     * decreasing or not.
+     * 
+     * @return
+     */
     public boolean alwayMorePop() {
 
         int prev = getRank(0);
+        if (prev == 0) {
+            prev = UNRANKED_VAL;
+        }
+
         for (int i = 1; i < getNumDecades(); i++) {
+
+            // Getting Rank and Forcing 0 to be UNRANKED_VAL 
             int curr = getRank(i);
-            if (prev < curr || (prev != 0 && curr == 0)) {
+            if (curr == 0) {
+                curr = UNRANKED_VAL;
+            }
+
+            // Check to See if the rankings stay the same or more causing to be false
+            if (prev <= curr) {
                 return false;
             }
+
             prev = curr;
         }
         return true;
