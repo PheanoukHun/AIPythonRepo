@@ -25,14 +25,16 @@ public class NameRecord implements Comparable<NameRecord> {
      * was first added to the census and a rawData string that contains the name and
      * its popularity over the decades.
      * 
-     * @param baseYear v
-     * @param rawData
+     * @param baseYear - The base year the name was first added to the census
+     * @param rawData  - A string that contains the name and the rank for each each
+     *                 in the census
      */
     public NameRecord(int baseYear, String rawData) {
 
         this.baseYear = baseYear;
         rankings = new ArrayList<>();
 
+        // Scans for Data
         Scanner scLine = new Scanner(rawData);
         if (scLine.hasNext()) {
             name = scLine.next();
