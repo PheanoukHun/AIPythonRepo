@@ -149,17 +149,17 @@ public class Names {
      */
     public ArrayList<String> alwaysMorePopular() {
 
-        ArrayList<String> alwaysIncreasePopNames = new ArrayList<>();
+        ArrayList<String> alwaysMorePopNames = new ArrayList<>();
 
         // Searching Through the Names List
         for (int i = 0; i < names.size(); i++) {
             NameRecord currName = names.get(i);
             if (currName.alwayMorePop()) {
-                alwaysIncreasePopNames.add(currName.getName());
+                alwaysMorePopNames.add(currName.getName());
             }
         }
 
-        return alwaysIncreasePopNames;
+        return alwaysMorePopNames;
     }
 
     /**
@@ -215,33 +215,43 @@ public class Names {
     }
 
     /**
+     * This method returns the Most Volatile name based on the alphabetical letter
+     * passed into it.
      * 
-     * @param charStr
-     * @return
+     * @param letter - A string that has a single alphabetical letter in it that the
+     *               user wants to search for.
+     * @return - A NameRecord object that is the most volatile and has the letter
+     *         inside of it. Returns null if there are no names with that letter inside of it.
      */
-    public NameRecord mostVolRankPerChar(String charStr) {
-        
-        ArrayList<NameRecord> filteredNames = getMatches(charStr);
+    public NameRecord mostVolRankPerChar(String letter) {
 
-        NameRecord mostVolName = filteredNames.get(0);
-        double mostVolVal = mostVolName.getSDev();
+        // Filter for only names that have that letter inside of it
+        ArrayList<NameRecord> filteredNames = getMatches(letter);
 
-        for (int i = 1; i < filteredNames.size(); i++) {
+        // Find the Most Volatile
+        if (filteredNames.size() != 0) {
+            NameRecord mostVolName = filteredNames.get(0);
+            double mostVolVal = mostVolName.getSDev();
 
-            NameRecord currName = filteredNames.get(i);
+            for (int i = 1; i < filteredNames.size(); i++) {
 
-            // Makes Sure The Name is Always Ranked and Most Volatile
-            if (currName.alwaysRanked()) {
-                
-                double currVolVal = currName.getSDev();
-                
-                if (mostVolVal < currVolVal) {
-                    mostVolName = currName;
-                    mostVolVal = currVolVal;
+                NameRecord currName = filteredNames.get(i);
+
+                // Makes Sure The Name is Always Ranked and Most Volatile
+                if (currName.alwaysRanked()) {
+
+                    double currVolVal = currName.getSDev();
+
+                    if (mostVolVal < currVolVal) {
+                        mostVolName = currName;
+                        mostVolVal = currVolVal;
+                    }
                 }
             }
+
+            return mostVolName;
         }
 
-        return mostVolName;
+        return null;
     }
 }

@@ -50,24 +50,64 @@ public class NameSurfer {
         // Test 1 For getName() Method
         String answer = "Alex";
         if (nameRec.getName().equals(answer)) {
-            System.out.println("\tTest 1 (getName) Has Passed.");
+            System.out.println("\nTest 1 (getName) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
         }
 
         // Test 2 For getName() Method
         rawData = "";
-        NameRecord nullNameRec = new NameRecord(baseYear, rawData);
+        int negativeBaseYear = -999999;
+        NameRecord nullNameRec = new NameRecord(negativeBaseYear, rawData);
 
         answer = null;
         if (nullNameRec.getName() == null) {
-            System.out.println("\tTest 2 (getName) Has Passed.");
+            System.out.println("Test 2 (getName) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
         }
 
-        // Test 1 For 
+        // Test 1 For getBaseYear() Method
+        if (nameRec.getBaseYear() == baseYear) {
+            System.out.println("\nTest 1 (getBaseYear) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
 
+        // Test 2 For getBaseYear() Method
+        if (nullNameRec.getBaseYear() == negativeBaseYear) {
+            System.out.println("Test 2 (getBaseYear) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 1 For getNumDecades() Method
+        if (nameRec.getNumDecades() == 13) {
+            System.out.println("\nTest 1 (getNumDecades) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 2 For getBaseYear() Method
+        if (nullNameRec.getNumDecades() == 0) {
+            System.out.println("Test 2 (getNumDecades) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 1 For getRank() Method
+        if (nameRec.getRank(5) == 6) {
+            System.out.println("\nTest 1 (getRank) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 2 For getBaseYear() Method
+        if (nameRec.getRank(0) == 1) {
+            System.out.println("Test 2 (getRank) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
     }
 
     // A few simple tests for the Names and NameRecord class.
