@@ -19,9 +19,6 @@ public class NameRecord implements Comparable<NameRecord> {
     private int baseYear;
     private ArrayList<Integer> rankings;
 
-    // Private Variables
-    private final int ZERO_EQUIVALENT = 1200;
-
     // Constructor
     /**
      * This method creates a NameRecord Object that takes in the base year the name
@@ -100,21 +97,24 @@ public class NameRecord implements Comparable<NameRecord> {
         return rankings.get(decade);
     }
 
+    /**
+     * This method gets the year in which the name was the most popular according to
+     * the current data in the NameRecord Object and Text file.
+     * 
+     * @return
+     */
     public int getMostPopDec() {
 
+        // Useful Constants
         final int LEN_DECADE = 10;
-        final int ZERO_EQUIVALENT = 1200;
-        int mostPopularIndex = 0;
+        final int ZERO_EQUIVALENT = 1001;
 
-        // Replace ZERO with a large Number
-        int currMinRank = getRank(mostPopularIndex);
-        if (currMinRank == 0) {
-            currMinRank = ZERO_EQUIVALENT;
-        }
+        int mostPopularIndex = 0;
+        int currMinRank = ZERO_EQUIVALENT;
 
         for (int i = 0; i < getNumDecades(); i++) {
 
-            // Get Value of Current Decade Rank
+            // Get Value of Current Decade Rank and Converts ZEROs
             int currRank = getRank(i);
             if (currRank == 0) {
                 currRank = ZERO_EQUIVALENT;
@@ -127,6 +127,7 @@ public class NameRecord implements Comparable<NameRecord> {
             }
         }
 
+        // Return most Popular and Most Recent Year
         int mostRecentPopYear = getBaseYear() + (mostPopularIndex * LEN_DECADE);
         return mostRecentPopYear;
     }
