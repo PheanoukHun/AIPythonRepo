@@ -223,6 +223,7 @@ public class NameRecord implements Comparable<NameRecord> {
      */
     public boolean alwaysLessPopular() {
 
+        // Get Value at 0 and Force 0 to be UNRANKED_VAL
         int prev = getRank(0);
         if (prev == 0) {
             prev = UNRANKED_VAL;
@@ -301,20 +302,33 @@ public class NameRecord implements Comparable<NameRecord> {
     }
 
     /**
-     * This method returns a 
+     * This method returns a String representation of the NameRecord Object. It
+     * gives us the name in the first line and prints out each decade and its
+     * corresponding String value.
      * 
+     * @returns - The String Representation of the NameRecord Object.
      */
     public String toString() {
 
         final int LEN_DECADE = 10;
 
         StringBuilder results = new StringBuilder(name + "\n");
+
+        // Append All the Decades and the Rankings During that Decade
         for (int i = 0; i < getNumDecades(); i++) {
             results.append((baseYear + (i * LEN_DECADE)) + ": " + getRank(i) + "\n");
         }
+
         return results.toString();
     }
 
+    /**
+     * This method compares the Two NameRecord object by Comparing the String Values
+     * of Each NameRecord Object
+     * 
+     * @return - An int value that represents whether the current Object is greater
+     *         than or less than the other NameRecord object.
+     */
     public int compareTo(NameRecord other) {
 
         // Checking Precondition
@@ -322,7 +336,7 @@ public class NameRecord implements Comparable<NameRecord> {
             throw new IllegalArgumentException("The parameter cannot be null.");
         }
 
-        int result = getName().compareTo(other.getName());
-        return result;
+        // Compare the Two String Names against each other.
+        return this.getName().compareTo(other.getName());
     }
 }
