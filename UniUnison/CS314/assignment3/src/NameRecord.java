@@ -19,6 +19,9 @@ public class NameRecord implements Comparable<NameRecord> {
     private int baseYear;
     private ArrayList<Integer> rankings;
 
+    // Private Variables
+    private final int ZERO_EQUIVALENT = 1200;
+
     // Constructor
     /**
      * This method creates a NameRecord Object that takes in the base year the name
@@ -49,9 +52,9 @@ public class NameRecord implements Comparable<NameRecord> {
     // Accessor Methods
 
     /**
-     * Returns the Name of the NameRecord
+     * Returns the Name of the Current NameRecord Object.
      * 
-     * @return Returns the Name of the NameRecord
+     * @return - Returns the Name of the NameRecord
      */
     public String getName() {
         return name;
@@ -60,24 +63,31 @@ public class NameRecord implements Comparable<NameRecord> {
     /**
      * Returns the Base Year the Name was recorded in
      * 
-     * @return Returns the Base Year the Name was recorded in
+     * @return - Returns the Base Year the Name was recorded in
      */
     public int getBaseYear() {
         return baseYear;
     }
 
     /**
+     * Return the size of the rankings arraylist which is the number of decades that
+     * each NameRecord have.
      * 
-     * @return
+     * @return - An int that represents the number of times the name has been
+     *         recorded in the census
      */
     public int getNumDecades() {
         return rankings.size();
     }
 
     /**
+     * This method returns the ranking a name has at in a particular decade
+     * specificied by the client.
      * 
-     * @param decade - Int value; 0 <= decade < getNumDecades()
-     * @return
+     * @param decade - Int value; 0 <= decade < getNumDecades(); The decade that
+     *               user wants to know the ranking of for this particular name.
+     * @return - An int value that represents the ranking at that that specific
+     *         decade.
      */
     public int getRank(int decade) {
 
@@ -93,16 +103,25 @@ public class NameRecord implements Comparable<NameRecord> {
     public int getMostPopDec() {
 
         final int LEN_DECADE = 10;
+        final int ZERO_EQUIVALENT = 1200;
         int mostPopularIndex = 0;
 
-        while (getRank(mostPopularIndex) == 0 && mostPopularIndex < getNumDecades()) {
-            mostPopularIndex++;
+        // Replace ZERO with a large Number
+        int currMinRank = getRank(mostPopularIndex);
+        if (currMinRank == 0) {
+            currMinRank = ZERO_EQUIVALENT;
         }
 
-        int currMinRank = getRank(mostPopularIndex);
         for (int i = 0; i < getNumDecades(); i++) {
+
+            // Get Value of Current Decade Rank
             int currRank = getRank(i);
-            if (currRank <= currMinRank && currRank != 0) {
+            if (currRank == 0) {
+                currRank = ZERO_EQUIVALENT;
+            }
+
+            // Compare
+            if (currRank <= currMinRank) {
                 mostPopularIndex = i;
                 currMinRank = currRank;
             }
