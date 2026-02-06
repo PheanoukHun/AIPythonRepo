@@ -19,12 +19,12 @@ public class NameSurfer {
     /**
      * METHOD EXPLANATION:
      * For my novel method, I wanted to find the name per character that had the
-     * most volatity when it came to its ranking changes each time the census is
-     * taken, especially for the names that are always ranked. As a result I
-     * implemented a Standard Deviation function into the NamesRecord class to get
-     * standard deviation of each NameRecord, since Standard Deviation is one way
-     * the volatility the financial markets are measured. Then I made a method that
-     * got the most volatile name in the Names class and I made sure that those
+     * most volatity when it came to its ranking changes each time the Popularity
+     * Data Rankings is taken, especially for the names that are always ranked. As a
+     * result I implemented a Standard Deviation function into the NamesRecord class
+     * to get standard deviation of each NameRecord, since Standard Deviation is one
+     * way the volatility the financial markets are measured. Then I made a method
+     * that got the most volatile name in the Names class and I made sure that those
      * names were always ranked by calling the alwaysRank() method from the
      * NamesRecord class to make sure the name is always Ranked. A name can appear
      * multiple time because the name can have multiple characters that it is most
@@ -34,9 +34,9 @@ public class NameSurfer {
      * After analyzing all the text files, I can say that the names that are most
      * common volatile names are from the 1970s to the 2000s. Additionally names
      * that start the letter 'A' are most volatile, taking up most of the outputs. I
-     * hypothesize that a partial answer to this trend could be a result of
-     * digitalization, since it would lead to easier data gathering for the census
-     * as oppose walking door to door to manually take the census.
+     * hypothesize that a partial answer to this trend could be a result of a shift
+     * in the cultural views of these names can could be result in these waves of
+     * popularity and recession of popularity.
      */
 
     // One of the basic data files given on the assignment.

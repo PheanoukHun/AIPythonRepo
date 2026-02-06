@@ -22,12 +22,14 @@ public class NameRecord implements Comparable<NameRecord> {
     // Constructor
     /**
      * This method creates a NameRecord Object that takes in the base year the name
-     * was first added to the census and a rawData string that contains the name and
+     * was first added to the Popularity Data Rankings and a rawData string that
+     * contains the name and
      * its popularity over the decades.
      * 
-     * @param baseYear - The base year the name was first added to the census
+     * @param baseYear - The base year the name was first added to the Popularity
+     *                 Data Rankings
      * @param rawData  - A string that contains the name and the rank for each each
-     *                 in the census
+     *                 in the Popularity Data Rankings
      */
     public NameRecord(int baseYear, String rawData) {
 
@@ -71,7 +73,7 @@ public class NameRecord implements Comparable<NameRecord> {
      * each NameRecord have.
      * 
      * @return - An int that represents the number of times the name has been
-     *         recorded in the census
+     *         recorded in the Popularity Data Rankings
      */
     public int getNumDecades() {
         return rankings.size();
@@ -81,6 +83,8 @@ public class NameRecord implements Comparable<NameRecord> {
      * This method returns the ranking a name has at in a particular decade
      * specificied by the client.
      * 
+     * pre: 0 <= decade < rankings.getNumDecades() && rankings != null
+     * 
      * @param decade - Int value; 0 <= decade < getNumDecades(); The decade that
      *               user wants to know the ranking of for this particular name.
      * @return - An int value that represents the ranking at that that specific
@@ -89,7 +93,7 @@ public class NameRecord implements Comparable<NameRecord> {
     public int getRank(int decade) {
 
         // Checking Preconditions
-        if (decade < 0 || decade >= getNumDecades()) {
+        if (decade < 0 || decade >= getNumDecades() || rankings == null) {
             throw new IllegalArgumentException("The decade parameter must be greater "
                     + "than or equal to 0 and less than getNumDecades()");
         }
@@ -101,7 +105,8 @@ public class NameRecord implements Comparable<NameRecord> {
      * This method gets the year in which the name was the most popular according to
      * the current data in the NameRecord Object and Text file.
      * 
-     * @return
+     * @return - An int value that represents the year that the name was most
+     *         popular.
      */
     public int getMostPopDec() {
 
@@ -132,10 +137,18 @@ public class NameRecord implements Comparable<NameRecord> {
         return mostRecentPopYear;
     }
 
+    /**
+     * This method tells the user the number of times a name has been ranked in the
+     * top 1000 throughout its history in the Popularity Data Rankings.
+     * 
+     * @return - Returns an int that represents the number of times the name has
+     *         been in the top 1000.
+     */
     public int getNumRanked() {
 
         int numTimes = 0;
 
+        // Count the Number of times it has been in the top 1000
         for (int i = 0; i < getNumDecades(); i++) {
             if (getRank(i) != 0) {
                 numTimes++;
@@ -145,9 +158,15 @@ public class NameRecord implements Comparable<NameRecord> {
         return numTimes;
     }
 
+    /**
+     * This method returns a method that checks to see if the name is always ranked
+     * in the top 1000 names during its entire time in the Popularity Data Rankings.
+     * 
+     * @return - Returns the boolean value based on whether the name has always been
+     *         in the top 1000 the entire time
+     */
     public boolean alwaysRanked() {
-        boolean result = getNumRanked() == getNumDecades();
-        return result;
+        return (getNumRanked() == getNumDecades());
     }
 
     public boolean isOnlyRankedOnce() {
