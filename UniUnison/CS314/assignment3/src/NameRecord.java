@@ -300,6 +300,8 @@ public class NameRecord implements Comparable<NameRecord> {
      * This method compares the Two NameRecord object by Comparing the String Values
      * of Each NameRecord Object
      * 
+     * pre: other != null
+     * 
      * @return - An int value that represents whether the current Object is greater
      *         than or less than the other NameRecord object.
      */
@@ -310,7 +312,6 @@ public class NameRecord implements Comparable<NameRecord> {
             throw new IllegalArgumentException("The parameter cannot be null.");
         }
 
-        // Compare the Two String Names against each other.
         return this.getName().compareTo(other.getName());
         
     }
@@ -326,7 +327,7 @@ public class NameRecord implements Comparable<NameRecord> {
 
         double sum = 0.0;
 
-        // Getting Sum and Num Counts
+        // Calculating Mean
         for (int i = 0; i < getNumDecades(); i++) {
             
             int currRank = getRank(i);

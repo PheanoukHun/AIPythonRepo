@@ -57,12 +57,11 @@ public class NameSurfer {
         }
 
         // Test 2 For getName() Method
-        rawData = "";
         int negativeBaseYear = -999999;
-        NameRecord nullNameRec = new NameRecord(negativeBaseYear, rawData);
+        rawData = "b 13 12 11 10 9 8 7 6 5 4 3 2 1";
+        NameRecord revNameRecord = new NameRecord(negativeBaseYear, rawData);
 
-        answer = null;
-        if (nullNameRec.getName() == null) {
+        if (revNameRecord.getName().equals("b")) {
             System.out.println("Test 2 (getName) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
@@ -76,7 +75,7 @@ public class NameSurfer {
         }
 
         // Test 2 For getBaseYear() Method
-        if (nullNameRec.getBaseYear() == negativeBaseYear) {
+        if (revNameRecord.getBaseYear() == negativeBaseYear) {
             System.out.println("Test 2 (getBaseYear) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
@@ -90,7 +89,7 @@ public class NameSurfer {
         }
 
         // Test 2 For getBaseYear() Method
-        if (nullNameRec.getNumDecades() == 0) {
+        if (revNameRecord.getNumDecades() == 13) {
             System.out.println("Test 2 (getNumDecades) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
@@ -104,7 +103,7 @@ public class NameSurfer {
         }
 
         // Test 2 For getBaseYear() Method
-        if (nameRec.getRank(0) == 1) {
+        if (nameRec.getRank(5) == 7) {
             System.out.println("Test 2 (getRank) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
@@ -118,7 +117,7 @@ public class NameSurfer {
         }
 
         // Test 2 For getBaseYear() Method
-        if (nullNameRec.getMostPopDec() == negativeBaseYear) {
+        if (revNameRecord.getMostPopDec() == negativeBaseYear) {
             System.out.println("Test 2 (getMostPopDec) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
@@ -132,7 +131,7 @@ public class NameSurfer {
         }
 
         // Test 2 For getNumRanked() Method
-        if (nullNameRec.getNumRanked() == 0) {
+        if (revNameRecord.getNumRanked() == revNameRecord.getNumDecades()) {
             System.out.println("Test 2 (getNumRanked) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
@@ -146,7 +145,7 @@ public class NameSurfer {
         }
 
         // Test 2 For isOnlyRankedOnce() Method
-        if (nullNameRec.alwaysRanked()) {
+        if (revNameRecord.alwaysRanked()) {
             System.out.println("Test 2 (alwaysRanked) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
@@ -160,7 +159,7 @@ public class NameSurfer {
         }
 
         // Test 2 For isOnlyRankedOnce() Method
-        if (!nullNameRec.isOnlyRankedOnce()) {
+        if (!revNameRecord.isOnlyRankedOnce()) {
             System.out.println("Test 2 (isOnlyRankedOnce) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
@@ -173,11 +172,7 @@ public class NameSurfer {
             System.out.println("*************** TEST FAILED ***************");
         }
 
-        // Test 2 For alwaysRanked() Method
-
-        rawData = "b 13 12 11 10 9 8 7 6 5 4 3 2 1";
-        NameRecord revNameRecord = new NameRecord(negativeBaseYear, rawData);
-
+        // Test 2 For alwaysMorePop() Method
         if (revNameRecord.alwayMorePop()) {
             System.out.println("Test 2 (alwayMorePop) Has Passed.");
         } else {
@@ -199,22 +194,23 @@ public class NameSurfer {
         }
 
         // Test 1 For getSDev() Method
-        if (((int)(nameRec.getSDev() * 100)) == 389) {
+        if (((int) (nameRec.getSDev() * 100)) == 389) {
             System.out.println("\nTest 1 (getSDev) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
         }
 
         // Test 2 For getSDev() Method
-        
-        if (((int)(revNameRecord.getSDev() * 100)) == 389) {
+
+        if (((int) (revNameRecord.getSDev() * 100)) == 389) {
             System.out.println("Test 2 (getSDev) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
         }
 
         // Test 1 For toString() Method
-        rawData = "Alex\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n";
+        rawData = "Alex\n1900: 1\n1910: 2\n1920: 3\n1930: 4\n1940: 5\n1950: 6\n1960: 7"
+                + "\n1970: 8\n1980: 9\n1990: 10" + "\n2000: 11\n2010: 12\n2020: 13\n";
 
         if (rawData.equals(nameRec.toString())) {
             System.out.println("\nTest 1 (toString) Has Passed.");
@@ -223,13 +219,31 @@ public class NameSurfer {
         }
 
         // Test 2 For toString() Method
-        rawData = "b\n-999999: 13\n-999989: 12\n-999979: 11\n-999969: 10\n-999959: 9\n-999949: 8\n-999939: 7\n-999929: 6\n-999919: 5\n-999909: 4\n-999899: 3\n-999889: 2\n-999879: 1\n";
+        rawData = "b\n-999999: 13\n-999989: 12\n-999979: 11\n-999969: 10\n-999959: 9"
+                + "\n-999949: 8\n-999939: 7\n-999929: 6\n-999919: 5\n-999909: 4\n-999899: 3"
+                + "\n-999889: 2\n-999879: 1\n";
 
         if (rawData.equals(revNameRecord.toString())) {
             System.out.println("Test 2 (toString) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
             System.out.println(revNameRecord);
+        }
+
+        // Testcase 1 For compareTo() Method
+        rawData = "Ag 1 2 3 4 5 6";
+        NameRecord agNameRecord = new NameRecord(baseYear, rawData);
+        if (agNameRecord.compareTo(nameRec) < 0) {
+            System.out.println("\nTest 1 (compareTo) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Testcase 2 For compareTo() Method
+        if (revNameRecord.compareTo(revNameRecord) == 0) {
+            System.out.println("Test 2 (compareTo) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
         }
     }
 
