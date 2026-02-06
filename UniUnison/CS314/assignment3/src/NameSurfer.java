@@ -31,10 +31,17 @@ public class NameSurfer {
      * volatile for.
      * 
      * METHOD RESULTS / INTERESTING TRENDS:
-     * 
+     * After analyzing all the text files, I can say that the names that are most
+     * common volatile names are from the 1970s to the 2000s. Additionally names
+     * that start the letter 'A' are most volatile, taking up most of the outputs. I
+     * hypothesize that a partial answer to this trend could be a result of
+     * digitalization, since it would lead to easier data gathering for the census
+     * as oppose walking door to door to manually take the census.
      */
 
-    // TODO: explain your interesting search / trend here
+    // One of the basic data files given on the assignment.
+    // Alter this to try different data files.
+    private static final String NAME_FILE = "names4.txt";
 
     public static void myTest() {
 
@@ -64,10 +71,6 @@ public class NameSurfer {
         // Test 1 For
 
     }
-
-    // One of the basic data files given on the assignment.
-    // Alter this to try different data files.
-    private static final String NAME_FILE = "names.txt";
 
     // A few simple tests for the Names and NameRecord class.
     public static void simpleTest() {

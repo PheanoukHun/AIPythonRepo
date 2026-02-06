@@ -20,10 +20,12 @@ public class NameRecord implements Comparable<NameRecord> {
     private ArrayList<Integer> rankings;
 
     // Constructor
-
     /**
+     * This method creates a NameRecord Object that takes in the base year the name
+     * was first added to the census and a rawData string that contains the name and
+     * its popularity over the decades.
      * 
-     * @param baseYear
+     * @param baseYear v
      * @param rawData
      */
     public NameRecord(int baseYear, String rawData) {
@@ -46,6 +48,7 @@ public class NameRecord implements Comparable<NameRecord> {
 
     /**
      * Returns the Name of the NameRecord
+     * 
      * @return Returns the Name of the NameRecord
      */
     public String getName() {
@@ -54,6 +57,7 @@ public class NameRecord implements Comparable<NameRecord> {
 
     /**
      * Returns the Base Year the Name was recorded in
+     * 
      * @return Returns the Base Year the Name was recorded in
      */
     public int getBaseYear() {
@@ -174,10 +178,10 @@ public class NameRecord implements Comparable<NameRecord> {
     }
 
     public double getSDev() {
-        
+
         double mean = getAvgRank();
         double sum = 0.0;
- 
+
         // Summation of (x_i - mean)^2
         for (int i = 0; i < getNumDecades(); i++) {
             int currVal = getRank(i);
