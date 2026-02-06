@@ -21,10 +21,13 @@ def getMean(arr):
     for num in arr:
         sum += num
 
+    print(sum)
+
     return sum / len(arr)
 
-randNums = [random.randint(1, 100) for i in range(20)]
+randNums = [i for i in range(1, 14)]
 print("\nRandom Array:", *randNums)
+print
 
 print("\nMy Function (Mean):", getMean(randNums))
 print("Python's Function (Mean):", statistics.mean(randNums))

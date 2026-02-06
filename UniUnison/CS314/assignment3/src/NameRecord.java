@@ -253,22 +253,20 @@ public class NameRecord implements Comparable<NameRecord> {
      * This method returns the Standard Deviation of the Ranking of Each Method.
      * 
      * @return - Returns a doubles value that represents the volatility of the
-     *         Name's Rankings. Returns 0 if there is 1 or less values in rankings.
+     *         Name's Rankings.
     */
    public double getSDev() {
-       
-        // No Standard Deviation to Record at all.
-        if (getNumDecades() <= 1) {
-            return 0;
-        }
 
         double mean = getAvgRank();
         double sum = 0.0;
         
         // Calculate Standard Deviation
         for (int i = 0; i < getNumDecades(); i++) {
-            int currVal = getRank(i);
             
+            int currVal = getRank(i);
+            if (currVal == 0) {
+                currVal = UNRANKED_VAL;
+            }
 
             sum += Math.pow(currVal - mean, 2);
         }
@@ -319,8 +317,7 @@ public class NameRecord implements Comparable<NameRecord> {
     
     /**
      * This method returns the Average Rank of the Name throughout the Decades. It
-     * returns a 0 if there are no values in Ranking ArrayList else returns the
-     * average of all the ranks.
+     * returns the average of all the ranks.
      * 
      * @return - Returns a Double value that represents the average of all the
      *         rankings and returns 0 if there are no ranks in ranking.
@@ -328,11 +325,6 @@ public class NameRecord implements Comparable<NameRecord> {
     private double getAvgRank() {
 
         double sum = 0.0;
-
-        // If there is no value or only 1 value in Rankings
-        if (getNumDecades() == 0) {
-            return 0;
-        }
 
         // Getting Sum and Num Counts
         for (int i = 0; i < getNumDecades(); i++) {

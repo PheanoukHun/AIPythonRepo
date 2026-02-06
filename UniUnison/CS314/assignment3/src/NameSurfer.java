@@ -197,6 +197,20 @@ public class NameSurfer {
         } else {
             System.out.println("*************** TEST FAILED ***************");
         }
+
+        // Test 1 For getSDev() Method
+        if (Math.round(nameRec.getSDev(), 2) == 3.98) {
+            System.out.println("\nTest 1 (getSDev) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 2 For alwaysLessPop() Method
+        if (!revNameRecord.alwaysLessPop()) {
+            System.out.println("Test 2 (alwaysLessPop) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
     }
 
     // A few simple tests for the Names and NameRecord class.
