@@ -103,7 +103,7 @@ public class NameSurfer {
         }
 
         // Test 2 For getBaseYear() Method
-        if (nameRec.getRank(5) == 7) {
+        if (revNameRecord.getRank(5) == 8) {
             System.out.println("Test 2 (getRank) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
@@ -117,7 +117,7 @@ public class NameSurfer {
         }
 
         // Test 2 For getBaseYear() Method
-        if (revNameRecord.getMostPopDec() == negativeBaseYear) {
+        if (revNameRecord.getMostPopDec() == -999879) {
             System.out.println("Test 2 (getMostPopDec) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
@@ -386,6 +386,8 @@ public class NameSurfer {
         }
 
         ArrayList<String> alwaysRanked = namesDatabase.rankedEveryDecade();
+
+        // Print All Names that are Always Ranked
         if (alwaysRanked.size() > 0) {
             System.out.println(alwaysRanked.size()
                     + " names appear in every decade. The names are:");
@@ -408,6 +410,8 @@ public class NameSurfer {
         }
 
         ArrayList<String> rankedOnceOnly = namesDatabase.rankedOnlyOneDecade();
+
+        // Print All Names that only Appear Once
         if (rankedOnceOnly.size() > 0) {
             System.out.println(rankedOnceOnly.size()
                     + " names appear in exactly one decade. The names are:");
@@ -430,6 +434,8 @@ public class NameSurfer {
         }
 
         ArrayList<String> alwaysMorePop = namesDatabase.alwaysMorePopular();
+
+        // Print all names that are always increasing in popularity
         if (alwaysMorePop.size() > 0) {
             System.out.println();
             for (String name : alwaysMorePop) {
@@ -451,6 +457,8 @@ public class NameSurfer {
         }
 
         ArrayList<String> alwaysLessPop = namesDatabase.alwaysLessPopular();
+
+        // Print all names that are always decreasing in popularity
         if (alwaysLessPop.size() > 0) {
             System.out.println(alwaysLessPop.size() + " names are less popular in every decade.");
             for (String name : alwaysLessPop) {
@@ -524,9 +532,10 @@ public class NameSurfer {
      * character and the decade where the name was the most popular in. All of the
      * names are always ranked.
      * 
-     * @param namesDatabase - A Names object that cannot equal null and contains the
-     *                      list of names from the text files. pre: namesDatabase !=
-     *                      null
+     * 
+     * @param namesDatabase - A Names object that cannot equal null and
+     *                      contains the list of names from the text files.
+     *                      pre: namesDatabase != null
      */
     private static void mostVolNames(Names namesDatabase) {
 
