@@ -131,9 +131,69 @@ public class NameSurfer {
             System.out.println("*************** TEST FAILED ***************");
         }
 
-        // Test 2 For getBaseYear() Method
+        // Test 2 For getNumRanked() Method
         if (nullNameRec.getNumRanked() == 0) {
             System.out.println("Test 2 (getNumRanked) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 1 For alwaysRanked() Method
+        if (nameRec.alwaysRanked()) {
+            System.out.println("\nTest 1 (alwaysRanked) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 2 For isOnlyRankedOnce() Method
+        if (nullNameRec.alwaysRanked()) {
+            System.out.println("Test 2 (alwaysRanked) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 1 For isOnlyRankedOnce() Method
+        if (!nameRec.isOnlyRankedOnce()) {
+            System.out.println("\nTest 1 (isOnlyRankedOnce) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 2 For isOnlyRankedOnce() Method
+        if (!nullNameRec.isOnlyRankedOnce()) {
+            System.out.println("Test 2 (isOnlyRankedOnce) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 1 For alwayMorePop() Method
+        if (!nameRec.alwayMorePop()) {
+            System.out.println("\nTest 1 (alwayMorePop) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 2 For alwaysRanked() Method
+
+        rawData = "a 13 12 11 10 9 8 7 6 5 4 3 2 1";
+        NameRecord revNameRecord = new NameRecord(negativeBaseYear, rawData);
+
+        if (revNameRecord.alwayMorePop()) {
+            System.out.println("Test 2 (alwayMorePop) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 1 For alwaysLessPop() Method
+        if (nameRec.alwaysLessPop()) {
+            System.out.println("\nTest 1 (alwaysLessPop) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 2 For alwaysLessPop() Method
+        if (!revNameRecord.alwaysLessPop()) {
+            System.out.println("Test 2 (alwaysLessPop) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
         }

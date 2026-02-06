@@ -20,7 +20,7 @@ public class NameRecord implements Comparable<NameRecord> {
     private ArrayList<Integer> rankings;
 
     // Private Variable
-    final private int UNRANKED_VAL = 5000;
+    final private int UNRANKED_VAL = 1200;
 
     // Constructor
     /**
@@ -248,39 +248,15 @@ public class NameRecord implements Comparable<NameRecord> {
         return true;
     }
 
-    /**
-     * This method returns the Average Rank of the Name throughout the Decades. It
-     * returns a 0 if there are no values in Ranking ArrayList else returns the
-     * average of all the ranks.
-     * 
-     * @return - Returns a Double value that represents the average of all the
-     *         rankings and returns 0 if there are no ranks in ranking.
-     */
-    public double getAvgRank() {
-
-        int sum = 0;
-
-        // If there is no value or only 1 value in Rankings
-        if (getNumDecades() == 0) {
-            return 0;
-        }
-
-        // Getting Sum and Num Counts
-        for (int i = 0; i < getNumDecades(); i++) {
-            sum += getRank(i);
-        }
-
-        return ((double) sum) / getNumDecades();
-    }
-
+    
     /**
      * This method returns the Standard Deviation of the Ranking of Each Method.
      * 
      * @return - Returns a doubles value that represents the volatility of the
      *         Name's Rankings. Returns 0 if there is 1 or less values in rankings.
-     */
-    public double getSDev() {
-
+    */
+   public double getSDev() {
+       
         // No Standard Deviation to Record at all.
         if (getNumDecades() <= 1) {
             return 0;
@@ -288,16 +264,16 @@ public class NameRecord implements Comparable<NameRecord> {
 
         double mean = getAvgRank();
         double sum = 0.0;
-
-        // Summation of (x_i - mean)^2
+        
+        // Calculate Standard Deviation
         for (int i = 0; i < getNumDecades(); i++) {
             int currVal = getRank(i);
+            
+
             sum += Math.pow(currVal - mean, 2);
         }
 
-        // Variance / (N - 1)
         double variance = sum / (getNumDecades() - 1);
-
         return Math.sqrt(variance);
     }
 
@@ -309,11 +285,11 @@ public class NameRecord implements Comparable<NameRecord> {
      * @returns - The String Representation of the NameRecord Object.
      */
     public String toString() {
-
+        
         final int LEN_DECADE = 10;
-
+        
         StringBuilder results = new StringBuilder(name + "\n");
-
+        
         // Append All the Decades and the Rankings During that Decade
         for (int i = 0; i < getNumDecades(); i++) {
             results.append((baseYear + (i * LEN_DECADE)) + ": " + getRank(i) + "\n");
@@ -338,5 +314,37 @@ public class NameRecord implements Comparable<NameRecord> {
 
         // Compare the Two String Names against each other.
         return this.getName().compareTo(other.getName());
+        
+    }
+    
+    /**
+     * This method returns the Average Rank of the Name throughout the Decades. It
+     * returns a 0 if there are no values in Ranking ArrayList else returns the
+     * average of all the ranks.
+     * 
+     * @return - Returns a Double value that represents the average of all the
+     *         rankings and returns 0 if there are no ranks in ranking.
+     */
+    private double getAvgRank() {
+
+        double sum = 0.0;
+
+        // If there is no value or only 1 value in Rankings
+        if (getNumDecades() == 0) {
+            return 0;
+        }
+
+        // Getting Sum and Num Counts
+        for (int i = 0; i < getNumDecades(); i++) {
+            
+            int currRank = getRank(i);
+            if (currRank == 0) {
+                currRank = UNRANKED_VAL;
+            }
+
+            sum += currRank;
+        }
+
+        return sum / getNumDecades();
     }
 }
