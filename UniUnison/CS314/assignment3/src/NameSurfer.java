@@ -36,7 +36,8 @@ public class NameSurfer {
      * that start the letter 'A' are most volatile, taking up most of the outputs. I
      * hypothesize that a partial answer to this trend could be a result of a shift
      * in the cultural views of these names can could be result in these waves of
-     * popularity and recession of popularity.
+     * popularity and recession of popularity especially along with the accelerated
+     * growth of the poulation.
      */
 
     private static final String NAME_FILE = "names.txt";
@@ -108,6 +109,34 @@ public class NameSurfer {
         } else {
             System.out.println("*************** TEST FAILED ***************");
         }
+
+        // Test 1 For getMostPopDec() Method
+        if (nameRec.getMostPopDec() == baseYear) {
+            System.out.println("\nTest 1 (getMostPopDec) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 2 For getBaseYear() Method
+        if (nullNameRec.getMostPopDec() == negativeBaseYear) {
+            System.out.println("Test 2 (getMostPopDec) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 1 For getNumRanked() Method
+        if (nameRec.getNumRanked() == nameRec.getNumDecades()) {
+            System.out.println("\nTest 1 (getNumRanked) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 2 For getBaseYear() Method
+        if (nullNameRec.getNumRanked() == 0) {
+            System.out.println("Test 2 (getNumRanked) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
     }
 
     // A few simple tests for the Names and NameRecord class.
@@ -165,14 +194,12 @@ public class NameSurfer {
     // main method. Driver for the whole program
     public static void main(String[] args) {
 
-        // Delete the following line in the final version of your program.
-        // simpleTest();
-
         myTest();
 
         Scanner fileScanner = getFileScannerForNames(NAME_FILE);
         Names namesDatabase = new Names(fileScanner);
         fileScanner.close();
+
         runOptions(namesDatabase);
     }
 
