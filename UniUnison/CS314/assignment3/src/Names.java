@@ -52,10 +52,6 @@ public class Names {
         Collections.sort(names);
     }
 
-    public Names(ArrayList<NameRecord> names) {
-        this.names = names;
-    }
-
     /**
      * Returns an ArrayList of NameRecord objects that contain a given
      * substring, ignoring case. The names must be in sorted order based on

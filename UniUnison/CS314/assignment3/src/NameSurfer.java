@@ -16,9 +16,8 @@ import java.util.Scanner;
 
 public class NameSurfer {
 
-    // TODO: explain your novel menu option here
     /**
-     * For my novel method, I wanted to find the name that had the most
+     * For my novel method, I wanted to find the name per character that had the most volatity when it came to its ranking changes each time the census is taken, especially for the names that are always ranked. As a result I implemented a Standard Deviation function into the NamesRecord class to get standard deviation of each NameRecord, since Standard Deviation is one way the volatility the financial markets are measured. Then I made a method that got the most volatile name in the Names class and I made sure that those names were always ranked by calling the rankedEveryDecade() method from the names 
      */
 
     // TODO: explain your interesting search / trend here
@@ -331,32 +330,18 @@ public class NameSurfer {
     }
 
     /**
-     * This method gets and print the most volatile names that are always ranked for each
+     * This method gets and print the most volatile names that are always ranked for
+     * each
      * alphabetical character.
      * 
      * @param namesDatabase - A Names object that cannot equal null and contains the
-     *                      list of names from the text files.
+     *                      list of names from the text files. pre: namesDatabase != null
      */
     private static void mostVolatileNames(Names namesDatabase) {
 
         // Checking Preconditions
         if (namesDatabase == null) {
             throw new IllegalArgumentException("The parameters cannot be null");
-        }
-
-        // Gets only the name that are always ranked in String Form
-        ArrayList<String> alwaysRankedArray = namesDatabase.rankedEveryDecade();
-
-        // Check to See if There is No Names at all that is always ranked
-        if (alwaysRankedArray.size() == 0) {
-            System.out.println("There are no Names that are Always Ranked.");
-            return;
-        }
-
-        // Get the NameRecord for Each of those Name
-        ArrayList<NameRecord> filteredDatabase = new ArrayList<>();
-        for (int i = 0; i < alwaysRankedArray.size(); i++) {
-            filteredDatabase.add(namesDatabase.getName(alwaysRankedArray.get(i)));
         }
 
         // Getting the ArrayList of NameRecord
@@ -368,10 +353,10 @@ public class NameSurfer {
         // Find and Print the Most Volatile Name For Each Letter
         for (int i = 0; i < alphabet.length(); i++) {
             char charVal = alphabet.charAt(i);
+            NameRecord currMostVol = namesDatabase.mostVolRankPerChar(charVal + "");
             System.out.print("\t" + charVal + ": ");
-            System.out.println(namesDatabase.mostVolRankPerChar(charVal + "").getName());
+            System.out.println(currMostVol.getName());
         }
-
     }
 
     /*
