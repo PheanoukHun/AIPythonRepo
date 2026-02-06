@@ -18,7 +18,7 @@ public class NameSurfer {
 
     // TODO: explain your novel menu option here
     /**
-     * For my novel method, I wanted to find the name that had the most 
+     * For my novel method, I wanted to find the name that had the most
      */
 
     // TODO: explain your interesting search / trend here
@@ -40,7 +40,7 @@ public class NameSurfer {
         // Test 2 For getName() Method
         rawData = "1 2 3 4 5 6 7 8 9 10";
         nameRec = new NameRecord(baseYear, rawData);
-        
+
         answer = "1";
         if (nameRec.getName().equals(answer)) {
             System.out.println("\tTest 2 (getName) Has Passed.");
@@ -48,8 +48,8 @@ public class NameSurfer {
             System.out.println("*************** TEST FAILED ***************");
         }
 
-        // Test 1 For 
-        
+        // Test 1 For
+
     }
 
     // One of the basic data files given on the assignment.
@@ -90,7 +90,6 @@ public class NameSurfer {
         }
     }
 
-
     // Checks if given name is present in Names.
     private static void performGetNameTest(Names names, String name,
             boolean expectNull) {
@@ -111,7 +110,7 @@ public class NameSurfer {
 
     // main method. Driver for the whole program
     public static void main(String[] args) {
-        
+
         // Delete the following line in the final version of your program.
         // simpleTest();
 
@@ -331,28 +330,42 @@ public class NameSurfer {
         }
     }
 
+    /**
+     * This method gets and print the most volatile names that are always ranked for each
+     * alphabetical character.
+     * 
+     * @param namesDatabase - A Names object that cannot equal null and contains the
+     *                      list of names from the text files.
+     */
     private static void mostVolatileNames(Names namesDatabase) {
-        
+
         // Checking Preconditions
         if (namesDatabase == null) {
             throw new IllegalArgumentException("The parameters cannot be null");
         }
 
-        // Gets only the name that are always ranked
+        // Gets only the name that are always ranked in String Form
         ArrayList<String> alwaysRankedArray = namesDatabase.rankedEveryDecade();
-        
+
+        // Check to See if There is No Names at all that is always ranked
+        if (alwaysRankedArray.size() == 0) {
+            System.out.println("There are no Names that are Always Ranked.");
+            return;
+        }
+
         // Get the NameRecord for Each of those Name
         ArrayList<NameRecord> filteredDatabase = new ArrayList<>();
         for (int i = 0; i < alwaysRankedArray.size(); i++) {
-            filteredDatabase.add(namesDatabase.getName(filteredDatabase.get(i)));
-        } 
+            filteredDatabase.add(namesDatabase.getName(alwaysRankedArray.get(i)));
+        }
 
-        // Getting the ArrayList of NameRecord 
+        // Getting the ArrayList of NameRecord
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
 
+        // Starts to Print the Result
         System.out.println("\nThe Most Volatile Name for Each Letter: ");
 
-        // Find the Most Volatile Name For Each Letter
+        // Find and Print the Most Volatile Name For Each Letter
         for (int i = 0; i < alphabet.length(); i++) {
             char charVal = alphabet.charAt(i);
             System.out.print("\t" + charVal + ": ");
@@ -372,7 +385,7 @@ public class NameSurfer {
         if (keyboard == null) {
             throw new IllegalArgumentException("The parameter keyboard cannot be null");
         }
-        
+
         int choice = getInt(keyboard, "Enter choice: ");
         keyboard.nextLine();
 
@@ -398,7 +411,7 @@ public class NameSurfer {
         if (s == null) {
             throw new IllegalArgumentException("The parameter s cannot be null");
         }
-        
+
         System.out.print(prompt);
         while (!s.hasNextInt()) {
             s.next();
