@@ -175,7 +175,7 @@ public class NameSurfer {
 
         // Test 2 For alwaysRanked() Method
 
-        rawData = "a 13 12 11 10 9 8 7 6 5 4 3 2 1";
+        rawData = "b 13 12 11 10 9 8 7 6 5 4 3 2 1";
         NameRecord revNameRecord = new NameRecord(negativeBaseYear, rawData);
 
         if (revNameRecord.alwayMorePop()) {
@@ -199,17 +199,37 @@ public class NameSurfer {
         }
 
         // Test 1 For getSDev() Method
-        if (Math.round(nameRec.getSDev(), 2) == 3.98) {
+        if (((int)(nameRec.getSDev() * 100)) == 389) {
             System.out.println("\nTest 1 (getSDev) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
         }
 
-        // Test 2 For alwaysLessPop() Method
-        if (!revNameRecord.alwaysLessPop()) {
-            System.out.println("Test 2 (alwaysLessPop) Has Passed.");
+        // Test 2 For getSDev() Method
+        
+        if (((int)(revNameRecord.getSDev() * 100)) == 389) {
+            System.out.println("Test 2 (getSDev) Has Passed.");
         } else {
             System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 1 For toString() Method
+        rawData = "Alex\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n";
+
+        if (rawData.equals(nameRec.toString())) {
+            System.out.println("\nTest 1 (toString) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+        }
+
+        // Test 2 For toString() Method
+        rawData = "b\n-999999: 13\n-999989: 12\n-999979: 11\n-999969: 10\n-999959: 9\n-999949: 8\n-999939: 7\n-999929: 6\n-999919: 5\n-999909: 4\n-999899: 3\n-999889: 2\n-999879: 1\n";
+
+        if (rawData.equals(revNameRecord.toString())) {
+            System.out.println("Test 2 (toString) Has Passed.");
+        } else {
+            System.out.println("*************** TEST FAILED ***************");
+            System.out.println(revNameRecord);
         }
     }
 
