@@ -301,7 +301,7 @@ public class NameSurfer {
 
     // main method. Driver for the whole program
     public static void main(String[] args) {
-
+        
         myTest();
 
         Scanner fileScanner = getFileScannerForNames(NAME_FILE);
