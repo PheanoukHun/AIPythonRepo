@@ -229,7 +229,7 @@ public class NameRecord implements Comparable<NameRecord> {
         }
 
         for (int i = 1; i < getNumDecades(); i++) {
-            
+
             // Getting Rank and Forcing 0 to be UNRANKED_VAL
             int curr = getRank(i);
             if (curr == 0) {
@@ -248,27 +248,42 @@ public class NameRecord implements Comparable<NameRecord> {
     }
 
     /**
-     * This method returns the Average Rank 
-     * @return
+     * This method returns the Average Rank of the Name throughout the Decades. It
+     * returns a 0 if there are no values in Ranking ArrayList else returns the
+     * average of all the ranks.
+     * 
+     * @return - Returns a Double value that represents the average of all the
+     *         rankings and returns 0 if there are no ranks in ranking.
      */
     public double getAvgRank() {
-        double average = 0;
-        int sum = 0;
-        int count = 0;
 
-        for (int i = 0; i < getNumDecades(); i++) {
-            if (getRank(i) != 0) {
-                sum += getRank(i);
-                count++;
-            }
+        int sum = 0;
+
+        // If there is no value or only 1 value in Rankings
+        if (getNumDecades() == 0) {
+            return 0;
         }
 
-        average = sum / count;
+        // Getting Sum and Num Counts
+        for (int i = 0; i < getNumDecades(); i++) {
+            sum += getRank(i);
+        }
 
-        return average;
+        return ((double) sum) / getNumDecades();
     }
 
+    /**
+     * This method returns the Standard Deviation of the Ranking of Each Method.
+     * 
+     * @return - Returns a doubles value that represents the volatility of the
+     *         Name's Rankings. Returns 0 if there is 1 or less values in rankings.
+     */
     public double getSDev() {
+
+        // No Standard Deviation to Record at all.
+        if (getNumDecades() <= 1) {
+            return 0;
+        }
 
         double mean = getAvgRank();
         double sum = 0.0;
@@ -279,10 +294,16 @@ public class NameRecord implements Comparable<NameRecord> {
             sum += Math.pow(currVal - mean, 2);
         }
 
+        // Variance / (N - 1)
         double variance = sum / (getNumDecades() - 1);
+
         return Math.sqrt(variance);
     }
 
+    /**
+     * This method returns a 
+     * 
+     */
     public String toString() {
 
         final int LEN_DECADE = 10;
