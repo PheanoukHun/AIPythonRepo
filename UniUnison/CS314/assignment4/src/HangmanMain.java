@@ -7,19 +7,19 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
- *  Class HangmanMain is the driver program for the Hangman program.  It reads 
- *  a dictionary of words to be used during the game and then plays a game with
- *  the user.
+ * Class HangmanMain is the driver program for the Hangman program. It reads
+ * a dictionary of words to be used during the game and then plays a game with
+ * the user.
  *
- *   This is a cheating version of hangman that delays picking a word
- *   to keep its options open.  You can change the setting for DEBUG to see
- *   how many options are still left on each turn and what patterns are
- *   being generated from the guess
+ * This is a cheating version of hangman that delays picking a word
+ * to keep its options open. You can change the setting for DEBUG to see
+ * how many options are still left on each turn and what patterns are
+ * being generated from the guess
  *
- *   Based on a program by Stuart Reges, modified by Mike Scott.
+ * Based on a program by Stuart Reges, modified by Mike Scott.
  */
 
-public class HangmanMain  {
+public class HangmanMain {
 
     // Name of the dictionary file.
     // TODO: change to dictionary.txt for full version of game.
@@ -46,10 +46,9 @@ public class HangmanMain  {
             setGameParameters(hangman, keyboard);
             playGame(keyboard, hangman);
             showResults(hangman);
-        } while(playAgain(keyboard));
+        } while (playAgain(keyboard));
         keyboard.close();
     }
-
 
     /**
      * Check to see if the user wants to play another game.
@@ -65,14 +64,13 @@ public class HangmanMain  {
         return answer.length() > 0 && answer.toLowerCase().charAt(0) == 'y';
     }
 
-
     /*
      * Get user choices for the current game of Hangman.
      * pre: hangman != null and initialized with correct dictionary, keyboard
      * connect to standard input
      */
     private static void setGameParameters(HangmanManager hangman,
-                                          Scanner keyboard) {
+            Scanner keyboard) {
         if (hangman == null) {
             throw new IllegalArgumentException("The HangmanManager "
                     + "may not be null.");
@@ -98,7 +96,7 @@ public class HangmanMain  {
     // determine difficulty level from user. They must enter a valid choice.
     // pre: keyboard != null
     private static HangmanDifficulty getDifficulty(Scanner keyboard) {
-        if (keyboard== null) {
+        if (keyboard == null) {
             throw new IllegalArgumentException("The Scanner object "
                     + "may not be null.");
         }
@@ -121,7 +119,7 @@ public class HangmanMain  {
 
     // Determine if choice is within the range [min, max]
     private static boolean validChoice(int choice, int min, int max,
-                                       String explanation) {
+            String explanation) {
 
         boolean valid = (min <= choice) && (choice <= max);
         if (!valid) {
@@ -133,11 +131,10 @@ public class HangmanMain  {
         return valid;
     }
 
-
-    // check to ensure there is at least one word of 
+    // check to ensure there is at least one word of
     // the given length in the manager
     private static boolean atLeastOneWord(HangmanManager hangman,
-                                          int wordLength) {
+            int wordLength) {
 
         int numWords = hangman.numWords(wordLength);
         if (numWords == 0) {
@@ -147,7 +144,6 @@ public class HangmanMain  {
         }
         return numWords != 0;
     }
-
 
     // open the dictionary file. Return a list containing
     // the words in the dictionary file.
@@ -160,8 +156,7 @@ public class HangmanMain  {
             while (input.hasNext())
                 dictionary.add(input.next().toLowerCase());
             input.close();
-        }
-        catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("Unable to find this file: " + DICTIONARY_FILE);
             System.out.print("Program running in this directory: ");
@@ -173,10 +168,9 @@ public class HangmanMain  {
         return Collections.unmodifiableSet(dictionary);
     }
 
-
     // Plays one game with the user
     private static void playGame(Scanner keyboard, HangmanManager hangman) {
-        // keep asking for guesses as long as 
+        // keep asking for guesses as long as
         // user has guesses left and puzzle not solved the puzzle
         final String UNKNOWN = "-";
         while (hangman.getGuessesLeft() > 0
@@ -213,7 +207,6 @@ public class HangmanMain  {
         System.out.println();
     }
 
-
     // pre: keyboard != null, hangman != null
     private static char getLetter(Scanner keyboard, HangmanManager manager) {
         if (keyboard == null || manager == null) {
@@ -248,8 +241,7 @@ public class HangmanMain  {
         return ('A' <= ch && ch <= 'Z') || ('a' <= ch && ch <= 'z');
     }
 
-
-    // debugging method to show current patterns and number of words for each 
+    // debugging method to show current patterns and number of words for each
     // pre: results != null
     private static void showPatterns(TreeMap<String, Integer> results) {
         if (results == null) {
@@ -267,11 +259,10 @@ public class HangmanMain  {
         System.out.println();
     }
 
-
     // pre: pattern != null
     // return the number of times the guess occurs in the pattern
     private static int getCount(String pattern, char guess) {
-        if (pattern == null ) {
+        if (pattern == null) {
             throw new IllegalArgumentException("Violation of "
                     + "precondition in getCount.");
         }
@@ -284,7 +275,6 @@ public class HangmanMain  {
         return result;
     }
 
-
     // reports the results of the game, including showing the answer
     private static void showResults(HangmanManager hangman) {
         // if the game is over, get the secret word
@@ -296,7 +286,6 @@ public class HangmanMain  {
             System.out.println("Sorry, you lose");
         }
     }
-
 
     // helper method for debugging. Display number of words of length
     // dictionary.txt has words from length 2 to 25
