@@ -56,3 +56,17 @@ Implement a game where the computer (AI) cheats by dynamically narrowing down po
 ---
 
 This assignment challenges you to combine advanced data structures, logic for dynamic word selection, and careful handling of difficulty levels. Focus on clarity, efficiency, and adherence to the specification. 🎮
+
+### TO DO LIST:
+
+1. Implement all the Methods in [[HangmanManager.java]]
+  1. Constructors
+  2. getNumWords()
+  3. prepForRound()
+  4. numWordsCurrent()
+  5. getGuessesLeft()
+  6. getGuessMade()
+  7. alreadyGuessed()
+  8. getPattern()
+  9. makeGuess()
+  10. getSecretWord();

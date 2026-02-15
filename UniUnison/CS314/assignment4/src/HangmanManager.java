@@ -22,17 +22,25 @@ public class HangmanManager {
 
     private Set<String> words;
     private boolean debugOn;
+    private String currSecretWord;
 
     /**
      * Create a new HangmanManager from the provided set of words and phrases.
      * pre: words != null, words.size() > 0
      *
-     * @param words A set with the words for this instance of Hangman.
+     * @param words   A set with the words for this instance of Hangman.
      * @param debugOn true if we should print out debugging to System.out.
      */
     public HangmanManager(Set<String> words, boolean debugOn) {
-        this.words = new HashSet();
-        this.words.addAll(words);
+
+        // Checking the Preconditions
+        if (words == null || words.size() == 0) {
+            throw new IllegalArgumentException("Words cannot be null and"
+                    + " its length must be greater than 0.");
+        }
+
+        // Copying the Values
+        this.words = new HashSet<String>(words);
         this.debugOn = debugOn;
     }
 
@@ -45,8 +53,15 @@ public class HangmanManager {
      */
     public HangmanManager(Set<String> words) {
 
-    }
+        // Checking Preconditions
+        if (words == null || words.size() == 0) {
+            throw new IllegalArgumentException("Words cannot be null and"
+                    + " its length must be greater than 0.");
+        }
 
+        // Copying the Words List
+        this.words = new HashSet<String>(words);
+    }
 
     /**
      * Get the number of words in this HangmanManager of the given length.
@@ -57,36 +72,33 @@ public class HangmanManager {
      *         length
      */
     public int numWords(int length) {
-        return 0;
+        return words.size();
     }
-
 
     /**
      * Get for a new round of Hangman. Think of a round as a complete game of
      * Hangman.
      *
-     * @param wordLen the length of the word to pick this time.
-     *                numWords(wordLen) > 0
+     * @param wordLen    the length of the word to pick this time.
+     *                   numWords(wordLen) > 0
      * @param numGuesses the number of wrong guesses before the player loses
      *                   the round. numGuesses >= 1
-     * @param diff The difficulty for this round.
+     * @param diff       The difficulty for this round.
      */
     public void prepForRound(int wordLen, int numGuesses, HangmanDifficulty diff) {
 
     }
-
 
     /**
      * The number of words still possible (live) based on the guesses so far.
      * Guesses will eliminate possible words.
      *
      * @return the number of words that are still possibilities based on the
-     * original dictionary and the guesses so far.
+     *         original dictionary and the guesses so far.
      */
     public int numWordsCurrent() {
         return 0;
     }
-
 
     /**
      * Get the number of wrong guesses the user has left in this round (game)
@@ -98,7 +110,6 @@ public class HangmanManager {
     public int getGuessesLeft() {
         return 0;
     }
-
 
     /**
      * Return a String that contains the letters the user has guessed so far
@@ -113,7 +124,6 @@ public class HangmanManager {
         return "DEFAULT";
     }
 
-
     /**
      * Check the status of a character.
      *
@@ -125,7 +135,6 @@ public class HangmanManager {
         return false;
     }
 
-
     /**
      * Get the current pattern. The pattern contains '-''s for unrevealed (or
      * guessed) characters and the actual character for "correctly guessed"
@@ -136,7 +145,6 @@ public class HangmanManager {
     public String getPattern() {
         return "DEFAULT";
     }
-
 
     /**
      * Update the game status (pattern, wrong guesses, word list), based on
@@ -151,7 +159,6 @@ public class HangmanManager {
         return null;
     }
 
-
     /**
      * Return the secret word this HangmanManager finally ended up picking for
      * this round. If there are multiple possible words left one is selected
@@ -161,6 +168,6 @@ public class HangmanManager {
      * @return return the secret word the manager picked.
      */
     public String getSecretWord() {
-        return "DEFAULT";
+        return currSecretWord;
     }
 }
