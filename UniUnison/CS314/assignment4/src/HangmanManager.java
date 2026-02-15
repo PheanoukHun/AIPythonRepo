@@ -21,6 +21,7 @@ import java.util.TreeMap;
 public class HangmanManager {
 
     private Set<String> words;
+    private int wordLength;
     private boolean debugOn;
     private String currSecretWord;
 
