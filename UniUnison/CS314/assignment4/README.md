@@ -60,13 +60,13 @@ This assignment challenges you to combine advanced data structures, logic for dy
 ### TO DO LIST:
 
 1. Implement all the Methods in [[HangmanManager.java]]
-  1. Constructors
-  2. getNumWords()
-  3. prepForRound()
-  4. numWordsCurrent()
-  5. getGuessesLeft()
-  6. getGuessMade()
-  7. alreadyGuessed()
-  8. getPattern()
-  9. makeGuess()
-  10. getSecretWord();
+  1.  Constructors
+  2.  getNumWords()
+  3.  prepForRound()
+  4.  numWordsCurrent()
+  5.  getGuessesLeft()
+  6.  getGuessMade()
+  7.  alreadyGuessed()
+  8.  getPattern()
+  9.  makeGuess()
+  10. getSecretWord()
