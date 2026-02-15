@@ -20,10 +20,12 @@ import java.util.TreeMap;
  */
 public class HangmanManager {
 
-    private Set<String> words;
-    private int wordLength;
     private boolean debugOn;
-    private String currSecretWord;
+
+    private Set<String> words;
+
+    private int wordLength;
+    private HangmanDifficulty currDifficulty;
 
     /**
      * Create a new HangmanManager from the provided set of words and phrases.
@@ -73,7 +75,7 @@ public class HangmanManager {
      *         length
      */
     public int numWords(int length) {
-        return words.size();
+        return 1;
     }
 
     /**
@@ -87,6 +89,15 @@ public class HangmanManager {
      * @param diff       The difficulty for this round.
      */
     public void prepForRound(int wordLen, int numGuesses, HangmanDifficulty diff) {
+        
+        // Checking Precondition
+        if (wordLen <= 0 || numGuesses <= 0) {
+            throw new IllegalArgumentException("Word Length cannot be less than 1 or "
+                    + "Number of guesses cannot be less than 1");
+        }
+
+        // Reseting Variables
+    }
 
     }
 
