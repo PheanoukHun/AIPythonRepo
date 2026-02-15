@@ -10,6 +10,7 @@
  */
 
 // TODO: add imports as necessary
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -20,6 +21,7 @@ import java.util.TreeMap;
 public class HangmanManager {
 
     private Set<String> words;
+    private boolean debugOn;
 
     /**
      * Create a new HangmanManager from the provided set of words and phrases.
@@ -29,7 +31,9 @@ public class HangmanManager {
      * @param debugOn true if we should print out debugging to System.out.
      */
     public HangmanManager(Set<String> words, boolean debugOn) {
-        this.words = 
+        this.words = new HashSet();
+        this.words.addAll(words);
+        this.debugOn = debugOn;
     }
 
     /**
