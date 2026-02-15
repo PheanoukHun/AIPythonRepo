@@ -4,9 +4,9 @@
  * By signing my name below, I affirm that this assignment is my own work. I
  * have neither given nor received unauthorized assistance on this assignment.
  *
- * Name:
- * Email address:
- * UTEID:
+ * Name: Pheanouk Hun
+ * Email address: ph23434@eid.utexas.edu
+ * UTEID: ph23434
  */
 
 // TODO: add imports as necessary
@@ -19,7 +19,7 @@ import java.util.TreeMap;
  */
 public class HangmanManager {
 
-    // TODO: add instance variables / fields
+    private Set<String> words;
 
     /**
      * Create a new HangmanManager from the provided set of words and phrases.
@@ -29,7 +29,7 @@ public class HangmanManager {
      * @param debugOn true if we should print out debugging to System.out.
      */
     public HangmanManager(Set<String> words, boolean debugOn) {
-
+        this.words = 
     }
 
     /**
