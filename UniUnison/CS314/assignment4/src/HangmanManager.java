@@ -195,6 +195,7 @@ public class HangmanManager {
      *         testing and debugging purposes.
      */
     public TreeMap<String, Integer> makeGuess(char guess) {
+        
         return null;
     }
 
@@ -207,6 +208,11 @@ public class HangmanManager {
      * @return return the secret word the manager picked.
      */
     public String getSecretWord() {
-        return currWords;
+        
+        if (currWords.size() == 0) {
+            throw new IllegalArgumentException("There is no words found.");
+        }
+
+        return currWords.get(0);
     }
 }
