@@ -196,6 +196,10 @@ public class HangmanManager {
      */
     public TreeMap<String, Integer> makeGuess(char guess) {
         
+        if (alreadyGuessed(guess)) {
+            throw new IllegalArgumentException("Already Guessed the Character");
+        }
+
         return null;
     }
 
