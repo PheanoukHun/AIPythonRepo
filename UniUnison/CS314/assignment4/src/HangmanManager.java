@@ -22,10 +22,13 @@ public class HangmanManager {
 
     private boolean debugOn;
 
-    private Set<String> words;
+    private TreeMap<Integer, Set<String>> allWords;
+    private Set<String> currWords;
 
-    private int wordLength;
-    private HangmanDifficulty currDifficulty;
+    private int wordLen;
+    private int numGuesses;
+
+    private HangmanDifficulty currDiff;
 
     /**
      * Create a new HangmanManager from the provided set of words and phrases.
@@ -43,7 +46,15 @@ public class HangmanManager {
         }
 
         // Copying the Values
-        this.words = new HashSet<String>(words);
+        for (String word : words) {
+            if (allWords.get(word.length()) == null) {
+                allWords.put(word.length(), new HashSet<>());
+                allWords.get(word.length()).add(word);
+            } else {
+                allWords.get(word.length()).add(word);
+            }
+        }
+
         this.debugOn = debugOn;
     }
 
@@ -62,8 +73,15 @@ public class HangmanManager {
                     + " its length must be greater than 0.");
         }
 
-        // Copying the Words List
-        this.words = new HashSet<String>(words);
+        // Copying the Values
+        for (String word : words) {
+            if (allWords.get(word.length()) == null) {
+                allWords.put(word.length(), new HashSet<>());
+                allWords.get(word.length()).add(word);
+            } else {
+                allWords.get(word.length()).add(word);
+            }
+        }
     }
 
     /**
@@ -75,7 +93,7 @@ public class HangmanManager {
      *         length
      */
     public int numWords(int length) {
-        return 1;
+        return allWords.get(length).size();
     }
 
     /**
@@ -97,8 +115,11 @@ public class HangmanManager {
         }
 
         // Reseting Variables
+        currDiff = diff;
+        this.numGuesses = numGuesses;
+        this.wordLen = wordLen;
+        currWords = allWords.get(wordLen);
 
-    }
 
     }
 
@@ -110,7 +131,7 @@ public class HangmanManager {
      *         original dictionary and the guesses so far.
      */
     public int numWordsCurrent() {
-        return 0;
+        return currWords.size();
     }
 
     /**
@@ -121,7 +142,7 @@ public class HangmanManager {
      *         (game) of Hangman.
      */
     public int getGuessesLeft() {
-        return 0;
+        return ;
     }
 
     /**
@@ -181,6 +202,6 @@ public class HangmanManager {
      * @return return the secret word the manager picked.
      */
     public String getSecretWord() {
-        return currSecretWord;
+        return currWords;
     }
 }
