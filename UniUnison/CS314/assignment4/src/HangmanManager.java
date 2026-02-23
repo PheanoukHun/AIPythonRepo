@@ -11,7 +11,7 @@
 
 // TODO: add imports as necessary
 import java.util.Set;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 /**
@@ -22,8 +22,11 @@ public class HangmanManager {
 
     private boolean debugOn;
 
-    private TreeMap<Integer, Set<String>> allWords;
-    private Set<String> currWords;
+    private TreeMap<Integer, ArrayList<String>> allWords;
+    private ArrayList<String> currWords;
+
+    private ArrayList<String> guessesMade;
+    private ArrayList<String> wrongGuesses;
 
     private int wordLen;
     private int numGuesses;
@@ -48,7 +51,7 @@ public class HangmanManager {
         // Copying the Values
         for (String word : words) {
             if (allWords.get(word.length()) == null) {
-                allWords.put(word.length(), new HashSet<>());
+                allWords.put(word.length(), new ArrayList<>());
                 allWords.get(word.length()).add(word);
             } else {
                 allWords.get(word.length()).add(word);
@@ -76,7 +79,7 @@ public class HangmanManager {
         // Copying the Values
         for (String word : words) {
             if (allWords.get(word.length()) == null) {
-                allWords.put(word.length(), new HashSet<>());
+                allWords.put(word.length(), new ArrayList<>());
                 allWords.get(word.length()).add(word);
             } else {
                 allWords.get(word.length()).add(word);
@@ -119,6 +122,7 @@ public class HangmanManager {
         this.numGuesses = numGuesses;
         this.wordLen = wordLen;
         currWords = allWords.get(wordLen);
+        guessesMade = new ArrayList<String>() {};
 
 
     }
@@ -142,7 +146,7 @@ public class HangmanManager {
      *         (game) of Hangman.
      */
     public int getGuessesLeft() {
-        return ;
+        return guessesMade.size();
     }
 
     /**
@@ -155,7 +159,7 @@ public class HangmanManager {
      *         during this round.
      */
     public String getGuessesMade() {
-        return "DEFAULT";
+        return guessesMade.toString();
     }
 
     /**
@@ -166,7 +170,8 @@ public class HangmanManager {
      *         false otherwise.
      */
     public boolean alreadyGuessed(char guess) {
-        return false;
+        String guessString = guess + "";
+        return guessesMade.indexOf(guessString) != -1;
     }
 
     /**
