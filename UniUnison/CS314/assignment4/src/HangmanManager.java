@@ -192,7 +192,7 @@ public class HangmanManager {
      * @return the current pattern.
      */
     public String getPattern() {
-        return "DEFAULT";
+        return wordMask;
     }
 
     /**
