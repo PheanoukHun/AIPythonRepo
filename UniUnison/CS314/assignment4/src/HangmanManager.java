@@ -34,6 +34,8 @@ public class HangmanManager {
 
     private HangmanDifficulty currDiff;
 
+    private String wordMask;
+
     /**
      * Create a new HangmanManager from the provided set of words and phrases.
      * pre: words != null, words.size() > 0
@@ -120,11 +122,19 @@ public class HangmanManager {
 
         // Reseting Variables
         currDiff = diff;
+        
         this.numGuesses = numGuesses;
         this.wordLen = wordLen;
         currWords = allWords.get(wordLen);
+
         guessesMade = new HashSet<>();
         wrongGuesses = new HashSet<>();
+
+        StringBuilder maskBuilder = new StringBuilder();
+        for (int i = 0; i < wordLen; i++) {
+            maskBuilder.append("-");
+        }
+        wordMask = maskBuilder.toString();
     }
 
     /**
@@ -171,7 +181,7 @@ public class HangmanManager {
      */
     public boolean alreadyGuessed(char guess) {
         String guessString = guess + "";
-        return guessesMade.indexOf(guessString) != -1;
+        return guessesMade.contains(guessString);
     }
 
     /**
