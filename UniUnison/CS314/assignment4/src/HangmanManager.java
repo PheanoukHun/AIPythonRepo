@@ -12,6 +12,7 @@
 // TODO: add imports as necessary
 import java.util.Set;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.TreeMap;
 
 /**
@@ -25,8 +26,8 @@ public class HangmanManager {
     private TreeMap<Integer, ArrayList<String>> allWords;
     private ArrayList<String> currWords;
 
-    private ArrayList<String> guessesMade;
-    private ArrayList<String> wrongGuesses;
+    private Set<String> guessesMade;
+    private Set<String> wrongGuesses;
 
     private int wordLen;
     private int numGuesses;
@@ -122,9 +123,8 @@ public class HangmanManager {
         this.numGuesses = numGuesses;
         this.wordLen = wordLen;
         currWords = allWords.get(wordLen);
-        guessesMade = new ArrayList<String>() {};
-
-
+        guessesMade = new HashSet<>();
+        wrongGuesses = new HashSet<>();
     }
 
     /**
