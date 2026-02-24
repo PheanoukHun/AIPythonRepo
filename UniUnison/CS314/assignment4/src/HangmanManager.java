@@ -190,15 +190,28 @@ public class HangmanManager {
      */
     public TreeMap<String, Integer> makeGuess(char guess) {
 
+        // Checking Preconditions
         if (alreadyGuessed(guess)) {
             throw new IllegalArgumentException("Already Guessed the Character");
         }
 
+        TreeMap<String, ArrayList<String>> allowWordMap = new TreeMap<>();
         TreeMap<String, Integer> result = new TreeMap<>();
 
+        // Gettings List of Words with Guesses
         for (String word: currWords) {
 
+            String currMask = getNewMaskedWord(guess, word);
+
+            if (allowWordMap.get(currMask) == null) {
+                allowWordMap.put(currMask, new ArrayList<>());
+                allowWordMap.get(currMask).add(word);
+            } else {
+                allowWordMap.get(currMask).add(word);
+            }
         }
+
+        
 
         return result;
     }
