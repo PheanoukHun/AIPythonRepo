@@ -30,7 +30,6 @@ public class HangmanManager {
     
     private int wordLen;
     private int numGuesses;
-    private int numWrongGuesses;
     private int guessesLeft;
 
     private HangmanDifficulty currDiff;
@@ -45,23 +44,7 @@ public class HangmanManager {
      * @param debugOn true if we should print out debugging to System.out.
      */
     public HangmanManager(Set<String> words, boolean debugOn) {
-
-        // Checking the Preconditions
-        if (words == null || words.size() == 0) {
-            throw new IllegalArgumentException("Words cannot be null and"
-                    + " its length must be greater than 0.");
-        }
-
-        // Copying the Values
-        for (String word : words) {
-            if (allWords.get(word.length()) == null) {
-                allWords.put(word.length(), new ArrayList<>());
-                allWords.get(word.length()).add(word);
-            } else {
-                allWords.get(word.length()).add(word);
-            }
-        }
-
+        this(words);
         this.debugOn = debugOn;
     }
 
@@ -126,7 +109,6 @@ public class HangmanManager {
         
         this.numGuesses = numGuesses;
         this.guessesLeft = numGuesses;
-        this.numWrongGuesses = 0;
 
         this.wordLen = wordLen;
         this.currWords = allWords.get(wordLen);
@@ -194,7 +176,7 @@ public class HangmanManager {
      * @return the current pattern.
      */
     public String getPattern() {
-        return wordMask;
+        return this.wordMask;
     }
 
     /**
@@ -214,7 +196,9 @@ public class HangmanManager {
 
         TreeMap<String, Integer> result = new TreeMap<>();
 
+        for (String word: currWords) {
 
+        }
 
         return result;
     }
