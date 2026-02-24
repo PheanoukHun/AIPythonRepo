@@ -31,6 +31,7 @@ public class HangmanManager {
 
     private int wordLen;
     private int numGuesses;
+    private int guessesLeft;
 
     private HangmanDifficulty currDiff;
 
@@ -121,20 +122,22 @@ public class HangmanManager {
         }
 
         // Reseting Variables
-        currDiff = diff;
+        this.currDiff = diff;
         
         this.numGuesses = numGuesses;
-        this.wordLen = wordLen;
-        currWords = allWords.get(wordLen);
+        this.guessesLeft = numGuesses;
 
-        guessesMade = new HashSet<>();
-        wrongGuesses = new HashSet<>();
+        this.wordLen = wordLen;
+        this.currWords = allWords.get(wordLen);
+
+        this.guessesMade = new HashSet<>();
+        this.wrongGuesses = new HashSet<>();
 
         StringBuilder maskBuilder = new StringBuilder();
         for (int i = 0; i < wordLen; i++) {
             maskBuilder.append("-");
         }
-        wordMask = maskBuilder.toString();
+        this.wordMask = maskBuilder.toString();
     }
 
     /**
@@ -145,7 +148,7 @@ public class HangmanManager {
      *         original dictionary and the guesses so far.
      */
     public int numWordsCurrent() {
-        return currWords.size();
+        return this.currWords.size();
     }
 
     /**
@@ -156,7 +159,7 @@ public class HangmanManager {
      *         (game) of Hangman.
      */
     public int getGuessesLeft() {
-        return guessesMade.size();
+        return this.guessesLeft;
     }
 
     /**
