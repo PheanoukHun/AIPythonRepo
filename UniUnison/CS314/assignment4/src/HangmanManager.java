@@ -184,7 +184,7 @@ public class HangmanManager {
      */
     public boolean alreadyGuessed(char guess) {
         String guessString = guess + "";
-        return guessesMade.contains(guessString);
+        return this.guessesMade.add(guessString);
     }
 
     /**
@@ -208,12 +208,16 @@ public class HangmanManager {
      *         testing and debugging purposes.
      */
     public TreeMap<String, Integer> makeGuess(char guess) {
-        
+
         if (alreadyGuessed(guess)) {
             throw new IllegalArgumentException("Already Guessed the Character");
         }
 
-        return null;
+        TreeMap<String, Integer> result = new TreeMap<>();
+
+
+
+        return result;
     }
 
     /**
@@ -231,5 +235,9 @@ public class HangmanManager {
         }
 
         return currWords.get(0);
+    }
+
+    private String getNewMaskedWord(String word, Strign currMask) {
+        
     }
 }
