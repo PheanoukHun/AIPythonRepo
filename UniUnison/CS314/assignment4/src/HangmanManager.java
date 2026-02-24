@@ -253,5 +253,8 @@ public class HangmanManager {
 
     private String getHardestWords(TreeMap<String, Integer> masks) {
         
+        
+
+        return null;
     }
 }
