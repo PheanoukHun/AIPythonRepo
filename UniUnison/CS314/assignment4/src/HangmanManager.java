@@ -237,7 +237,11 @@ public class HangmanManager {
         return currWords.get(0);
     }
 
-    private String getNewMaskedWord(String word, Strign currMask) {
-        
+    private String getNewMaskedWord(String word, String currMask) {
+        StringBuilder resultBuilder = new StringBuilder();
+        for (int i = 0; i < this.wordLen; i++) {
+            
+            if ()
+        }
     }
 }
