@@ -165,7 +165,7 @@ public class HangmanManager {
      *         false otherwise.
      */
     public boolean alreadyGuessed(char guess) {
-        return this.guessesMade.add(guess);
+        return this.guessesMade.contains(guess);
     }
 
     /**
@@ -195,6 +195,7 @@ public class HangmanManager {
             throw new IllegalArgumentException("Already Guessed the Character");
         }
 
+        guessesMade.add(guess);
         TreeMap<String, ArrayList<String>> allowWordMap = new TreeMap<>();
         TreeMap<String, Integer> result = new TreeMap<>();
 
@@ -211,7 +212,7 @@ public class HangmanManager {
             }
         }
 
-        
+
 
         return result;
     }
