@@ -27,10 +27,10 @@ public class HangmanManager {
     private ArrayList<String> currWords;
 
     private Set<Character> guessesMade;
-    private Set<Character> wrongGuesses;
-
+    
     private int wordLen;
     private int numGuesses;
+    private int numWrongGuesses;
     private int guessesLeft;
 
     private HangmanDifficulty currDiff;
@@ -126,12 +126,12 @@ public class HangmanManager {
         
         this.numGuesses = numGuesses;
         this.guessesLeft = numGuesses;
+        this.numWrongGuesses = 0;
 
         this.wordLen = wordLen;
         this.currWords = allWords.get(wordLen);
 
         this.guessesMade = new HashSet<>();
-        this.wrongGuesses = new HashSet<>();
 
         StringBuilder maskBuilder = new StringBuilder();
         for (int i = 0; i < wordLen; i++) {
@@ -237,11 +237,15 @@ public class HangmanManager {
     }
 
     private String getNewMaskedWord(char guess, String word) {
+        
+        char UNKNOWN_CHAR = '-';
         StringBuilder resultBuilder = new StringBuilder();
+
         for (int i = 0; i < this.wordLen; i++) {
-            char curr = word.charAt(i);
-            if (guess == curr) {
-                
+            if (guess == word.charAt(i)) {
+                resultBuilder.append(guess);
+            } else {
+                resultBuilder.append(UNKNOWN_CHAR);
             }
             
         }
