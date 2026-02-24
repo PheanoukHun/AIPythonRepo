@@ -26,8 +26,8 @@ public class HangmanManager {
     private TreeMap<Integer, ArrayList<String>> allWords;
     private ArrayList<String> currWords;
 
-    private Set<String> guessesMade;
-    private Set<String> wrongGuesses;
+    private Set<Character> guessesMade;
+    private Set<Character> wrongGuesses;
 
     private int wordLen;
     private int numGuesses;
@@ -183,8 +183,7 @@ public class HangmanManager {
      *         false otherwise.
      */
     public boolean alreadyGuessed(char guess) {
-        String guessString = guess + "";
-        return this.guessesMade.add(guessString);
+        return this.guessesMade.add(guess);
     }
 
     /**
@@ -237,11 +236,16 @@ public class HangmanManager {
         return currWords.get(0);
     }
 
-    private String getNewMaskedWord(String word, String currMask) {
+    private String getNewMaskedWord(char guess, String word) {
         StringBuilder resultBuilder = new StringBuilder();
         for (int i = 0; i < this.wordLen; i++) {
+            char curr = word.charAt(i);
+            if (guess == curr) {
+                
+            }
             
-            if ()
         }
+
+        return resultBuilder.toString();
     }
 }
