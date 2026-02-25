@@ -27,7 +27,7 @@ public class HangmanManager {
     private ArrayList<String> currWords;
 
     private Set<Character> guessesMade;
-    
+
     private int wordLen;
     private int numGuesses;
     private int guessesLeft;
@@ -97,7 +97,7 @@ public class HangmanManager {
      * @param diff       The difficulty for this round.
      */
     public void prepForRound(int wordLen, int numGuesses, HangmanDifficulty diff) {
-        
+
         // Checking Precondition
         if (wordLen <= 0 || numGuesses <= 0) {
             throw new IllegalArgumentException("Word Length cannot be less than 1 or "
@@ -106,7 +106,7 @@ public class HangmanManager {
 
         // Reseting Variables
         this.diff = diff;
-        
+
         this.numGuesses = numGuesses;
         this.guessesLeft = numGuesses;
 
@@ -201,7 +201,7 @@ public class HangmanManager {
         TreeMap<String, Integer> resultsMap = new TreeMap<>();
 
         // Gettings List of Words with Guesses
-        for (String word: this.currWords) {
+        for (String word : this.currWords) {
 
             String currMask = getNewMaskedWord(guess, word);
 
@@ -236,7 +236,7 @@ public class HangmanManager {
      * @return return the secret word the manager picked.
      */
     public String getSecretWord() {
-        
+
         if (currWords.size() == 0) {
             throw new IllegalArgumentException("There is no words found.");
         }
@@ -244,9 +244,17 @@ public class HangmanManager {
         return currWords.get(0);
     }
 
-    
+    /**
+     * Generate the masked version of a given masked word based on the previous mask
+     * format and the guess.
+     * 
+     * @param guess - The char value of the guess that user made.
+     * @param word  - The word that the mask will be based on.
+     * 
+     * @return - The String representation of the word of the updated pattern.
+     */
     private String getNewMaskedWord(char guess, String word) {
-        
+
         StringBuilder resultBuilder = new StringBuilder();
 
         for (int i = 0; i < this.wordLen; i++) {
@@ -271,7 +279,7 @@ public class HangmanManager {
     }
 
     private String getEasyWords(TreeMap<String, ArrayList<String>> allowedWords) {
-        
+
         return null;
     }
 }
