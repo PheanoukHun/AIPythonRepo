@@ -213,16 +213,16 @@ public class HangmanManager {
             }
         }
 
+        // Get the Best Result based on the 
         if (this.diff == HangmanDifficulty.HARD) {
-            getHardestWords(allowedWords);
+            this.wordMask = getHardestWords(allowedWords);
         } else if (this.diff == HangmanDifficulty.MEDIUM) {
-            getMediumWords(allowedWords);
+            this.wordMask = getMediumWords(allowedWords);
         } else {
-            getEasyWords(allowedWords);
+            this.wordMask = getEasyWords(allowedWords);
         }
 
-        this.currWords = allowedWords.get();
-        this.wordMask = 
+        this.currWords = allowedWords.get(this.wordMask);
 
         return resultsMap;
     }
