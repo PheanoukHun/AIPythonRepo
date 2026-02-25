@@ -213,7 +213,7 @@ public class HangmanManager {
             }
         }
 
-        // Get the Best Result based on the 
+        // Get the Best Result based on the g
         if (this.diff == HangmanDifficulty.HARD) {
             this.wordMask = getHardestWords(allowedWords);
         } else if (this.diff == HangmanDifficulty.MEDIUM) {
