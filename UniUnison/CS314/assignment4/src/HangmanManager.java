@@ -9,11 +9,13 @@
  * UTEID: ph23434
  */
 
-// TODO: add imports as necessary
-import java.util.Set;
 import java.util.ArrayList;
+
+import java.util.Set;
 import java.util.HashSet;
+
 import java.util.TreeMap;
+import java.util.Map;
 
 /**
  * Manages the details of EvilHangman. This class keeps track of the possible
@@ -271,7 +273,17 @@ public class HangmanManager {
 
     private TreeMap<String, Integer> getHardestWords(TreeMap<String, ArrayList<String>> allowedWords) {
 
-        
+        String hardestFamily = null;
+        int hardestFamilySize = 0;
+        for (Map.Entry<String, ArrayList<String>> entry: allowedWords.entrySet()) {
+
+            int currFamilySize = entry.getValue().size();
+            if (currFamilySize > hardestFamilySize) {
+                hardestFamily = entry.getKey();
+            } else if (currFamilySize == hardestFamilySize) {
+                
+            }
+        }
 
         return null;
     }
