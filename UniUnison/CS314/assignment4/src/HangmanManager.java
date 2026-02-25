@@ -32,7 +32,7 @@ public class HangmanManager {
 
     private int wordLen;
     private int numGuesses;
-    private int guessesLeft;
+    private int turnNum;
 
     private HangmanDifficulty diff;
 
@@ -48,6 +48,12 @@ public class HangmanManager {
     public HangmanManager(Set<String> words, boolean debugOn) {
         this(words);
         this.debugOn = debugOn;
+
+        if (this.debugOn) {
+            for (Map.Entry<Integer, ArrayList<String>> entry : this.wordPatterns.entrySet()) {
+
+            }
+        }
     }
 
     /**
@@ -110,7 +116,6 @@ public class HangmanManager {
         this.diff = diff;
 
         this.numGuesses = numGuesses;
-        this.guessesLeft = numGuesses;
 
         this.wordLen = wordLen;
         this.currWords = wordPatterns.get(wordLen);
@@ -144,7 +149,7 @@ public class HangmanManager {
      *         (game) of Hangman.
      */
     public int getGuessesLeft() {
-        return this.guessesLeft;
+        return this.numGuesses;
     }
 
     /**
@@ -199,6 +204,8 @@ public class HangmanManager {
         }
 
         this.guessesMade.add(guess);
+        this.numGuesses--;
+
         TreeMap<String, ArrayList<String>> allowedWords = new TreeMap<>();
         TreeMap<String, Integer> resultsMap;
 
@@ -312,6 +319,10 @@ public class HangmanManager {
         return result;
     }
 
+    /**
+     * 
+     * 
+     */
     private String compareTwoEntries(String hardestFamily, String currFamily,
             TreeMap<String, ArrayList<String>> allowedWords) {
 
@@ -324,10 +335,12 @@ public class HangmanManager {
             hardestFamily = currFamily;
         } else if (currFamilySize == hardestFamilySize) {
 
-            // Compare Based on N
+            // Compare Based on Number of Hidden Characters
             if (getNumHidden(hardestFamily) - getNumHidden(currFamily) > 0) {
                 hardestFamily = currFamily;
             } else if (getNumHidden(hardestFamily) - getNumHidden(currFamily) == 0) {
+
+                // Compare Lexographically
                 if (hardestFamily.compareTo(currFamily) < 0) {
                     hardestFamily = currFamily;
                 }
