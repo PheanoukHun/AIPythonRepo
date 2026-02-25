@@ -257,6 +257,7 @@ public class HangmanManager {
 
         StringBuilder resultBuilder = new StringBuilder();
 
+        // Looking through all Characters
         for (int i = 0; i < this.wordLen; i++) {
             if (guess == word.charAt(i)) {
                 resultBuilder.append(guess);
