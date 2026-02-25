@@ -200,7 +200,7 @@ public class HangmanManager {
 
         // Checking Preconditions
         if (alreadyGuessed(guess)) {
-            throw new IllegalArgumentException("Already Guessed the Character");
+            throw new IllegalStateException("Already Guessed the Character");
         }
 
         this.guessesMade.add(guess);
