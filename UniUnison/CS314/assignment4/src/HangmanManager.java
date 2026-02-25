@@ -10,7 +10,7 @@
  */
 
 import java.util.ArrayList;
-
+import java.util.Comparator;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -350,5 +350,19 @@ public class HangmanManager {
         return hardestFamily;
     }
 
-    private class 
+    private class CompareFamilies implements Comparable {
+        private final String family;
+        private final ArrayList<String> familyList;
+
+        public CompareFamilies(String family, ArrayList<String> familyList) {
+            this.family = family;
+            this.familyList = familyList;
+        }
+
+        public int compareTo(Object o) {
+            if (o instanceof CompareFamilies) {
+                
+            }
+        }
+    }
 }
