@@ -244,6 +244,7 @@ public class HangmanManager {
         return currWords.get(0);
     }
 
+    
     private String getNewMaskedWord(char guess, String word) {
         
         StringBuilder resultBuilder = new StringBuilder();
