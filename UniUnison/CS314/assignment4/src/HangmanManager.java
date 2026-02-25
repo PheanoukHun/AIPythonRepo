@@ -215,11 +215,11 @@ public class HangmanManager {
 
         // Get the Best Result based on the g
         if (this.diff == HangmanDifficulty.HARD) {
-            this.wordMask = getHardestWords(allowedWords);
+            resultsMap = getHardestWords(allowedWords);
         } else if (this.diff == HangmanDifficulty.MEDIUM) {
-            this.wordMask = getMediumWords(allowedWords);
+            resultsMap = getMediumWords(allowedWords);
         } else {
-            this.wordMask = getEasyWords(allowedWords);
+            resultsMap = getEasyWords(allowedWords);
         }
 
         this.currWords = allowedWords.get(this.wordMask);
