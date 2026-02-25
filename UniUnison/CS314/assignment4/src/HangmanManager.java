@@ -23,7 +23,7 @@ public class HangmanManager {
 
     private boolean debugOn;
 
-    private TreeMap<Integer, ArrayList<String>> allWords;
+    private TreeMap<Integer, ArrayList<String>> wordPatterns;
     private ArrayList<String> currWords;
 
     private Set<Character> guessesMade;
@@ -32,7 +32,7 @@ public class HangmanManager {
     private int numGuesses;
     private int guessesLeft;
 
-    private HangmanDifficulty currDiff;
+    private HangmanDifficulty difficulty;
 
     private String wordMask;
 
@@ -65,11 +65,11 @@ public class HangmanManager {
 
         // Copying the Values
         for (String word : words) {
-            if (allWords.get(word.length()) == null) {
-                allWords.put(word.length(), new ArrayList<>());
-                allWords.get(word.length()).add(word);
+            if (wordPatterns.get(word.length()) == null) {
+                wordPatterns.put(word.length(), new ArrayList<>());
+                wordPatterns.get(word.length()).add(word);
             } else {
-                allWords.get(word.length()).add(word);
+                wordPatterns.get(word.length()).add(word);
             }
         }
     }
@@ -83,7 +83,7 @@ public class HangmanManager {
      *         length
      */
     public int numWords(int length) {
-        return allWords.get(length).size();
+        return wordPatterns.get(length).size();
     }
 
     /**
@@ -105,13 +105,13 @@ public class HangmanManager {
         }
 
         // Reseting Variables
-        this.currDiff = diff;
+        this.difficulty = diff;
         
         this.numGuesses = numGuesses;
         this.guessesLeft = numGuesses;
 
         this.wordLen = wordLen;
-        this.currWords = allWords.get(wordLen);
+        this.currWords = wordPatterns.get(wordLen);
 
         this.guessesMade = new HashSet<>();
 
