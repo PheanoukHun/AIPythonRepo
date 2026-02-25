@@ -271,31 +271,32 @@ public class HangmanManager {
         return resultBuilder.toString();
     }
 
-    private TreeMap<String, Integer> getHardestWords(TreeMap<String, ArrayList<String>> allowedWords) {
+    private TreeMap<String, Integer> getHardestWords(
+            TreeMap<String, ArrayList<String>> allowedWords) {
 
         TreeMap<String, Integer> result = new TreeMap<>();
 
         String hardestFamily = null;
-        int hardestFamilySize = 0;
-        for (Map.Entry<String, ArrayList<String>> entry: allowedWords.entrySet()) {
 
-            int currFamilySize = entry.getValue().size();
-
-            if (currFamilySize > hardestFamilySize) {
-                hardestFamily = entry.getKey();
-            } else if (currFamilySize == hardestFamilySize) {
-                if (getNumHidden(hardestFamily) - getNumHidden(entry.getKey()) > 0) {
-                    hardestFamily = entry.getKey();
-                } else if (getNumHidden(hardestFamily) - getNumHidden(entry.getKey()) == 0) {
-                    
-                }
-            }
+        for (Map.Entry<String, ArrayList<String>> entry : allowedWords.entrySet()) {
+            hardestFamily = compareTwoEntries(hardestFamily, hardestFamily, allowedWords);
         }
 
         this.wordMask = hardestFamily;
-        result.put(hardestFamily, hardestFamilySize);
-
+        result.put(hardestFamily, allowedWords.get(hardestFamily).size());
         return result;
+    }
+
+    private TreeMap<String, Integer> getMediumWords(
+            TreeMap<String, ArrayList<String>> allowedWords) {
+
+        return null;
+    }
+
+    private TreeMap<String, Integer> getEasyWords(
+            TreeMap<String, ArrayList<String>> allowedWords) {
+
+        return null;
     }
 
     private int getNumHidden(String word) {
@@ -311,13 +312,28 @@ public class HangmanManager {
         return result;
     }
 
-    private TreeMap<String, Integer> getMediumWords(TreeMap<String, ArrayList<String>> allowedWords) {
+    private String compareTwoEntries(String hardestFamily, String currFamily,
+            TreeMap<String, ArrayList<String>> allowedWords) {
 
-        return null;
-    }
+        // Getting the Size of Each ArrayList
+        int hardestFamilySize = allowedWords.get(hardestFamily).size();
+        int currFamilySize = allowedWords.get(currFamily).size();
 
-    private TreeMap<String, Integer> getEasyWords(TreeMap<String, ArrayList<String>> allowedWords) {
+        // Compare Based on Number of Words in Each List
+        if (currFamilySize > hardestFamilySize) {
+            hardestFamily = currFamily;
+        } else if (currFamilySize == hardestFamilySize) {
 
-        return null;
+            // Compare Based on N
+            if (getNumHidden(hardestFamily) - getNumHidden(currFamily) > 0) {
+                hardestFamily = currFamily;
+            } else if (getNumHidden(hardestFamily) - getNumHidden(currFamily) == 0) {
+                if (hardestFamily.compareTo(currFamily) < 0) {
+                    hardestFamily = currFamily;
+                }
+            }
+        }
+
+        return hardestFamily;
     }
 }
