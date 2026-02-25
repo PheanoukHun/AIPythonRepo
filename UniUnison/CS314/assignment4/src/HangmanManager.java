@@ -273,19 +273,42 @@ public class HangmanManager {
 
     private TreeMap<String, Integer> getHardestWords(TreeMap<String, ArrayList<String>> allowedWords) {
 
+        TreeMap<String, Integer> result = new TreeMap<>();
+
         String hardestFamily = null;
         int hardestFamilySize = 0;
         for (Map.Entry<String, ArrayList<String>> entry: allowedWords.entrySet()) {
 
             int currFamilySize = entry.getValue().size();
+
             if (currFamilySize > hardestFamilySize) {
                 hardestFamily = entry.getKey();
             } else if (currFamilySize == hardestFamilySize) {
-                
+                if (getNumHidden(hardestFamily) - getNumHidden(entry.getKey()) > 0) {
+                    hardestFamily = entry.getKey();
+                } else if (getNumHidden(hardestFamily) - getNumHidden(entry.getKey()) == 0) {
+                    
+                }
             }
         }
 
-        return null;
+        this.wordMask = hardestFamily;
+        result.put(hardestFamily, hardestFamilySize);
+
+        return result;
+    }
+
+    private int getNumHidden(String word) {
+        char HIDDEN_CHAR = '-';
+        int result = 0;
+
+        for (int i = 0; i < word.length(); i++) {
+            if (word.charAt(i) == HIDDEN_CHAR) {
+                result++;
+            }
+        }
+
+        return result;
     }
 
     private TreeMap<String, Integer> getMediumWords(TreeMap<String, ArrayList<String>> allowedWords) {
