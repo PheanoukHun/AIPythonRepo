@@ -251,7 +251,7 @@ public class HangmanManager {
      * @param guess - The char value of the guess that user made.
      * @param word  - The word that the mask will be based on.
      * 
-     * @return - The String representation of the word of the updated pattern.
+     * @return - The String representation of the word of the updated masked pattern.
      */
     private String getNewMaskedWord(char guess, String word) {
 
