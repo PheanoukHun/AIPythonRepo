@@ -32,7 +32,7 @@ public class HangmanManager {
     private int numGuesses;
     private int guessesLeft;
 
-    private HangmanDifficulty difficulty;
+    private HangmanDifficulty diff;
 
     private String wordMask;
 
@@ -66,10 +66,10 @@ public class HangmanManager {
         // Copying the Values
         for (String word : words) {
             if (wordPatterns.get(word.length()) == null) {
-                wordPatterns.put(word.length(), new ArrayList<>());
-                wordPatterns.get(word.length()).add(word);
+                this.wordPatterns.put(word.length(), new ArrayList<>());
+                this.wordPatterns.get(word.length()).add(word);
             } else {
-                wordPatterns.get(word.length()).add(word);
+                this.wordPatterns.get(word.length()).add(word);
             }
         }
     }
@@ -83,7 +83,7 @@ public class HangmanManager {
      *         length
      */
     public int numWords(int length) {
-        return wordPatterns.get(length).size();
+        return this.wordPatterns.get(length).size();
     }
 
     /**
@@ -105,7 +105,7 @@ public class HangmanManager {
         }
 
         // Reseting Variables
-        this.difficulty = diff;
+        this.diff = diff;
         
         this.numGuesses = numGuesses;
         this.guessesLeft = numGuesses;
@@ -154,7 +154,7 @@ public class HangmanManager {
      *         during this round.
      */
     public String getGuessesMade() {
-        return guessesMade.toString();
+        return this.guessesMade.toString();
     }
 
     /**
@@ -195,26 +195,26 @@ public class HangmanManager {
             throw new IllegalArgumentException("Already Guessed the Character");
         }
 
-        guessesMade.add(guess);
-        TreeMap<String, ArrayList<String>> allowWordMap = new TreeMap<>();
-        TreeMap<String, Integer> result = new TreeMap<>();
+        this.guessesMade.add(guess);
+        TreeMap<String, ArrayList<String>> allowedWords = new TreeMap<>();
+        TreeMap<String, Integer> resultsMap = new TreeMap<>();
 
         // Gettings List of Words with Guesses
-        for (String word: currWords) {
+        for (String word: this.currWords) {
 
             String currMask = getNewMaskedWord(guess, word);
 
-            if (allowWordMap.get(currMask) == null) {
-                allowWordMap.put(currMask, new ArrayList<>());
-                allowWordMap.get(currMask).add(word);
+            if (allowedWords.get(currMask) == null) {
+                allowedWords.put(currMask, new ArrayList<>());
+                allowedWords.get(currMask).add(word);
             } else {
-                allowWordMap.get(currMask).add(word);
+                allowedWords.get(currMask).add(word);
             }
         }
 
 
 
-        return result;
+        return resultsMap;
     }
 
     /**
