@@ -216,10 +216,13 @@ public class HangmanManager {
         if (this.diff == HangmanDifficulty.HARD) {
             getHardestWords(allowedWords);
         } else if (this.diff == HangmanDifficulty.MEDIUM) {
-
+            getMediumWords(allowedWords);
         } else {
-            
+            getEasyWords(allowedWords);
         }
+
+        this.currWords = allowedWords.get();
+        this.wordMask = 
 
         return resultsMap;
     }
@@ -258,8 +261,16 @@ public class HangmanManager {
 
     private String getHardestWords(TreeMap<String, ArrayList<String>> allowedWords) {
 
+        return null;
+    }
 
+    private String getMediumWords(TreeMap<String, ArrayList<String>> allowedWords) {
 
+        return null;
+    }
+
+    private String getEasyWords(TreeMap<String, ArrayList<String>> allowedWords) {
+        
         return null;
     }
 }
