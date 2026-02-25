@@ -198,7 +198,7 @@ public class HangmanManager {
 
         this.guessesMade.add(guess);
         TreeMap<String, ArrayList<String>> allowedWords = new TreeMap<>();
-        TreeMap<String, Integer> resultsMap = new TreeMap<>();
+        TreeMap<String, Integer> resultsMap;
 
         // Gettings List of Words with Guesses
         for (String word : this.currWords) {
@@ -223,7 +223,6 @@ public class HangmanManager {
         }
 
         this.currWords = allowedWords.get(this.wordMask);
-
         return resultsMap;
     }
 
@@ -251,7 +250,8 @@ public class HangmanManager {
      * @param guess - The char value of the guess that user made.
      * @param word  - The word that the mask will be based on.
      * 
-     * @return - The String representation of the word of the updated masked pattern.
+     * @return - The String representation of the word of the updated masked
+     *         pattern.
      */
     private String getNewMaskedWord(char guess, String word) {
 
@@ -269,17 +269,19 @@ public class HangmanManager {
         return resultBuilder.toString();
     }
 
-    private String getHardestWords(TreeMap<String, ArrayList<String>> allowedWords) {
+    private TreeMap<String, Integer> getHardestWords(TreeMap<String, ArrayList<String>> allowedWords) {
+
+        
 
         return null;
     }
 
-    private String getMediumWords(TreeMap<String, ArrayList<String>> allowedWords) {
+    private TreeMap<String, Integer> getMediumWords(TreeMap<String, ArrayList<String>> allowedWords) {
 
         return null;
     }
 
-    private String getEasyWords(TreeMap<String, ArrayList<String>> allowedWords) {
+    private TreeMap<String, Integer> getEasyWords(TreeMap<String, ArrayList<String>> allowedWords) {
 
         return null;
     }
