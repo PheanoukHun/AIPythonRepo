@@ -116,8 +116,9 @@ public class HangmanManager {
         this.guessesMade = new HashSet<>();
 
         StringBuilder maskBuilder = new StringBuilder();
+        char UNKNOWN_CHAR = '-';
         for (int i = 0; i < wordLen; i++) {
-            maskBuilder.append("-");
+            maskBuilder.append(UNKNOWN_CHAR);
         }
         this.wordMask = maskBuilder.toString();
     }
@@ -212,7 +213,13 @@ public class HangmanManager {
             }
         }
 
+        if (this.diff == HangmanDifficulty.HARD) {
+            getHardestWords(allowedWords);
+        } else if (this.diff == HangmanDifficulty.MEDIUM) {
 
+        } else {
+            
+        }
 
         return resultsMap;
     }
@@ -236,24 +243,22 @@ public class HangmanManager {
 
     private String getNewMaskedWord(char guess, String word) {
         
-        char UNKNOWN_CHAR = '-';
         StringBuilder resultBuilder = new StringBuilder();
 
         for (int i = 0; i < this.wordLen; i++) {
             if (guess == word.charAt(i)) {
                 resultBuilder.append(guess);
             } else {
-                resultBuilder.append(UNKNOWN_CHAR);
+                resultBuilder.append(this.wordMask.charAt(i));
             }
-            
         }
 
         return resultBuilder.toString();
     }
 
-    private String getHardestWords(TreeMap<String, Integer> masks) {
-        
-        
+    private String getHardestWords(TreeMap<String, ArrayList<String>> allowedWords) {
+
+
 
         return null;
     }
