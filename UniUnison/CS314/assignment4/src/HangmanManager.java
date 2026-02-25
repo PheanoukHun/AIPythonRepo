@@ -349,4 +349,6 @@ public class HangmanManager {
 
         return hardestFamily;
     }
+
+    private class 
 }
