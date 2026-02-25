@@ -360,9 +360,17 @@ public class HangmanManager {
         }
 
         public int compareTo(Object o) {
-            if (o instanceof CompareFamilies) {
-                
+            
+            // Precondition
+            if (!(o instanceof CompareFamilies) || o == null) {
+               throw new IllegalArgumentException(o + "is not an instance of CompareFamilies");
             }
+
+            CompareFamilies other = (CompareFamilies)o;
+
+            
+
+            return -1;
         }
     }
 }
