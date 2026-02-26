@@ -308,7 +308,7 @@ public class HangmanManager {
         if (this.debugOn) {
             System.out.println("\nDEBUGGING: Picking hardest list.");
             System.out.println("DEBUGGING: New pattern is: " + lastFamily.getFamily()
-                    +". New family has " + lastFamily.getFamilyList().size() + " words.");
+                    + ". New family has " + lastFamily.getFamilyList().size() + " words.\n");
         }
 
         return lastFamily.getFamily();
@@ -329,17 +329,19 @@ public class HangmanManager {
         if (this.turn % numRounds == specialRound && sortedFamilies.lower(family) != null) {
             family = sortedFamilies.lower(family);
             if (this.debugOn) {
-                System.out.println("DEBUGGING: Should pick second hardest pattern this turn, "
+                System.out.println("\nDEBUGGING: Should pick second hardest pattern this turn, "
                         + "but only one pattern available.");
+                System.out.println("DEBUGGING: New pattern is: " + family.getFamily()
+                        +". New family has " + family.getFamilyList().size() + " words.\n")
             }
         } else {
             if (this.debugOn) {
                 System.out.println("\nDEBUGGING: Picking hardest list.");
                 System.out.println("DEBUGGING: New pattern is: " + family.getFamily()
-                        +". New family has " + family.getFamilyList().size() + " words.");
+                +". New family has " + family.getFamilyList().size() + " words.\n");
             }
         }
-
+        
         this.turn++;
         return family.getFamily();
     }
