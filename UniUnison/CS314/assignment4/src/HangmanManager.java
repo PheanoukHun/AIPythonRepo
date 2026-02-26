@@ -260,7 +260,7 @@ public class HangmanManager {
     public String getSecretWord() {
 
         // Precondition
-        if (currWords.size() == 0) {
+        if (currWords.isEmpty()) {
             throw new IllegalArgumentException("There is no words found.");
         }
 
@@ -362,6 +362,12 @@ public class HangmanManager {
          * @param familyList
          */
         public ComparableFamilies(String family, ArrayList<String> familyList) {
+
+            // Preconditions
+            if (family == null || familyList == null) {
+                throw new IllegalArgumentException("Family nor FamilyList may be Empty");
+            }
+
             this.family = family;
             this.familyList = familyList;
         }
@@ -372,11 +378,6 @@ public class HangmanManager {
          * @return
          */
         public int compareTo(ComparableFamilies other) {
-
-            // Precondition
-            if (other == null) {
-                throw new NullPointerException("Cannot compare to null");
-            }
 
             // Getting the Size of Each ArrayList
             if (this.familyList.size() > other.familyList.size()) {
