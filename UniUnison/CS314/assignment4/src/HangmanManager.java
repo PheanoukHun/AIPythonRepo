@@ -228,7 +228,11 @@ public class HangmanManager {
             }
         }
 
-        // Get the Best Result based on the g
+        // Sorted Sort Based on the CompareFamilies
+        
+
+
+        // Get the Best Result based on the Difficulty
         if (this.diff == HangmanDifficulty.HARD) {
             resultsMap = getHardestWords(allowedWords);
         } else if (this.diff == HangmanDifficulty.MEDIUM) {
@@ -288,10 +292,7 @@ public class HangmanManager {
             TreeMap<String, ArrayList<String>> allowedWords) {
 
         TreeMap<String, Integer> result = new TreeMap<>();
-
         String hardestFamily = null;
-
-        
 
         this.wordMask = hardestFamily;
         result.put(hardestFamily, allowedWords.get(hardestFamily).size());
