@@ -10,7 +10,6 @@
  */
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -242,9 +241,11 @@ public class HangmanManager {
         if (this.diff == HangmanDifficulty.HARD) {
             resultsMap = getHardestWords(sortedFamilies);
         } else if (this.diff == HangmanDifficulty.MEDIUM) {
-            resultsMap = getMediumWords(sortedFamilies);
+            int numRounds = 4, specialRound = 3;
+            resultsMap = getNonHardDiff(sortedFamilies, numRounds, specialRound);
         } else {
-            resultsMap = getEasyWords(sortedFamilies);
+            int numRounds = 2, specialRound = 1;
+            resultsMap = getNonHardDiff(sortedFamilies, numRounds, specialRound);
         }
 
         this.currWords = allowedWords.get(this.wordMask);
@@ -296,49 +297,24 @@ public class HangmanManager {
 
     private TreeMap<String, Integer> getHardestWords(TreeSet<ComparableFamilies> sortedFamilies) {
         TreeMap<String, Integer> result = new TreeMap<>();
-        this.wordMask = sortedFamilies.last().getFamily();
-        result.put(this.wordMask, sortedFamilies.last().getFamilyList().size());
+        ComparableFamilies lastFamily = sortedFamilies.last();
+        this.wordMask = lastFamily.getFamily();
+        result.put(this.wordMask, lastFamily.getFamilyList().size());
         return result;
     }
 
-    private TreeMap<String, Integer> getMediumWords(TreeSet<ComparableFamilies> sortedFamilies) {
-
-        TreeMap<String, Integer> resultMap = new TreeMap<>();
-        ComparableFamilies family = sortedFamilies.last();
-
-        if (turn % 2 == 1 && sortedFamilies.floor(family) != null) {
-            family = sortedFamilies.floor(family);
-        }
-
-        this.turn++;
-        this.wordMask = family.getFamily();
-        resultMap.put(family.getFamily(), family.getFamilyList().size());
-
-        return resultMap;
-    }
-
-    private TreeMap<String, Integer> getEasyWords(TreeSet<ComparableFamilies> sortedFamilies) {
-
-        final int ZERO_BASED_FOURTH_POS = 3;
-
-        TreeMap<String, Integer> resultMap = new TreeMap<>();
-        ComparableFamilies family = sortedFamilies.last();
-
-        if (turn % 4 == ZERO_BASED_FOURTH_POS && sortedFamilies.floor(family) != null) {
-            family = sortedFamilies.floor(family);
-        }
-
-        this.turn++;
-        this.wordMask = family.getFamily();
-        resultMap.put(family.getFamily(), family.getFamilyList().size());
-        return resultMap;
-    }
-
-    private TreeMap<String, Integer> getGenericDiff(TreeSet<ComparableFamilies> sortedFamilies,
+    private TreeMap<String, Integer> getNonHardDiff(TreeSet<ComparableFamilies> sortedFamilies,
             int numRounds, int specialRound) {
         TreeMap<String, Integer> resultMap = new TreeMap<>();
-        Comparable
+        ComparableFamilies family = sortedFamilies.last();
 
+        if (this.turn % numRounds == specialRound && sortedFamilies.floor(family) != null) {
+            family = sortedFamilies.floor(family);
+        }
+
+        this.turn++;
+        this.wordMask = family.getFamily();
+        resultMap.put(family.getFamily(), family.getFamilyList().size());
         return resultMap;
     }
 
