@@ -223,32 +223,23 @@ public class HangmanManager {
 
         // Sorted Set Based on the CompareFamilies Orderings
         TreeSet<ComparableFamilies> sortedFamilies = new TreeSet<>();
+        TreeMap<String, Integer> resultsMap = new TreeMap<>();
         for (Map.Entry<String, ArrayList<String>> entry : allowedWords.entrySet()) {
-            sortedFamilies.add(new ComparableFamilies(entry.getKey(), entry.getValue()));
+            String currFamily = entry.getKey();
+            ArrayList<String> currFamilyList = entry.getValue();
+            sortedFamilies.add(new ComparableFamilies(currFamily, currFamilyList));
+            resultsMap.put(currFamily, currFamilyList.size());
         }
 
         // Get the Best Result based on the Difficulty
-        TreeMap<String, Integer> resultsMap;
         if (this.diff == HangmanDifficulty.HARD) {
-            resultsMap = getHardestWords(sortedFamilies);
+            this.wordMask = getHardestWords(sortedFamilies);
         } else if (this.diff == HangmanDifficulty.MEDIUM) {
             int numRounds = 4, specialRound = 3;
-            resultsMap = getNonHardDiff(sortedFamilies, numRounds, specialRound);
+            this.wordMask = getNonHardDiff(sortedFamilies, numRounds, specialRound);
         } else {
             int numRounds = 2, specialRound = 1;
-            resultsMap = getNonHardDiff(sortedFamilies, numRounds, specialRound);
-        }
-
-        if (this.debugOn) {
-            System.out.println("DEBUGGING: Based on guess here are resulting patterns and number"
-                    + "of words in each pattern:");
-
-            for (ComparableFamilies family : sortedFamilies) {
-                System.out.println("pattern: " + family.getFamily() + ", number of words: "
-                + family.getFamilyList().size());
-            }
-
-            System.out.println("END DEBUGGING");
+            this.wordMask = getNonHardDiff(sortedFamilies, numRounds, specialRound);
         }
 
         // Updating Game States
@@ -310,21 +301,10 @@ public class HangmanManager {
      * @param sortedFamilies
      * @return
      */
-    private TreeMap<String, Integer> getHardestWords(TreeSet<ComparableFamilies> sortedFamilies) {
-
+    private String getHardestWords(TreeSet<ComparableFamilies> sortedFamilies) {
         TreeMap<String, Integer> result = new TreeMap<>();
         ComparableFamilies lastFamily = sortedFamilies.last();
-
-        this.wordMask = lastFamily.getFamily();
-        result.put(this.wordMask, lastFamily.getFamilyList().size());
-
-        if (this.debugOn) {
-            System.out.println("DEBUGGING: Picking hardest list.");
-            System.out.println("DEBUGGING: New pattern is: " + this.wordMask + ". New family has "
-                    + result.get(this.wordMask) + " words.");
-        }
-
-        return result;
+        return lastFamily.getFamily();
     }
 
     /**
@@ -334,33 +314,17 @@ public class HangmanManager {
      * @param specialRound
      * @return
      */
-    private TreeMap<String, Integer> getNonHardDiff(TreeSet<ComparableFamilies> sortedFamilies,
+    private String getNonHardDiff(TreeSet<ComparableFamilies> sortedFamilies,
             int numRounds, int specialRound) {
-        TreeMap<String, Integer> resultMap = new TreeMap<>();
+
         ComparableFamilies family = sortedFamilies.last();
 
         if (this.turn % numRounds == specialRound && sortedFamilies.lower(family) != null) {
             family = sortedFamilies.lower(family);
-
-            if (this.debugOn) {
-                System.out.println("DEBUGGING: Picking the Second Hardest List.");
-            }
-        } else {
-            if (this.debugOn) {
-                System.out.println("DEBUGGING: Picking hardest list.");
-            }
         }
 
         this.turn++;
-        this.wordMask = family.getFamily();
-        resultMap.put(family.getFamily(), family.getFamilyList().size());
-
-        if (this.debugOn) {
-            System.out.println("DEBUGGING: New pattern is: " + this.wordMask + ". New family has "
-                    + resultMap.get(this.wordMask) + " words.");
-        }
-
-        return resultMap;
+        return family.getFamily();
     }
 
     private class ComparableFamilies implements Comparable<ComparableFamilies> {
