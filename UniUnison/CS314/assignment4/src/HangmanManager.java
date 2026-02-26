@@ -218,10 +218,12 @@ public class HangmanManager {
             throw new IllegalStateException("Already Guessed the Character");
         }
 
-        this.guessesMade.add(guess);
+        String prevMask = this.wordMask;
 
-        // Gettings List of Words with Guesses
+        // Gettings List of Words with Guesses and Adding them to a Sorted Set.
         TreeMap<String, ArrayList<String>> allowedWords = new TreeMap<>();
+        ArrayList<ComparableFamilies> unSortedFamilies = new ArrayList<>();
+
         for (String word : this.currWords) {
             
             String currMask = getNewMaskedWord(guess, word);
@@ -229,19 +231,14 @@ public class HangmanManager {
             if (allowedWords.get(currMask) == null) {
                 allowedWords.put(currMask, new ArrayList<>());
                 allowedWords.get(currMask).add(word);
+                unSortedFamilies.add(new ComparableFamilies(currMask, allowedWords.get(currMask)));
             } else {
                 allowedWords.get(currMask).add(word);
             }
         }
-
-        TreeSet<ComparableFamilies> 
         
-        // Sorted Sort Based on the CompareFamilies
-        TreeSet<ComparableFamilies> sortedFamilies = new TreeSet<>();
-        for (Map.Entry<String, ArrayList<String>> entry : allowedWords.entrySet()) {
-            sortedFamilies.add(new ComparableFamilies(entry.getKey(), entry.getValue()));
-        }
-        
+        TreeSet<ComparableFamilies> sortedFamilies = new TreeSet<>(unSortedFamilies);
+                
         // Get the Best Result based on the Difficulty
         TreeMap<String, Integer> resultsMap;
         if (this.diff == HangmanDifficulty.HARD) {
@@ -254,7 +251,13 @@ public class HangmanManager {
             resultsMap = getNonHardDiff(sortedFamilies, numRounds, specialRound);
         }
 
+        // Updating Game States
         this.currWords = allowedWords.get(this.wordMask);
+        this.guessesMade.add(guess);
+        
+        if (this.wordMask.equals(prevMask)) {
+            this.numGuesses--;
+        }
 
         return resultsMap;
     }
