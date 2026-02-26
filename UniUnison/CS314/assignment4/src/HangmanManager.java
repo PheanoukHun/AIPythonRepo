@@ -302,8 +302,15 @@ public class HangmanManager {
      * @return
      */
     private String getHardestWords(TreeSet<ComparableFamilies> sortedFamilies) {
-        TreeMap<String, Integer> result = new TreeMap<>();
+
         ComparableFamilies lastFamily = sortedFamilies.last();
+
+        if (this.debugOn) {
+            System.out.println("DEBUGGING: Picking hardest list.");
+            System.out.println("DEBUGGING: New pattern is: " + lastFamily.getFamily()
+                    +". New family has 2 words.");
+        }
+
         return lastFamily.getFamily();
     }
 
