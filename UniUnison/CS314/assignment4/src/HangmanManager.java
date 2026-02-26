@@ -52,8 +52,10 @@ public class HangmanManager {
 
         // TODO: Debug print all Words from 0 to 24
         if (this.debugOn) {
-            for (Map.Entry<Integer, ArrayList<String>> entry : this.wordPatterns.entrySet()) {
-
+            for (int i = 0; i < 24; i++) {
+                if (this.wordPatterns.get(i) == null) {
+                    System.out.println(i + " 0");
+                }
             }
         }
     }
@@ -229,18 +231,18 @@ public class HangmanManager {
         }
 
         // Sorted Sort Based on the CompareFamilies
-        for (Map.entry<String, ArrayList<String>> entry : ) {
-
+        TreeSet<CompareFamilies> sortedFamilies = new TreeSet<>();
+        for (Map.Entry<String, ArrayList<String>> entry : allowedWords.entrySet()) {
+            sortedFamilies.add(new CompareFamilies(entry.getKey(), entry.getValue()));
         }
-
 
         // Get the Best Result based on the Difficulty
         if (this.diff == HangmanDifficulty.HARD) {
-            resultsMap = getHardestWords(allowedWords);
+            resultsMap = getHardestWords(sortedFamilies);
         } else if (this.diff == HangmanDifficulty.MEDIUM) {
-            resultsMap = getMediumWords(allowedWords);
+            resultsMap = getMediumWords(sortedFamilies);
         } else {
-            resultsMap = getEasyWords(allowedWords);
+            resultsMap = getEasyWords(sortedFamilies);
         }
 
         this.currWords = allowedWords.get(this.wordMask);
@@ -290,25 +292,19 @@ public class HangmanManager {
         return resultBuilder.toString();
     }
 
-    private TreeMap<String, Integer> getHardestWords(
-            TreeMap<String, ArrayList<String>> allowedWords) {
-
+    private TreeMap<String, Integer> getHardestWords(TreeSet<CompareFamilies> sortedFamilies) {
         TreeMap<String, Integer> result = new TreeMap<>();
-        String hardestFamily = null;
-
-        this.wordMask = hardestFamily;
-        result.put(hardestFamily, allowedWords.get(hardestFamily).size());
+        this.wordMask = sortedFamilies.last().getFamily();
+        result.put(this.wordMask, sortedFamilies.last().getFamilyList().size());
         return result;
     }
 
-    private TreeMap<String, Integer> getMediumWords(
-            TreeMap<String, ArrayList<String>> allowedWords) {
+    private TreeMap<String, Integer> getMediumWords(TreeSet<CompareFamilies> sortedFamilies) {
 
         return null;
     }
 
-    private TreeMap<String, Integer> getEasyWords(
-            TreeMap<String, ArrayList<String>> allowedWords) {
+    private TreeMap<String, Integer> getEasyWords(TreeSet<CompareFamilies> sortedFamilies) {
 
         return null;
     }
