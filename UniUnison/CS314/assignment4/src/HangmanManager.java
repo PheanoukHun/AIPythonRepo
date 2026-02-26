@@ -61,7 +61,7 @@ public class HangmanManager {
     public HangmanManager(Set<String> words) {
 
         // Checking Preconditions
-        if (words == null || words.size() == 0) {
+        if (words == null || words.isEmpty()) {
             throw new IllegalArgumentException("Words cannot be null and"
                     + " its length must be greater than 0.");
         }
@@ -218,7 +218,7 @@ public class HangmanManager {
             String currMask = getNewMaskedWord(guess, word);
 
             if (allowedWords.get(currMask) == null) {
-                allowedWords.put(currMask, new ArrayList<>());
+                allowedWords.puct(currMask, new ArrayList<>());
             }
 
             allowedWords.get(currMask).add(word);
