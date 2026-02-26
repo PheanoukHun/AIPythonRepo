@@ -11,8 +11,9 @@
 
 import java.util.ArrayList;
 import java.util.Comparator;
+
 import java.util.Set;
-import java.util.HashSet;
+import java.util.TreeSet;
 
 import java.util.TreeMap;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class HangmanManager {
     private TreeMap<Integer, ArrayList<String>> wordPatterns;
     private ArrayList<String> currWords;
 
-    private Set<Character> guessesMade;
+    private TreeSet<Character> guessesMade;
 
     private int wordLen;
     private int numGuesses;
@@ -49,6 +50,7 @@ public class HangmanManager {
         this(words);
         this.debugOn = debugOn;
 
+        // TODO: Debug print all Words from 0 to 24
         if (this.debugOn) {
             for (Map.Entry<Integer, ArrayList<String>> entry : this.wordPatterns.entrySet()) {
 
@@ -73,9 +75,13 @@ public class HangmanManager {
 
         // Copying the Values
         for (String word : words) {
+
+            // New Entry
             if (wordPatterns.get(word.length()) == null) {
                 this.wordPatterns.put(word.length(), new ArrayList<>());
                 this.wordPatterns.get(word.length()).add(word);
+
+            // Updating an Entry
             } else {
                 this.wordPatterns.get(word.length()).add(word);
             }
@@ -120,7 +126,7 @@ public class HangmanManager {
         this.wordLen = wordLen;
         this.currWords = wordPatterns.get(wordLen);
 
-        this.guessesMade = new HashSet<>();
+        this.guessesMade = new TreeSet<>();
 
         StringBuilder maskBuilder = new StringBuilder();
         char UNKNOWN_CHAR = '-';
@@ -354,6 +360,14 @@ public class HangmanManager {
             }
 
             return result;
+        }
+
+        public String getFamily() {
+            return this.family;
+        }
+
+        public ArrayList<String> getFamilyList() {
+            return this.familyList;
         }
     }
 }
