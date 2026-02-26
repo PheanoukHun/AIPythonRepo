@@ -227,7 +227,7 @@ public class HangmanManager {
         TreeMap<String, ArrayList<String>> allowedWords = new TreeMap<>();
         for (String word : this.currWords) {
             String currMask = getNewMaskedWord(guess, word);
-            
+
             if (allowedWords.get(currMask) == null) {
                 allowedWords.put(currMask, new ArrayList<>());
             }
@@ -370,11 +370,21 @@ public class HangmanManager {
         private final String family;
         private final ArrayList<String> familyList;
 
+        /**
+         * 
+         * @param family
+         * @param familyList
+         */
         public ComparableFamilies(String family, ArrayList<String> familyList) {
             this.family = family;
             this.familyList = familyList;
         }
 
+        /**
+         * 
+         * @param other
+         * @return
+         */
         public int compareTo(ComparableFamilies other) {
 
             // Precondition
@@ -402,6 +412,10 @@ public class HangmanManager {
             return -1;
         }
 
+        /**
+         * 
+         * @return
+         */
         public int getNumHidden() {
             char HIDDEN_CHAR = '-';
             int result = 0;
@@ -415,10 +429,18 @@ public class HangmanManager {
             return result;
         }
 
+        /**
+         * 
+         * @return
+         */
         public String getFamily() {
             return this.family;
         }
 
+        /**
+         * 
+         * @return
+         */
         public ArrayList<String> getFamilyList() {
             return this.familyList;
         }
