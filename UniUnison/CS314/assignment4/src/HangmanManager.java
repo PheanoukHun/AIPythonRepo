@@ -324,24 +324,56 @@ public class HangmanManager {
     private String getNonHardDiff(TreeSet<ComparableFamilies> sortedFamilies,
             int numRounds, int specialRound) {
 
+        // ComparableFamilies family = sortedFamilies.last();
+
+        // if (this.turn % numRounds == specialRound && sortedFamilies.lower(family) !=
+        // null) {
+        // family = sortedFamilies.lower(family);
+        // if (this.debugOn) {
+        // System.out.println("\nDEBUGGING: Should pick second hardest pattern this
+        // turn, "
+        // + "but only one pattern available.");
+        // System.out.println("DEBUGGING: New pattern is: " + family.getFamily()
+        // +". New family has " + family.getFamilyList().size() + " words.\n")
+        // }
+        // } else {
+        // if (this.debugOn) {
+        // System.out.println("\nDEBUGGING: Picking hardest list.");
+        // System.out.println("DEBUGGING: New pattern is: " + family.getFamily()
+        // +". New family has " + family.getFamilyList().size() + " words.\n");
+        // }
+        // }
+
+        // this.turn++;
+        // return family.getFamily();
+
         ComparableFamilies family = sortedFamilies.last();
 
-        if (this.turn % numRounds == specialRound && sortedFamilies.lower(family) != null) {
-            family = sortedFamilies.lower(family);
+        if (this.turn % numRounds == specialRound) {
+
             if (this.debugOn) {
-                System.out.println("\nDEBUGGING: Should pick second hardest pattern this turn, "
-                        + "but only one pattern available.");
-                System.out.println("DEBUGGING: New pattern is: " + family.getFamily()
-                        +". New family has " + family.getFamilyList().size() + " words.\n")
+                System.out.println("\nDEBUGGING: Should pick second hardest pattern this turn,"
+                        + " but only one pattern available.");
+            }
+
+            if (sortedFamilies.lower(family) != null) {
+                family = sortedFamilies.lower(family);
+            } else {
+                if (this.debugOn) {
+                    System.out.println("\nDEBUGGING: Picking hardest list.");
+                }
             }
         } else {
             if (this.debugOn) {
                 System.out.println("\nDEBUGGING: Picking hardest list.");
-                System.out.println("DEBUGGING: New pattern is: " + family.getFamily()
-                +". New family has " + family.getFamilyList().size() + " words.\n");
             }
         }
-        
+
+        if (this.debugOn) {
+            System.out.println("DEBUGGING: New pattern is: " + family.getFamily()
+                    + ". New family has " + family.getFamilyList().size() + " words.\n");
+        }
+
         this.turn++;
         return family.getFamily();
     }
