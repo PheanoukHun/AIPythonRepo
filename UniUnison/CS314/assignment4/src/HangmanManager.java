@@ -76,6 +76,8 @@ public class HangmanManager {
                     + " its length must be greater than 0.");
         }
 
+        this.wordPatterns = new TreeMap<>();
+
         // Copying the Values
         for (String word : words) {
 
@@ -100,7 +102,11 @@ public class HangmanManager {
      *         length
      */
     public int numWords(int length) {
-        return this.wordPatterns.get(length).size();
+        ArrayList<String> listAtLen = this.wordPatterns.get(length);
+        if (listAtLen == null) {
+            return 0;
+        }
+        return listAtLen.size();
     }
 
     /**
@@ -213,7 +219,6 @@ public class HangmanManager {
         }
 
         this.guessesMade.add(guess);
-        this.numGuesses--;
 
         TreeMap<String, ArrayList<String>> allowedWords = new TreeMap<>();
         TreeMap<String, Integer> resultsMap;
@@ -249,6 +254,8 @@ public class HangmanManager {
         }
 
         this.currWords = allowedWords.get(this.wordMask);
+        
+
         return resultsMap;
     }
 
