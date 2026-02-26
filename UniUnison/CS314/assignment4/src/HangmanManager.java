@@ -239,6 +239,18 @@ public class HangmanManager {
             resultsMap = getNonHardDiff(sortedFamilies, numRounds, specialRound);
         }
 
+        if (this.debugOn) {
+            System.out.println("DEBUGGING: Based on guess here are resulting patterns and number"
+                    + "of words in each pattern:");
+
+            for (ComparableFamilies family : sortedFamilies) {
+                System.out.println("pattern: " + family.getFamily() + ", number of words: "
+                + family.getFamilyList().size());
+            }
+
+            System.out.println("END DEBUGGING");
+        }
+
         // Updating Game States
         this.currWords = allowedWords.get(this.wordMask);
         this.guessesMade.add(guess);
