@@ -285,9 +285,7 @@ public class HangmanManager {
 
         String hardestFamily = null;
 
-        for (Map.Entry<String, ArrayList<String>> entry : allowedWords.entrySet()) {
-            hardestFamily = compareTwoEntries(hardestFamily, hardestFamily, allowedWords);
-        }
+        
 
         this.wordMask = hardestFamily;
         result.put(hardestFamily, allowedWords.get(hardestFamily).size());
@@ -306,52 +304,8 @@ public class HangmanManager {
         return null;
     }
 
-    private int getNumHidden(String word) {
-        char HIDDEN_CHAR = '-';
-        int result = 0;
-
-        for (int i = 0; i < word.length(); i++) {
-            if (word.charAt(i) == HIDDEN_CHAR) {
-                result++;
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * 
-     * 
-     */
-    private String compareTwoEntries(String hardestFamily, String currFamily,
-            TreeMap<String, ArrayList<String>> allowedWords) {
-
-        // Getting the Size of Each ArrayList
-        int hardestFamilySize = allowedWords.get(hardestFamily).size();
-        int currFamilySize = allowedWords.get(currFamily).size();
-
-        // Compare Based on Number of Words in Each List
-        if (currFamilySize > hardestFamilySize) {
-            hardestFamily = currFamily;
-        } else if (currFamilySize == hardestFamilySize) {
-
-            // Compare Based on Number of Hidden Characters
-            if (getNumHidden(hardestFamily) - getNumHidden(currFamily) > 0) {
-                hardestFamily = currFamily;
-            } else if (getNumHidden(hardestFamily) - getNumHidden(currFamily) == 0) {
-
-                // Compare Lexographically
-                if (hardestFamily.compareTo(currFamily) < 0) {
-                    hardestFamily = currFamily;
-                }
-            }
-        }
-
-        return hardestFamily;
-    }
-
     private class CompareFamilies implements Comparable {
-        
+
         private final String family;
         private final ArrayList<String> familyList;
 
@@ -361,23 +315,45 @@ public class HangmanManager {
         }
 
         public int compareTo(Object o) {
-            
+
             // Precondition
             if (!(o instanceof CompareFamilies) || o == null) {
-               throw new IllegalArgumentException(o + "is not an instance of CompareFamilies");
+                throw new IllegalArgumentException(o + "is not an instance of CompareFamilies");
             }
 
-            CompareFamilies other = (CompareFamilies)o;
+            CompareFamilies other = (CompareFamilies) o;
 
+            // Getting the Size of Each ArrayList
             if (this.familyList.size() > other.familyList.size()) {
                 return 1;
             }
 
+            // Compare Based on Number of Words in Each List
             if (this.familyList.size() == other.familyList.size()) {
-                if 
+                if (this.getNumHidden() > other.getNumHidden()) {
+                    return 1;
+                }
+
+                // Compare Lexographically
+                if (this.getNumHidden() == other.getNumHidden()) {
+                    return this.family.compareTo(other.family);
+                }
             }
 
             return -1;
+        }
+
+        public int getNumHidden() {
+            char HIDDEN_CHAR = '-';
+            int result = 0;
+
+            for (int i = 0; i < this.family.length(); i++) {
+                if (this.family.charAt(i) == HIDDEN_CHAR) {
+                    result++;
+                }
+            }
+
+            return result;
         }
     }
 }
