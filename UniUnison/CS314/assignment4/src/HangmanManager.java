@@ -50,7 +50,7 @@ public class HangmanManager {
         this(words);
         this.debugOn = debugOn;
 
-        //Debug: print the number of Words from size 0 to 24
+        // Debug: print the number of Words from size 0 to 24
         if (this.debugOn) {
             for (int i = 2; i < 24; i++) {
                 if (this.wordPatterns.get(i) == null) {
@@ -233,9 +233,9 @@ public class HangmanManager {
         }
 
         // Sorted Sort Based on the CompareFamilies
-        TreeSet<CompareFamilies> sortedFamilies = new TreeSet<>();
+        TreeSet<ComparableFamilies> sortedFamilies = new TreeSet<>();
         for (Map.Entry<String, ArrayList<String>> entry : allowedWords.entrySet()) {
-            sortedFamilies.add(new CompareFamilies(entry.getKey(), entry.getValue()));
+            sortedFamilies.add(new ComparableFamilies(entry.getKey(), entry.getValue()));
         }
 
         // Get the Best Result based on the Difficulty
@@ -294,65 +294,65 @@ public class HangmanManager {
         return resultBuilder.toString();
     }
 
-    private TreeMap<String, Integer> getHardestWords(TreeSet<CompareFamilies> sortedFamilies) {
+    private TreeMap<String, Integer> getHardestWords(TreeSet<ComparableFamilies> sortedFamilies) {
         TreeMap<String, Integer> result = new TreeMap<>();
         this.wordMask = sortedFamilies.last().getFamily();
         result.put(this.wordMask, sortedFamilies.last().getFamilyList().size());
         return result;
     }
 
-    private TreeMap<String, Integer> getMediumWords(TreeSet<CompareFamilies> sortedFamilies) {
+    private TreeMap<String, Integer> getMediumWords(TreeSet<ComparableFamilies> sortedFamilies) {
 
         TreeMap<String, Integer> resultMap = new TreeMap<>();
-        CompareFamilies family = sortedFamilies.last();
-        
-        if (turn % 2 == 1) {
-            if (sortedFamilies.size() == 1) {
-                resultMap = getHardestWords(sortedFamilies);
-            } else {
-                family = sortedFamilies.floor(family);
-            }
+        ComparableFamilies family = sortedFamilies.last();
+
+        if (turn % 2 == 1 && sortedFamilies.floor(family) != null) {
+            family = sortedFamilies.floor(family);
         }
-        
+
         this.turn++;
-        
-        resultMap.put(family.getFamily(), family.getFamilyList().size());
         this.wordMask = family.getFamily();
+        resultMap.put(family.getFamily(), family.getFamilyList().size());
 
         return resultMap;
     }
 
-    private TreeMap<String, Integer> getEasyWords(TreeSet<CompareFamilies> sortedFamilies) {
+    private TreeMap<String, Integer> getEasyWords(TreeSet<ComparableFamilies> sortedFamilies) {
 
         final int ZERO_BASED_FOURTH_POS = 3;
-        
+
         TreeMap<String, Integer> resultMap = new TreeMap<>();
+        ComparableFamilies family = sortedFamilies.last();
 
-        if (turn % 4 == ZERO_BASED_FOURTH_POS) {
-            if (sortedFamilies.size() == 1) {
-                resultMap = getHardestWords(sortedFamilies);
-            } else {
-
-            }
-        } else {
-            resultMap = getHardestWords(sortedFamilies);
+        if (turn % 4 == ZERO_BASED_FOURTH_POS && sortedFamilies.floor(family) != null) {
+            family = sortedFamilies.floor(family);
         }
 
         this.turn++;
+        this.wordMask = family.getFamily();
+        resultMap.put(family.getFamily(), family.getFamilyList().size());
         return resultMap;
     }
 
-    private class CompareFamilies implements Comparable<CompareFamilies> {
+    private TreeMap<String, Integer> getGenericDiff(TreeSet<ComparableFamilies> sortedFamilies,
+            int numRounds, int specialRound) {
+        TreeMap<String, Integer> resultMap = new TreeMap<>();
+        Comparable
+
+        return resultMap;
+    }
+
+    private class ComparableFamilies implements Comparable<ComparableFamilies> {
 
         private final String family;
         private final ArrayList<String> familyList;
 
-        public CompareFamilies(String family, ArrayList<String> familyList) {
+        public ComparableFamilies(String family, ArrayList<String> familyList) {
             this.family = family;
             this.familyList = familyList;
         }
 
-        public int compareTo(CompareFamilies other) {
+        public int compareTo(ComparableFamilies other) {
 
             // Precondition
             if (other == null) {
