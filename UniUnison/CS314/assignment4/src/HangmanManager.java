@@ -130,6 +130,7 @@ public class HangmanManager {
         // Reseting Variables
         this.diff = diff;
 
+        this.turn = 0;
         this.numGuesses = numGuesses;
 
         this.wordLen = wordLen;
@@ -220,10 +221,8 @@ public class HangmanManager {
 
         String prevMask = this.wordMask;
 
-        // Gettings List of Words with Guesses and Adding them to a Sorted Set.
+        // Gettings List of Words with Guesses
         TreeMap<String, ArrayList<String>> allowedWords = new TreeMap<>();
-        ArrayList<ComparableFamilies> unSortedFamilies = new ArrayList<>();
-
         for (String word : this.currWords) {
             
             String currMask = getNewMaskedWord(guess, word);
@@ -231,14 +230,17 @@ public class HangmanManager {
             if (allowedWords.get(currMask) == null) {
                 allowedWords.put(currMask, new ArrayList<>());
                 allowedWords.get(currMask).add(word);
-                unSortedFamilies.add(new ComparableFamilies(currMask, allowedWords.get(currMask)));
             } else {
                 allowedWords.get(currMask).add(word);
             }
         }
         
-        TreeSet<ComparableFamilies> sortedFamilies = new TreeSet<>(unSortedFamilies);
-                
+        // Sorted Set Based on the CompareFamilies Orderings
+        TreeSet<ComparableFamilies> sortedFamilies = new TreeSet<>();
+        for (Map.Entry<String, ArrayList<String>> entry : allowedWords.entrySet()) {
+            sortedFamilies.add(new ComparableFamilies(entry.getKey(), entry.getValue()));
+        }
+        
         // Get the Best Result based on the Difficulty
         TreeMap<String, Integer> resultsMap;
         if (this.diff == HangmanDifficulty.HARD) {
@@ -327,8 +329,8 @@ public class HangmanManager {
         TreeMap<String, Integer> resultMap = new TreeMap<>();
         ComparableFamilies family = sortedFamilies.last();
 
-        if (this.turn % numRounds == specialRound && sortedFamilies.floor(family) != null) {
-            family = sortedFamilies.floor(family);
+        if (this.turn % numRounds == specialRound && sortedFamilies.lower(family) != null) {
+            family = sortedFamilies.lower(family);
 
             if (this.debugOn) {
                 System.out.println("DEBUGGING: Picking the Second Hardest List.");
