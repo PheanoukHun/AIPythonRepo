@@ -254,7 +254,6 @@ public class HangmanManager {
         }
 
         this.currWords = allowedWords.get(this.wordMask);
-        
 
         return resultsMap;
     }
@@ -303,10 +302,19 @@ public class HangmanManager {
     }
 
     private TreeMap<String, Integer> getHardestWords(TreeSet<ComparableFamilies> sortedFamilies) {
+        
         TreeMap<String, Integer> result = new TreeMap<>();
         ComparableFamilies lastFamily = sortedFamilies.last();
+        
         this.wordMask = lastFamily.getFamily();
         result.put(this.wordMask, lastFamily.getFamilyList().size());
+
+        if (this.debugOn) {
+            System.out.println("DEBUGGING: Picking hardest list.");
+            System.out.println("DEBUGGING: New pattern is: " + this.wordMask + ". New family has " 
+            + result.get(this.wordMask) + " words.");
+        }
+
         return result;
     }
 
