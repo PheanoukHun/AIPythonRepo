@@ -351,6 +351,7 @@ public class HangmanManager {
     }
 
     private class CompareFamilies implements Comparable {
+        
         private final String family;
         private final ArrayList<String> familyList;
 
@@ -368,7 +369,13 @@ public class HangmanManager {
 
             CompareFamilies other = (CompareFamilies)o;
 
-            
+            if (this.familyList.size() > other.familyList.size()) {
+                return 1;
+            }
+
+            if (this.familyList.size() == other.familyList.size()) {
+                if 
+            }
 
             return -1;
         }
