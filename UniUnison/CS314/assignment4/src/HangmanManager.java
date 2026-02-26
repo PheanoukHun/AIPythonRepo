@@ -10,6 +10,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -219,28 +220,27 @@ public class HangmanManager {
             throw new IllegalStateException("Already Guessed the Character");
         }
 
+        // Saving Previous Mask
         String prevMask = this.wordMask;
 
         // Gettings List of Words with Guesses
         TreeMap<String, ArrayList<String>> allowedWords = new TreeMap<>();
         for (String word : this.currWords) {
-            
             String currMask = getNewMaskedWord(guess, word);
             
             if (allowedWords.get(currMask) == null) {
                 allowedWords.put(currMask, new ArrayList<>());
-                allowedWords.get(currMask).add(word);
-            } else {
-                allowedWords.get(currMask).add(word);
             }
+
+            allowedWords.get(currMask).add(word);
         }
-        
+
         // Sorted Set Based on the CompareFamilies Orderings
         TreeSet<ComparableFamilies> sortedFamilies = new TreeSet<>();
         for (Map.Entry<String, ArrayList<String>> entry : allowedWords.entrySet()) {
             sortedFamilies.add(new ComparableFamilies(entry.getKey(), entry.getValue()));
         }
-        
+
         // Get the Best Result based on the Difficulty
         TreeMap<String, Integer> resultsMap;
         if (this.diff == HangmanDifficulty.HARD) {
@@ -256,7 +256,6 @@ public class HangmanManager {
         // Updating Game States
         this.currWords = allowedWords.get(this.wordMask);
         this.guessesMade.add(guess);
-        
         if (this.wordMask.equals(prevMask)) {
             this.numGuesses--;
         }
@@ -274,6 +273,7 @@ public class HangmanManager {
      */
     public String getSecretWord() {
 
+        // Precondition
         if (currWords.size() == 0) {
             throw new IllegalArgumentException("There is no words found.");
         }
@@ -307,6 +307,11 @@ public class HangmanManager {
         return resultBuilder.toString();
     }
 
+    /**
+     * 
+     * @param sortedFamilies
+     * @return
+     */
     private TreeMap<String, Integer> getHardestWords(TreeSet<ComparableFamilies> sortedFamilies) {
 
         TreeMap<String, Integer> result = new TreeMap<>();
@@ -324,6 +329,13 @@ public class HangmanManager {
         return result;
     }
 
+    /**
+     * 
+     * @param sortedFamilies
+     * @param numRounds
+     * @param specialRound
+     * @return
+     */
     private TreeMap<String, Integer> getNonHardDiff(TreeSet<ComparableFamilies> sortedFamilies,
             int numRounds, int specialRound) {
         TreeMap<String, Integer> resultMap = new TreeMap<>();
