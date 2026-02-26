@@ -33,7 +33,7 @@ public class HangmanManager {
 
     private int wordLen;
     private int numGuesses;
-    private int turnNum;
+    private int turn;
 
     private HangmanDifficulty diff;
 
@@ -50,11 +50,13 @@ public class HangmanManager {
         this(words);
         this.debugOn = debugOn;
 
-        // TODO: Debug print all Words from 0 to 24
+        //Debug: print the number of Words from size 0 to 24
         if (this.debugOn) {
-            for (int i = 0; i < 24; i++) {
+            for (int i = 2; i < 24; i++) {
                 if (this.wordPatterns.get(i) == null) {
                     System.out.println(i + " 0");
+                } else {
+                    System.out.println(i + " " + this.wordPatterns.get(i).size());
                 }
             }
         }
@@ -301,12 +303,33 @@ public class HangmanManager {
 
     private TreeMap<String, Integer> getMediumWords(TreeSet<CompareFamilies> sortedFamilies) {
 
+        TreeMap<String, Integer> resultMap;
+        
+        if (turn % 2 == 0) {
+            resultMap = getHardestWords(sortedFamilies);
+        } else {
+
+        }
+
+        this.turn++;
         return null;
     }
 
     private TreeMap<String, Integer> getEasyWords(TreeSet<CompareFamilies> sortedFamilies) {
 
-        return null;
+        final int ZERO_BASED_FOURTH_POS = 3;
+        TreeMap<String, Integer> resultMap;
+
+        if (turn % 4 == ZERO_BASED_FOURTH_POS) {
+            if (sortedFamilies.size() == 1) {
+                
+            }
+        } else {
+            resultMap = getHardestWords(sortedFamilies);
+        }
+
+        this.turn++;
+        return resultMap;
     }
 
     private class CompareFamilies implements Comparable<CompareFamilies> {
