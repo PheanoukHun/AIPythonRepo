@@ -49,17 +49,6 @@ public class HangmanManager {
     public HangmanManager(Set<String> words, boolean debugOn) {
         this(words);
         this.debugOn = debugOn;
-
-        // Debug: print the number of Words from size 0 to 24
-        if (this.debugOn) {
-            for (int i = 2; i < 24; i++) {
-                if (this.wordPatterns.get(i) == null) {
-                    System.out.println(i + " 0");
-                } else {
-                    System.out.println(i + " " + this.wordPatterns.get(i).size());
-                }
-            }
-        }
     }
 
     /**
