@@ -303,24 +303,30 @@ public class HangmanManager {
 
     private TreeMap<String, Integer> getMediumWords(TreeSet<CompareFamilies> sortedFamilies) {
 
-        TreeMap<String, Integer> resultMap = getHardestWords(sortedFamilies);
+        TreeMap<String, Integer> resultMap = new TreeMap<>();
+        CompareFamilies family = sortedFamilies.last();
         
         if (turn % 2 == 1) {
             if (sortedFamilies.size() == 1) {
                 resultMap = getHardestWords(sortedFamilies);
             } else {
-                resultMap = sortedFamilies.lower(resultMap);
+                family = sortedFamilies.floor(family);
             }
         }
-
+        
         this.turn++;
+        
+        resultMap.put(family.getFamily(), family.getFamilyList().size());
+        this.wordMask = family.getFamily();
+
         return resultMap;
     }
 
     private TreeMap<String, Integer> getEasyWords(TreeSet<CompareFamilies> sortedFamilies) {
 
         final int ZERO_BASED_FOURTH_POS = 3;
-        TreeMap<String, Integer> resultMap;
+        
+        TreeMap<String, Integer> resultMap = new TreeMap<>();
 
         if (turn % 4 == ZERO_BASED_FOURTH_POS) {
             if (sortedFamilies.size() == 1) {
