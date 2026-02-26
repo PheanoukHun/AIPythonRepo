@@ -10,11 +10,8 @@
  */
 
 import java.util.ArrayList;
-import java.util.Collections;
-
 import java.util.Set;
 import java.util.TreeSet;
-
 import java.util.TreeMap;
 import java.util.Map;
 
@@ -117,7 +114,7 @@ public class HangmanManager {
                     + "Number of guesses cannot be less than 1");
         }
 
-        // Reseting Variables
+        // Resetting Variables
         this.diff = diff;
 
         this.turn = 0;
@@ -212,13 +209,13 @@ public class HangmanManager {
         // Saving Previous Mask
         String prevMask = this.wordMask;
 
-        // Gettings List of Words with Guesses
+        // Getting List of Words with Guesses
         TreeMap<String, ArrayList<String>> allowedWords = new TreeMap<>();
         for (String word : this.currWords) {
             String currMask = getNewMaskedWord(guess, word);
 
             if (allowedWords.get(currMask) == null) {
-                allowedWords.puct(currMask, new ArrayList<>());
+                allowedWords.put(currMask, new ArrayList<>());
             }
 
             allowedWords.get(currMask).add(word);
