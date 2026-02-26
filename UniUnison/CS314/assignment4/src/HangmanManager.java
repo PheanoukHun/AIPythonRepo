@@ -81,7 +81,7 @@ public class HangmanManager {
                 this.wordPatterns.put(word.length(), new ArrayList<>());
                 this.wordPatterns.get(word.length()).add(word);
 
-            // Updating an Entry
+                // Updating an Entry
             } else {
                 this.wordPatterns.get(word.length()).add(word);
             }
@@ -229,7 +229,9 @@ public class HangmanManager {
         }
 
         // Sorted Sort Based on the CompareFamilies
-        
+        for (Map.entry<String, ArrayList<String>> entry : ) {
+
+        }
 
 
         // Get the Best Result based on the Difficulty
@@ -311,7 +313,7 @@ public class HangmanManager {
         return null;
     }
 
-    private class CompareFamilies implements Comparable {
+    private class CompareFamilies implements Comparable<CompareFamilies> {
 
         private final String family;
         private final ArrayList<String> familyList;
@@ -321,14 +323,12 @@ public class HangmanManager {
             this.familyList = familyList;
         }
 
-        public int compareTo(Object o) {
+        public int compareTo(CompareFamilies other) {
 
             // Precondition
-            if (!(o instanceof CompareFamilies) || o == null) {
-                throw new IllegalArgumentException(o + "is not an instance of CompareFamilies");
+            if (other == null) {
+                throw new NullPointerException("Cannot compare to null");
             }
-
-            CompareFamilies other = (CompareFamilies) o;
 
             // Getting the Size of Each ArrayList
             if (this.familyList.size() > other.familyList.size()) {
