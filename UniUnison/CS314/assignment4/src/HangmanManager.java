@@ -274,11 +274,13 @@ public class HangmanManager {
      * Make Guess Method.
      * 
      * @param guess - The character being guessed currently.
-     * @return - A Map containing all the possible masks as the key set and 
+     * @return - A Map containing all the possible masks as the key set and an
+     *         ArrayList of Words that share the same word mask as the value set.
      */
     private TreeMap<String, ArrayList<String>> getAllowedWords(char guess) {
+
         TreeMap<String, ArrayList<String>> allowedWords = new TreeMap<>();
-        
+
         for (String word : this.currWords) {
             String currMask = getNewMaskedWord(guess, word);
 
@@ -288,13 +290,16 @@ public class HangmanManager {
 
             allowedWords.get(currMask).add(word);
         }
-        return allowedWords;
 
+        return allowedWords;
     }
 
     /**
+     * This method checks the difficulty of the Current Game and runs the Method
+     * that correspond with that difficulty.
      * 
-     * @param sortedFamilies
+     * @param sortedFamilies - A TreeSet of sorted ComparableFamilies Objects which
+     *                       contains all masks and its corresponding ArrayLists.
      */
     private void playBasedDifficulty(TreeSet<ComparableFamilies> sortedFamilies) {
         if (this.diff == HangmanDifficulty.HARD) {
@@ -307,14 +312,17 @@ public class HangmanManager {
     }
 
     /**
+     * Updates all of the games states based on the current guess.
      * 
-     * @param allowedWords
-     * @param prevMask
-     * @param guess
+     * @param aliveWords - A TreeMap containing the currently alive and still
+     *                   allowed for play.
+     * @param prevMask   - The mask that is shown for the user in at the start of
+     *                   the current round.
+     * @param guess      - The character being guessed currently.
      */
-    private void updateGameStates(TreeMap<String, ArrayList<String>> allowedWords,
+    private void updateGameStates(TreeMap<String, ArrayList<String>> aliveWords,
             String prevMask, char guess) {
-        this.currWords = allowedWords.get(this.wordMask);
+        this.currWords = aliveWords.get(this.wordMask);
         this.guessesMade.add(guess);
         if (this.wordMask.equals(prevMask)) {
             this.numGuesses--;
@@ -348,9 +356,12 @@ public class HangmanManager {
     }
 
     /**
+     * This method gets the hardest word family based on the Conditions found in the
+     * ComparableFamilies Class.
      * 
-     * @param sortedFamilies
-     * @return
+     * @param sortedFamilies - A TreeSet of sorted ComparableFamilies Objects which
+     *                       contains all masks and its corresponding ArrayLists.
+     * @return - A word mask that corresponds to the hardest mask family.
      */
     private String getHardDiffs(TreeSet<ComparableFamilies> sortedFamilies) {
 
@@ -366,24 +377,32 @@ public class HangmanManager {
     }
 
     /**
+     * This method gets the hardest or Second Hardest word family based on the
+     * Conditions found in the ComparableFamilies Class.
      * 
-     * @param sortedFamilies
-     * @param numRounds
-     * @param specialRound
-     * @return
+     * @param sortedFamilies - A TreeSet of sorted ComparableFamilies Objects which
+     *                       contains all masks and its corresponding ArrayLists.
+     * @param numRounds      - The Number of Rounds the Difficulty has per Cycle.
+     * @param specialRound   - The Round where the Difficulty picks the second
+     *                       hardest word family.
+     * @return - A word mask that corresponds to the hardest or second hardes mask
+     *         family.
      */
     private String getOtherDiffs(TreeSet<ComparableFamilies> sortedFamilies,
             int numRounds, int specialRound) {
 
         ComparableFamilies family = sortedFamilies.last();
 
+        // Check if it is a Special Round
         if (this.turn % numRounds == specialRound) {
 
+            // Debug
             if (this.debugOn) {
                 System.out.println("\nDEBUGGING: Should pick second hardest pattern this turn,"
                         + " but only one pattern available.");
             }
 
+            // If there is any other families left
             if (sortedFamilies.lower(family) != null) {
                 family = sortedFamilies.lower(family);
             } else {
@@ -398,6 +417,7 @@ public class HangmanManager {
             }
         }
 
+        // DEBUG
         if (this.debugOn) {
             System.out.println("DEBUGGING: New pattern is: " + family.getFamily()
                     + ". New family has " + family.getFamilyList().size() + " words.\n");
@@ -407,6 +427,9 @@ public class HangmanManager {
         return family.getFamily();
     }
 
+    /**
+     * Represents a family of words that share the same mask
+     */
     private class ComparableFamilies implements Comparable<ComparableFamilies> {
 
         private final String family;
