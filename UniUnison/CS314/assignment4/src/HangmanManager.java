@@ -333,7 +333,7 @@ public class HangmanManager {
         if (this.debugOn) {
             System.out.println("DEBUGGING:");
             System.out.println("\tWords Alive: " + this.aliveWords.toString());
-            System.out.println("");
+            System.out.println("DEBUGGING ENDED");
         }
     }
 
