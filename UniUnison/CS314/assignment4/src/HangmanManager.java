@@ -40,11 +40,11 @@ public class HangmanManager {
 
     private final char HIDDEN_CHAR = '-';
 
-    private final int MED_ROUNDS = 4;
-    private final int MED_SPEC_ROUND = 3;
+    private final int MED_NUM_RNDS = 4;
+    private final int MED_SPEC_RND = 3;
 
     private final int EASY_NUM_ROUNDS = 2;
-    private final int EASY_SPECIAL_ROUND = 1;
+    private final int EASY_SPEC_RND = 1;
 
     /**
      * Create a new HangmanManager from the provided set of words and phrases.
@@ -218,19 +218,10 @@ public class HangmanManager {
         // Saving Previous Mask
         String prevMask = this.wordMask;
 
-        // Getting List of Words with Guesses
-        TreeMap<String, ArrayList<String>> allowedWords = new TreeMap<>();
-        for (String word : this.currWords) {
-            String currMask = getNewMaskedWord(guess, word);
+        // Getting List of Words with Guesses Masked
+        TreeMap<String, ArrayList<String>> allowedWords = getAllowedWords(guess);
 
-            if (allowedWords.get(currMask) == null) {
-                allowedWords.put(currMask, new ArrayList<>());
-            }
-
-            allowedWords.get(currMask).add(word);
-        }
-
-        // Sorted Set Based on the CompareFamilies Orderings
+        // Sorted Set Based on the CompareFamilies Orderings and Results for Debugging Purposes
         TreeSet<ComparableFamilies> sortedFamilies = new TreeSet<>();
         TreeMap<String, Integer> resultsMap = new TreeMap<>();
 
@@ -242,21 +233,10 @@ public class HangmanManager {
         }
 
         // Get the Best Result based on the Difficulty
-        if (this.diff == HangmanDifficulty.HARD) {
-            this.wordMask = getHardestWords(sortedFamilies);
-        } else if (this.diff == HangmanDifficulty.MEDIUM) {
-            this.wordMask = getNonHardDiff(sortedFamilies, this.MED_ROUNDS, this.MED_SPEC_ROUND);
-        } else {
-            int numRounds = 2, specialRound = 1;
-            this.wordMask = getNonHardDiff(sortedFamilies, this.EASY_NUM_ROUNDS, this.EASY_SPECIAL_ROUND);
-        }
+        playBasedDifficulty(sortedFamilies);
 
         // Updating Game States
-        this.currWords = allowedWords.get(this.wordMask);
-        this.guessesMade.add(guess);
-        if (this.wordMask.equals(prevMask)) {
-            this.numGuesses--;
-        }
+        updateGameStates(allowedWords, prevMask, guess);
 
         return resultsMap;
     }
@@ -277,6 +257,54 @@ public class HangmanManager {
         }
 
         return currWords.get(0);
+    }
+
+    /**
+     * 
+     * @param guess
+     * @return
+     */
+    private TreeMap<String, ArrayList<String>> getAllowedWords(char guess) {
+        TreeMap<String, ArrayList<String>> allowedWords = new TreeMap<>();
+        for (String word : this.currWords) {
+            String currMask = getNewMaskedWord(guess, word);
+
+            if (allowedWords.get(currMask) == null) {
+                allowedWords.put(currMask, new ArrayList<>());
+            }
+
+            allowedWords.get(currMask).add(word);
+        }
+        return allowedWords;
+    }
+
+    /**
+     * 
+     * @param sortedFamilies
+     */
+    private void playBasedDifficulty(TreeSet<ComparableFamilies> sortedFamilies) {
+        if (this.diff == HangmanDifficulty.HARD) {
+            this.wordMask = getHardestWords(sortedFamilies);
+        } else if (this.diff == HangmanDifficulty.MEDIUM) {
+            this.wordMask = getNonHardWord(sortedFamilies, this.MED_NUM_RNDS, this.MED_SPEC_RND);
+        } else {
+            this.wordMask = getNonHardWord(sortedFamilies, this.EASY_NUM_ROUNDS, this.EASY_SPEC_RND);
+        }
+    }
+
+    /**
+     * 
+     * @param allowedWords
+     * @param prevMask
+     * @param guess
+     */
+    private void updateGameStates(TreeMap<String, ArrayList<String>> allowedWords, 
+        String prevMask, char guess) {
+        this.currWords = allowedWords.get(this.wordMask);
+        this.guessesMade.add(guess);
+        if (this.wordMask.equals(prevMask)) {
+            this.numGuesses--;
+        }
     }
 
     /**
@@ -330,7 +358,7 @@ public class HangmanManager {
      * @param specialRound
      * @return
      */
-    private String getNonHardDiff(TreeSet<ComparableFamilies> sortedFamilies,
+    private String getNonHardWord(TreeSet<ComparableFamilies> sortedFamilies,
             int numRounds, int specialRound) {
 
         ComparableFamilies family = sortedFamilies.last();
