@@ -38,6 +38,14 @@ public class HangmanManager {
 
     private String wordMask;
 
+    private final char HIDDEN_CHAR = '-';
+
+    private final int MED_ROUNDS = 4;
+    private final int MED_SPEC_ROUND = 3;
+
+    private final int EASY_NUM_ROUNDS = 2;
+    private final int EASY_SPECIAL_ROUND = 1;
+
     /**
      * Create a new HangmanManager from the provided set of words and phrases.
      * pre: words != null, words.size() > 0
@@ -128,9 +136,8 @@ public class HangmanManager {
         this.guessesMade = new TreeSet<>();
 
         StringBuilder maskBuilder = new StringBuilder();
-        char UNKNOWN_CHAR = '-';
         for (int i = 0; i < wordLen; i++) {
-            maskBuilder.append(UNKNOWN_CHAR);
+            maskBuilder.append(this.HIDDEN_CHAR);
         }
         this.wordMask = maskBuilder.toString();
     }
@@ -226,6 +233,7 @@ public class HangmanManager {
         // Sorted Set Based on the CompareFamilies Orderings
         TreeSet<ComparableFamilies> sortedFamilies = new TreeSet<>();
         TreeMap<String, Integer> resultsMap = new TreeMap<>();
+
         for (Map.Entry<String, ArrayList<String>> entry : allowedWords.entrySet()) {
             String currFamily = entry.getKey();
             ArrayList<String> currFamilyList = entry.getValue();
@@ -237,11 +245,10 @@ public class HangmanManager {
         if (this.diff == HangmanDifficulty.HARD) {
             this.wordMask = getHardestWords(sortedFamilies);
         } else if (this.diff == HangmanDifficulty.MEDIUM) {
-            int numRounds = 4, specialRound = 3;
-            this.wordMask = getNonHardDiff(sortedFamilies, numRounds, specialRound);
+            this.wordMask = getNonHardDiff(sortedFamilies, this.MED_ROUNDS, this.MED_SPEC_ROUND);
         } else {
             int numRounds = 2, specialRound = 1;
-            this.wordMask = getNonHardDiff(sortedFamilies, numRounds, specialRound);
+            this.wordMask = getNonHardDiff(sortedFamilies, this.EASY_NUM_ROUNDS, this.EASY_SPECIAL_ROUND);
         }
 
         // Updating Game States
@@ -342,7 +349,7 @@ public class HangmanManager {
                     System.out.println("\nDEBUGGING: Picking hardest list.");
                 }
             }
-            
+
         } else {
             if (this.debugOn) {
                 System.out.println("\nDEBUGGING: Picking hardest list.");
@@ -381,33 +388,6 @@ public class HangmanManager {
 
         /**
          * 
-         * @param other
-         * @return
-         */
-        public int compareTo(ComparableFamilies other) {
-
-            // Getting the Size of Each ArrayList
-            if (this.familyList.size() > other.familyList.size()) {
-                return 1;
-            }
-
-            // Compare Based on Number of Words in Each List
-            if (this.familyList.size() == other.familyList.size()) {
-                if (this.getNumHidden() > other.getNumHidden()) {
-                    return 1;
-                }
-
-                // Compare Lexographically
-                if (this.getNumHidden() == other.getNumHidden()) {
-                    return this.family.compareTo(other.family);
-                }
-            }
-
-            return -1;
-        }
-
-        /**
-         * 
          * @return
          */
         public int getNumHidden() {
@@ -437,6 +417,33 @@ public class HangmanManager {
          */
         public ArrayList<String> getFamilyList() {
             return this.familyList;
+        }
+
+        /**
+         * 
+         * @param other
+         * @return
+         */
+        public int compareTo(ComparableFamilies other) {
+
+            // Getting the Size of Each ArrayList
+            if (this.familyList.size() > other.familyList.size()) {
+                return 1;
+            }
+
+            // Compare Based on Number of Words in Each List
+            if (this.familyList.size() == other.familyList.size()) {
+                if (this.getNumHidden() > other.getNumHidden()) {
+                    return 1;
+                }
+
+                // Compare Lexographically
+                if (this.getNumHidden() == other.getNumHidden()) {
+                    return this.family.compareTo(other.family);
+                }
+            }
+
+            return -1;
         }
     }
 }
