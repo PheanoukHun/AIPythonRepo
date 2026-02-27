@@ -26,7 +26,7 @@ public class HangmanManager {
     private boolean debugOn;
 
     private TreeMap<Integer, ArrayList<String>> wordPatterns;
-    private ArrayList<String> currWords;
+    private ArrayList<String> aliveWords;
 
     private TreeSet<Character> guessesMade;
 
@@ -131,7 +131,7 @@ public class HangmanManager {
         this.numGuesses = numGuesses;
 
         this.wordLen = wordLen;
-        this.currWords = wordPatterns.get(wordLen);
+        this.aliveWords = wordPatterns.get(wordLen);
 
         this.guessesMade = new TreeSet<>();
 
@@ -144,7 +144,7 @@ public class HangmanManager {
         if (this.debugOn) {
             System.out.println("\nDEBUGGING INSIDE prepForRound METHOD:");
             System.out.println("\tTurn Number: " + this.turn);
-            System.out.println("\tCurrent Words Alive: " + this.currWords.toString());
+            System.out.println("\tCurrent Words Alive: " + this.aliveWords.toString());
             System.out.println("\tWord Mask: " + this.wordMask);
             System.out.println("DEBUGGING ENDED\n");
         }
@@ -158,7 +158,7 @@ public class HangmanManager {
      *         original dictionary and the guesses so far.
      */
     public int numWordsCurrent() {
-        return this.currWords.size();
+        return this.aliveWords.size();
     }
 
     /**
@@ -261,11 +261,11 @@ public class HangmanManager {
     public String getSecretWord() {
 
         // Precondition
-        if (currWords.isEmpty()) {
+        if (aliveWords.isEmpty()) {
             throw new IllegalArgumentException("There is no words found.");
         }
 
-        return currWords.get(0);
+        return aliveWords.get(0);
     }
 
     /**
@@ -281,7 +281,7 @@ public class HangmanManager {
 
         TreeMap<String, ArrayList<String>> allowedWords = new TreeMap<>();
 
-        for (String word : this.currWords) {
+        for (String word : this.aliveWords) {
             String currMask = getNewMaskedWord(guess, word);
 
             if (allowedWords.get(currMask) == null) {
@@ -322,10 +322,18 @@ public class HangmanManager {
      */
     private void updateGameStates(TreeMap<String, ArrayList<String>> aliveWords,
             String prevMask, char guess) {
-        this.currWords = aliveWords.get(this.wordMask);
+
+        this.aliveWords = aliveWords.get(this.wordMask);
         this.guessesMade.add(guess);
+
         if (this.wordMask.equals(prevMask)) {
             this.numGuesses--;
+        }
+
+        if (this.debugOn) {
+            System.out.println("DEBUGGING:");
+            System.out.println("\tWords Alive: " + this.aliveWords.toString());
+            System.out.println("");
         }
     }
 
@@ -428,7 +436,12 @@ public class HangmanManager {
     }
 
     /**
-     * Represents a family of words that share the same mask
+     * Represents a family of words that share the same mask based on a guess and
+     * previous mask. When sorted the hardest word families would be at the end of
+     * the TreeSet when selecting the next pattern in Evil Hangman. Sorted based on
+     * Size of Word family, then which family have the greater number of hidden
+     * characters in the patterns, and then based on the lexographical order of the
+     * pattern.
      */
     private class ComparableFamilies implements Comparable<ComparableFamilies> {
 
@@ -436,9 +449,12 @@ public class HangmanManager {
         private final ArrayList<String> familyList;
 
         /**
+         * Creates a ComparableFamilies object based on the family mask and the family
+         * array.
          * 
-         * @param family
-         * @param familyList
+         * @param family     - A String mask that represents the family.
+         * @param familyList - An ArrayList containing a the list of words that share
+         *                   the same word mask.
          */
         public ComparableFamilies(String family, ArrayList<String> familyList) {
 
@@ -452,8 +468,9 @@ public class HangmanManager {
         }
 
         /**
+         * Counts the number of characters still left hidden in the mask.
          * 
-         * @return
+         * @return - The number of hidden characters in the family pattern.
          */
         public int getNumHidden() {
             char HIDDEN_CHAR = '-';
@@ -469,25 +486,33 @@ public class HangmanManager {
         }
 
         /**
+         * Gets the Family (Word Mask) to which this object belongs to.
          * 
-         * @return
+         * @return - The mask for this word family.
          */
         public String getFamily() {
             return this.family;
         }
 
         /**
+         * Gets the list of words that belong to the word mask family.
          * 
-         * @return
+         * @return - The ArrayList of Words that beong to the family pattern.
          */
         public ArrayList<String> getFamilyList() {
             return this.familyList;
         }
 
         /**
+         * Compares this object to another family to determines its ordering in a sorted
+         * array/set. Sorted based on Size of Word family, then which family have the
+         * greater number of hidden characters in the patterns, and then based on the
+         * lexographical order of the pattern.
          * 
-         * @param other
-         * @return
+         * @param other - The other ComparableFamilies Object to compare against.
+         * @return - 1 if this object is harder; 0 if this object has the same
+         *         difficulty as the other object; -1 if this object is easier to guess
+         *         than other object.
          */
         public int compareTo(ComparableFamilies other) {
 
