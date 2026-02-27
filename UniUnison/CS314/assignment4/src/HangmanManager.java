@@ -43,7 +43,7 @@ public class HangmanManager {
     private final int MED_NUM_RNDS = 4;
     private final int MED_SPEC_RND = 3;
 
-    private final int EASY_NUM_ROUNDS = 2;
+    private final int EASY_NUM_RNDS = 2;
     private final int EASY_SPEC_RND = 1;
 
     /**
@@ -140,6 +140,14 @@ public class HangmanManager {
             maskBuilder.append(this.HIDDEN_CHAR);
         }
         this.wordMask = maskBuilder.toString();
+
+        if (this.debugOn) {
+            System.out.println("\nDEBUGGING INSIDE prepForRound METHOD:");
+            System.out.println("\tTurn Number: " + this.turn);
+            System.out.println("\tCurrent Words Alive: " + this.currWords.toString());
+            System.out.println("\tWord Mask: " + this.wordMask);
+            System.out.println("DEBUGGING ENDED\n");
+        }
     }
 
     /**
@@ -221,7 +229,8 @@ public class HangmanManager {
         // Getting List of Words with Guesses Masked
         TreeMap<String, ArrayList<String>> allowedWords = getAllowedWords(guess);
 
-        // Sorted Set Based on the CompareFamilies Orderings and Results for Debugging Purposes
+        // Sorted Set Based on the CompareFamilies Orderings and Results for Debugging
+        // Purposes
         TreeSet<ComparableFamilies> sortedFamilies = new TreeSet<>();
         TreeMap<String, Integer> resultsMap = new TreeMap<>();
 
@@ -260,12 +269,16 @@ public class HangmanManager {
     }
 
     /**
+     * Groups all the Currently Alive Words based on the Mask based on the guess and
+     * Previous Mask. The Map created based on that is then returned for use in the
+     * Make Guess Method.
      * 
-     * @param guess
-     * @return
+     * @param guess - The character being guessed currently.
+     * @return - A Map containing all the possible masks as the key set and 
      */
     private TreeMap<String, ArrayList<String>> getAllowedWords(char guess) {
         TreeMap<String, ArrayList<String>> allowedWords = new TreeMap<>();
+        
         for (String word : this.currWords) {
             String currMask = getNewMaskedWord(guess, word);
 
@@ -276,6 +289,7 @@ public class HangmanManager {
             allowedWords.get(currMask).add(word);
         }
         return allowedWords;
+
     }
 
     /**
@@ -284,11 +298,11 @@ public class HangmanManager {
      */
     private void playBasedDifficulty(TreeSet<ComparableFamilies> sortedFamilies) {
         if (this.diff == HangmanDifficulty.HARD) {
-            this.wordMask = getHardestWords(sortedFamilies);
+            this.wordMask = getHardDiffs(sortedFamilies);
         } else if (this.diff == HangmanDifficulty.MEDIUM) {
-            this.wordMask = getNonHardWord(sortedFamilies, this.MED_NUM_RNDS, this.MED_SPEC_RND);
+            this.wordMask = getOtherDiffs(sortedFamilies, this.MED_NUM_RNDS, this.MED_SPEC_RND);
         } else {
-            this.wordMask = getNonHardWord(sortedFamilies, this.EASY_NUM_ROUNDS, this.EASY_SPEC_RND);
+            this.wordMask = getOtherDiffs(sortedFamilies, this.EASY_NUM_RNDS, this.EASY_SPEC_RND);
         }
     }
 
@@ -298,8 +312,8 @@ public class HangmanManager {
      * @param prevMask
      * @param guess
      */
-    private void updateGameStates(TreeMap<String, ArrayList<String>> allowedWords, 
-        String prevMask, char guess) {
+    private void updateGameStates(TreeMap<String, ArrayList<String>> allowedWords,
+            String prevMask, char guess) {
         this.currWords = allowedWords.get(this.wordMask);
         this.guessesMade.add(guess);
         if (this.wordMask.equals(prevMask)) {
@@ -338,7 +352,7 @@ public class HangmanManager {
      * @param sortedFamilies
      * @return
      */
-    private String getHardestWords(TreeSet<ComparableFamilies> sortedFamilies) {
+    private String getHardDiffs(TreeSet<ComparableFamilies> sortedFamilies) {
 
         ComparableFamilies lastFamily = sortedFamilies.last();
 
@@ -358,7 +372,7 @@ public class HangmanManager {
      * @param specialRound
      * @return
      */
-    private String getNonHardWord(TreeSet<ComparableFamilies> sortedFamilies,
+    private String getOtherDiffs(TreeSet<ComparableFamilies> sortedFamilies,
             int numRounds, int specialRound) {
 
         ComparableFamilies family = sortedFamilies.last();
