@@ -23,7 +23,7 @@ public class HangmanMain {
 
     // Name of the dictionary file.
     // TODO: change to dictionary.txt for full version of game.
-    private static final String DICTIONARY_FILE = "smallDictionary.txt";
+    private static final String DICTIONARY_FILE = "dictionary.txt";
     // Used to tell HangmanManager if it should output debugging information.
     private static final boolean DEBUG = true;
     private static final int MAX_GUESSES = 25;
