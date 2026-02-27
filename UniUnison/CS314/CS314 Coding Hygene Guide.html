@@ -1,0 +1,2142 @@
+CS314 Coding Hygene Guide
+
+<h2><a class="auto-style9" href="CS314_Program_Hygiene_Best_Practices.pdf">A PDF 
+with all sections of the CS314 Program Hygiene and Best Practices Requirments</a></h2>
+<h2>1.1 Introduction</h2>
+<p>This is a program hygiene and best practices guide for CS314. It contains a 
+list of rules we expect you to meet for the code you turn in for programming 
+assignments. This page covers the entire semester, so it is not meant to be 
+something that you memorize and understand entirely through one read through. 
+Rather, it is a reference guide that you will be able to use to look up rules 
+and examples. </p>
+<p>Note that this guide is not 100% comprehensive. A guide that tried to cover 
+every particular issue would be ten times the size of this one. <strong>There may be 
+specific things on each assignment we are looking for and the TAs and other 
+graders may find issues not covered by this guide. If so they will provide 
+feedback so you can improve the code you write.</strong></p>
+<h2>1.2 Motivation</h2>
+<p>"The cleaner and nicer the program, the faster it's going to run. And if it 
+doesn't, it'll be easy to make it fast." -
+<a href="https://en.wikipedia.org/wiki/Joshua_Bloch">Joshua Bloch</a></p>
+<p>"Code is read more often than it is written. Code should always be written in 
+a way that promotes readability." -
+<a href="https://en.wikipedia.org/wiki/Guido_van_Rossum">Guido van Rossum</a></p>
+<p><span class="auto-style8">"</span><o:p><font size="3"><span class="auto-style8"><span class="auto-style6">It's 
+a long-standing principle of programming style that the functional elements of a 
+program should not be too large. If some component of a program grows beyond the 
+stage where it's readily comprehensible, it becomes a mass of complexity which 
+conceals errors as easily as a big city conceals fugitives. Such software will 
+be hard to read, hard to test, and hard to debug." -
+<a href="https://en.wikipedia.org/wiki/Paul_Graham_(programmer)">Paul Graham</a></span></span></font></o:p></p>
+<p>Why does the internal structure of a program matter?</p>
+<ul>
+	<li>Programming is a collaborative activity, so it is important to know how 
+	to write code easily understandable by other humans.</li>
+	<li>Many programmers / computer scientists / software developers / 
+	collaborators not want to continue to work with you if you routinely churn 
+	out unreadable and ugly code.</li>
+	<li>Writing clean code reduces the chances that our code is buggy. And if 
+	there is a bug it is <strong>much, much easier to find the bug in well 
+	written code. I see this routinely in office hours.</strong></li>
+	<li>Many people in industry and in open source projects will 
+	conduct code reviews on your code and will not allow changes that do not 
+	match their internal standards. <strong>The way we grade programs for 
+	hygiene mimics 
+	this industry best practice.</strong></li>
+</ul>
+<p>A program is<strong><em> externally correct</em><span class="auto-style2">,</span></strong><span class="auto-style2"> 
+if it produces the correct results for valid inputs. Many people believe that 
+when writing code, the only thing that matters is if your code is working or 
+not. </span><strong><em>&nbsp;</em>This is false</strong> - while it's 
+important to get your code working, it is just as important to make sure your 
+code is understandable by<strong> other people.</strong></p>
+<p>Programming is a highly collaborative activity - it's fairly common to have 
+to work together with other people, sometimes even hundreds of them at a time. 
+As a result, it's very important to write code that is easy to work with to 
+allow others to integrate seamlessly with your work. Another benefit is that 
+since clean code is easier to understand, you'll work much faster and introduce 
+fewer bugs.</p>
+<p>All programming assignments in CS312 and most in CS314 are done individually. 
+However, it is still important to write readable code that follows our course 
+hygiene guidelines - it's the core difference between whether a program is 
+pleasant or impossible to work with.</p>
+<p>In general, focusing on writing clean code forces you to acquire an eye for 
+detail. The same holds true when writing an English paper or a Chemistry lab 
+report. Programming, and writing correct (externally and internally) programs 
+requires careful attention, so it's better to acquire that habit sooner, rather 
+then later. As a programmer you have a responsibility to write as clean and 
+well-designed code as possible to minimize the chances of bugs and accidents 
+that might sneak in due to carelessness. The sooner you can get into the habit 
+of caring about detail and correctness, the better. </p>
+<p><strong>Note, these are our guidelines for Mike Scott's CS314 sections. They 
+will differ from other 
+style guides. It does not mean one is right and one is wrong. In some cases it 
+is simply a matter of preference. That said, we expect you to follow these 
+guidelines in CS314.</strong></p>
+<h2>1.3 Common Issues</h2>
+<p>Although most of these are covered later, these are some of the easiest to 
+spot items and therefore the ones that are most often lead to points lost on 
+assignments.</p>
+<h3>1.3.1 Magic Numbers</h3>
+<p>Typically any literal int in a program has <strong>some</strong> meaning. 
+While that meaning may be clear and obvious when you write the code, it will not 
+be clear and obvious to someone else looking at your code later, 
+including your future self.</p>
+<p>Therefore for any literal ints besides -1, 0, 1, and 2, create and use a 
+constant.</p>
+<p>Example. Count the number of Strings in array of Strings that have a length 
+greater than or equal to 5.</p>
+<p><strong><code>final int MIN_LENGTH = 5;<br>
+int count = 0;<br>
+for (String s : data) {<br>
+&nbsp;&nbsp;&nbsp; if (s.length() &gt;= MIN_LENGTH) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; count++;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+</code></strong>}</p>
+<h3>1.3.2. Limit methods to 25 lines of code</h3>
+<p>A method that is more than 25 lines of code is likely trying to do too much 
+or has redundant code. Break longer methods up into smaller methods to provide 
+structure and / or remove redundancy. Better yet, try to devise a simpler 
+solution.</p>
+<h3>1.3.3. Minimize the scope of variables to the smallest necessary.</h3>
+<p>Don't declare variables until you need them. This helps reduce the cognitive 
+load of trying to understand code. Following this guideline solves so many other 
+issues such as minimizing the number of parameters to a method, minimizing the 
+number of instance variables for a class, and not using static variables as a 
+form of global variables. </p>
+<h3>1.3.4. Use descriptive identifiers</h3>
+<p>i, j, and k are fine for loop control variables when there is no other 
+meaning attached to the variable, but in general we want to name our classes, 
+methods, variables, and constants based on what they store or do.</p>
+<h3>1.3.5. Comment judiciously (but do comment!)</h3>
+<p>Yes, you must comment your code, but read the page on proper commenting. Not 
+too much, not too little, just right. Don't simply repeat what the code is 
+doing. Provide a higher level explanation of the method and / or algorithm. If you follow the other guidelines much of 
+the code becomes self commented and you must only explain complex or unusual 
+aspects of your code. Of course every method shall be commented. </p>
+<p>&nbsp;</p>
+
+
+
+<h2>2. Source File Structure</h2>
+<h3>2.1 Package Statements</h3>
+<p>Do not include any package statements in your submitted code. </p>
+<h3>2.2 Import Statements</h3>
+<p>Specify each class you import separately. Do not use the wildcard. So </p>
+<p><code><strong>import java.util.ArrayList; // yes<br>
+import java.util.HashSet;</strong></code></p>
+<p>not</p>
+<p><code><strong>import java.util.*; // no</strong></code></p>
+<p>Do not include any unnecessary imports. Most IDEs have a feature to assist in 
+organizing imports and removing unnecessary ones.</p>
+<p>Do not import any non standard Java classes. Standard Java classes typically 
+being with <code><strong>java.</strong></code> or <code><strong>javax. </strong>
+</code>Compile your code on a CS department lab machine to be certain you do not 
+have any non standard Java imports. </p>
+<h3>2.3 Ordering of Class components</h3>
+<p>In general, place class constants and instance variable declarations at the 
+top of your class.</p>
+<p>The order of how you place methods is up to you, but it helps readability to 
+maintain some kind of logical ordering. One common ordering is to include all 
+constructors in the beginning, then all other public methods before private 
+methods. Programmers also commonly choose to put related public/private pair 
+methods together so that another viewer of the code can see the pair at the same 
+time.</p>
+
+
+
+<h2>3. Formatting </h2>
+<p>Oh, the metaphorical blood that has been spilled over code formatting. </p>
+<p>The following section describes rules about how your code should be organized 
+visually. It should be noted that the rules listed below are not <strong><em>
+inarguably</em></strong> the best rules; there are plenty of reasonable 
+alternatives out there. <strong>It is important, however, to adhere to the 
+relevant style of the work environment, in this case CS314.</strong> For other 
+readers [your TA or instructor], code that follows the style guidelines is 
+easier to understand than code that doesn't. Being able to anticipate 
+conventional formatting of code eliminates time wasted on deciphering the 
+meaning of any unfamiliar structure and formatting.</p>
+<h3>3.1 Indentation</h3>
+<div class="subsection">
+	<p>Each time a curly brace is opened, increase the indent level. When the 
+	closing curly brace occurs and ends the code block, the indent should return 
+	to the previous indent level. The indent level applies to both code and 
+	comments throughout the block defined by the curly braces. </p>
+	<p>Choose 4 spaces to be your indent level and stay consistent.</p>
+	<p>Use spaces not tabs.</p>
+</div>
+<div class="subsection">
+	<h3 id="spacing" class="side-nav-header" data-href="https://courses.cs.washington.edu/courses/cse143/21wi/quality.html#spacing" data-level="1">
+	3.2 Spacing</h3>
+</div>
+<p>Java is not a whitespace sensitive language, but maintaining good spacing 
+throughout your program helps your code be more readable for human eyes. Many 
+Java programmers follow the spacing conventions shown below for their programs.</p>
+<ul>
+	<li>Class headers: <code class="language-plaintext highlighter-rouge">
+	<strong>public class SomeClass {</strong></code></li>
+	<li>Method headers: <code class="language-plaintext highlighter-rouge">
+	<strong>public static void someMethod(int number1, int number2) {</strong></code></li>
+	<li>Method calls: <code class="language-plaintext highlighter-rouge">
+	<strong>someMethod(4, 3);</strong></code></li>
+	<li>Loops:<ul>
+		<li><code class="language-plaintext highlighter-rouge"><strong>for (int 
+		i = 0; i &lt; 4; i++) {</strong></code></li>
+		<li><code class="language-plaintext highlighter-rouge"><strong>while (someTest) 
+		{</strong></code></li>
+		<li><code class="language-plaintext highlighter-rouge"><strong>for 
+		(String s : list) {</strong></code></li>
+	</ul>
+	</li>
+	<li>Arrays: <code class="language-plaintext highlighter-rouge"><strong>int[] 
+	someArray = new int[4];</strong></code></li>
+	<li>Variable initializations:
+	<code class="language-plaintext highlighter-rouge"><strong>int someNumber = 
+	4;</strong></code></li>
+	<li>Expressions (a space before and after <strong>every binary operator</strong>):<ul>
+		<li><code class="language-plaintext highlighter-rouge"><strong>int x = 4 
+		* (3 + 2) - 1;</strong></code></li>
+		<li><code class="language-plaintext highlighter-rouge"><strong>boolean 
+		result = test1 &amp;&amp; test2 || (x != 3);</strong></code></li>
+	</ul>
+	</li>
+</ul>
+<p>A blank line before every method comment (because <strong>every method
+</strong>is commented.)</p>
+<div class="subsection">
+	<h3 id="spacing0" class="side-nav-header" data-href="https://courses.cs.washington.edu/courses/cse143/21wi/quality.html#spacing" data-level="1">
+	3.3 One statement per line</h3>
+</div>
+<p>Each time you finish a statement with a semicolon, you shall use a new line 
+to begin the next statement.</p>
+<dl>
+	<dt>Note: The exception to this rule is that the
+	<code class="language-plaintext highlighter-rouge">for</code> loop header 
+	should have its 3 parts all on one line.</dt>
+</dl>
+<h3 id="column-limit-and-line-wrapping">3.4 Column limit and line wrapping</h3>
+<p>No line shall exceed 100 characters in length.</p>
+<p>When code that might otherwise legally occupy a single line is divided into 
+multiple lines, this activity is called <strong>line-wrapping</strong>. Use 
+line-wrapping to break up long lines that would otherwise exceed 100 characters, 
+as described below.</p>
+<p>When line-wrapping, each line after the first (each continuation line) should 
+be indented at least one level. Common choices for how much to indent include 2 
+levels of indentation or lining up elements from the previous line of the long 
+line.</p>
+<dl>
+	<dt>Bad</dt>
+	<dd>It’s good that this line is wrapped to maintain the 100 char line limit, 
+	but the continued line should be indented at least 1 indentation level and 
+	preferably 2.<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><strong>  </strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>method1</strong></span><span class="o"><strong>(</strong></span><span class="nc"><strong>String</strong></span> <span class="n"><strong>param1</strong></span><span class="o"><strong>,</strong></span> <span class="nc"><strong>String</strong></span> <span class="n"><strong>param2</strong></span><span class="o"><strong>,</strong></span> <span class="nc"><strong>String</strong></span> <span class="n"><strong>param3</strong></span><span class="o"><strong>,</strong></span><strong>
+</strong><span class="nc"><strong>  String</strong></span> <span class="n"><strong>param4</strong></span><span class="o"><strong>,</strong></span> <span class="nc"><strong>String</strong></span> <span class="n"><strong>param5</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="o"><strong>...</strong></span><strong>
+</strong><span class="o"><strong>  }</strong></span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Good</dt>
+	<dd>This method header is properly indented and uses 2 levels of indentation 
+	for the broken up line.<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><strong>  </strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>method1</strong></span><span class="o"><strong>(</strong></span><span class="nc"><strong>String</strong></span> <span class="n"><strong>param1</strong></span><span class="o"><strong>,</strong></span> <span class="nc"><strong>String</strong></span> <span class="n"><strong>param2</strong></span><span class="o"><strong>,</strong></span> <span class="nc"><strong>String</strong></span> <span class="n"><strong>param3</strong></span><span class="o"><strong>,</strong></span><strong>
+  </strong><span class="nc"><strong>        String</strong></span> <span class="n"><strong>param4</strong></span><span class="o"><strong>,</strong></span> <span class="nc"><strong>String</strong></span> <span class="n"><strong>param5</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="o"><strong>...
+  }</strong></span></code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Good</dt>
+	<dd>This method header is also properly indented, and lines up elements from 
+	the broken up line.<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><strong>  </strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>method1</strong></span><span class="o"><strong>(</strong></span><span class="nc"><strong>String</strong></span> <span class="n"><strong>param1</strong></span><span class="o"><strong>,</strong></span> <span class="nc"><strong>String</strong></span> <span class="n"><strong>param2</strong></span><span class="o"><strong>,</strong></span> <span class="nc"><strong>String</strong></span> <span class="n"><strong>param3</strong></span><span class="o"><strong>,</strong></span><strong>
+                             </strong><span class="nc"><strong>String</strong></span> <span class="n"><strong>param4</strong></span><span class="o"><strong>,</strong></span> <span class="nc"><strong>String</strong></span> <span class="n"><strong>param5</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="o"><strong>...</strong></span><strong>
+</strong><span class="o"><strong>  }</strong></span></code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<h3 id="exceptions" class="side-nav-header" data-href="https://courses.cs.washington.edu/courses/cse143/21wi/quality.html#exceptions" data-level="1">
+3.5 Exceptions, especially for failure to meet preconditions</h3>
+<p><strong>Exception code should come at the top of the method</strong>. 
+Everything related to checking for and throwing the exception (computing a value 
+to be used in the condition, the if statement itself) counts as exception code. 
+Any code unrelated to the exception conditions / throwing should be placed lower 
+than exception code. This is both an attempt to fail early to avoid unnecessary 
+computation and a readability rule.</p>
+<p>If an exception check cannot be checked at the beginning of the method (e.g. 
+requires significant computation / additional statements), check for it when it 
+can be more easily detected as the method continues.</p>
+<pre class="code-sample bad-code language-java"><code class=" language-java"><span class="token comment"><strong>// BAD! This example doesn't check/throw for the exception at the very beginning of the method.</strong></span><strong>
+</strong><span class="token keyword"><strong>public</strong></span> <span class="token keyword"><strong>static</strong></span> <span class="token keyword"><strong>int</strong></span> <span class="token function"><strong>countVowels</strong></span><span class="token punctuation"><strong>(</strong></span><span class="token class-name"><strong>String</strong></span><strong> name</strong><span class="token punctuation"><strong>)</strong></span> <span class="token punctuation"><strong>{</strong></span><strong>
+    </strong><span class="token keyword"><strong>int</strong></span><strong> total </strong><span class="token operator"><strong>=</strong></span> <span class="token number"><strong>0</strong></span><span class="token punctuation"><strong>;</strong></span><strong>
+    </strong><span class="token keyword"><strong>if</strong></span> <span class="token punctuation"><strong>(</strong></span><strong>name</strong><span class="token punctuation"><strong>.</strong></span><span class="token function"><strong>length</strong></span><span class="token punctuation"><strong>()</strong></span> <span class="token operator"><strong>&lt;=</strong></span> <span class="token number"><strong>1</strong></span><span class="token punctuation"><strong>)</strong></span> <span class="token punctuation"><strong>{</strong></span><strong>
+        </strong><span class="token keyword"><strong>throw</strong></span> <span class="token keyword"><strong>new</strong></span> <span class="token class-name"><strong>IllegalArgumentException</strong></span><span class="token punctuation"><strong>();</strong></span><strong>
+    </strong><span class="token punctuation"><strong>}</strong></span><strong>
+    </strong><span class="token punctuation"><strong>...</strong></span><strong>
+</strong><span class="token punctuation">}</span></code></pre>
+<p><strong>Do not attach else statements onto exception checks to connect 
+regular behavior code. </strong>Following an exception check, non-exception code 
+should not be placed in an attached else. This is another readability rule 
+(mostly done by convention. Another reason: why indent all of the method's 
+regular behavior code a whole level if the structure is still clear without 
+indenting?) as well as a logic rule. Exception code is fundamentally different 
+than regular method behavior code, and shouldn't be connected to regular 
+behavior with one long if/else structure - doing so almost implies the if/else 
+branches are on the same level of importance or that they are related.</p>
+<pre class="code-sample bad-code language-java"><code class=" language-java"><span class="token comment"><strong>// BAD! This example attaches an 'else' to an exception check. </strong></span><strong>
+</strong><span class="token comment"><strong>// This leads to indenting all the normal behavior code, </strong></span><strong>
+</strong><span class="token comment"><strong>// which makes it a little bit harder to read.</strong></span><strong>
+</strong><span class="token keyword"><strong>public</strong></span> <span class="token keyword"><strong>static</strong></span> <span class="token keyword"><strong>int</strong></span> <span class="token function"><strong>countVowels</strong></span><span class="token punctuation"><strong>(</strong></span><span class="token class-name"><strong>String</strong></span><strong> name</strong><span class="token punctuation"><strong>)</strong></span> <span class="token punctuation"><strong>{</strong></span><strong>
+    </strong><span class="token keyword"><strong>if</strong></span> <span class="token punctuation"><strong>(</strong></span><strong>name</strong><span class="token punctuation"><strong>.</strong></span><span class="token function"><strong>length</strong></span><span class="token punctuation"><strong>()</strong></span> <span class="token operator"><strong>&lt;=</strong></span> <span class="token number"><strong>1</strong></span><span class="token punctuation"><strong>)</strong></span> <span class="token punctuation"><strong>{</strong></span><strong>
+        </strong><span class="token keyword"><strong>throw</strong></span> <span class="token keyword"><strong>new</strong></span> <span class="token class-name"><strong>IllegalArgumentException</strong></span><span class="token punctuation"><strong>();</strong></span><strong>
+    </strong><span class="token punctuation"><strong>}</strong></span> <span class="token keyword"><strong>else</strong></span> <span class="token punctuation"><strong>{</strong></span><strong>
+        </strong><span class="token keyword"><strong>int</strong></span><strong> total </strong><span class="token operator"><strong>=</strong></span> <span class="token number"><strong>0</strong></span><span class="token punctuation"><strong>;</strong></span><strong>
+        </strong><span class="token punctuation"><strong>...</strong></span><strong>
+    </strong><span class="token punctuation"><strong>}</strong></span><strong>
+</strong><span class="token punctuation">}</span>
+</code></pre>
+<pre class="code-sample good-code language-java"><code class=" language-java"><span class="token comment"><strong>// GOOD! This one is good! No else attached with regular behavior </strong></span><strong>
+</strong><span class="token comment"><strong>// and the check for exception is at the top of the method.</strong></span><strong>
+</strong><span class="token keyword"><strong>public</strong></span> <span class="token keyword"><strong>static</strong></span> <span class="token keyword"><strong>int</strong></span> <span class="token function"><strong>countVowels</strong></span><span class="token punctuation"><strong>(</strong></span><span class="token class-name"><strong>String</strong></span><strong> name</strong><span class="token punctuation"><strong>)</strong></span> <span class="token punctuation"><strong>{</strong></span><strong>
+    </strong><span class="token keyword"><strong>if</strong></span> <span class="token punctuation"><strong>(</strong></span><strong>name</strong><span class="token punctuation"><strong>.</strong></span><span class="token function"><strong>length</strong></span><span class="token punctuation"><strong>()</strong></span> <span class="token operator"><strong>&lt;=</strong></span> <span class="token number"><strong>1</strong></span><span class="token punctuation"><strong>)</strong></span> <span class="token punctuation"><strong>{</strong></span><strong>
+        </strong><span class="token keyword"><strong>throw</strong></span> <span class="token keyword"><strong>new</strong></span> <span class="token class-name"><strong>IllegalArgumentException</strong></span><span class="token punctuation"><strong>();</strong></span><strong>
+    </strong><span class="token punctuation"><strong>}</strong></span><strong>
+    </strong><span class="token keyword"><strong>int</strong></span><strong> total </strong><span class="token operator"><strong>=</strong></span> <span class="token number"><strong>0</strong></span><span class="token punctuation"><strong>;</strong></span><strong>
+    </strong><span class="token punctuation"><strong>...</strong></span><strong>  
+</strong><span class="token punctuation">}</span>
+</code></pre>
+<div class="alert alert-info">
+	<p><strong>Note: </strong><code class=" language-java">
+	<span class="token keyword">else</span> <span class="token keyword">if</span></code>s 
+	that check for more exceptions are fine. Just don't use else to have a 
+	branch for the method's normal behavior code. For example the following code 
+	structure would be fine. </p>
+	<pre class="code-sample good-code language-java"><strong>   </strong><code class=" language-java"><span class="token keyword"><strong>if</strong></span> <span class="token punctuation"><strong>(</strong></span><strong>exceptionCheck</strong><span class="token punctuation"><strong>)</strong></span> <span class="token punctuation"><strong>{</strong></span> <strong>
+       </strong><span class="token keyword"><strong>throw</strong></span><strong> exception1 
+   </strong><span class="token punctuation"><strong>}</strong></span> <span class="token keyword"><strong>else</strong></span> <span class="token keyword"><strong>if</strong></span> <span class="token punctuation"><strong>(</strong></span><strong>exceptionCheck2</strong><span class="token punctuation"><strong>)</strong></span> <span class="token punctuation"><strong>{</strong></span> <strong>
+       </strong><span class="token keyword"><strong>throw</strong></span><strong> exception2 
+   </strong><span class="token punctuation"><strong>}</strong></span><strong>
+   </strong><span class="token comment"><strong>// non-exception behavior code here</strong></span></code></pre>
+</div>
+<div class="subsection">
+	<h3 id="[optional]curlybraces" class="side-nav-header" data-href="https://courses.cs.washington.edu/courses/cse143/21wi/quality.html#[optional]curlybraces" data-level="1">
+	3.6 Curly braces [Preferred, but you can use alternative brace styles]</h3>
+	<p><strong>Again, the metaphorical blood that has been spilled over brace 
+	styles is astonishing. </strong>The brace rules mentioned below document the 
+	style that you will likely see your TAs and lecturers use, <strong>but this 
+	is optional if you want to use a reasonable (readable) alternative instead. 
+	The most important thing is consistency with whatever style you choose.
+	</strong></p>
+	<ul>
+		<li>No line break before the opening brace.</li>
+		<li>Line break after the opening brace.</li>
+		<li>Line break before the closing brace.</li>
+		<li>Line break after the closing brace, <em>only if</em> that brace 
+		terminates a statement or terminates the body of a method, constructor, 
+		or class. For example, there is <em>no</em> line break after the brace 
+		if it is followed by <code class=" language-java">
+		<span class="token keyword">else</span></code>. <strong><em>Prefer the 
+		cozy else structure. </em></strong></li>
+	</ul>
+	<p>Example:</p>
+	<pre class="code-sample good-code language-java"><code class=" language-java"><span class="token keyword"><strong>public</strong></span> <span class="token keyword"><strong>static</strong></span> <span class="token keyword"><strong>void</strong></span> <span class="token function"><strong>method1</strong></span><span class="token punctuation"><strong>(</strong></span><span class="token keyword"><strong>int</strong></span><strong> times</strong><span class="token punctuation"><strong>)</strong></span> <span class="token punctuation"><strong>{</strong></span><strong>
+    </strong><span class="token keyword"><strong>for</strong></span> <span class="token punctuation"><strong>(</strong></span><span class="token keyword"><strong>int</strong></span><strong> i </strong><span class="token operator"><strong>=</strong></span> <span class="token number"><strong>0</strong></span><span class="token punctuation"><strong>;</strong></span><strong> i </strong><span class="token operator"><strong>&lt;</strong></span><strong> times</strong><span class="token punctuation"><strong>;</strong></span><strong> i</strong><span class="token operator"><strong>++</strong></span><span class="token punctuation"><strong>)</strong></span> <span class="token punctuation"><strong>{</strong></span><strong>
+        </strong><span class="token keyword"><strong>if</strong></span> <span class="token punctuation"><strong>(</strong></span><strong>i </strong><span class="token operator"><strong>%</strong></span> <span class="token number"><strong>2</strong></span> <span class="token operator"><strong>==</strong></span> <span class="token number"><strong>0</strong></span><span class="token punctuation"><strong>)</strong></span> <span class="token punctuation"><strong>{</strong></span><strong>
+             </strong><span class="token class-name"><strong>System</strong></span><span class="token punctuation"><strong>.</strong></span><strong>out</strong><span class="token punctuation"><strong>.</strong></span><span class="token function"><strong>print</strong></span><span class="token punctuation"><strong>(</strong></span>i<span class="token punctuation"><strong>);</strong></span><strong>
+        </strong><span class="token punctuation"><strong>}</strong></span> <span class="token keyword"><strong>else</strong></span> <span class="token punctuation"><strong>{</strong></span><strong>
+             </strong><span class="token class-name"><strong>System</strong></span><span class="token punctuation"><strong>.</strong></span><strong>out</strong><span class="token punctuation"><strong>.</strong></span><span class="token function"><strong>print</strong></span><span class="token punctuation"><strong>(</strong></span><span class="token string"><strong>"x"</strong></span><span class="token punctuation"><strong>);</strong></span><strong>
+        </strong><span class="token punctuation"><strong>}</strong></span><strong>
+        </strong><span class="token class-name"><strong>System</strong></span><span class="token punctuation"><strong>.</strong></span><strong>out</strong><span class="token punctuation"><strong>.</strong></span><span class="token function"><strong>println</strong></span><span class="token punctuation"><strong>(</strong></span><span class="token string"><strong>" hello"</strong></span><span class="token punctuation"><strong>);</strong></span><strong>
+    </strong><span class="token punctuation"><strong>}</strong></span><strong>      
+</strong><span class="token punctuation">}</span></code></pre>
+</div>
+
+	<h3 id="[optional]curlybraces0" class="side-nav-header" data-href="https://courses.cs.washington.edu/courses/cse143/21wi/quality.html#[optional]curlybraces" data-level="1">
+	3.7 Enclose all blocks with curly braces</h3>
+	<p>Although it is not syntactically necessary to enclose single statement 
+	blocks controlled by a loop or a conditional, do so in your programming 
+	assignments. Omitting these braces can result in maintainability issues if a 
+	later editor of your code attempts to add additional lines to the block but 
+	fails to add the braces. <strong>(Note, some examples and exam questions 
+	will omit braces in order to conserve visual space.)</strong></p>
+	<p>Example:</p>
+	<pre class="code-sample good-code language-java"><strong>// #BAD! on assignments
+for (int i = 1; i &lt;= MAX; i++) 
+    if (i % x == 0) 
+        System.out.print(i + " ");</strong></pre>
+<pre class="code-sample good-code language-java">&nbsp;</pre>
+<pre class="code-sample good-code language-java"><strong>// #GOOD!
+for (int i = 1; i &lt;= MAX; i++) {
+    if (i % x == 0) {
+        </strong><strong>System.out.print(i + " ");
+    }
+</strong>}
+    </pre>
+
+	<h3 id="scope1">&nbsp;3.8 Remove unnecessary and unneeded code</h3>
+	<p>Consider the program you turn in your final draft. Like the final draft 
+	of an English paper or Chemistry lab report, include only what is necessary. 
+	</p>
+<p>For you solution code especially, remove any and all debugging code, notes to 
+yourself, TODO's, and 
+	previous versions of your solution, unused imports, and other comments and / 
+or code that is no longer necessary for your solution. </p>
+<p>You can of course save another version 
+	of your program with that debugging code and early attempts at solutions, 
+	but<strong> the code your turn in shall be pristine and without any 
+	unnecessary cruft. Take some well-deserved pride in what you have created.</strong></p>
+	
+
+
+<h2 id="commenting">4. Commenting</h2>
+<h3>4.1 Motivation</h3>
+<p>Comments are specially marked lines of text in code that can be used to 
+describe what’s happening in a program. Java ignores comments when it runs a 
+program, so they’re not necessary for actually making code work properly.</p>
+<p><strong>There’s no exact formula or algorithm for writing good comments. The 
+simplest way to know if comments are sufficient is to ask, “If I didn’t 
+understand the code in this method, would I still be able to use it properly by 
+reading only the comment, the method header, and the variable names?”</strong></p>
+<p>The purpose of comments isn’t necessarily for the author’s benefit, though 
+they can be helpful as programs get more complex. Rather, comments are for the 
+benefit of <strong>clients</strong> who are using the program. Ideally, a client 
+should only have to read the method comment and the method signature (return 
+type, name, parameters) to know how to use a method. It will shock you when you 
+go back and look at code a few months after you wrote it. What seemed crystal 
+clear at the time may well baffle you later. [Likely a function of our limited 
+short term memory.] I have often thought when I look 
+back at code I wrote, <strong>"Did I actually write this? What was I thinking?!?! 
+How on earth does this actually work??"</strong></p>
+<p>As such, comments should describe the behavior of a method (what it does) 
+without its implementation (how it does it). If someone is really interested in 
+seeing exactly how a method works, they can read the code, which will be easy to 
+read because you followed the rest of these best practices.</p>
+<h3 id="guidelines">4.2 Format of comments and general guidelines:</h3>
+<ul>
+	<li>
+	<p class="MsoNormal">Your comments should all be formatted consistently. You 
+	can use pre/post, JavaDoc, or some other format that includes all the 
+	required information. </p>
+	</li>
+	<li>
+	<p class="MsoNormal">Use either multiline comments (/* */) or single line 
+	comments (//). </p>
+	</li>
+	<li>
+	<p class="MsoNormal">No line shall be longer than 100 characters wide. 
+	Having long lines decreases the readability of your code </p>
+	</li>
+	<li>
+	<p class="MsoNormal">Each comment should have the same level of indentation 
+	as the code it is commenting
+	<o:p></o:p>
+	</p>
+	</li>
+</ul>
+<p><strong>Complete the header we provide. Include it in all .java files your 
+submit.</strong></p>
+<p>The top level program comment describes what the program does without 
+including implementation details.</p>
+<p>Method comments in particular shall be in either pre/post format, standard 
+JavaDoc format, or some other format that includes all the required information. 
+Use proper capitalization; do not write comments in all capital letters.</p>
+<p>Keep comments short and sweet. Most methods can be described in a single 
+sentence, though more complicated methods might take two or three sentences.</p>
+<h3 id="write-for-the-client">4.3 Write for the client</h3>
+<p>The <strong>client</strong> is a person who wants to use a program without 
+knowing how it works. For examples, see the Java API documentation (e.g.
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayList.html">
+ArrayList</a>).</p>
+<h3 id="avoid-implementation-details">4.4 Avoid implementation details</h3>
+<p>Avoid things that describe how the program or method achieves its results. In 
+particular, avoid mentioning:</p>
+<ul>
+	<li>Local variable names, private field names.</li>
+	<li>For loop, while loop, if/else, recursion, inner data structures, calls 
+	to other methods.</li>
+</ul>
+<p>If some implementation detail is vitally important, reformat the detail in a 
+client-oriented way. For example, rather than “Uses a SortedMap to maintain 
+keys in sorted order,” restate the detail as, “Maintain keys in sorted order.”</p>
+<h3 id="describe-parameters-results-and-exceptions">4.5 Describe parameters, 
+results, and exceptions</h3>
+<p>Describe what each parameter represents, either in a list or as part of the 
+method description. Describe why each parameter is needed. Comment any special 
+cases the client may care about, e.g. “The given list should be in sorted 
+order.”</p>
+<p>If the program produces output, describe it.</p>
+<dl>
+	<dt>Where does the output appear?</dt>
+	<dd>On the console, in a file, etc.</dd>
+	<dt>What is the output?</dt>
+	<dd>A list of numbers, a paragraph, the result of a computation, etc.</dd>
+	<dt>What is the output format?</dt>
+	<dd>On multiple lines, in reverse order, separated by spaces, etc.</dd>
+</dl>
+<p>If the program returns a value, describe what the returned value represents 
+in relation to the input. Comment on any special cases the client may care 
+about. For example, does the method return null or -1 in particular cases?</p>
+<p>Tell the user precisely what will cause an exception. Include the exact type 
+of any exceptions that are thrown next to their causes so that the client knows 
+what could happen.</p>
+<h3 id="internal-comments-private-methods-and-fields">4.6 Internal comments, 
+private methods, and fields</h3>
+<p>While method comments should not include implementation details since they’re 
+intended for the client, internal comments placed within the body of a method 
+might be helpful for maintaining the program in the future, <strong>especially 
+if the code is complex or achieves a result in a clever, non obvious way.</strong></p>
+<p><strong>Do not comment trivial code, only code that is important, confusing, 
+or tricky.</strong> </p>
+<p>Method comments for private methods follow the same rules as public methods, 
+but are slightly less strict. It’s still important to avoid commenting on 
+implementation details.</p>
+<p>Put a brief comment on each class constant and instance variable describing 
+what it represents,<strong> if the function of the field is not immediately 
+apparent from its name</strong>. Comments on public fields or constants in 
+particular should avoid mentioning implementation details.</p>
+<h3 id="be-direct">4.7 Be direct, be correct</h3>
+<p>Reword sentences to jump straight to the point. Instead of, “This method 
+calculates a sum…” just write, “Calculates a sum…”</p>
+<p>Don’t say the method “should” do something or “will” do something. </p>
+<p><strong><code>// #BAD! This section will find the min value in the array 
+named data.</code></strong></p>
+<p><strong><code>// #GOOD! Find the min in the array data.</code></strong></p>
+<p>Do not copy from the assignment specification. The specification usually 
+gives too much information for commenting. It is a good idea to draw only the 
+information the client needs from the specification and put them in your own 
+words.</p>
+<p>Do not have incorrect or misleading comments and remove any unnecessary 
+comments such as IDE added TODO comments. Remove any comments provided by the 
+instructors that were instructions.</p>
+<h3>4.8 Case studies</h3>
+<h4 id="method-comments">4.8.1 Method comments</h4>
+<p>Consider this method that prints an introduction.</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>intro</strong></span><span class="o"><strong>()</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"This program computes the cost of postage required to send mail via the"</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"United States Postal Service. In addition to sender and recipient,"</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"the program will need each item's dimensions and weight."</strong></span><span class="o"><strong>);</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span><strong>
+</strong></code></pre>
+	</div>
+</div>
+<p>The following comment is too brief. It doesn’t answer the most basic 
+question, “What does the method do?”</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="c1"><strong>// Intro #BAD!</strong></span><strong>
+</strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>intro</strong></span><span class="o"><strong>()</strong></span> <span class="o">{</span>
+</code></pre>
+	</div>
+</div>
+<p>The following comment is much better. It concisely describes the method’s 
+behavior.</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="c1"><strong>// #GOOD! Prints an introduction to the program to standard output. </strong></span><strong>
+</strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>intro</strong></span><span class="o"><strong>()</strong></span> <span class="o">{</span>
+</code></pre>
+	</div>
+</div>
+<p>While the next comment is more descriptive, it’s arguably too descriptive. It 
+mentions that it prints an introduction to the program, which describes its 
+behavior, but also includes unnecessary details about the method’s 
+implementation details. If someone wants to know how the printing happens, they 
+can read the code.</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="c1"><strong>// #BAD! Uses four println statements to print four lines of introduction to the program. Each line is</strong></span><strong>
+</strong><span class="c1"><strong>// different, so each one needs a separate println statement as I didn't want to embed newline characters.</strong></span><strong>
+</strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>intro</strong></span><span class="o"><strong>()</strong></span> <span class="o">{</span>
+</code></pre>
+	</div>
+</div>
+<h4 id="parameter-comments">4.8.2 Parameter comments</h4>
+<p>Consider this method that prints a list of numbers up to and including the 
+value passed in as a parameter. The following is a good comment for the method.</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="c1"><strong>// #GOOD! Takes an int representing a maximum and prints a list of numbers to the console up to and</strong></span><strong>
+</strong><span class="c1"><strong>// including max in the format: 1, 2, 3, ..., max</strong></span><strong>
+</strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>printNumberList</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>max</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>for</strong></span> <span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>=</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>&lt;</strong></span> <span class="n"><strong>max</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span><span class="o"><strong>++)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>print</strong></span><span class="o"><strong>(</strong></span><span class="n"><strong>i</strong></span> <span class="o"><strong>+</strong></span> <span class="s"><strong>", "</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="n"><strong>max</strong></span><span class="o"><strong>);</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+	</div>
+</div>
+<p>That seems pretty straightforward. The method and its parameters are 
+well-named, and the comment is concise but descriptive. Contrast the above 
+comment with this example.</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="c1"><strong>// #BAD! Lists the numbers using a for loop</strong></span><strong>
+</strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>list</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>n</strong></span><span class="o"><strong>)</strong></span> <span class="o">{</span>
+</code></pre>
+	</div>
+</div>
+<p>It’s very difficult to tell what this method does. It could print a list up 
+to but not including <code class="language-plaintext highlighter-rouge">n</code>—an 
+important difference. Or, it could print the list starting at
+<code class="language-plaintext highlighter-rouge">n</code> down to 1. It’s not 
+possible to tell if it prints a list.</p>
+<p>The only way to know what this method does and how to use it is to read all 
+of the code and figure it out. This can be very time consuming. It’s also good 
+to note that the name of a method and the names of its parameters help describe 
+what the method does.</p>
+<h4 id="methods-with-return-values">4.8.3 Methods with return values</h4>
+<p>Sometimes what a method returns might not be immediately obvious. A method 
+that returns an <code class="language-plaintext highlighter-rouge">int</code> 
+might be returning a result that it calculates, or it might print the result to 
+the console and instead return the number of seconds the calculation took. It’s 
+important to describe what the return value of a method represents so that 
+people know what to expect when they use it.</p>
+<p>This first version of the method below is well commented. The comments are 
+concise and correctly describe what the method takes as a parameter and what it 
+returns. The code is straightforward and explains itself. Internal comments 
+aren’t necessary here.</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="c1"><strong>// #GOOD! Takes an integer n as a parameter and returns the factorial of n
+// pre: n &gt;= 1
+// post: return n!</strong></span><strong>
+</strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>int</strong></span> <span class="nf"><strong>factorial</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>n</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="kt"><strong>int</strong></span> <span class="n"><strong>result</strong></span> <span class="o"><strong>=</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>;</strong></span><strong>
+    </strong><span class="k"><strong>while</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>n</strong></span> <span class="o"><strong>&gt;</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="n"><strong>result</strong></span> <span class="o"><strong>*=</strong></span> <span class="n"><strong>n</strong></span><span class="o"><strong>;</strong></span><strong>
+        </strong><span class="n"><strong>n</strong></span><span class="o"><strong>--;</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+    </strong><span class="k"><strong>return</strong></span> <span class="n"><strong>result</strong></span><span class="o"><strong>;</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+	</div>
+</div>
+<p>The next comment isn’t descriptive enough. It doesn’t describe the input and 
+output parameters. It calculates the factorial of what? What does the returned
+<code class="language-plaintext highlighter-rouge">int</code> represent?</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="c1"><strong>// #BAD! Calculates the factorial</strong></span><strong>
+</strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>int</strong></span> <span class="nf"><strong>factorial</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>n</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+</strong></code></pre>
+	</div>
+</div>
+<h4 id="internal-comments">4.8.4 Internal comments</h4>
+<p>The next version of the comments contains too many implementation details and 
+the internal comments actually make the code less readable and more cluttered. 
+The “while loop” comments are completely redundant with the
+<code class="language-plaintext highlighter-rouge">while</code> statement 
+declared in code. Java programmers reading the code will know that
+<code class="language-plaintext highlighter-rouge">n--</code> will “update n” 
+without needing the comment to say so. The
+<code class="language-plaintext highlighter-rouge">return</code> statement 
+includes the <code class="language-plaintext highlighter-rouge">return</code> 
+keyword, so it’s not necessary to include a comment that just restates the 
+keyword.</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="c1"><strong>// #BAD! Uses a result variable and a while loop to calculate the result of n factorial. The while loop</strong></span><strong>
+</strong><span class="c1"><strong>// runs until the result is calculated, and a return statement is used to return result.</strong></span><strong>
+</strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>int</strong></span> <span class="nf"><strong>factorial</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>n</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="kt"><strong>int</strong></span> <span class="n"><strong>result</strong></span> <span class="o"><strong>=</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>;</strong></span> <span class="c1"><strong>// #BAD! initialize result #NOT_NECESSARY</strong></span><strong>
+    </strong><span class="c1"><strong>// while loop #NOT_NECESSARY</strong></span><strong>
+    </strong><span class="k"><strong>while</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>n</strong></span> <span class="o"><strong>&gt;</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="n"><strong>result</strong></span> <span class="o"><strong>*=</strong></span> <span class="n"><strong>n</strong></span><span class="o"><strong>;</strong></span><strong>
+        </strong><span class="n"><strong>n</strong></span><span class="o"><strong>--;</strong></span> <span class="c1"><strong>// update n #NOT_NECESSARY</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span> <span class="c1"><strong>// end of while loop #NOT_NECESSARY</strong></span><strong>
+    </strong><span class="k"><strong>return</strong></span> <span class="n"><strong>result</strong></span><span class="o"><strong>;</strong></span> <span class="c1"><strong>// return #NOT_NECESSARY</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+	</div>
+</div>
+<p>Save internal comments for more complicated statements. For example if you 
+are using an array of ints to store the frequency of chars and mapping the ASCII 
+code or Unicode value of the char to the array index, that is worthy of an 
+internal comment.</p>
+<h4 id="implementation-details">4.8.5 Implementation details</h4>
+<p>The method below has appropriate internal and external comments. The comments 
+concisely describe the behavior of the method as well as the input parameters 
+without discussing the implementation. The internal comment is there to describe 
+the function of a particularly odd-looking piece of code. It is a good idea to 
+leave whitespace before an internal comment so that it’s easier to read.</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="c1"><strong>// #GOOD! Takes a Scanner "input" and a PrintStream "output" as parameters. Prints the contents of the</strong></span><strong>
+</strong><span class="c1"><strong>// input Scanner to output with trimmed whitespace and line breaks every 10 tokens. Existing line</strong></span><strong>
+</strong><span class="c1"><strong>// breaks in the input are ignored.</strong></span><strong>
+</strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>addLineBreaks</strong></span><span class="o"><strong>(</strong></span><span class="nc"><strong>Scanner</strong></span> <span class="n"><strong>input</strong></span><span class="o"><strong>,</strong></span> <span class="nc"><strong>PrintStream</strong></span> <span class="n"><strong>output</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="kt"><strong>int</strong></span> <span class="n"><strong>tokenCount</strong></span> <span class="o"><strong>=</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>;</strong></span><strong>
+    </strong><span class="k"><strong>while</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>input</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>hasNext</strong></span><span class="o"><strong>())</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="n"><strong>output</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>print</strong></span><span class="o"><strong>(</strong></span><span class="n"><strong>input</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>next</strong></span><span class="o"><strong>());</strong></span><strong>
+        </strong><span class="n"><strong>tokenCount</strong></span><span class="o"><strong>++;
+</strong></span><strong>
+        </strong><span class="c1"><strong>// Add a line break every 10th line</strong></span><strong>
+        </strong><span class="k"><strong>if</strong></span><span class="o"><strong>(</strong></span><span class="n"><strong>tokenCount</strong></span> <span class="o"><strong>%</strong></span> <span class="mi"><strong>10</strong></span> <span class="o"><strong>==</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+            </strong><span class="n"><strong>output</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>();</strong></span><strong>
+        </strong><span class="o"><strong>}</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+	</div>
+</div>
+<p>The next method description isn’t sufficient. It doesn’t correctly answer the 
+questions, “What does this code do?” and, “What are the parameters?” If someone 
+were to read these comments, they might be confused about what the
+<code class="language-plaintext highlighter-rouge">Scanner</code> was supposed 
+to contain and where the output is printed.</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="c1"><strong>// #BAD! prints out a file with line breaks every 10 tokens</strong></span><strong>
+</strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>addLineBreaks</strong></span><span class="o"><strong>(</strong></span><span class="nc"><strong>Scanner</strong></span> <span class="n"><strong>input</strong></span><span class="o"><strong>,</strong></span> <span class="nc"><strong>PrintStream</strong></span> <span class="n"><strong>output</strong></span><span class="o"><strong>)</strong></span> <span class="o">{</span>
+</code></pre>
+	</div>
+</div>
+<p>The next method comment isn’t appropriate because it deals with 
+implementation details. We don’t need to know that the code uses a while loop in 
+order to use it. If someone wants to find out how the code gets the job done, 
+they can read the code.</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="c1"><strong>// #BAD! Uses a while loop and a scanner to output the Scanner file</strong></span><strong>
+</strong><span class="c1"><strong>// with line breaks every 10 tokens.</strong></span><strong>
+</strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>addLineBreaks</strong></span><span class="o"><strong>(</strong></span><span class="nc"><strong>Scanner</strong></span> <span class="n"><strong>input</strong></span><span class="o"><strong>,</strong></span> <span class="nc"><strong>PrintStream</strong></span> <span class="n"><strong>output</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+</strong></code></pre>
+	</div>
+</div>
+<h4 id="prepost-and-exceptions">4.8.6 Pre conditions and post conditions AND 
+exceptions</h4>
+<p>Exceptions are an important part of the behavior of the method. When 
+commenting a method that may throw an exception, it’s necessary to include the 
+type of the exception and the conditions that throw it in the comment. It’s also 
+helpful to provide a short explanation of why the exception was thrown in the
+<code class="language-plaintext highlighter-rouge">Exception</code> itself. This 
+is a nice way to give a user a little more information than just the exception 
+type.</p>
+<p>A<strong>ll pubic methods of a class shall have pre conditions and post 
+conditions document in the method comment. </strong>Pre conditions and post conditions are a way to assert what must be true 
+before and after a method runs. For the
+<code class="language-plaintext highlighter-rouge"><strong>findMax</strong></code> 
+method to run properly, the pre-conditions for valid parameters must be true (or 
+else an exception will be thrown). A post condition is used to describe the 
+effects of the method after the method has completely executed. A method that 
+sorts a list, for example, has the post condition that the list is sorted. Some 
+methods may not have a post-condition or (more rarely) may not have a 
+pre condition.</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="cm"><strong>/* 
+ * #GOOD!
+ * pre : start &gt;= 0, end &lt;= list.length, start &gt;= end
+ *       Throws an IllegalArgumentException if preconditions not met.
+ *
+ * post: Returns the maximum value found in the list of integers between start and end,
+ *       start inclusive and end exclusive.
+ */</strong></span><strong>
+</strong><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>int</strong></span> <span class="nf"><strong>findMax</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span><span class="o"><strong>[]</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>,</strong></span> <span class="kt"><strong>int</strong></span> <span class="n"><strong>start</strong></span><span class="o"><strong>,</strong></span> <span class="kt"><strong>int</strong></span> <span class="n"><strong>end</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>start</strong></span> <span class="o"><strong>&lt;</strong></span> <span class="mi"><strong>0</strong></span> <span class="o"><strong>||</strong></span> <span class="n"><strong>end</strong></span> <span class="o"><strong>&gt;</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>length</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>throw</strong></span> <span class="k"><strong>new</strong></span> <span class="nf"><strong>IllegalArgumentException</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"start or end out of range"</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span> <span class="k"><strong>else</strong></span> <span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>start</strong></span> <span class="o"><strong>&gt;=</strong></span> <span class="n"><strong>end</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>throw</strong></span> <span class="k"><strong>new</strong></span> <span class="nf"><strong>IllegalArgumentException</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"start is greater than end"</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+    </strong><span class="kt"><strong>int</strong></span> <span class="n"><strong>max</strong></span> <span class="o"><strong>=</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>[</strong></span><span class="n"><strong>start</strong></span><span class="o"><strong>];</strong></span></code></pre>
+		<pre class="highlight"><code><strong>
+    </strong><span class="c1"><strong>// Find the maximum in the given range.</strong></span><strong>
+    </strong><span class="k"><strong>for</strong></span> <span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>=</strong></span> <span class="n"><strong>start</strong></span> <span class="o"><strong>+</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>&lt;</strong></span> <span class="n"><strong>end</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span><span class="o"><strong>++)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="n"><strong>max</strong></span> <span class="o"><strong>=</strong></span> <span class="nc"><strong>Math</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>max</strong></span><span class="o"><strong>(</strong></span><span class="n"><strong>max</strong></span><span class="o"><strong>,</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>[</strong></span><span class="n"><strong>i</strong></span><span class="o"><strong>]);</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+    </strong><span class="k"><strong>return</strong></span> <span class="n"><strong>max</strong></span><span class="o"><strong>;</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span><strong>
+</strong></code></pre>
+	</div>
+</div>
+<h4 id="commenting-fields">4.8.7 Commenting class and instance variables.</h4>
+<p>Fields, representing the state of the class, should be commented as well. 
+Describe what the field represents. These comments should not be lengthy, but 
+they should help anyone reading your code to understand why the field is 
+important.</p>
+<p>However, be careful to only provide comments that add information. If the 
+field’s name is very self-explanatory, then it might not need any comment.</p>
+<p>In the following example, the first two comments are good. They describe 
+briefly what the field stores and the format of the data. The last comment is 
+poor because it merely repeats the name of the field. A better comment might be, 
+“The student’s age in years.”</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="kd"><strong>public</strong></span> <span class="kd"><strong>class</strong></span> <span class="nc"><strong>Student</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="c1"><strong>// #Good! The first and last name of the student.</strong></span><strong>
+    </strong><span class="kd"><strong>private</strong></span> <span class="nc"><strong>String</strong></span> <span class="n"><strong>name</strong></span><span class="o"><strong>;</strong></span><strong>
+
+    </strong><span class="c1"><strong>// #Good! The student's score (from 0 to 100) on their latest test.</strong></span><strong>
+    </strong><span class="kd"><strong>private</strong></span> <span class="kt"><strong>int</strong></span> <span class="n"><strong>score</strong></span><span class="o"><strong>;</strong></span><strong>
+
+    </strong><span class="c1"><strong>// #Bad! #NOT_NECESSARY The student's age.</strong></span><strong>
+    </strong><span class="kd"><strong>private</strong></span> <span class="kt"><strong>int</strong></span> <span class="o"><strong>studenAge;</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+	</div>
+</div>
+
+
+
+<h2 id="fields">5. Class Design</h2>
+<h3>5.1 Fields aka Instance Variables</h3>
+<h4>5.1.1Initialize fields inside the constructor</h4>
+<p>Do not initialize fields at declaration. This is both a flexibility and 
+readability rule. It’s possible that you want to initialize a field to different 
+values in different constructors. Initializing a field at declaration and again 
+in a constructor is both redundant and distracting.</p>
+<p><code><span class="c1"><strong>&nbsp;&nbsp;&nbsp; // #BAD!<br>
+&nbsp;&nbsp;&nbsp; private ArrayList&lt;Object&gt; container = new ArrayList&lt;&gt;();<br>
+<br>
+&nbsp;&nbsp;&nbsp; // #GOOD!<br>
+&nbsp;&nbsp;&nbsp; private ArrayList&lt;Object&gt; container;<br>
+<br>
+&nbsp;&nbsp;&nbsp; public SomeClass() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; container = new ArrayList&lt;&gt;();<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; public SomeClass(int initialCapactity) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; container = new ArrayList&lt;&gt;(initialCapactity);<br>
+&nbsp;&nbsp;&nbsp; }</strong></span></code></p>
+<h4>5.1.2 Declare all fields private access</h4>
+<p>This modifier ensures clients of the class cannot modify the internal data 
+without using an allowed (<code class="language-plaintext highlighter-rouge">public</code>) 
+method.</p>
+<dl>
+	<dt><strong>Note</strong></dt>
+	<dd>There is an exception to this rule. For node classes (<code class="language-plaintext highlighter-rouge">ListNode, 
+	DoubleListNode, TreeNode, BSTNode</code>), it is acceptable (and encouraged) 
+	to use <code class="language-plaintext highlighter-rouge">public</code> 
+	fields so that the client (you) can directly manipulate the field references 
+	to other nodes without using setter methods.</dd>
+</dl>
+<p>Why? As you’ll see when nested and inner classes are introduced, ideally these classes 
+would be <code class="language-plaintext highlighter-rouge">private</code> 
+nested or inner 
+classes, as clients should be abstracted away from the nodes themselves. Being 
+a private nested or inner class also means that the field access modifiers wouldn’t matter. 
+However, if we write them as separate classes, public field access is the 
+way to allow the nodes to be manipulated in the natural/conventional way.</p>
+<h4 id="avoid-extra-fields">5.1.3 Do not have unnecessary fields</h4>
+<p>The more fields your class has, the more difficult it becomes to maintain and 
+reason about your code. With more fields, each instance of the class will also 
+take up more memory. This is a case of the overarching guidelines of <strong>
+minimize the scope of variables to the smallest necessary</strong>.</p>
+<p>When revising your code, watch out for fields that are only used in one 
+public method, and/or that are recomputed/cleared every call to a specific 
+method. These can likely be simplified to local variables within the scope of 
+that public method/its private helper methods. <strong>Also watch out for 
+redundant fields that can be inferred from the properties of other fields.</strong></p>
+<p><strong>5.1.4 Accessing fields</strong></p>
+<p>Prefer consistency when accessing fields. Assuming a getter exists for a 
+field (which is <strong>not </strong>always the case) you can access the field 
+in several ways</p>
+<p><code><strong>public class Point {<br>
+&nbsp;&nbsp;&nbsp; private int x;<br>
+<br>
+&nbsp;&nbsp;&nbsp; public int getX() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return x;<br>
+&nbsp;&nbsp;&nbsp; // other code not shown<br>
+}</strong></code></p>
+<p>We have the following options for accessing the field x in instance methods 
+of the class:</p>
+<p><strong><code>public void accessXExamples() {<br>
+&nbsp;&nbsp;&nbsp; int temp1 = x; // direct, this. implicit<br>
+&nbsp;&nbsp;&nbsp; int temp2 = this.x; // explicit this.<br>
+&nbsp;&nbsp;&nbsp; int temp3 = getX();<br>
+}</code></strong></p>
+<p>Assuming there are no efficiency concerns (the getter method is O(1)), pick 
+one style and use it <strong>consistently </strong>throughout your code.</p>
+<p>If you prefer the direct, implicit this. approach (as most of the 
+instructional staff does) it is acceptable to use the explicit this. when there are 
+multiple objects of the same type as the calling object in scope. This is not 
+required, but it is acceptable if it helps your understanding of which objects 
+are being dealt with.</p>
+<p><strong><code>// #ACCEPTABLE This is an example method from the Point class.<br>
+// pre: other != null<br>
+// post: return the distance between this and other<br>
+public double distance(Point other) {<br>
+&nbsp;&nbsp;&nbsp; temp result = Math.pow(this.x - other.x, 2); // this.x could 
+be replaced with simply x, but this use is acceptable<br>
+&nbsp;&nbsp;&nbsp; temp += Math.pow(this.y - other.y, 2);<br>
+&nbsp;&nbsp;&nbsp; return Math.sqrt(temp);<br>
+</code></strong><code><strong>}</strong></code></p>
+<p><strong>5.1.5 Maintain Encapsulation. </strong></p>
+<p>Just as 5.1.2 requires the vast majority of fields (instance variables) to be 
+private, it is important to maintain encapsulation. If you have a field that is 
+a mutable object, such as an <strong>ArrayList</strong>, do not have a getter 
+method providing a reference to that mutable object to a client. Doing so can 
+lead to logic errors as the client may alter the object is some way. </p>
+<p>If feel you <strong>must</strong> provide an instance variable that is a 
+mutable object to a client, then make a copy of it to provide the client. This 
+should likely be avoided as well though, because making the copy requires using 
+both time and space. Ask yourself, why does the client need this data? Can I 
+instead write a method that provides the client the answer they are looking for?</p>
+<h3 id="class-constants">&nbsp;</h3>
+<h3>5.2 Class Variables and Constants</h3>
+<p><strong>5.2.1 Prefer class constants</strong></p>
+<p>A static field belongs to the class as a whole. All objects of the class type 
+share it as opposed to fields / instance variables. Every object of the class 
+type has its own copy of fields / instance variables. Early programmers often 
+misuse class variables as a form of global data, leading to code that is hard to 
+understand, hard to debug, hard to maintain, and often leads to incorrect 
+behavior. </p>
+<p>While class variables can be useful in some rare occasions, prefer (in CS314) 
+class constants, declared <strong><code>final</code></strong>. </p>
+<h4><strong>5.2.2 Use the correct access modifier. </strong></h4>
+<p><code class="language-plaintext highlighter-rouge">public</code> allows a 
+client to directly interact with the constant.
+<code class="language-plaintext highlighter-rouge">private </code>means the 
+constant is only accessible inside the class itself. Decide if clients need 
+access to the class constant or whether you are using it to improve internal 
+readability of the class.</p>
+<p>Create and use class constants when directed by the spec and where 
+appropriate. A good creation/use of a constant constitutes replacing a raw value 
+that is used multiple times in your program with a constant that stores the 
+value, but with more descriptive and readable name. This also provides more 
+flexibility if the raw value ever needs to change.</p>
+<dl>
+	<dt><strong>Note</strong></dt>
+	<dd>Class constants should be initialized at declaration unlike how fields 
+	should be initialized in the constructor.</dd>
+</dl>
+<p>Watch out for using raw numbers aka “magic values” in your code. These values 
+might confuse another reader of your code, so you should avoid them and consider 
+other options. There may be a useful method or way to access the value that is 
+more logical, or the spec might have more information. <strong>You must 
+determine if a constant should be local to a method only or a class constant 
+available to the whole class. If the constant is used in only one method it 
+should be local to the method. If it is used in 2 or more methods prefer making 
+it a class constant.</strong></p>
+<h3 id="methods">5.3 Methods</h3>
+<h4 id="access-modifiers">5.3.1 Access modifiers</h4>
+<p><strong>Methods (and constructors) to implement that are listed in the spec 
+should all be declared <code class="language-plaintext highlighter-rouge">public</code>,</strong> 
+so that clients can call these methods. <strong>Any additional 
+methods/constructors you write in the class should be declared
+<code class="language-plaintext highlighter-rouge">private</code>,</strong> so 
+that these methods can only be called internally. This will not only prevent 
+clients from calling these methods in ways that might corrupt your fields or 
+otherwise break your program, but also simplify the functionality a client will 
+have to deal with.</p>
+<h4 id="parameters">5.3.2 Parameters</h4>
+<p><strong>Avoid unnecessary parameters.</strong> For the same reasons to cut 
+down on fields, simplifying the number of parameters can simplify the code. 
+Watch out for unused parameters or parameters whose values can be inferred by 
+other parameters. Likewise, don't declare a variable until it is needed. </p>
+<h4 id="returns">5.3.3 Returns</h4>
+<p><strong>Avoid unnecessary returns.</strong> If you pass in a reference to an 
+object as a parameter, there’s no reason to define your method to return that 
+same reference. Wherever called the method already has a reference to the 
+object, as it was able to pass it in the first place, so returning the same 
+value back is redundant. In fact, defining a method to have a redundant return 
+may imply that you made a copy of the object passed in, and may confuse a reader 
+of your code.</p>
+<dl>
+	<dt><strong>Bad</strong></dt>
+	<dd>This method unnecessarily defines a return that always returns the 
+	reference to the original object. Because whoever called this method has a 
+	reference to the <code class="language-plaintext highlighter-rouge">List</code> 
+	object, we can change this method’s return type to void to simplify the 
+	method.<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="kd"><strong>public</strong></span> <span class="nc"><strong>List</strong></span><span class="o"><strong>&lt;</strong></span><span class="nc"><strong>String</strong></span><span class="o"><strong>&gt;</strong></span> <span class="nf"><strong>generateNames</strong></span><span class="o"><strong>(</strong></span><span class="nc"><strong>List</strong></span><span class="o"><strong>&lt;</strong></span><span class="nc"><strong>String</strong></span><span class="o"><strong>&gt;</strong></span> <span class="n"><strong>toFill</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="c1"><strong>// add some elements to toFill</strong></span><strong>
+    </strong><span class="o"><strong>...</strong></span><strong>
+    </strong><span class="k"><strong>return</strong></span> <span class="n"><strong>toFill</strong></span><span class="o"><strong>;</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt><strong>Good</strong></dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="kd"><strong>public</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>generateNames</strong></span><span class="o"><strong>(</strong></span><span class="nc"><strong>List</strong></span><span class="o"><strong>&lt;</strong></span><span class="nc"><strong>String</strong></span><span class="o"><strong>&gt;</strong></span> <span class="n"><strong>toFill</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="c1"><strong>// add some elements to toFill</strong></span><strong>
+    </strong><span class="o"><strong>...</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<p id="unspecified-behavior">Do not use returns for empty statements in void 
+methods.</p>
+<p><code><strong>// #BAD!<br>
+public void fooBAD(int x, int y) {<br>
+&nbsp;&nbsp;&nbsp; if (y == 0) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return; // avoid<br>
+&nbsp;&nbsp;&nbsp; } else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.print(x / y);<br>
+&nbsp;&nbsp;&nbsp; }<br>
+}<br>
+<br>
+// #ACCEPTABLE!<br>
+public void fooGOOD(int x, int y) {<br>
+&nbsp;&nbsp;&nbsp; if (y != 0) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.out.print(x / y);<br>
+&nbsp;&nbsp;&nbsp; }<br>
+}</strong></code></p>
+<p>Prefer to have a single return for non-void methods. However, it is 
+acceptable to use multiple returns if the code is succinct and it is easier to 
+simply return when we have found our answer. Likewise, in recursive methods multiple returns 
+can lead to easier to understand code when we have a return for 
+base case(s) and recursive cases, successful and failures. </p>
+<p><code><strong>// #ACCEPTABLE!<br>
+// pre: data != null<br>
+// post: return the first index of tgt in data or -1 if tgt is not present<br>
+public void indexOf(int[] data, int tgt) {<br>
+&nbsp;&nbsp;&nbsp; for (int i = 0; i &lt; data.length; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (data[i] == tgt) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp; // never found tgt in data, never returned, tgt not present 
+in data<br>
+&nbsp;&nbsp;&nbsp; return -1;<br>
+}</strong></code></p>
+<h4>5.3.4 Unspecified behavior</h4>
+<p><strong>Do not add additional behavior beyond what’s described in the spec.</strong> 
+This includes additional exceptions. Only include exceptions listed in the 
+specification for each method.</p>
+<p><strong>Do not modify object parameters passed to public methods, unless 
+allowed by the spec.</strong> An unsuspecting client of the method may not have 
+wanted their data dismantled while your method ran for a different purpose.</p>
+<h4>5.3.5 Methods do one thing</h4>
+<p><strong>Methods should do one thing.</strong> 
+A method should have one job. Methods that try to do to many things shall be 
+broken up into smaller methods to provide structure.</p>
+<h3 id="constructors">5.4 Constructors</h3>
+<ul>
+	<li>When applicable, <strong>reduce redundancy by using the
+	<code class="language-plaintext highlighter-rouge">this()</code> keyword to 
+	call another constructor</strong> in the same class. Generally, the 
+	constructors that assume more defaults (fewer parameters) call the more 
+	general constructors (more parameters).</li>
+	<li>Typically, clients of a class should not have to set fields of an object 
+	immediately after construction. There should be a constructor included for 
+	this situation. The general behavior of a constructor is to set up the state 
+	of an object correctly, and this should encompass setting most fields.</li>
+	<li>Clients of a class should never have to pass in dummy values to a 
+	constructor to set up the desired state. Instead, there should be a 
+	constructor included so that only the relevant parameters need to be passed.</li>
+	<li>Only implement constructors that are used somewhere.</li>
+	<li>It is acceptable to add private constructors not required by the 
+	specification if it helps reduce or remove redundant or inefficient code.
+	</li>
+</ul>
+<h3 id="scope">5.5 Scope</h3>
+<p><strong>Minimize the scope of variables to the smallest necessary</strong>. Remember that the 
+scope of a variable is the closest pair of curly braces that surround it. In the 
+following example, the variable
+<code class="language-plaintext highlighter-rouge">nextScore</code> has been 
+declared in the scope of the entire method, but note that declaring it in such a 
+wide scope is actually not necessary.</p>
+<dl>
+	<dt>Bad (some older programming languages often required local variables to 
+	be declared at the start of the function. This is no longer true in most 
+	modern programming languages.)</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>printTenScores</strong></span><span class="o"><strong>(</strong></span><span class="nc"><strong>Scanner</strong></span> <span class="n"><strong>console</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="kt"><strong>int</strong></span> <span class="n"><strong>nextScore</strong></span><span class="o"><strong>;</strong></span><strong>
+    </strong><span class="k"><strong>for</strong></span> <span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>=</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>&lt;=</strong></span> <span class="mi"><strong>10</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span><span class="o"><strong>++)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>print</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"next score? "</strong></span><span class="o"><strong>);</strong></span><strong>
+        </strong><span class="n"><strong>nextScore</strong></span> <span class="o"><strong>=</strong></span> <span class="n"><strong>console</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>nextInt</strong></span><span class="o"><strong>();</strong></span><strong>
+        </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"score "</strong></span> <span class="o"><strong>+</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>+</strong></span> <span class="s"><strong>" = "</strong></span> <span class="o"><strong>+</strong></span> <span class="n"><strong>nextScore</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<p>Notice that <code class="language-plaintext highlighter-rouge">nextScore</code> 
+is only ever accessed inside of the for loop, so we can actually localize its 
+scope to just the loop itself rather than the whole method.</p>
+<dl>
+	<dt>Good This does not cause an efficiency issues. The goal is to reduce the 
+	cognitive load of someone trying to read and understand our code. If they 
+	are faced with 10 local variables at the start of a method, it can be much 
+	harder to understand the method. Reduce the cognitive load by not declaring 
+	a variable until it is necessary.</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>void</strong></span> <span class="nf"><strong>printTenScores</strong></span><span class="o"><strong>(</strong></span><span class="nc"><strong>Scanner</strong></span> <span class="n"><strong>console</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>for</strong></span> <span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>=</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>&lt;=</strong></span> <span class="mi"><strong>10</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span><span class="o"><strong>++)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>print</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"next score? "</strong></span><span class="o"><strong>);</strong></span><strong>
+        </strong><span class="kt"><strong>int</strong></span> <span class="n"><strong>nextScore</strong></span> <span class="o"><strong>=</strong></span> <span class="n"><strong>console</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>nextInt</strong></span><span class="o"><strong>();</strong></span><strong>
+        </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"score "</strong></span> <span class="o"><strong>+</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>+</strong></span> <span class="s"><strong>" = "</strong></span> <span class="o"><strong>+</strong></span> <span class="n"><strong>nextScore</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<p>By localizing scope, our code becomes simpler to reason about, because we’ve 
+minimized the number of different variables floating around at any given 
+location in our code. Note that eliminating unnecessary fields is often just an 
+example of localizing variables. Also note that “re-declaring” the variable
+<code class="language-plaintext highlighter-rouge">nextScore</code> inside the 
+loop is just fine efficiency-wise because of how the compiler will optimize our 
+code. In this course, you shouldn’t ever have to worry about micro-optimizations 
+like the number of variable declarations.</p>
+<h3 id="scope0">5.7 Preconditions and Exceptions</h3>
+<p><strong>Check method preconditions if possible and throw an appropriate 
+exception if the precondition is not met.</strong></p>
+<p>Ensure the messages included with exceptions are meaningful. An exception 
+without a message describing the failure provides little value over simply 
+terminating the program, while one with a message describing the reason the 
+exception was thrown can save a substantial amount of debugging time. </p>
+<p><strong><code>//#BAD! <br>
+// pre: data.length &gt;= 7<br>
+public void printMovingAverage(int[] data) {<br>
+&nbsp;&nbsp;&nbsp; if (data.length &lt; 7) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw new IllegalArgumentException(); 
+// Not enough information.</code></strong></p>
+<p><strong><code>//#GOOD! <br>
+// pre: data.length &gt;= 7<br>
+public void printMovingAverage(int[] data) {<br>
+&nbsp;&nbsp;&nbsp; if (data.length &lt; 7) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; throw new </code></strong><strong>
+<code>IllegalArgumentException("The length of the array data must be &gt;= 7. "<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+"length of parameter data = " + data.length);</code></strong></p>
+<dl>
+	<h3 id="scope1">5.8 Remove unnecessary and unneeded code - REPEATED</h3>
+	<p>Consider the program you turn in your final draft. Like the final draft 
+	of an English paper or Chemistry lab report, include only what is necessary. 
+	</p>
+	<p>For you solution code especially, remove any and all debugging code, 
+	notes to yourself, TODO's, and 
+	previous versions of your solution, unused imports, and other comments and / 
+	or code that is no longer necessary for your solution. </p>
+	<p>You can of course save another version 
+	of your program with that debugging code and early attempts at solutions, 
+	but<strong> the code your turn in shall be pristine and without any 
+	unnecessary cruft. Take some well-deserved pride in what you have created.</strong></p>
+</dl>
+<p>&nbsp;</p>
+
+
+
+<h2>6. Naming</h2>
+<p>The names of the public methods and the class must appear exactly how they 
+appear in the spec (case matters). If these names are not exactly correct, the 
+provided main program should fail to compile if you try to.</p>
+<h3 id="casing">6.1 Casing</h3>
+<ul>
+	<li>Fields, local variables, and methods should be
+	<code class="language-plaintext highlighter-rouge"><strong>camelCased</strong></code>, 
+	where every word after the first begins with capitalization.</li>
+	<li>Class names and constructors should be
+	<code class="language-plaintext highlighter-rouge"><strong>UpperCamelCased</strong></code>. 
+	This is camel casing but the first word also begins with capitalization.</li>
+	<li>All constants, (class, local, final fields) should be
+	<code class="language-plaintext highlighter-rouge"><strong>SCREAMING_CASE</strong></code>, 
+	where words are all uppercase and separated by underscores.</li>
+</ul>
+<p>Private helper methods that aide a constructor are still methods (have 
+explicit return types and aren’t used with
+<code class="language-plaintext highlighter-rouge">new</code>) and shall be 
+camelCased unlike the constructor itself.</p>
+<h3 id="descriptiveness">6.2 Descriptiveness</h3>
+<p><strong>Use descriptive names that will help out another reader of your code.</strong> 
+Giving some kind of context for what the value(s) is or giving a high-level 1 to 2 
+word description is usually appropriate.</p>
+<p>For the following example, assume we’re trying to name a
+<code class="language-plaintext highlighter-rouge">List</code> that will keep 
+track of the names of each chapter in a book. Since we have some context for 
+what we want to use this variable for, we can try and come up with a descriptive 
+name.</p>
+<p><code class="language-plaintext highlighter-rouge"><strong>List&lt;String&gt; l = 
+new ArrayList&lt;&gt;();</strong></code></p>
+<p><code class="language-plaintext highlighter-rouge"><strong>l</strong></code> 
+is not descriptive. It really doesn’t say anything about what the values in<strong>
+</strong><code class="language-plaintext highlighter-rouge">l</code> or
+<code class="language-plaintext highlighter-rouge"><strong>l</strong></code> 
+itself represent.</p>
+<p>&nbsp;</p>
+<p><code class="language-plaintext highlighter-rouge"><strong>List&lt;String&gt; 
+listOfStrings = new ArrayList&lt;&gt;();</strong></code></p>
+<p>Restating the type may seem better, but it doesn’t actually help a reader 
+understand the code any more easily. A reader still doesn’t have any context or 
+high level understanding what <code class="language-plaintext highlighter-rouge">
+<strong>listOfStrings</strong></code> represents.</p>
+<p>&nbsp;</p>
+<p><code class="language-plaintext highlighter-rouge"><strong>List&lt;String&gt; 
+values = new ArrayList&lt;&gt;();</strong></code></p>
+<p>Every variable stores a value, so this one is a little bit too vague to be 
+helpful.</p>
+<dl>
+	<dt></dt>
+</dl>
+<p><code class="language-plaintext highlighter-rouge"><strong>List&lt;String&gt; 
+chapterTitles = new ArrayList&lt;&gt;();</strong></code></p>
+<p>Good! This one gives some context for what the list represents.</p>
+<p>&nbsp;</p>
+<p><code class="language-plaintext highlighter-rouge"><strong>List&lt;String&gt; 
+chapterTitlesForTheCurrentBookObject = new ArrayList&lt;&gt;();</strong></code></p>
+<p>This is too much. It is possible to make variable names too long. To include 
+unnecessary information.</p>
+<p>&nbsp;</p>
+<p>While one-letter names may be easy to type, they aren’t descriptive. Other 
+readers of your code will likely ponder over their meaning if they need to 
+understand what your code is doing. </p>
+<p><strong>There are some appropriate uses, however, like for </strong>
+<code class="language-plaintext highlighter-rouge"><strong>for</strong></code><strong> 
+loop variable names. </strong>Here it is acceptable to use i, j, k, etc. if the 
+loop variable has no meaning beyond a counter. Likewise you can 
+use r and c (for row and column) when iterating through a 2d array or i and j 
+(as typically used in mathematics).</p>
+<p>Likewise for a Point object x and y are perfectly variable names for the 
+Point's x and y coordinates. </p>
+<p>They’re also used to describe values that are temporary or so general that 
+there isn’t really any context to describe. But for the most part, try to use 
+more helpful names when you can think of them. Other readers will likely 
+appreciate it.</p>
+<p>However, if a loop control variable has some meaning beyond a simple counter 
+than it is acceptable and desirable to give it a more meaningful name. </p>
+<p><code><span class="k"><strong>// print out a table of equivalent degrees 
+Celsius for degrees Fahrenheit from 0 to 100.<br>
+final int MAX_TEMP = 100;<br>
+final int FREEZE_POINT_F = 32;<br>
+final double CONVERSION_FACTOR = 5.0 / 9.0;<br>
+<br>
+for</strong></span> <span class="o"><strong>(</strong></span><span class="kt"><strong>int 
+degreesF</strong></span> <span class="o"><strong>=</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>;</strong></span> 
+<strong>degreesF</strong><span class="o"><strong> &lt;= MAX_TEMP;</strong></span> <span class="o"><strong><span class="kt">
+degreesF</span>++)</strong></span> <span class="o"><strong>{<br>
+&nbsp;&nbsp;&nbsp; int degreesC = (int) ((degreesF - FREEZE_POINT_F) *
+<span class="k">CONVERSION_FACTOR);</span></strong></span><strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(degreesF 
++ " degrees <span class="k">Fahrenheit is roughly " + degreesC<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
++ " degrees Celsius."</span>);</strong></span><strong><br>
+    </strong><span class="o"><strong>}</strong></span></code></p>
+<h3>6.3 Method names</h3>
+<p>Method names are typically verbs or verb phrases as the method does 
+something. It accomplished some task. Note, this is not always the case, but 
+prefer method names that describe what the method does (but not how it does 
+it.).</p>
+<p>&nbsp;</p>
+
+
+
+<h2 id="type-parameters-generics">7. Data Types</h2>
+<h3>7.1 Type parameters (generics)</h3>
+<p><strong>Always include the type parameter when dealing with generic classes 
+such as <code class="language-plaintext highlighter-rouge">ArrayList</code>,
+<code class="language-plaintext highlighter-rouge">TreeSet</code>, etc.</strong> 
+Failing to do so will likely lead to casting that clutter up the code and/or 
+unsafe type operations.</p>
+<dl>
+	<dt>Bad</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="nc">Stack</span> <span class="n">visited</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Stack</span><span class="o">();</span></code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Good</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="nc">Stack</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">visited</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Stack</span><span class="o">&lt;&gt;();</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<h3 id="casting">7. 2 Casting</h3>
+<p><strong>Avoid casting of object types.</strong> Casting to object types is 
+essentially disregarding the safety net of the type system that Java provides. 
+It may achieve the desired behavior, but it is usually a sign that we should 
+change the logic of our program elsewhere. Casting to object types should only 
+be done if truly necessary, typically in an equals method and sometimes in order 
+to write a more efficient version of an algorithm.</p>
+<p>Casting to primitive types to actually convert values is fine, however, e.g.</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="kt">int</span> <span class="n">truncated</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="nc">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()</span> <span class="o">*</span> <span class="mi">5</span><span class="o">);</span></code></pre>
+		The place you will most likely cast objects is when overriding the 
+		equals method. We do not want to overload equals so the parameter shall 
+		be of type Object. Use <strong><code>instanceof</code></strong> operator 
+		or the <strong><code>getClass() </code></strong>method, to check the 
+		parameter is the same type as the <strong><code>this</code></strong> 
+		object before casting.<br>
+		If the class uses generic types, <strong>do not attempt to cast to the 
+		generic type parameter. Use the wildcard or Object as the data type of 
+		the elements of the target of the cast.<br>
+		<br>
+		Example:<br>
+		<br>
+		<code>public class GenericList&lt;E&gt; {<br>
+&nbsp;&nbsp;&nbsp; private E[] container;<br>
+		<br>
+&nbsp;&nbsp;&nbsp; public boolean equals(Object obj) { // NOT GenericList&lt;E&gt; obj 
+		or GenericList obj. That overloads equals<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (obj instanceof GenericList&lt;?&gt;) { 
+		// obj instanceof GenericList&lt;E&gt; is a syntax error<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GenericList&lt;?&gt; 
+		otherList = (GenericList&lt;?&gt;) obj;<br>
+		<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 
+		GenericList&lt;E&gt; otherList = (GenericList&lt;E&gt;) obj is NOT SAFE and not 
+		allowed in 314.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+		</code></strong></div>
+</div>
+<h3 id="prefer-simple-data-types">7.3 Prefer simple data types</h3>
+<p>Sometimes we have options for how we want to represent the data and either 
+option(s) will be able to produce correct behavior. Instead of using a more 
+complicated representation that can do everything we want and more, we should 
+try use the representation that fits the specific problem the best. The intent 
+and logic of your code will be simpler to another reader. Some examples are 
+listed below.</p>
+<ul>
+	<li>If you’re using an <code class="language-plaintext highlighter-rouge">
+	int</code> to keep track of whether it’s one value or another with only 2 
+	choices, use a
+	<code class="language-plaintext highlighter-rouge">boolean</code> instead.</li>
+	<li>If you’re using a <code class="language-plaintext highlighter-rouge">
+	String</code> to keep track of a single letter, use a
+	<code class="language-plaintext highlighter-rouge">char</code>.</li>
+	<li>Do not use boxed types unless you need them to store in a generic data 
+	structure. If you’re using
+	<code class="language-plaintext highlighter-rouge">Integer</code> because 
+	you want to keep track of a sum, just use
+	<code class="language-plaintext highlighter-rouge">int</code>. Likewise for
+	<code>Character</code> and <code>char</code> AND <code>Double</code> and
+	<code>double</code>.</li>
+</ul>
+<p>The point of a data structure is to store related values. If a data structure 
+is only used to store one or two values, we prefer to use those value(s) 
+directly.</p>
+
+
+
+<h2 id="efficiency-and-redundancy">8. Efficiency and Redundancy</h2>
+<p>A lot of what we define to be important for efficiency boils down to “don’t 
+do anything unnecessary”. Knowing what’s necessary and what isn’t can be 
+difficult, but following the suggestions of the assignment specifications for certain implementation details 
+will lead you in the right direction. Unfortunately, there’s no hard and fast 
+rule for avoiding every inefficiency. To avoid them, you will have to dedicate 
+some time to reasoning about your code. In other words you may find it useful to 
+perform algorithm analysis as taught the first week of class on the code you 
+write.</p>
+<p>As a general rule, reduce or remove complicated expressions and logic where 
+reasonably possible.</p>
+<h3 id="creating-new-objects">8.1 Creating new objects</h3>
+<p><strong>Avoid making objects that you don’t need.</strong> This can be tricky 
+to spot, but in particular you should review your code statements that 
+instantiate <code class="language-plaintext highlighter-rouge">new</code> 
+objects or call other methods that do so. Making sure that every object you 
+instantiate is necessary (no other available methods can provide the same or 
+reasonable behavior) and logical will give some sense of security here.</p>
+<p>The first example makes a <code class="language-plaintext highlighter-rouge">
+new ArrayList&lt;&gt;();</code> just to discard it in the next line. When we set
+<code class="language-plaintext highlighter-rouge">words = generateWords()</code> 
+in the second line, the previous value of
+<code class="language-plaintext highlighter-rouge">words</code> is lost (unless 
+it’s saved elsewhere). The second example doesn’t throw away any newly made 
+objects.</p>
+<dl>
+	<dt><strong>Bad</strong></dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="nc"><strong>ArrayList</strong></span><span class="o"><strong>&lt;</strong></span><span class="nc"><strong>String</strong></span><span class="o"><strong>&gt;</strong></span> <span class="n"><strong>words</strong></span> <span class="o"><strong>=</strong></span> <span class="k"><strong>new</strong></span> <span class="nc"><strong>ArrayList</strong></span><span class="o"><strong>&lt;&gt;();</strong></span><strong>
+</strong><span class="n"><strong>words</strong></span> <span class="o"><strong>=</strong></span> <span class="n"><strong>generateWords</strong></span><span class="o"><strong>();</strong></span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt><strong>Good</strong></dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="nc"><strong>ArrayList</strong></span><span class="o"><strong>&lt;</strong></span><span class="nc"><strong>String</strong></span><span class="o"><strong>&gt;</strong></span> <span class="n"><strong>words</strong></span> <span class="o"><strong>=</strong></span> <span class="n"><strong>generateWords</strong></span><span class="o"><strong>();</strong></span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<p>Likewise, avoid building up a String inside a loop. Strings are immutable. A 
+program that builds up a String inside of loop using String concatenation, 
+creates a new String with each concatenation. Also, building up a String in a 
+loop can be inefficient. <strong>Prefer using a StringBuilder when building up a 
+String via a loop.</strong></p>
+<dl>
+	<dt><strong>Bad</strong></dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><strong>// assume data is an array of </strong><code><strong>Objects
+String result = "";
+for (Object o : data) {
+    result += o + " ";
+</strong>}
+<strong>return result;</strong></code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt><strong>Good</strong></dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><strong>// assume data is an array of </strong><code><strong>Objects
+StringBuilder sb = new StringBuilder();
+for (Object o : data) {
+    sb.append(o);
+    sb.append(" ");
+}
+return sb.toString();</strong></code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<h3>8.2 Recomputing values</h3>
+<p>Avoid recomputing complex expressions and method calls. <strong>If you have 
+to use the value of a method call or a complicated expression more than once, 
+you should store it in a well-named variable.</strong> Using the value stored in 
+this variable will give you instant access instead of recomputing the value by 
+evaluating the method call or expression again. This will also clear up the 
+clutter of your code by replacing generic symbols and expressions with a name to 
+describe some context.</p>
+<p>There are some methods that are fast enough that storing the value in a 
+variable for the future doesn’t save us anything. For example, the
+<code class="language-plaintext highlighter-rouge">size()</code> method for any 
+data structure we use in this course will have the same instant access whether 
+we store it or call the method. In such a case, efficiency is not an issue we 
+have to worry about.</p>
+<h3 id="factoring">8.3 Factoring</h3>
+<p>If you have lines of repeated or very similar code that need to be executed 
+in different places, group the code of the task into a private helper method. 
+Putting the code into one place instead of several will make making changes 
+easier, as well as make our code more readable.</p>
+<p>Code inside if/else structure should represent different cases where the code 
+is inherently different. This means duplicate lines of code or logic in an 
+if/else structure should be factored out to come before or after, so that they 
+are only written to happen once, unconditionally.</p>
+<dl>
+	<dt>Bad</dt>
+	<dd>Note that there are repeated lines of logic that actually always happen, 
+	instead of conditionally like how our structure is set up. We can factor 
+	these out to simplify and clean our code.<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>x</strong></span> <span class="o"><strong>%</strong></span> <span class="mi"><strong>2</strong></span> <span class="o"><strong>==</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"Hello!"</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"I love even numbers too."</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"See you later!"</strong></span><span class="o"><strong>);</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span> <span class="k"><strong>else</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"Hello!"</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"I don't like even numbers either."</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"See you later!"</strong></span><span class="o"><strong>);</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Good</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"Hello!"</strong></span><span class="o"><strong>);</strong></span><strong>
+</strong><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>x</strong></span> <span class="o"><strong>%</strong></span> <span class="mi"><strong>2</strong></span> <span class="o"><strong>==</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"I love even numbers too."</strong></span><span class="o"><strong>);</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span><strong>  </strong><span class="k"><strong>else</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"I don't like even numbers either."</strong></span><span class="o"><strong>);</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"See you later!"</strong></span><span class="o"><strong>);</strong></span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<p>Review any if/else structures you write and make sure there are no duplicate 
+lines of code or logic at the beginning or the end.</p>
+<h3 id="redundant-conditional-logic">8.4 Redundant conditional logic</h3>
+<p>This section details issues with writing unnecessary if/else logic that can 
+be omitted. We will refer to any control flow like if, else, etc. as conditional 
+logic.</p>
+<h4 id="loops">8.4.1 Loops</h4>
+<p>Good bounds and loop conditions will already deal with certain edge case 
+behavior. Avoid writing additional conditional logic that loop bounds already 
+generalize.</p>
+<dl>
+	<dt>Bad</dt>
+	<dd>The <code class="language-plaintext highlighter-rouge">if</code> here is 
+	redundant. The loop won’t produce any output (or even run) if n were 0 or 
+	negative in the first place, so we should remove the check.<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>n</strong></span> <span class="o"><strong>&gt;</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>for</strong></span> <span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>=</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>&lt;</strong></span> <span class="n"><strong>n</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span><span class="o"><strong>++)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"I love loops &lt;3!"</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<h4 id="already-known-values">8.4.2 Already known values</h4>
+<p>By using control flow (if/else/return) properly, you can guarantee some 
+implicit facts about values and state without explicitly checking for them. The 
+examples listed below add in redundant conditional logic that should be removed.</p>
+<dl>
+	<dt>Bad</dt>
+	<dd>Because <code class="language-plaintext highlighter-rouge"><strong>
+	someTest</strong></code> was tested for alone in the first if, future 
+	branches of the if/else structure know
+	<code class="language-plaintext highlighter-rouge"><strong>someTest</strong></code> 
+	must be false, so the check for
+	<code class="language-plaintext highlighter-rouge"><strong>!someTest</strong></code> 
+	is redundant and can be omitted.<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>someTest</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="o"><strong>...</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span> <span class="k"><strong>else</strong></span> <span class="k"><strong>if</strong></span> <span class="o"><strong>(!</strong></span><span class="n"><strong>someTest</strong></span> <span class="o"><strong>...)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="o"><strong>...</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Bad</dt>
+	<dd>At the second <code class="language-plaintext highlighter-rouge">if</code> 
+	statement, we know that <code class="language-plaintext highlighter-rouge">
+	someTest</code> must have been false, so it’s not necessary to check its 
+	value again.<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>someTest</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>throw</strong></span> <span class="n"><strong>exception</strong></span><span class="o"><strong>/</strong></span><span class="k"><strong>return</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="k"><strong>if</strong></span> <span class="o"><strong>(!</strong></span><span class="n"><strong>someTest</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="o"><strong>...</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<h3 id="reuse-existing-code-and-methods">8.5 Reuse existing code and methods</h3>
+<p><strong>Avoid re-implementing the functionality of already existing methods 
+including commonly used methods from the Java standard library, by just calling 
+those existing methods.</strong></p>
+<p>In the following example, the two methods are almost identical, except
+<code class="language-plaintext highlighter-rouge">indexOf</code> is more 
+powerful/flexible than <code class="language-plaintext highlighter-rouge">
+<strong>contains</strong></code>. So,
+<code class="language-plaintext highlighter-rouge"><strong>contains</strong></code> 
+can actually just use a call to
+<code class="language-plaintext highlighter-rouge"><strong>indexOf</strong></code> 
+to reuse already written behavior.</p>
+<div class="language-java highlighter-rouge">
+	<div class="highlight">
+		<pre class="highlight"><code><span class="kd"><strong>public</strong></span> <span class="kt"><strong>int</strong></span> <span class="nf"><strong>indexOf</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>value</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>for</strong></span> <span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>=</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>&lt;</strong></span> <span class="n"><strong>size</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span><span class="o"><strong>++)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>elementData</strong></span><span class="o"><strong>[</strong></span><span class="n"><strong>i</strong></span><span class="o"><strong>]</strong></span> <span class="o"><strong>==</strong></span> <span class="n"><strong>value</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+            </strong><span class="k"><strong>return</strong></span> <span class="n"><strong>i</strong></span><span class="o"><strong>;</strong></span><strong>
+        </strong><span class="o"><strong>}</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+    </strong><span class="k"><strong>return</strong></span> <span class="o"><strong>-</strong></span><span class="mi"><strong>1</strong></span><span class="o"><strong>;</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+	</div>
+</div>
+<dl>
+	<dt>Bad</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="kd"><strong>public</strong></span> <span class="kt"><strong>boolean</strong></span> <span class="nf"><strong>contains</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>value</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>for</strong></span> <span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>=</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>&lt;</strong></span> <span class="n"><strong>size</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span><span class="o"><strong>++)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>elementData</strong></span><span class="o"><strong>[</strong></span><span class="n"><strong>i</strong></span><span class="o"><strong>]</strong></span> <span class="o"><strong>==</strong></span> <span class="n"><strong>value</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+            </strong><span class="k"><strong>return</strong></span> <span class="kc"><strong>true</strong></span><span class="o"><strong>;</strong></span><strong>
+        </strong><span class="o"><strong>}</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+    </strong><span class="k"><strong>return</strong></span> <span class="kc"><strong>false</strong></span><span class="o"><strong>;</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Good</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="kd"><strong>public</strong></span> <span class="kt"><strong>boolean</strong></span> <span class="nf"><strong>contains</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>value</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>return</strong></span> <span class="nf"><strong>indexOf</strong></span><span class="o"><strong>(</strong></span><span class="n"><strong>value</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>&gt;=</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>;</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span><strong>
+</strong></code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<p>The classes you will use in this course (<code class="language-plaintext highlighter-rouge">String</code>,
+<code class="language-plaintext highlighter-rouge">ArrayList</code>,
+<code class="language-plaintext highlighter-rouge">TreeMap</code>, etc.) will 
+provide many useful methods and you should aim to take advantage of them by 
+using them. Rewriting existing behavior is less flexible, redundant, and by 
+writing more lines of code you raise the risk of encountering more bugs.</p>
+<p>This includes repeated code in the methods you write. If you have the exact 
+same block of code, three or more lines long, repeated in a method or multiple 
+methods, factor it out into a separate method. This includes constructors with 
+repeated code.</p>
+<h3 id="reuse-existing-code-and-methods0">8.6 Prefer code that can scale as the 
+problem changes or grows.</h3>
+<p><strong>Example: </strong>Assume we want to add up the lengths of four 
+consecutive Strings in an array of Strings given a starting index.</p>
+<dl>
+	<dt>Bad</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><strong>// data is an array of Strings.
+// We know no elements of data are null
+// We know index is inbounds and that the next three indices are also in bounds.
+int sum = data[index].length() + data[index + 1].length() + data[index + 2].length + data[index + 3].length();</strong></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<dl>
+	<dt>Good</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><strong>int sum = 0;
+final int LAST_INDEX = index + 3; // 3 can be changed to scale the problem.
+for (int i = index; i &lt;= LAST_INDEX; i++) {
+    sum += data[i].length();
+}    </strong> </pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<h3 id="reuse-existing-code-and-methods1">8.7 Stop computing when the answer is 
+known.</h3>
+<p>When looking for an answer or solution, stop computing when that answer is 
+known.</p>
+<p><strong>Example: </strong>Determine if an array of ints contains a target 
+value a given number of times <strong>or more. </strong></p>
+<dl>
+	<dt>Bad</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><strong>public static boolean containsAtLeast(int[] data, int tgt, int minNum) {
+    // Always looks at every element in the array.
+    int count = 0;
+    for (int element : data) {
+        if (element == tgt) {
+            count++;
+        }
+    }
+    return count &gt;= minNum;
+</strong>}</pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<dl>
+	<dt>Good</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><strong>public static boolean containsAtLeast(int[] data, int tgt, int minNum) {
+    // If we find the minimum number required, stop looking. We have our answer.
+    int count = 0;
+    for (int element : data) {
+        if (element == tgt) {
+            count++;
+            if (count == minNum) {
+                return true;
+            }
+        }
+    }
+    // Did not find minNum occurrences of tgt.
+    return false; 
+}</strong></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<h3 id="reuse-existing-code-and-methods2">8.8 Implement compareTo and compare 
+simply if possible</h3>
+<p>When implementing the Comparable interface we must implement the method 
+compareTo. compareTo returns an int. The return value shall be &lt; 0 if the 
+calling object (this) is "less than" the explicit parameter, = 0 if the objects 
+are "equal", and an int &gt; 0 if the calling object is greater than the explicit 
+parameter. While some implementations of compareTo return -1, 0, or 1 <strong>
+this is not required and can lead to unnecessarily verbose code.</strong></p>
+<p><strong>Example: </strong>We have Person class. Each person has a height in 
+inches. The Person class implements the Comparable interface and we want to 
+order Person objects based on the field that represents the persons height.</p>
+<p><strong><code>public class Person implements Comparable&lt;Person&gt; {<br>
+<br>
+&nbsp;&nbsp;&nbsp; private int heightInInches;<br>
+<br>
+&nbsp;&nbsp;&nbsp; // other fields not shown</code></strong></p>
+<dl>
+	<dt>Bad</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><strong>public int compareTo(Person other) {
+    if (<code>heightInInches &lt; other.heightInInches) {
+        return -1;
+    } else if (eightInInches == other.heightInInches) {
+        return 0;
+    } else {
+        return 1;
+    }
+}</code></strong></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<dl>
+	<dt>Good</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><strong>public int compareTo(Person other) {
+    return <code>heightInInches - other.heightInInches;
+}</code></strong></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+
+
+
+<h2 id="boolean-zen">9 Zen</h2>
+<h3>9.1 Boolean Zen</h3>
+<p>Boolean Zen is all about using boolean values efficiently and concisely.</p>
+<p>The following code shows a tempting way to write an if statement based on 
+boolean value.</p>
+<dl>
+	<dt>Bad</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>test</strong></span> <span class="o"><strong>==</strong></span> <span class="kc"><strong>true</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="c1"><strong>// do some work</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<p>Note that <code class="language-plaintext highlighter-rouge"><strong>test</strong></code> 
+itself is a <code class="language-plaintext highlighter-rouge"><strong>boolean</strong></code> 
+value. When it is <code class="language-plaintext highlighter-rouge"><strong>
+true</strong></code>, we are asking whether
+<code class="language-plaintext highlighter-rouge"><strong>true == true</strong></code>.
+<code class="language-plaintext highlighter-rouge"><strong>true == true</strong></code> 
+will evaluate to <code class="language-plaintext highlighter-rouge"><strong>true</strong></code>, 
+but remember that the<strong> </strong>
+<code class="language-plaintext highlighter-rouge"><strong>if</strong></code> 
+branch will execute as long as what is in its parentheses evaluates to true. So 
+we can actually use <code class="language-plaintext highlighter-rouge"><strong>
+test</strong></code> directly:</p>
+<dl>
+	<dt>Good</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>test</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="c1"><strong>// do some work</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span><strong>
+</strong></code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Note</dt>
+	<dd>To check for the opposite of
+	<code class="language-plaintext highlighter-rouge"><strong>test</strong></code>, 
+	don’t check for<strong> </strong>
+	<code class="language-plaintext highlighter-rouge"><strong>test == false</strong></code>. 
+	Instead, use <code class="language-plaintext highlighter-rouge"><strong>
+	!test</strong></code> to check that the opposite of
+	<code class="language-plaintext highlighter-rouge"><strong>test</strong></code> 
+	evaluates to <code class="language-plaintext highlighter-rouge"><strong>true</strong></code>.</dd>
+</dl>
+<p>Here’s an example that uses what we learned in the previous section about 
+simplifying boolean expressions.</p>
+<dl>
+	<dt>Bad</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>test</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>return</strong></span> <span class="kc"><strong>true</strong></span><span class="o"><strong>;</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span> <span class="k"><strong>else</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>return</strong></span> <span class="kc"><strong>false</strong></span><span class="o"><strong>;</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<p>There is actually a much more concise way to do this. If we want to return 
+true when test is true and false when test is false, then we actually just want 
+to return the value of <code class="language-plaintext highlighter-rouge">
+<strong>test</strong></code>.</p>
+<dl>
+	<dt>Good</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>return</strong></span> <span class="n"><strong>test</strong></span><span class="o">;</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<p>In general, make your use of booleans to simplify conditional and boolean 
+expressions. This is something to look out for whenever you have conditions or 
+boolean values.</p>
+<dl>
+	<dt>Bad</dt>
+	<dd>Because this code always wants to do one or the other, (and doesn’t 
+	involve a return or exception) we want to express this code more simply as 
+	an if/else.<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>someTest</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"hello!"</strong></span><span class="o"><strong>);</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="k"><strong>if</strong></span> <span class="o"><strong>(!</strong></span><span class="n"><strong>someTest</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"I'm redundant"</strong></span><span class="o"><strong>);</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Bad</dt>
+	<dd>Note that the behavior inside this if block is exactly the same behavior 
+	as in the other if block. Instead of rewriting the same code twice, we can 
+	combine the two if conditions with
+	<code class="language-plaintext highlighter-rouge">||</code> and just write 
+	the behavior once.<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>max</strong></span> <span class="o"><strong>&lt;</strong></span> <span class="n"><strong>result</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>return</strong></span> <span class="n"><strong>max</strong></span><span class="o"><strong>;</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>max</strong></span> <span class="o"><strong>==</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>return</strong></span> <span class="n"><strong>max</strong></span><span class="o"><strong>;</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Bad</dt>
+	<dd>It doesn’t matter if you think of conditions/cases or their negated 
+	versions, but after revising your code don’t include empty condition blocks 
+	with no line of code inside. Instead, just flip the condition to have if 
+	(max &gt;= 0), and no else.<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>max</strong></span> <span class="o"><strong>&lt;</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="c1"><strong>// do nothing</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span> <span class="k"><strong>else</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="o"><strong>...</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<p>Don't use if / else statements or ternary operators to&nbsp; to assign 
+boolean values the result of a boolean expression.</p>
+<dl>
+	<dt>Bad</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>boolean meetsReq;
+if</strong></span> <span class="o"><strong>(score &gt; = MIN_SCORE)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    meetsReq = true;
+</strong><span class="o"><strong>} else {</strong></span><strong>
+    meetsReq = false;
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Still Bad</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>boolean meetsReq = false;
+if</strong></span> <span class="o"><strong>(score &gt; = MIN_SCORE)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    meetsReq = true;
+</strong><span class="o"><strong>}</strong></span></code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<h3 id="loop-zen">&nbsp;</h3>
+<dl>
+	<dt>Good</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><span class="k"><code><strong>boolean meetsReq = score &gt;= <span class="o">MIN_SCORE</span>;</strong></code></span></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<h3>9.2 Loop Zen</h3>
+<h4 id="loop-bounds">9.2.1 Loop Bounds</h4>
+<p>When writing loops, choose loop bounds or loop conditions that help 
+generalize code the best. For example, the code before this
+<code class="language-plaintext highlighter-rouge"><strong>for</strong></code> 
+loop is unnecessary.</p>
+<dl>
+	<dt>Bad</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>print</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"\*"</strong></span><span class="o"><strong>);</strong></span><strong>
+</strong><span class="k"><strong>for</strong></span> <span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>=</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>&lt;</strong></span> <span class="mi"><strong>4</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span><span class="o"><strong>++)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>print</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"\*"</strong></span><span class="o"><strong>);</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span><strong>
+</strong></code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<p>Instead, why not just run the loop one extra time? This way we avoid writing 
+duplicate behavior.</p>
+<dl>
+	<dt>Good</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>for</strong></span> <span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>=</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>&lt;</strong></span> <span class="mi"><strong>5</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span><span class="o"><strong>++)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>print</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"\*"</strong></span><span class="o"><strong>);</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<h4 id="only-repeated-tasks">9.2.2 Only Repeated Tasks</h4>
+<p>If you have something that only happens once (maybe at the end of a bunch of 
+repeated tasks), then don’t put code for it inside of your loop.</p>
+<dl>
+	<dt>Bad</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>for</strong></span> <span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>=</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>&lt;</strong></span> <span class="mi"><strong>4</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span><span class="o"><strong>++)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>i</strong></span> <span class="o"><strong>!=</strong></span> <span class="mi"><strong>3</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"working hard!"</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span> <span class="k"><strong>else</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"hardly working!"</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Good</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="k"><strong>for</strong></span> <span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>=</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span> <span class="o"><strong>&lt;</strong></span> <span class="mi"><strong>3</strong></span><span class="o"><strong>;</strong></span> <span class="n"><strong>i</strong></span><span class="o"><strong>++)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"working hard!"</strong></span><span class="o"><strong>);</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="nc"><strong>System</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>out</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>println</strong></span><span class="o"><strong>(</strong></span><span class="s"><strong>"hardly working!"</strong></span><span class="o"><strong>);</strong></span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+<p>Similarly, a loop that <strong>always</strong> runs one time is also a bad use of a loop. When 
+reviewing the logic of your code, it might be helpful to check if a loop can be 
+reduced to an if or just deleting the loop entirely.</p>
+<h3 id="recursion-zen">9.3 Recursion Zen</h3>
+<p><strong>Avoid adding extra if/else cases to recursive methods when there are 
+more generalized conditions to use.</strong></p>
+<dl>
+	<dt>Bad</dt>
+	<dd>This private method is an example of <strong>arm’s length recursion</strong>: 
+	it has an extra base case for
+	<code class="language-plaintext highlighter-rouge">index == list.length - 1</code>. 
+	If we omit this and just use the first base case, the behavior will actually 
+	still generalize and be correct, but our code will be more concise and 
+	easier to reason about.<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="kd"><strong>private</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>int</strong></span> <span class="nf"><strong>sum</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span><span class="o"><strong>[]</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>,</strong></span> <span class="kt"><strong>int</strong></span> <span class="n"><strong>index</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>index</strong></span> <span class="o"><strong>==</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>length</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>return</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>;</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span> <span class="k"><strong>else</strong></span> <span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>index</strong></span> <span class="o"><strong>==</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>length</strong></span> <span class="o"><strong>-</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>return</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>[</strong></span><span class="n"><strong>index</strong></span><span class="o"><strong>];</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span> <span class="k"><strong>else</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>return</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>[</strong></span><span class="n"><strong>index</strong></span><span class="o"><strong>]</strong></span> <span class="o"><strong>+</strong></span> <span class="n"><strong>sum</strong></span><span class="o"><strong>(</strong></span><span class="n"><strong>list</strong></span><span class="o"><strong>,</strong></span> <span class="n"><strong>index</strong></span> <span class="o"><strong>+</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Good</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="kd"><strong>private</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>int</strong></span> <span class="nf"><strong>sum</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span><span class="o"><strong>[]</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>,</strong></span> <span class="kt"><strong>int</strong></span> <span class="n"><strong>index</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>index</strong></span> <span class="o"><strong>==</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>length</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>return</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>;</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span> <span class="k"><strong>else</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>return</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>[</strong></span><span class="n"><strong>index</strong></span><span class="o"><strong>]</strong></span> <span class="o"><strong>+</strong></span> <span class="n"><strong>sum</strong></span><span class="o"><strong>(</strong></span><span class="n"><strong>list</strong></span><span class="o"><strong>,</strong></span> <span class="n"><strong>index</strong></span> <span class="o"><strong>+</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Bad</dt>
+	<dd>This example also exhibits arm’s length recursion since the code in the 
+	public method would be more appropriate to handle in the private helper 
+	method.<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>int</strong></span> <span class="nf"><strong>sum</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span><span class="o"><strong>[]</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>list</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>length</strong></span> <span class="o"><strong>&lt;</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>return</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>;</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span> <span class="k"><strong>else</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>return</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>[</strong></span><span class="mi"><strong>0</strong></span><span class="o"><strong>]</strong></span> <span class="o"><strong>+</strong></span> <span class="n"><strong>sum</strong></span><span class="o"><strong>(</strong></span><span class="n"><strong>list</strong></span><span class="o"><strong>,</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span><strong>
+
+</strong><span class="kd"><strong>private</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>int</strong></span> <span class="nf"><strong>sum</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span><span class="o"><strong>[]</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>,</strong></span> <span class="kt"><strong>int</strong></span> <span class="n"><strong>index</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>index</strong></span> <span class="o"><strong>==</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>length</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>return</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>;</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span> <span class="k"><strong>else</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>return</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>[</strong></span><span class="n"><strong>index</strong></span><span class="o"><strong>]</strong></span> <span class="o"><strong>+</strong></span> <span class="n"><strong>sum</strong></span><span class="o"><strong>(</strong></span><span class="n"><strong>list</strong></span><span class="o"><strong>,</strong></span> <span class="n"><strong>index</strong></span> <span class="o"><strong>+</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Good</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><span class="kd"><strong>public</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>int</strong></span> <span class="nf"><strong>sum</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span><span class="o"><strong>[]</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>return</strong></span> <span class="nf"><strong>sum</strong></span><span class="o"><strong>(</strong></span><span class="n"><strong>list</strong></span><span class="o"><strong>,</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>);</strong></span><strong>
+</strong><span class="o"><strong>}</strong></span><strong>
+
+</strong><span class="kd"><strong>private</strong></span> <span class="kd"><strong>static</strong></span> <span class="kt"><strong>int</strong></span> <span class="nf"><strong>sum</strong></span><span class="o"><strong>(</strong></span><span class="kt"><strong>int</strong></span><span class="o"><strong>[]</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>,</strong></span> <span class="kt"><strong>int</strong></span> <span class="n"><strong>index</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+    </strong><span class="k"><strong>if</strong></span> <span class="o"><strong>(</strong></span><span class="n"><strong>index</strong></span> <span class="o"><strong>==</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>.</strong></span><span class="na"><strong>length</strong></span><span class="o"><strong>)</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>return</strong></span> <span class="mi"><strong>0</strong></span><span class="o"><strong>;</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span> <span class="k"><strong>else</strong></span> <span class="o"><strong>{</strong></span><strong>
+        </strong><span class="k"><strong>return</strong></span> <span class="n"><strong>list</strong></span><span class="o"><strong>[</strong></span><span class="n"><strong>index</strong></span><span class="o"><strong>]</strong></span> <span class="o"><strong>+</strong></span> <span class="n"><strong>sum</strong></span><span class="o"><strong>(</strong></span><span class="n"><strong>list</strong></span><span class="o"><strong>,</strong></span> <span class="n"><strong>index</strong></span> <span class="o"><strong>+</strong></span> <span class="mi"><strong>1</strong></span><span class="o"><strong>);</strong></span><strong>
+    </strong><span class="o"><strong>}</strong></span><strong>
+</strong><span class="o">}</span>
+</code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+
+
+
+<h2 id="boolean-zen">10. Disallowed features</h2>
+<p>We have very specific goals in 314 concerning what we want to learn and evaluate 
+you on. Therefore, some Java features are disallowed. </p>
+<p>In general if a programming assignment specification does not disallow a 
+feature, method, or class from the Java standard library and it isn't listed 
+here, you <strong>may use it. If you are unsure post to the class discussion 
+group for clarification.</strong></p>
+<h3><strong>10.1 Avoid the use of break and continue, especially on assignments</strong></h3>
+<p>The keywords break and continue can be used to write cleaner code, but the 
+vast, vast majority of beginning programmers misuse them to create code that is 
+more difficult to understand without improving readability or efficiency. Instead of having all the exit conditions at the 
+top of a loop the break and continue keywords are used to scatter the exit 
+conditions throughout the code, making it harder to understand.</p>
+<p>Therefore break and continue shall not be used on programming assignments in 
+314. After CS314, go nuts! Use them all you want.</p>
+<p>You <strong>may</strong> return from inside of loops if it leads to cleaner and more logical 
+code, but avoid returns buried deep inside loops.</p>
+<h3><strong>10.2 </strong>Do not return from void method</h3>
+<p>Do not use the return statement to exit early from a void method,</p>
+<h3><strong>10.3 </strong>Do not use Java 8+ functional features.</h3>
+<p>Those features are for another course, not the current version of CS314. We 
+will discuss them near the end of the course if time allows.</p>
+<p>Do not use the Java 8 functional features such as lambdas, streams, and 
+method references.</p>
+<h3><strong>10.4 </strong>Do not use Java 11+ local variable type inference</h3>
+<p>Do not use the var keyword or&nbsp; local variable type inference.</p>
+<h3><strong>10.5 Do not use try / catch blocks to deal with avoidable logic 
+errors.</strong></h3>
+<p>try / catch blocks are meant for exceptional situations that cannot be 
+handled with standard control structures. For example, if we are reading from a 
+data source (file) on a remote computer and that data source is deleted while 
+our program is running, we cannot avoid that with standard control logic. Thus 
+the use of a try catch block for an exceptional situation outside of our 
+control.</p>
+<p>Compare that to looping through an array. Some programmers misuse try / catch 
+blocks instead of standard control structures. This makes the code confusing as 
+we expect try catch blocks to be used for those exceptional circumstances.</p>
+<p><strong>Example. </strong>Given an array of ints add up the first 10 elements 
+of the array or all the elements of the array if the length of the array is less 
+than 10.</p>
+<dl>
+	<dt>Bad</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><strong>int sum = 0;
+try {
+    for (int i = 0; i &lt; 10; i++) {
+        sum += data[i];
+    }
+} catch (ArrayIndexOutOfBoundsException aiobe) {
+    // oh well, less than 10 elements, nothing to see here, move along
+}
+</strong></code></pre>
+		</div>
+	</div>
+	</dd>
+	<dt>Good</dt>
+	<dd>
+	<div class="language-java highlighter-rouge">
+		<div class="highlight">
+			<pre class="highlight"><code><strong>int sum = 0;
+int i = 0;
+int LIMIT = 10;
+while (i &lt; data.length &amp;&amp; i &lt; LIMIT) {
+    sum += data[i];
+    i++;
+}</strong></code></pre>
+		</div>
+	</div>
+	</dd>
+</dl>
+
+
+
+
+
