@@ -13,13 +13,14 @@
 import java.util.Iterator;
 
 /**
- * Students are to complete this class. 
+ * Students are to complete this class.
  * Students should implement as many methods as they can using the Iterator
  * from the iterator method and the other methods.
  */
 public abstract class AbstractSet<E> implements ISet<E> {
 
-    /* DELETE THIS COMMENT FROM YOUR SUBMISSION.
+    /*
+     * DELETE THIS COMMENT FROM YOUR SUBMISSION.
      *
      * RECALL:
      *
@@ -34,27 +35,61 @@ public abstract class AbstractSet<E> implements ISet<E> {
      * NO METHODS ADDED other than those in ISet and Object.
      */
 
-
     /**
-     * Return a String version of this set. 
-     * Format is (e1, e2, ... en)
-     * @return A String version of this set.
+     * A union operation. Add all items of otherSet that
+     * are not already present in this set to this set.
+     * 
+     * @param otherSet != null
+     * @return true if this set changed as a result of this operation,
+     *         false otherwise.
      */
-
     public boolean addAll(ISet<E> otherSet) {
-        
+
         // Precondition
         if (otherSet == null) {
             throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
         }
 
-        for (E item : otherSet) {
-            
+        boolean changed = false;
+        Iterator<E> it = this.iterator();
+
+        while (it.hasNext()) {
+            changed = changed || add(it.next());
         }
+
+        return changed;
     }
 
-    public 
+    /**
+     * Determine if all of the elements of otherSet are in this set.
+     *  
+     * @param otherSet != null
+     * @return true if this set contains all of the elements in otherSet,
+     *         false otherwise.
+     */
+    public boolean containsAll(ISet<E> otherSet) {
 
+        // Precondition
+        if (otherSet == null) {
+            throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
+        }
+
+        boolean same = true;
+        Iterator<E> it = this.iterator();
+
+        while (it.hasNext()) {
+            same = same && contains(it.next());
+        }
+
+        return same;
+    }
+
+    /**
+     * Return a String version of this set.
+     * Format is (e1, e2, ... en)
+     * 
+     * @return A String version of this set.
+     */
     public String toString() {
         StringBuilder result = new StringBuilder();
         String seperator = ", ";

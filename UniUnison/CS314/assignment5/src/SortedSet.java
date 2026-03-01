@@ -29,7 +29,7 @@ import java.util.ArrayList;
  * if that method can be done more efficiently if the other set is also a
  * SortedSet, then do so.
  */
-public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
+public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> implements {
 
     private ArrayList<E> myCon;
 
@@ -66,31 +66,26 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         return null;
     }
 
-    @Override
     public boolean add(E item) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'add'");
     }
 
-    @Override
     public void clear() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'clear'");
     }
 
-    @Override
     public boolean contains(E item) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'contains'");
     }
 
-    @Override
     public boolean containsAll(ISet<E> otherSet) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'containsAll'");
     }
 
-    @Override
     public ISet<E> difference(ISet<E> otherSet) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'difference'");
@@ -104,8 +99,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     @Override
     public Iterator<E> iterator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+        return new SortedSetIterator();
     }
 
     @Override
@@ -126,9 +120,19 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         throw new UnsupportedOperationException("Unimplemented method 'union'");
     }
 
-    private class SortedSetIterator implements {
+    private class SortedSetIterator implements Iterator<E> {
         
         private int currIndex;
+
+        public boolean hasNext() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'hasNext'");
+        }
+
+        public E next() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'next'");
+        }
 
     }
 }
