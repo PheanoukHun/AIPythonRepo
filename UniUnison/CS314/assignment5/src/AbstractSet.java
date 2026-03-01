@@ -5,13 +5,9 @@
  * own work. I/we have neither given nor received unauthorized assistance on
  * this assignment.
  *
- * Name 1:
- * Email address 1:
- * UTEID 1:
- *
- * Name 2:
- * Email address 2:
- * UTEID 2:
+ * Name 1: Pheanouk Hun
+ * Email address 1: ph23434@eid.utexas.edu
+ * UTEID 1: ph23434
  */
 
 import java.util.Iterator;
@@ -44,6 +40,21 @@ public abstract class AbstractSet<E> implements ISet<E> {
      * Format is (e1, e2, ... en)
      * @return A String version of this set.
      */
+
+    public boolean addAll(ISet<E> otherSet) {
+        
+        // Precondition
+        if (otherSet == null) {
+            throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
+        }
+
+        for (E item : otherSet) {
+            
+        }
+    }
+
+    public 
+
     public String toString() {
         StringBuilder result = new StringBuilder();
         String seperator = ", ";

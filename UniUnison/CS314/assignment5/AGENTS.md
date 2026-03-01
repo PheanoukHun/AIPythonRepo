@@ -163,3 +163,81 @@ The following constraints are enforced by the assignment:
 - Verify `equals()` is properly overridden (symmetric, transitive)
 - Test that collections are not mutated by operations
 - Verify iterator behavior matches collection state
+
+## CS314 Code Hygiene Guidelines
+
+These guidelines are enforced in CS314 for maintaining clean, understandable code.
+
+### Magic Numbers
+
+Constants should replace literal integers, except for `-1`, `0`, `1`, and `2`.
+
+**Bad Example:**
+```java
+int count = 0;
+for (String s : data) {
+    if (s.length() >= 5) {  // Magic number
+        count++;
+    }
+}
+```
+
+**Good Example:**
+```java
+final int MIN_LENGTH = 5;
+int count = 0;
+for (String s : data) {
+    if (s.length() >= MIN_LENGTH) {
+        count++;
+    }
+}
+```
+
+### Method Length
+
+Keep methods under 25 lines of code. Methods exceeding this likely encapsulate too much logic or contain redundant code.
+
+### Variable Scope
+
+Declare variables as close to their usage point as possible to reduce cognitive load and improve readability.
+
+### Source File Structure
+
+- **Package Statements**: Avoid including package statements in submitted code
+- **Import Statements**: Import classes separately (no wildcards like `java.util.*`)
+
+### Ordering of Class Components
+
+Group constants above instance variables, followed by constructors and methods organized logically.
+
+### Formatting Rules
+
+1. No line shall exceed 100 characters in length
+2. Enclose all blocks with curly braces for clarity
+3. Use 4 spaces for indentation
+4. Maintain consistent spacing around operators and after commas
+
+### Commenting Guidelines
+
+1. **Comment Judiciously**: Comment to explain the "why" behind complex logic rather than repeating what the code does
+2. **Avoid Implementation Details**: Comments should describe methods' behavior without delving into implementation specifics
+3. **Write for Clients**: Clearly document parameters, return values, and exceptions
+
+### Class Design
+
+- **Fields**: Private by default; initialize in constructors rather than at declaration
+- **Class Constants**: Use `final` keyword to indicate they shouldn't change
+
+### Efficiency and Redundancy
+
+- Avoid unnecessary object creation and recomputation of values
+- Factor out repeated or complex logic into helper methods
+
+### Disallowed Features
+
+The following are discouraged in CS314:
+- Excessive use of `break` or `continue`
+- Returning from void methods
+- Java 8+ functional features (lambdas, streams, method references)
+- Local variable type inference with `var`
+- try/catch for avoidable errors

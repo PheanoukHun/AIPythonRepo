@@ -73,12 +73,6 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     }
 
     @Override
-    public boolean addAll(ISet<E> otherSet) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addAll'");
-    }
-
-    @Override
     public void clear() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'clear'");
@@ -132,4 +126,9 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         throw new UnsupportedOperationException("Unimplemented method 'union'");
     }
 
+    private class SortedSetIterator implements {
+        
+        private int currIndex;
+
+    }
 }
