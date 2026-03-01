@@ -104,10 +104,12 @@ public abstract class AbstractSet<E> implements ISet<E> {
         if (this == other) {
             return true;
         }
+        
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
 
         
-
-
     }
 
     /**
