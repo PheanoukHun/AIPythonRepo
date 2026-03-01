@@ -29,9 +29,10 @@ import java.util.ArrayList;
  * if that method can be done more efficiently if the other set is also a
  * SortedSet, then do so.
  */
-public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> implements {
+public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     private ArrayList<E> myCon;
+    private final int DEFAULT_CONTAINER_SIZE = 10;
 
     /**
      * create an empty SortedSet
@@ -73,7 +74,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> i
 
     public void clear() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clear'");
+        this.myCon = new ArrayList<E>(10);
     }
 
     public boolean contains(E item) {

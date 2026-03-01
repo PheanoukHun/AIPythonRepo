@@ -19,22 +19,6 @@ import java.util.Iterator;
  */
 public abstract class AbstractSet<E> implements ISet<E> {
 
-    /*
-     * DELETE THIS COMMENT FROM YOUR SUBMISSION.
-     *
-     * RECALL:
-     *
-     * NO INSTANCE VARIABLES ALLOWED.
-     *
-     * NO DIRECT REFERENCE TO UnsortedSet OR SortedSet ALLOWED.
-     * (In other words the data types UnsortedSet and SortedSet
-     * will not appear anywhere in this class.)
-     *
-     * NO DIRECT REFERENCES to ArrayList or other Java Collections.
-     *
-     * NO METHODS ADDED other than those in ISet and Object.
-     */
-
     /**
      * A union operation. Add all items of otherSet that
      * are not already present in this set to this set.
@@ -58,6 +42,29 @@ public abstract class AbstractSet<E> implements ISet<E> {
         }
 
         return changed;
+    }
+
+    /**
+     * Determine if item is in this set.
+     * @param item element whose presence is being tested. item != null
+     * Item may not equal null.
+     * @return true if this set contains the specified item, false otherwise.
+     */
+    public boolean contains(E item) {
+        
+        //Precondition
+        if (item == null) {
+            throw new IllegalArgumentException("The Parameter cannot be Null.");
+        }
+
+        Iterator<E> it = this.iterator();
+        while (it.hasNext()) {
+            if (item.equals(it.next())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
