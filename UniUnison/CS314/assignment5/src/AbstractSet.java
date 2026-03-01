@@ -92,6 +92,25 @@ public abstract class AbstractSet<E> implements ISet<E> {
     }
 
     /**
+     * Determine if this set is equal to other.
+     * Two sets are equal if they have exactly the same elements.
+     * The order of the elements does not matter.
+     * <br>pre: none
+     * @param other the object to compare to this set
+     * @return true if other is a Set and has the same elements as this set
+     */
+    public boolean equals(Object other) {
+        
+        if (this == other) {
+            return true;
+        }
+
+        
+
+
+    }
+
+    /**
      * Return a String version of this set.
      * Format is (e1, e2, ... en)
      * 

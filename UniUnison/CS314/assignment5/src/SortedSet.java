@@ -5,13 +5,9 @@
  * own work. I/we have neither given nor received unauthorized assistance on
  * this assignment.
  *
- * Name 1:
- * Email address 1:
- * UTEID 1:
- *
- * Name 2:
- * Email address 2:
- * UTEID 2:
+ * Name 1: Pheanouk Hun
+ * Email address 1: ph23434@eid.utexas.edu
+ * UTEID 1: ph23434
  */
 
 import java.util.Iterator;
@@ -32,13 +28,12 @@ import java.util.ArrayList;
 public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     private ArrayList<E> myCon;
-    private final int DEFAULT_CONTAINER_SIZE = 10;
 
     /**
      * create an empty SortedSet
      */
     public SortedSet() {
-
+        this.myCon = new ArrayList<E>();
     }
 
     /**
@@ -46,7 +41,16 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * @param other != null
      */
     public SortedSet(ISet<E> other) {
+        
+        // Precondition
+        if (other == null) {
+            throw new IllegalArgumentException("The Parameter Cannot Equal Null");
+        }
 
+        this();
+        for (E item : other) {
+            this.add(item);
+        }
     }
 
     /**
@@ -74,7 +78,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     public void clear() {
         // TODO Auto-generated method stub
-        this.myCon = new ArrayList<E>(10);
+        this.myCon = new ArrayList<E>();
     }
 
     public boolean contains(E item) {
@@ -111,8 +115,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return this.myCon.size();
     }
 
     @Override
