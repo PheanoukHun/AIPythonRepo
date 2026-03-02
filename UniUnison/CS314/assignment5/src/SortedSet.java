@@ -106,10 +106,40 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         return false;
     }
 
+    /**
+     * Make this set empty.
+     */
     public void clear() {
         this.myCon = new ArrayList<E>();
     }
 
+    /**
+     * Create a new set that is the difference of this set and otherSet.
+     * Return an ISet of elements that are in this Set but not in otherSet.
+     * Also called the relative complement.
+     * <br>Example: If ISet A contains [X, Y, Z] and ISet B contains [W, Z]
+     * then A.difference(B) would return an ISet with elements [X, Y] while
+     * B.difference(A) would return an ISet with elements [W].
+     * <br>pre: otherSet != null
+     * <br>post: returns a set that is the difference of this set and otherSet.
+     * Neither this set or otherSet are altered as a result of this operation.
+     * <br> pre: otherSet != null
+     * @param otherSet != null
+     * @return a set that is the difference of this set and otherSet
+     */
+    public ISet<E> difference(ISet<E> otherSet) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'difference'");
+    }
+
+    /**
+     * Determine if this set is equal to other.
+     * Two sets are equal if they have exactly the same elements.
+     * The order of the elements does not matter.
+     * pre: none
+     * @param other the object to compare to this set
+     * @return true if other is a Set and has the same elements as this set
+     */
     public boolean equals(Object other) {
 
         boolean equalLen = super.equals(other);
@@ -128,10 +158,6 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         return equalLen;
     }
 
-    public ISet<E> difference(ISet<E> otherSet) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'difference'");
-    }
 
     @Override
     public ISet<E> intersection(ISet<E> otherSet) {
@@ -144,9 +170,19 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         return new SortedSetIterator();
     }
 
-    @Override
     public boolean remove(E item) {
-        myCon.remove(item)
+
+        // Precondition
+        if (item == null) {
+            throw new IllegalArgumentException("The Item Parameter cannot be null.");
+        }
+
+        if (this.contains(item)) {
+            myCon.remove(item);
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -154,10 +190,28 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         return this.myCon.size();
     }
 
-    @Override
+    /**
+     * Create a new set that is the union of this set and otherSet. Neither this set
+     * or otherSet are altered as a result of this operation.
+     * 
+     * @param otherSet != null
+     * @return - returns a set that is the union of this set and otherSet.
+     */
     public ISet<E> union(ISet<E> otherSet) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'union'");
+
+        ISet<E> result = new SortedSet<E>();
+
+        Iterator<E> thisIt = this.iterator();
+        while (thisIt.hasNext()) {
+            result.add(thisIt.next());
+        }
+
+        Iterator<E> otherIt = otherSet.iterator();
+        while (otherIt.hasNext()) {
+            result.add(otherIt.next());
+        }
+
+        return result;
     }
 
     private class SortedSetIterator implements Iterator<E> {
