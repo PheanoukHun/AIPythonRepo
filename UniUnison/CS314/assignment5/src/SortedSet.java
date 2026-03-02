@@ -129,7 +129,13 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         int end = size();
 
         while (start != end) {
-            if ()
+            if (item.compareTo(myCon.get(start)) == 0) {
+                start = start
+            } else if (item.compareTo(myCon.get(start)) < 0) {
+                
+            } else {
+                return true;
+            }
         }
 
         return false;
