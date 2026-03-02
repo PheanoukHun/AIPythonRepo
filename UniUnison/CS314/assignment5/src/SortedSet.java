@@ -153,7 +153,17 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("The Parameter Cannot Equal Null");
         }
 
+        ISet<E> diffSet = new SortedSet<>();
         
+        Iterator<E> it = this.iterator();
+        while (it.hasNext()) {
+            E currVal = it.next();
+            if (!otherSet.contains(currVal)) {
+                diffSet.add(currVal);
+            }
+        }
+
+        return diffSet;
     }
 
     /**
