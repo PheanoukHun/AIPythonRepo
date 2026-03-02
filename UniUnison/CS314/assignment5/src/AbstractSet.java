@@ -34,10 +34,14 @@ public abstract class AbstractSet<E> implements ISet<E> {
             throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
         }
 
-        int startSize = this.size
+        int startSize = this.size();
 
-        this.union(otherSet);
-        return ;
+        Iterator<E> it = this.iterator();
+        while (it.hasNext()) {
+            changed = changed || add(it.next());
+        }
+
+        return startSize == this.size();
     }
 
     /**

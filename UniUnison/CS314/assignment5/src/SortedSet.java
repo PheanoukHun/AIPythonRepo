@@ -136,27 +136,24 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     }
 
     /**
-     * Create a new set that is the difference of this set and otherSet.
-     * Return an ISet of elements that are in this Set but not in otherSet.
-     * Also called the relative complement.
-     * <br>
-     * Example: If ISet A contains [X, Y, Z] and ISet B contains [W, Z]
-     * then A.difference(B) would return an ISet with elements [X, Y] while
-     * B.difference(A) would return an ISet with elements [W].
-     * <br>
-     * pre: otherSet != null
-     * <br>
-     * post: returns a set that is the difference of this set and otherSet.
-     * Neither this set or otherSet are altered as a result of this operation.
-     * <br>
-     * pre: otherSet != null
+     * Create a new set that is the difference of this set and otherSet. Return an
+     * ISet of elements that are in this Set but not in otherSet. Also called the
+     * relative complement. Example: If ISet A contains [X, Y, Z] and ISet B
+     * contains [W, Z]then A.difference(B) would return an ISet with elements [X, Y]
+     * while B.difference(A) would return an ISet with elements [W]. Neither this
+     * set or otherSet are altered as a result of this operation.
      * 
      * @param otherSet != null
      * @return a set that is the difference of this set and otherSet
      */
     public ISet<E> difference(ISet<E> otherSet) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'difference'");
+        
+        // Precondition
+        if (otherSet == null) {
+            throw new IllegalArgumentException("The Parameter Cannot Equal Null");
+        }
+
+        
     }
 
     /**
@@ -186,13 +183,33 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         return equalLen;
     }
 
-    @Override
+    /**
+     * create a new set that is the intersection of this set and otherSet.
+     * Neither this set or otherSet are altered as a result of this operation.
+     * 
+     * @param otherSet != null
+     * @return a set that is the intersection of this set and otherSet
+     */
     public ISet<E> intersection(ISet<E> otherSet) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'intersection'");
+
+        SortedSet<E> result = new SortedSet<>();
+        Iterator<E> it = this.iterator();
+
+        while (it.hasNext()) {
+            E currVal = it.next();
+            if (otherSet.contains(currVal)) {
+                result.add(currVal);
+            }
+        }
+
+        return result;
     }
 
-    @Override
+    /**
+     * Return an Iterator object for the elements of this set.
+     * 
+     * @return an Iterator object for the elements of this set
+     */
     public Iterator<E> iterator() {
         return new SortedSetIterator();
     }
@@ -267,13 +284,13 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             if (this.myCon.get(mid).equals(val)) {
                 return mid;
             } else if (this.myCon.get(mid).compareTo(val) < 0) {
-                start  = mid + 1;
+                start = mid + 1;
             } else {
                 end = mid + 1;
             }
         }
 
-        return  -1;
+        return -1;
     }
 
     private class SortedSetIterator implements Iterator<E> {
