@@ -32,7 +32,13 @@ public class UnsortedSet<E> extends AbstractSet<E> {
     @Override
     public boolean add(E item) {
         
+        // Precondition
+        if (item == null) {
+            throw new IllegalArgumentException("The Item Parameter cannot be null.");
+        }
+
         if (this.contains(item)) {
+            return false;
         }
         
         myCon.add(item);
@@ -42,12 +48,6 @@ public class UnsortedSet<E> extends AbstractSet<E> {
     @Override
     public void clear() {
         myCon = new ArrayList<>();
-    }
-
-    @Override
-    public boolean containsAll(ISet<E> otherSet) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'containsAll'");
     }
 
     @Override

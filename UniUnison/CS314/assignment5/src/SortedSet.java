@@ -76,9 +76,34 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         return null;
     }
 
+    /**
+     * Add an item to this set.
+     * item != null
+     * 
+     * @param item the item to be added to this set. item may not equal null.
+     * @return true if this set changed as a result of this operation,
+     *         false otherwise.
+     */
     public boolean add(E item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
+
+        // Precondition
+        if (item == null) {
+            throw new IllegalArgumentException("The Item Parameter cannot be null.");
+        }
+
+        if (this.contains(item)) {
+            return false;
+        }
+
+        for (int i = 0; i < this.size(); i++) {
+            if (item.compareTo(myCon.get(i)) < 0) {
+                myCon.add(i, item);
+                return true;
+            }
+        }
+
+        myCon.add(item);
+        return false;
     }
 
     public void clear() {
@@ -88,7 +113,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     public boolean equals(Object other) {
 
         boolean equalLen = super.equals(other);
-        
+
         if (equalLen) {
             SortedSet<?> otherSet = (SortedSet<?>) other;
             Iterator<?> otherIt = otherSet.iterator();
@@ -156,7 +181,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         }
 
         public E next() {
-            
+
             if (!hasNext()) {
                 throw new IllegalStateException("There are No Elements Left to Use");
             }
@@ -168,10 +193,10 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         }
 
         public void remove() {
-            
+
             if (!removeable) {
                 throw new IllegalStateException("You Cannot Call Remove Twice or "
-                 + "Remove Before You Have Called Next for the first time.");
+                        + "Remove Before You Have Called Next for the first time.");
             }
 
             removeable = false;
