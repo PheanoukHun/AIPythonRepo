@@ -31,7 +31,7 @@ public class UnsortedSet<E> extends AbstractSet<E> {
 
     @Override
     public boolean add(E item) {
-        
+
         // Precondition
         if (item == null) {
             throw new IllegalArgumentException("The Item Parameter cannot be null.");
@@ -40,7 +40,7 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         if (this.contains(item)) {
             return false;
         }
-        
+
         myCon.add(item);
         return true;
     }
@@ -69,14 +69,22 @@ public class UnsortedSet<E> extends AbstractSet<E> {
 
     @Override
     public boolean remove(E item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+        // Precondition
+        if (item == null) {
+            throw new IllegalArgumentException("The Item Parameter cannot be null.");
+        }
+
+        if (this.contains(item)) {
+            myCon.remove(item);
+            return true;
+        }
+
+        return false;
     }
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return this.myCon.size();
     }
 
     @Override
@@ -95,7 +103,7 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         }
 
         public E next() {
-            
+
             if (!hasNext()) {
                 throw new IllegalStateException("There are No Elements Left to Use");
             }
@@ -107,10 +115,10 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         }
 
         public void remove() {
-            
+
             if (!removeable) {
                 throw new IllegalStateException("You Cannot Call Remove Twice or "
-                 + "Remove Before You Have Called Next for the first time.");
+                        + "Remove Before You Have Called Next for the first time.");
             }
 
             removeable = false;

@@ -125,19 +125,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("The Parameter cannot be Null.");
         }
 
-        int start = 0;
-        int end = size();
-
-        while (start <= end) {
-            int mid = start + ((end - start) / 2);
-
-            if (item.equals(myCon.get(mid))) {
-                return true;
-            }
-
-        }
-
-        return false;
+        return binarySearch(item) == -1;
     }
 
     /**
@@ -210,7 +198,6 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     }
 
     public boolean remove(E item) {
-
         // Precondition
         if (item == null) {
             throw new IllegalArgumentException("The Item Parameter cannot be null.");
@@ -253,12 +240,40 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         return result;
     }
 
+    /**
+     * 
+     */
     private void sort() {
 
     }
 
+    /**
+     * 
+     * @param val
+     * @return
+     */
     private int binarySearch(E val) {
-        
+
+        if (this.size() == 0) {
+            return -1;
+        }
+
+        int start = 0;
+        int end = size();
+
+        while (start <= end) {
+            int mid = start + ((end - start) / 2);
+
+            if (this.myCon.get(mid).equals(val)) {
+                return mid;
+            } else if (this.myCon.get(mid).compareTo(val) < 0) {
+                start  = mid + 1;
+            } else {
+                end = mid + 1;
+            }
+        }
+
+        return  -1;
     }
 
     private class SortedSetIterator implements Iterator<E> {
