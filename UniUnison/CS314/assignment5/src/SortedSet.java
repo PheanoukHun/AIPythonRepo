@@ -62,7 +62,12 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * @return the smallest element in this SortedSet.
      */
     public E min() {
-        return null;
+        // Precondition
+        if (this.size() == 0) {
+            throw new IllegalArgumentException("You cannot use null as for of this parameter.");
+        }
+
+        return this.myCon.get(0);
     }
 
     /**
@@ -73,7 +78,14 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * @return the largest element in this SortedSet.
      */
     public E max() {
-        return null;
+        
+        // Precondition
+        if (this.size() == 0) {
+            throw new IllegalArgumentException("You cannot use null as for of this parameter.");
+        }
+
+    }return this.myCon.get(this.size()-1);
+
     }
 
     /**
@@ -137,6 +149,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * Two sets are equal if they have exactly the same elements.
      * The order of the elements does not matter.
      * pre: none
+     * 
      * @param other the object to compare to this set
      * @return true if other is a Set and has the same elements as this set
      */
@@ -157,7 +170,6 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
         return equalLen;
     }
-
 
     @Override
     public ISet<E> intersection(ISet<E> otherSet) {
