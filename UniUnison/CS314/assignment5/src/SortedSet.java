@@ -37,7 +37,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     }
 
     /**
-     * create a SortedSet out of an unsorted set. <br>
+     * create a SortedSet out of an unsorted set.
      * 
      * @param other != null
      */
@@ -56,7 +56,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     /**
      * Return the smallest element in this SortedSet.
-     * <br>
+     * 
      * pre: size() != 0
      * 
      * @return the smallest element in this SortedSet.
@@ -67,7 +67,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     /**
      * Return the largest element in this SortedSet.
-     * <br>
+     * 
      * pre: size() != 0
      * 
      * @return the largest element in this SortedSet.
@@ -128,16 +128,6 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         return equalLen;
     }
 
-    public boolean contains(E item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contains'");
-    }
-
-    public boolean containsAll(ISet<E> otherSet) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'containsAll'");
-    }
-
     public ISet<E> difference(ISet<E> otherSet) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'difference'");
@@ -156,8 +146,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     @Override
     public boolean remove(E item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+        myCon.remove(item)
     }
 
     @Override
