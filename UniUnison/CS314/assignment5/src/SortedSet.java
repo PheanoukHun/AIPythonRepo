@@ -78,14 +78,13 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * @return the largest element in this SortedSet.
      */
     public E max() {
-        
+
         // Precondition
         if (this.size() == 0) {
             throw new IllegalArgumentException("You cannot use null as for of this parameter.");
         }
 
-    }return this.myCon.get(this.size()-1);
-
+        return this.myCon.get(this.size() - 1);
     }
 
     /**
@@ -107,14 +106,32 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             return false;
         }
 
-        for (int i = 0; i < this.size(); i++) {
-            if (item.compareTo(myCon.get(i)) < 0) {
-                myCon.add(i, item);
-                return true;
-            }
+        myCon.add(item);
+        this.sort();
+        return false;
+    }
+
+    /**
+     * Determine if item is in this set. Using Binary Search
+     * 
+     * @param item element whose presence is being tested. item != null
+     *             Item may not equal null.
+     * @return true if this set contains the specified item, false otherwise.
+     */
+    public boolean contains(E item) {
+
+        // Precondition
+        if (item == null) {
+            throw new IllegalArgumentException("The Parameter cannot be Null.");
         }
 
-        myCon.add(item);
+        int start = 0;
+        int end = size();
+
+        while (start != end) {
+            if ()
+        }
+
         return false;
     }
 
@@ -129,13 +146,18 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * Create a new set that is the difference of this set and otherSet.
      * Return an ISet of elements that are in this Set but not in otherSet.
      * Also called the relative complement.
-     * <br>Example: If ISet A contains [X, Y, Z] and ISet B contains [W, Z]
+     * <br>
+     * Example: If ISet A contains [X, Y, Z] and ISet B contains [W, Z]
      * then A.difference(B) would return an ISet with elements [X, Y] while
      * B.difference(A) would return an ISet with elements [W].
-     * <br>pre: otherSet != null
-     * <br>post: returns a set that is the difference of this set and otherSet.
+     * <br>
+     * pre: otherSet != null
+     * <br>
+     * post: returns a set that is the difference of this set and otherSet.
      * Neither this set or otherSet are altered as a result of this operation.
-     * <br> pre: otherSet != null
+     * <br>
+     * pre: otherSet != null
+     * 
      * @param otherSet != null
      * @return a set that is the difference of this set and otherSet
      */
@@ -224,6 +246,10 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         }
 
         return result;
+    }
+
+    private void sort() {
+
     }
 
     private class SortedSetIterator implements Iterator<E> {
