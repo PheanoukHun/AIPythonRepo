@@ -81,21 +81,21 @@ public abstract class AbstractSet<E> implements ISet<E> {
             throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
         }
 
-        boolean same = true;
         Iterator<E> it = this.iterator();
-
         while (it.hasNext()) {
-            same = same && contains(it.next());
+            if (!otherSet.contains(it.next())) {
+                return false;
+            }
         }
 
-        return same;
+        return true;
     }
 
     /**
      * Determine if this set is equal to other.
      * Two sets are equal if they have exactly the same elements.
      * The order of the elements does not matter.
-     * <br>pre: none
+     * pre: none
      * @param other the object to compare to this set
      * @return true if other is a Set and has the same elements as this set
      */

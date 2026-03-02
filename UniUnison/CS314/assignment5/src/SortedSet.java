@@ -11,6 +11,7 @@
  */
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.ArrayList;
 
 /**
@@ -148,17 +149,35 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     private class SortedSetIterator implements Iterator<E> {
 
-        private int currIndex;
+        private int nextIndex;
+        private boolean removeable;
 
         public boolean hasNext() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'hasNext'");
+            return nextIndex < myCon.size();
         }
 
         public E next() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'next'");
+            
+            if (!hasNext()) {
+                throw new NoSuchElementException("There are No Elements Left to Use");
+            }
+
+            E result = myCon.get(nextIndex);
+            removeable = true;
+            nextIndex++;
+            return result;
         }
 
+        public void remove() {
+            
+            if (!removeable) {
+                throw new IllegalStateException("You Cannot Call Remove Twice or "
+                 + "Remove Before You Have Called Next for the first time.");
+            }
+
+            removeable = false;
+            nextIndex--;
+            myCon.remove(nextIndex);
+        }
     }
 }
