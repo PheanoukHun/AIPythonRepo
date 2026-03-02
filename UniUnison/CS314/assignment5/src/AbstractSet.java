@@ -109,7 +109,7 @@ public abstract class AbstractSet<E> implements ISet<E> {
             return false;
         }
 
-        
+        return this.size() == other.size();
     }
 
     /**

@@ -77,8 +77,23 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     }
 
     public void clear() {
-        // TODO Auto-generated method stub
         this.myCon = new ArrayList<E>();
+    }
+
+    public boolean equals(Object other) {
+        
+        boolean equalLen = super.equals(other);
+        
+        
+        if (equalLen) {
+            for (E item : this.myCon) {
+                if (!(other.contains(item))) {
+                    return false;
+                }
+            }
+        }
+
+        return equalLen;
     }
 
     public boolean contains(E item) {
