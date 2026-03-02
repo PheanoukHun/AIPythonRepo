@@ -38,10 +38,11 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     /**
      * create a SortedSet out of an unsorted set. <br>
+     * 
      * @param other != null
      */
     public SortedSet(ISet<E> other) {
-        
+
         // Precondition
         if (other == null) {
             throw new IllegalArgumentException("The Parameter Cannot Equal Null");
@@ -55,7 +56,9 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     /**
      * Return the smallest element in this SortedSet.
-     * <br> pre: size() != 0
+     * <br>
+     * pre: size() != 0
+     * 
      * @return the smallest element in this SortedSet.
      */
     public E min() {
@@ -64,7 +67,9 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     /**
      * Return the largest element in this SortedSet.
-     * <br> pre: size() != 0
+     * <br>
+     * pre: size() != 0
+     * 
      * @return the largest element in this SortedSet.
      */
     public E max() {
@@ -81,13 +86,15 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     }
 
     public boolean equals(Object other) {
-        
+
         boolean equalLen = super.equals(other);
         
-        
         if (equalLen) {
-            for (E item : this.myCon) {
-                if (!(other.contains(item))) {
+            SortedSet<?> otherSet = (SortedSet<?>) other;
+            Iterator<?> otherIt = otherSet.iterator();
+            Iterator<E> thisIt = this.iterator();
+            while (thisIt.hasNext() && otherIt.hasNext()) {
+                if (!thisIt.next().equals(otherIt.next())) {
                     return false;
                 }
             }
@@ -140,7 +147,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     }
 
     private class SortedSetIterator implements Iterator<E> {
-        
+
         private int currIndex;
 
         public boolean hasNext() {
