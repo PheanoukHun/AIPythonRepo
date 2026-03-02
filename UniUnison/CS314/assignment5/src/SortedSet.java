@@ -128,14 +128,13 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         int start = 0;
         int end = size();
 
-        while (start != end) {
-            if (item.equals(this.myCon.get(start))) {
+        while (start <= end) {
+            int mid = start + ((end - start) / 2);
+
+            if (item.equals(myCon.get(mid))) {
                 return true;
-            } else if (item.compareTo(myCon.get(start)) > 0) {
-                start = (start+end)/2;
-            } else {
-                
             }
+
         }
 
         return false;
@@ -256,6 +255,10 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     private void sort() {
 
+    }
+
+    private int binarySearch(E val) {
+        
     }
 
     private class SortedSetIterator implements Iterator<E> {
