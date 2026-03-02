@@ -31,26 +31,17 @@ public class UnsortedSet<E> extends AbstractSet<E> {
 
     @Override
     public boolean add(E item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
-    }
-
-    @Override
-    public boolean addAll(ISet<E> otherSet) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addAll'");
+        
+        if (this.contains(item)) {
+        }
+        
+        myCon.add(item);
+        return true;
     }
 
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clear'");
-    }
-
-    @Override
-    public boolean contains(E item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contains'");
+        myCon = new ArrayList<>();
     }
 
     @Override
@@ -73,8 +64,7 @@ public class UnsortedSet<E> extends AbstractSet<E> {
 
     @Override
     public Iterator<E> iterator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+        return new UnsortedSetIterator();
     }
 
     @Override
@@ -95,4 +85,37 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         throw new UnsupportedOperationException("Unimplemented method 'union'");
     }
 
+    private class UnsortedSetIterator implements Iterator<E> {
+
+        private int nextIndex;
+        private boolean removeable;
+
+        public boolean hasNext() {
+            return nextIndex < myCon.size();
+        }
+
+        public E next() {
+            
+            if (!hasNext()) {
+                throw new IllegalStateException("There are No Elements Left to Use");
+            }
+
+            E result = myCon.get(nextIndex);
+            removeable = true;
+            nextIndex++;
+            return result;
+        }
+
+        public void remove() {
+            
+            if (!removeable) {
+                throw new IllegalStateException("You Cannot Call Remove Twice or "
+                 + "Remove Before You Have Called Next for the first time.");
+            }
+
+            removeable = false;
+            nextIndex--;
+            myCon.remove(nextIndex);
+        }
+    }
 }

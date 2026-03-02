@@ -11,7 +11,6 @@
  */
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.ArrayList;
 
 /**
@@ -159,7 +158,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         public E next() {
             
             if (!hasNext()) {
-                throw new NoSuchElementException("There are No Elements Left to Use");
+                throw new IllegalStateException("There are No Elements Left to Use");
             }
 
             E result = myCon.get(nextIndex);
