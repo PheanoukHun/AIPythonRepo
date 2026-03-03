@@ -52,6 +52,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         for (E item : other) {
             this.add(item);
         }
+
+        this.sort();
     }
 
     /**
@@ -64,7 +66,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     public E min() {
         // Precondition
         if (this.size() == 0) {
-            throw new IllegalArgumentException("You cannot use null as for of this parameter.");
+            throw new IllegalArgumentException("Theres is no elements in this Set.");
         }
 
         return this.myCon.get(0);
@@ -81,7 +83,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
         // Precondition
         if (this.size() == 0) {
-            throw new IllegalArgumentException("You cannot use null as for of this parameter.");
+            throw new IllegalArgumentException("Theres is no elements in this Set.");
         }
 
         return this.myCon.get(this.size() - 1);
@@ -107,8 +109,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         }
 
         myCon.add(item);
-        this.sort();
-        return false;
+        return true;
     }
 
     /**
@@ -125,7 +126,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("The Parameter cannot be Null.");
         }
 
-        return binarySearch(item) == -1;
+        return binarySearch(item) != -1;
     }
 
     /**
@@ -180,9 +181,12 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         boolean equalLen = super.equals(other);
 
         if (equalLen) {
+            
             SortedSet<?> otherSet = (SortedSet<?>) other;
+            
             Iterator<?> otherIt = otherSet.iterator();
             Iterator<E> thisIt = this.iterator();
+            
             while (thisIt.hasNext() && otherIt.hasNext()) {
                 if (!thisIt.next().equals(otherIt.next())) {
                     return false;
@@ -230,15 +234,20 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("The Item Parameter cannot be null.");
         }
 
-        if (this.contains(item)) {
-            myCon.remove(item);
+        int valIndex = this.binarySearch(item);
+        if (valIndex != -1) {
+            myCon.remove(valIndex);
             return true;
         }
 
         return false;
     }
 
-    @Override
+    /**
+     * Return the number of elements of this set.
+     * 
+     * @return the number of items in this set
+     */
     public int size() {
         return this.myCon.size();
     }
