@@ -141,13 +141,7 @@ public abstract class AbstractSet<E> implements ISet<E> {
 
         ISet<?> otherSet = (ISet<?>) other;
 
-        for (E element : otherSet) {
-            if (!this.contains(element)) {
-                return false;
-            }
-        }
-
-        return true;
+        return this.containsAll(otherSet);
     }
 
     /**
