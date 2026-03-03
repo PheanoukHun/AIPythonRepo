@@ -46,13 +46,14 @@ public abstract class AbstractSet<E> implements ISet<E> {
 
     /**
      * Determine if item is in this set.
+     * 
      * @param item element whose presence is being tested. item != null
-     * Item may not equal null.
+     *             Item may not equal null.
      * @return true if this set contains the specified item, false otherwise.
      */
     public boolean contains(E item) {
-        
-        //Precondition
+
+        // Precondition
         if (item == null) {
             throw new IllegalArgumentException("The Parameter cannot be Null.");
         }
@@ -69,7 +70,7 @@ public abstract class AbstractSet<E> implements ISet<E> {
 
     /**
      * Determine if all of the elements of otherSet are in this set.
-     *  
+     * 
      * @param otherSet != null
      * @return true if this set contains all of the elements in otherSet,
      *         false otherwise.
@@ -92,13 +93,19 @@ public abstract class AbstractSet<E> implements ISet<E> {
     }
 
     /**
-     * create a new set that is the intersection of this set and otherSet and otherSet.
-     * Neither this set or otherSet are altered as a result of this operation.
+     * create a new set that is the intersection of this set and otherSet and
+     * otherSet. Neither this set or otherSet are altered as a result of this
+     * operation.
      * 
      * @param otherSet != null
      * @return a set that is the intersection of this set and otherSet
      */
     public ISet<E> intersection(ISet<E> otherSet) {
+
+        if (otherSet == null) {
+            throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
+        }
+
         ISet<E> unionSet = this.union(otherSet);
         ISet<E> diffSet = this.difference(otherSet);
 
@@ -117,15 +124,16 @@ public abstract class AbstractSet<E> implements ISet<E> {
      * Two sets are equal if they have exactly the same elements.
      * The order of the elements does not matter.
      * pre: none
+     * 
      * @param other the object to compare to this set
      * @return true if other is a Set and has the same elements as this set
      */
     public boolean equals(Object other) {
-        
+
         if (this == other) {
             return true;
         }
-        
+
         if (other == null || this.getClass() != other.getClass()) {
             return false;
         }
