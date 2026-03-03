@@ -33,6 +33,19 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         myCon = new ArrayList<>();
     }
 
+    public UnsortedSet(ISet<E> other) {
+
+        if (other == null) {
+            throw new IllegalArgumentException("The Parameter Cannot Equal Null");
+        }
+
+        this();
+
+        for (E item : other) {
+            this.add(item);
+        }
+    }
+
     public boolean add(E item) {
 
         // Precondition
@@ -53,8 +66,18 @@ public class UnsortedSet<E> extends AbstractSet<E> {
     }
 
     public ISet<E> difference(ISet<E> otherSet) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'difference'");
+        
+        ISet<E> results = new UnsortedSet<>();
+        Iterator<E> it = this.iterator();
+        
+        while (it.hasNext()) {
+            E currVal = it.next();
+            if (!otherSet.contains(currVal)) {
+                results.add(currVal);
+            }
+        }
+
+        return results;
     }
 
     public ISet<E> intersection(ISet<E> otherSet) {
