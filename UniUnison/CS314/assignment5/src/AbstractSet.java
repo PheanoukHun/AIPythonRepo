@@ -35,10 +35,10 @@ public abstract class AbstractSet<E> implements ISet<E> {
         }
 
         int startSize = this.size();
-
         Iterator<E> it = this.iterator();
+
         while (it.hasNext()) {
-            changed = changed || add(it.next());
+            add(it.next());
         }
 
         return startSize == this.size();
