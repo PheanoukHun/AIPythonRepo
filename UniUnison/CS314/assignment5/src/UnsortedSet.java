@@ -29,7 +29,10 @@ public class UnsortedSet<E> extends AbstractSet<E> {
 
     private ArrayList<E> myCon;
 
-    @Override
+    public UnsortedSet() {
+        myCon = new ArrayList<>();
+    }
+
     public boolean add(E item) {
 
         // Precondition
@@ -45,29 +48,24 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         return true;
     }
 
-    @Override
     public void clear() {
         myCon = new ArrayList<>();
     }
 
-    @Override
     public ISet<E> difference(ISet<E> otherSet) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'difference'");
     }
 
-    @Override
     public ISet<E> intersection(ISet<E> otherSet) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'intersection'");
     }
 
-    @Override
     public Iterator<E> iterator() {
         return new UnsortedSetIterator();
     }
 
-    @Override
     public boolean remove(E item) {
         // Precondition
         if (item == null) {
@@ -82,12 +80,10 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         return false;
     }
 
-    @Override
     public int size() {
         return this.myCon.size();
     }
 
-    @Override
     public ISet<E> union(ISet<E> otherSet) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'union'");
