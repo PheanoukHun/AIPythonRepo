@@ -66,10 +66,10 @@ public class UnsortedSet<E> extends AbstractSet<E> {
     }
 
     public ISet<E> difference(ISet<E> otherSet) {
-        
+
         ISet<E> results = new UnsortedSet<>();
         Iterator<E> it = this.iterator();
-        
+
         while (it.hasNext()) {
             E currVal = it.next();
             if (!otherSet.contains(currVal)) {
@@ -78,11 +78,6 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         }
 
         return results;
-    }
-
-    public ISet<E> intersection(ISet<E> otherSet) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'intersection'");
     }
 
     public Iterator<E> iterator() {

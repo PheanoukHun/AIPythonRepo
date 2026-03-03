@@ -92,6 +92,27 @@ public abstract class AbstractSet<E> implements ISet<E> {
     }
 
     /**
+     * create a new set that is the intersection of this set and otherSet and otherSet.
+     * Neither this set or otherSet are altered as a result of this operation.
+     * 
+     * @param otherSet != null
+     * @return a set that is the intersection of this set and otherSet
+     */
+    public ISet<E> intersection(ISet<E> otherSet) {
+        ISet<E> unionSet = this.union(otherSet);
+        ISet<E> diffSet = this.difference(otherSet);
+
+        if (unionSet.size() != 0) {
+            Iterator<E> diffIt = diffSet.iterator();
+            while (diffIt.hasNext()) {
+                unionSet.remove(diffIt.next());
+            }
+        }
+
+        return unionSet;
+    }
+
+    /**
      * Determine if this set is equal to other.
      * Two sets are equal if they have exactly the same elements.
      * The order of the elements does not matter.
