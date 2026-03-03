@@ -35,10 +35,8 @@ public abstract class AbstractSet<E> implements ISet<E> {
         }
 
         int startSize = this.size();
-        Iterator<E> it = this.iterator();
-
-        while (it.hasNext()) {
-            add(it.next());
+        for (E item : otherSet) {
+            this.add(item);
         }
 
         return startSize == this.size();
@@ -60,7 +58,7 @@ public abstract class AbstractSet<E> implements ISet<E> {
 
         Iterator<E> it = this.iterator();
         while (it.hasNext()) {
-            if (item.equals(it.next())) {
+            if (it.next().equals(item)) {
                 return true;
             }
         }
@@ -82,9 +80,12 @@ public abstract class AbstractSet<E> implements ISet<E> {
             throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
         }
 
-        Iterator<E> it = this.iterator();
-        while (it.hasNext()) {
-            if (!otherSet.contains(it.next())) {
+        if (otherSet.size() > this.size()) {
+            return false;
+        }
+
+        for (E item : otherSet) {
+            if (!this.contains(item)) {
                 return false;
             }
         }
@@ -102,10 +103,12 @@ public abstract class AbstractSet<E> implements ISet<E> {
      */
     public ISet<E> intersection(ISet<E> otherSet) {
 
+        // Precondition
         if (otherSet == null) {
             throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
         }
 
+        // Union - Difference = Intersection
         ISet<E> unionSet = this.union(otherSet);
         ISet<E> diffSet = this.difference(otherSet);
 
@@ -120,10 +123,8 @@ public abstract class AbstractSet<E> implements ISet<E> {
     }
 
     /**
-     * Determine if this set is equal to other.
-     * Two sets are equal if they have exactly the same elements.
-     * The order of the elements does not matter.
-     * pre: none
+     * Determine if this set is equal to other. Two sets are equal if they have
+     * exactly the same elements. The order of the elements does not matter.
      * 
      * @param other the object to compare to this set
      * @return true if other is a Set and has the same elements as this set
@@ -139,7 +140,14 @@ public abstract class AbstractSet<E> implements ISet<E> {
         }
 
         ISet<?> otherSet = (ISet<?>) other;
-        return this.size() == otherSet.size();
+
+        for (E element : otherSet) {
+            if (!this.contains(element)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
