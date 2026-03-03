@@ -53,7 +53,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             this.add(item);
         }
 
-        this.sort();
+        this.mergeSort();
     }
 
     /**
@@ -279,7 +279,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     /**
      * 
      */
-    private void sort() {
+    private void mergeSort() {
         
     }
 
