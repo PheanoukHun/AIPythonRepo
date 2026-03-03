@@ -280,7 +280,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * 
      */
     private void sort() {
-
+        
     }
 
     /**
