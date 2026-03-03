@@ -68,12 +68,9 @@ public class UnsortedSet<E> extends AbstractSet<E> {
     public ISet<E> difference(ISet<E> otherSet) {
 
         ISet<E> results = new UnsortedSet<>();
-        Iterator<E> it = this.iterator();
-
-        while (it.hasNext()) {
-            E currVal = it.next();
-            if (!otherSet.contains(currVal)) {
-                results.add(currVal);
+        for (E item : this) {
+            if (!otherSet.contains(item)) {
+                results.add(item);
             }
         }
 
@@ -103,8 +100,18 @@ public class UnsortedSet<E> extends AbstractSet<E> {
     }
 
     public ISet<E> union(ISet<E> otherSet) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'union'");
+        
+        UnsortedSet<E> results = new UnsortedSet<>();
+
+        for (E item : otherSet) {
+            results.add(item);
+        }
+
+        for (E item : this) {
+            results.add(item);
+        }
+
+        return results;
     }
 
     private class UnsortedSetIterator implements Iterator<E> {
