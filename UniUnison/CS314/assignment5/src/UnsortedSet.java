@@ -62,7 +62,7 @@ public class UnsortedSet<E> extends AbstractSet<E> {
     }
 
     public void clear() {
-        myCon = new ArrayList<>();
+        this.myCon.clear();
     }
 
     public ISet<E> difference(ISet<E> otherSet) {
@@ -78,7 +78,7 @@ public class UnsortedSet<E> extends AbstractSet<E> {
     }
 
     public Iterator<E> iterator() {
-        return new UnsortedSetIterator();
+        return this.myCon.iterator();
     }
 
     public boolean remove(E item) {
@@ -103,48 +103,9 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         
         UnsortedSet<E> results = new UnsortedSet<>();
 
-        for (E item : otherSet) {
-            results.add(item);
-        }
-
-        for (E item : this) {
-            results.add(item);
-        }
+       results.addAll(this);
+       results.addAll(otherSet);
 
         return results;
-    }
-
-    private class UnsortedSetIterator implements Iterator<E> {
-
-        private int nextIndex;
-        private boolean removeable;
-
-        public boolean hasNext() {
-            return nextIndex < myCon.size();
-        }
-
-        public E next() {
-
-            if (!hasNext()) {
-                throw new IllegalStateException("There are No Elements Left to Use");
-            }
-
-            E result = myCon.get(nextIndex);
-            removeable = true;
-            nextIndex++;
-            return result;
-        }
-
-        public void remove() {
-
-            if (!removeable) {
-                throw new IllegalStateException("You Cannot Call Remove Twice or "
-                        + "Remove Before You Have Called Next for the first time.");
-            }
-
-            removeable = false;
-            nextIndex--;
-            myCon.remove(nextIndex);
-        }
     }
 }

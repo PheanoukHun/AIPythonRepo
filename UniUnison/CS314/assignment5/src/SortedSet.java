@@ -315,7 +315,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * @return an Iterator object for the elements of this set
      */
     public Iterator<E> iterator() {
-        return new SortedSetIterator();
+        return this.myCon.iterator();
     }
 
     public boolean remove(E item) {
@@ -443,39 +443,5 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         }
 
         return null;
-    }
-
-    private class SortedSetIterator implements Iterator<E> {
-
-        private int nextIndex;
-        private boolean removeable;
-
-        public boolean hasNext() {
-            return nextIndex < myCon.size();
-        }
-
-        public E next() {
-
-            if (!hasNext()) {
-                throw new IllegalStateException("There are No Elements Left to Use");
-            }
-
-            E result = myCon.get(nextIndex);
-            removeable = true;
-            nextIndex++;
-            return result;
-        }
-
-        public void remove() {
-
-            if (!removeable) {
-                throw new IllegalStateException("You Cannot Call Remove Twice or "
-                        + "Remove Before You Have Called Next for the first time.");
-            }
-
-            removeable = false;
-            nextIndex--;
-            myCon.remove(nextIndex);
-        }
     }
 }
