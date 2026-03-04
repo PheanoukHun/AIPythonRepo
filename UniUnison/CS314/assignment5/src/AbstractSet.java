@@ -113,9 +113,8 @@ public abstract class AbstractSet<E> implements ISet<E> {
         ISet<E> diffSet = this.difference(otherSet);
 
         if (unionSet.size() != 0) {
-            Iterator<E> diffIt = diffSet.iterator();
-            while (diffIt.hasNext()) {
-                unionSet.remove(diffIt.next());
+            for (E val : diffSet) {
+                unionSet.remove(val);
             }
         }
 
