@@ -108,6 +108,16 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             return false;
         }
 
+        if (item.compareTo(this.min()) < 0) {
+            
+        }
+
+        for (int i = 0; i < this.size(); i++) {
+            if (this.myCon.get(i).compareTo(item) <) {
+
+            }
+        }
+
         myCon.add(item);
         return true;
     }
@@ -155,12 +165,16 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         }
 
         ISet<E> diffSet = new SortedSet<>();
-        
-        Iterator<E> it = this.iterator();
-        while (it.hasNext()) {
-            E currVal = it.next();
-            if (!otherSet.contains(currVal)) {
-                diffSet.add(currVal);
+
+        for (E val : this) {
+            if (!otherSet.contains(val)) {
+                diffSet.add(val);
+            }
+        }
+
+        for (E val : otherSet) {
+            if (!this.contains(val)) {
+                diffSet.add(val);
             }
         }
 
