@@ -221,7 +221,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             E thisCurrVal = getSafeIteratorNext(thisIt);
             E otherCurrVal = getSafeIteratorNext(otherIt);
 
-            while (thisCurrVal != null && otherCurrVal != null) {
+            while (thisCurrVal != null || otherCurrVal != null) {
                 int comparedVal = thisCurrVal.compareTo(otherCurrVal);
                 if (comparedVal < 0) {
                     results.add(thisCurrVal);
