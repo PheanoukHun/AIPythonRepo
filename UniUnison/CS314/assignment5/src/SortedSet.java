@@ -55,7 +55,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             for (E item : otherSet.myCon) {
                 this.myCon.add(item);
             }
-        } else {\
+        } else {
             for (E item : other) {
                 this.add(item);
             }
@@ -130,6 +130,20 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     }
 
     /**
+     * A union operation. Add all items of otherSet that
+     * are not already present in this set to this set.
+     * 
+     * @param otherSet != null
+     * @return true if this set changed as a result of this operation,
+     *         false otherwise.
+     */
+    public boolean addAll(ISet<E> otherSet) {
+        if (otherSet == null) {
+            throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
+        }
+    }
+
+    /**
      * Determine if item is in this set. Using Binary Search
      * 
      * @param item element whose presence is being tested. item != null
@@ -150,7 +164,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * Make this set empty.
      */
     public void clear() {
-        this.myCon = new ArrayList<E>();
+        this.myCon.clear();
     }
 
     /**
@@ -211,7 +225,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             Iterator<E> thisIt = this.iterator();
             Iterator<?> otherIt = otherSet.iterator();
 
-            while (thisIt.hasNext() && otherIt.hasNext()) {
+            while (thisIt.hasNext()) {
                 if (!thisIt.next().equals(otherIt.next())) {
                     return false;
                 }
