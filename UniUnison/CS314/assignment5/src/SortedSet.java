@@ -49,11 +49,17 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         }
 
         this();
-        for (E item : other) {
-            this.add(item);
-        }
 
-        this.mergeSort();
+        if (other instanceof SortedSet<E>) {
+            SortedSet<E> otherSet = (SortedSet<E>) other;
+            for (E item : otherSet.myCon) {
+                this.myCon.add(item);
+            }
+        } else {\
+            for (E item : other) {
+                this.add(item);
+            }
+        }
     }
 
     /**
@@ -173,12 +179,6 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             }
         }
 
-        for (E val : otherSet) {
-            if (!this.contains(val)) {
-                diffSet.add(val);
-            }
-        }
-
         return diffSet;
     }
 
@@ -197,11 +197,11 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             return true;
         }
 
-        if (!(other instanceof SortedSet<?>)) {
+        if (!(other instanceof ISet<?>)) {
             return false;
         }
 
-        SortedSet<?> otherSet = (SortedSet<?>) other;
+        ISet<?> otherSet = (ISet<?>) other;
 
         if (this.size() != otherSet.size()) {
             return false;
@@ -220,7 +220,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             return true;
         }
 
-        return false;
+        return this.containsAll((ISet<E>) otherSet);
     }
 
     /**
@@ -321,7 +321,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         }
 
         int start = 0;
-        int end = size();
+        int end = this.size() - 1;
 
         while (start <= end) {
             int mid = start + ((end - start) / 2);
