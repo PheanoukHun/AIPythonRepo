@@ -138,49 +138,22 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      *         false otherwise.
      */
     public boolean addAll(ISet<E> otherSet) {
-        
+
         // Precondition
         if (otherSet == null) {
             throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
         }
 
-        if (otherSet instanceof SortedSet<E>) {
-            int oldSize = this.size();
-
-            ArrayList<E> results = new ArrayList<>();
-
-            Iterator<E> thisIt = this.iterator();
-            Iterator<E> otherIt = otherSet.iterator();
-
-            E thisCurrVal = getSafeIteratorNext(thisIt);
-            E otherCurrVal = getSafeIteratorNext(otherIt);
-
-            while (thisCurrVal != null && otherCurrVal != null) {
-                int comparedVal = thisCurrVal.compareTo(otherCurrVal);
-                if (comparedVal == 0) {
-                    results.add(thisCurrVal);
-                    thisCurrVal = getSafeIteratorNext(thisIt);
-                    otherCurrVal = getSafeIteratorNext(otherIt);
-                } else if (comparedVal > 0) {
-                    results.add(otherCurrVal);
-                    otherCurrVal = getSafeIteratorNext(otherIt);
-                } else {
-                    results.add(thisCurrVal);
-                    thisCurrVal = getSafeIteratorNext(thisIt);
-                }
-            }
+        if (otherSet instanceof SortedSet<?>) {
             
-            while (thisCurrVal != null) {
-                results.add(thisCurrVal);
-                thisCurrVal = getSafeIteratorNext(thisIt);
-            }
-
-            while (otherCurrVal != null) {
-                results.add(otherCurrVal);
-                otherCurrVal = getSafeIteratorNext(otherIt);
-            }
-
-            this.myCon = results;
+            SortedSet<E> otherSorted = (SortedSet<E>) otherSet;
+            Iterator<E> otherIt = otherSorted.iterator();
+            
+            Iterator<E> thisIt = this.iterator();
+            
+            int oldSize = this.size();
+            this.myCon = mergeArrays(thisIt, otherIt);
+            
             return oldSize != this.size();
         } else {
             return super.addAll(otherSet);
@@ -362,9 +335,45 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     /**
      * 
+     * @param thisIt
+     * @param otherIt
+     * @return
      */
-    private void mergeSort() {
+    private ArrayList<E> mergeArrays(Iterator<E> thisIt, Iterator<E> otherIt) {
+        
+        ArrayList<E> results = new ArrayList<>();
 
+        E thisCurrVal = getSafeIteratorNext(thisIt);
+        E otherCurrVal = getSafeIteratorNext(otherIt);
+
+        while (thisCurrVal != null && otherCurrVal != null) {
+            
+            int comparedVal = thisCurrVal.compareTo(otherCurrVal);
+            
+            if (comparedVal == 0) {
+                results.add(thisCurrVal);
+                thisCurrVal = getSafeIteratorNext(thisIt);
+                otherCurrVal = getSafeIteratorNext(otherIt);
+            } else if (comparedVal > 0) {
+                results.add(otherCurrVal);
+                otherCurrVal = getSafeIteratorNext(otherIt);
+            } else {
+                results.add(thisCurrVal);
+                thisCurrVal = getSafeIteratorNext(thisIt);
+            }
+        }
+
+        while (thisCurrVal != null) {
+            results.add(thisCurrVal);
+            thisCurrVal = getSafeIteratorNext(thisIt);
+        }
+
+        while (otherCurrVal != null) {
+            results.add(otherCurrVal);
+            otherCurrVal = getSafeIteratorNext(otherIt);
+        }
+
+        return results;
     }
 
     /**
@@ -397,7 +406,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     }
 
     private E getSafeIteratorNext(Iterator<E> it) {
-        
+
         if (it.hasNext()) {
             return it.next();
         }
