@@ -317,8 +317,20 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * @return - returns a set that is the union of this set and otherSet.
      */
     public ISet<E> union(ISet<E> otherSet) {
+        
         SortedSet<E> result = new SortedSet<E>();
-        result.myCon
+
+        if (otherSet instanceof SortedSet<E>) {
+            SortedSet<E> sortedOtherSet = (SortedSet<E>) otherSet;
+            
+            Iterator<E> thisIt = this.iterator();
+            Iterator<E> otherIt = sortedOtherSet.iterator();
+
+            result.myCon = mergeArrays(thisIt, otherIt);
+        } else {
+            
+        }
+        
         return result;
     }
 
