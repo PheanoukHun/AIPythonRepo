@@ -104,34 +104,23 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("The Item Parameter cannot be null.");
         }
 
-        if (this.contains(item)) {
-            return false;
-        }
-
         int left = 0;
         int right = this.size() - 1;
 
-        while (left != right) {
+        while (left <= right) {
             int mid = left + ((right - left) / 2);
-            if (item.compareTo(this.myCon.get(mid)) < 0) {
+            int comparedVal = item.compareTo(this.myCon.get(mid));
+            if (comparedVal == 0) {
+                return false;
+            } else if (comparedVal < 0) {
                 right = mid - 1;
-            } else if (item.compareTo(this.myCon.get(mid)) > 0) {
+            } else {
                 left = mid + 1;
             }
         }
 
         this.myCon.add(left, item);
         return true;
-
-        // for (int i = 0; i < this.size(); i++) {
-        // if (item.compareTo(this.myCon.get(i)) <= 0) {
-        // this.myCon.add(i, item);
-        // return true;
-        // }
-        // }
-
-        // this.myCon.add(item);
-        // return true;
     }
 
     /**
@@ -204,19 +193,25 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      */
     public boolean equals(Object other) {
 
-        boolean equalLen = super.equals(other);
+        if (this == other) {
+            return true;
+        }
 
-        if (equalLen) {
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
 
-            SortedSet<?> otherSet = (SortedSet<?>) other;
+        SortedSet<?> otherSet = (SortedSet<?>) other;
 
-            Iterator<?> otherIt = otherSet.iterator();
-            Iterator<E> thisIt = this.iterator();
+        for (E thisVal : this) {
+            for (E otherVal : otherSet) {
+                
+            }
+        }
 
-            while (thisIt.hasNext() && otherIt.hasNext()) {
-                if (!thisIt.next().equals(otherIt.next())) {
-                    return false;
-                }
+        while (thisIt.hasNext() && otherIt.hasNext()) {
+            if (!thisIt.next().equals(otherIt.next())) {
+                return false;
             }
         }
 
