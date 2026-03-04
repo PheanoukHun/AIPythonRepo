@@ -108,18 +108,30 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             return false;
         }
 
-        if (item.compareTo(this.min()) < 0) {
-            
-        }
+        int left = 0;
+        int right = this.size() - 1;
 
-        for (int i = 0; i < this.size(); i++) {
-            if (this.myCon.get(i).compareTo(item) <) {
-
+        while (left != right) {
+            int mid = left + ((right - left) / 2);
+            if (item.compareTo(this.myCon.get(mid)) < 0) {
+                right = mid - 1;
+            } else if (item.compareTo(this.myCon.get(mid)) > 0) {
+                left = mid + 1;
             }
         }
 
-        myCon.add(item);
+        this.myCon.add(left, item);
         return true;
+
+        // for (int i = 0; i < this.size(); i++) {
+        // if (item.compareTo(this.myCon.get(i)) <= 0) {
+        // this.myCon.add(i, item);
+        // return true;
+        // }
+        // }
+
+        // this.myCon.add(item);
+        // return true;
     }
 
     /**
@@ -158,7 +170,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * @return a set that is the difference of this set and otherSet
      */
     public ISet<E> difference(ISet<E> otherSet) {
-        
+
         // Precondition
         if (otherSet == null) {
             throw new IllegalArgumentException("The Parameter Cannot Equal Null");
@@ -195,12 +207,12 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         boolean equalLen = super.equals(other);
 
         if (equalLen) {
-            
+
             SortedSet<?> otherSet = (SortedSet<?>) other;
-            
+
             Iterator<?> otherIt = otherSet.iterator();
             Iterator<E> thisIt = this.iterator();
-            
+
             while (thisIt.hasNext() && otherIt.hasNext()) {
                 if (!thisIt.next().equals(otherIt.next())) {
                     return false;
@@ -294,7 +306,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * 
      */
     private void mergeSort() {
-        
+
     }
 
     /**
@@ -319,7 +331,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             } else if (this.myCon.get(mid).compareTo(val) < 0) {
                 start = mid + 1;
             } else {
-                end = mid + 1;
+                end = mid - 1;
             }
         }
 
