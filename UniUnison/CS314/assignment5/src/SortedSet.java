@@ -202,7 +202,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("The Parameter Cannot Equal Null");
         }
 
-        ISet<E> diffSet = new SortedSet<>();
+        SortedSet<E> diffSet = new SortedSet<>();
 
         if (!(otherSet instanceof SortedSet<E>)) {
             for (E val : this) {
@@ -211,7 +211,35 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
                 }
             }
         } else {
-            
+            SortedSet<E> otherSorted = new SortedSet<>();
+
+            Iterator<E> otherIt = otherSorted.iterator();
+            Iterator<E> thisIt = this.iterator();
+
+            ArrayList<E> results = new ArrayList<>();
+
+            E thisCurrVal = getSafeIteratorNext(thisIt);
+            E otherCurrVal = getSafeIteratorNext(otherIt);
+
+            while (thisCurrVal != null && otherCurrVal != null) {
+                int comparedVal = thisCurrVal.compareTo(otherCurrVal);
+                if (comparedVal < 0) {
+                    results.add(thisCurrVal);
+                    thisCurrVal = getSafeIteratorNext(thisIt);
+                } else if (comparedVal > 0) {
+                    otherCurrVal = getSafeIteratorNext(otherIt);
+                } else {
+                    thisCurrVal = getSafeIteratorNext(thisIt);
+                    otherCurrVal = getSafeIteratorNext(otherIt);
+                }
+            }
+
+            while (thisCurrVal != null) {
+                results.add(thisCurrVal);
+                thisCurrVal = getSafeIteratorNext(thisIt);
+            }
+
+            diffSet.myCon = results;
         }
 
         return diffSet;
@@ -267,15 +295,16 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      */
     public ISet<E> intersection(ISet<E> otherSet) {
 
-        SortedSet<E> result = new SortedSet<>();
-        Iterator<E> it = this.iterator();
-
-        while (it.hasNext()) {
-            E currVal = it.next();
-            if (otherSet.contains(currVal)) {
-                result.add(currVal);
-            }
+        // Precondition
+        if (otherSet == null) {
+            throw new IllegalArgumentException("The Item Parameter cannot be null.");
         }
+
+        if (!(otherSet instanceof SortedSet<E>)) {
+            return super.intersection(otherSet);
+        }
+
+        SortedSet<E> result = new SortedSet<>();
 
         return result;
     }
@@ -328,7 +357,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         }
 
         SortedSet<E> result = new SortedSet<E>();
-        
+
         result.addAll(this);
         result.addAll(otherSet);
 
