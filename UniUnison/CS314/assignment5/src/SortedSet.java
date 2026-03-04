@@ -141,6 +141,25 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         if (otherSet == null) {
             throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
         }
+
+        if (otherSet.size() == 0) {
+            return false;
+        }
+
+        if (otherSet instanceof SortedSet<E>) {
+            int oldSize = this.size();
+
+            ArrayList<E> results = new ArrayList<>();
+
+            Iterator<E> thisIt = this.iterator();
+            Iterator<E> otherIt = otherSet.iterator();
+
+            
+            
+            return oldSize != this.size();
+        } else {
+            return super.addAll(otherSet);
+        }
     }
 
     /**
