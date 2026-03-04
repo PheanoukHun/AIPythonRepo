@@ -197,25 +197,30 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             return true;
         }
 
-        if (other == null || this.getClass() != other.getClass()) {
+        if (!(other instanceof SortedSet<?>)) {
             return false;
         }
 
         SortedSet<?> otherSet = (SortedSet<?>) other;
 
-        for (E thisVal : this) {
-            for (E otherVal : otherSet) {
-                
-            }
+        if (this.size() != otherSet.size()) {
+            return false;
         }
 
-        while (thisIt.hasNext() && otherIt.hasNext()) {
-            if (!thisIt.next().equals(otherIt.next())) {
-                return false;
+        if (otherSet instanceof SortedSet<?>) {
+            Iterator<E> thisIt = this.iterator();
+            Iterator<?> otherIt = otherSet.iterator();
+
+            while (thisIt.hasNext() && otherIt.hasNext()) {
+                if (!thisIt.next().equals(otherIt.next())) {
+                    return false;
+                }
             }
+
+            return true;
         }
 
-        return equalLen;
+        return false;
     }
 
     /**
