@@ -317,7 +317,12 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * @return - returns a set that is the union of this set and otherSet.
      */
     public ISet<E> union(ISet<E> otherSet) {
-        
+     
+        // Precondition
+        if (otherSet == null) {
+            throw new IllegalArgumentException("You cannot use null as the parameter otherSet");
+        }
+
         SortedSet<E> result = new SortedSet<E>();
 
         if (otherSet instanceof SortedSet<E>) {
@@ -328,7 +333,13 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
             result.myCon = mergeArrays(thisIt, otherIt);
         } else {
-            
+            for (E val : this) {
+                result.add(val);
+            }
+
+            for (E val : otherSet) {
+                result.add(val);
+            }
         }
         
         return result;
