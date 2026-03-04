@@ -110,10 +110,16 @@ public abstract class AbstractSet<E> implements ISet<E> {
 
         // Union - Difference = Intersection
         ISet<E> unionSet = this.union(otherSet);
-        ISet<E> diffSet = this.difference(otherSet);
+
+        ISet<E> thisDiffSet = this.difference(otherSet);
+        ISet<E> otherDiffSet = this.difference(this);
 
         if (unionSet.size() != 0) {
-            for (E val : diffSet) {
+            for (E val : thisDiffSet) {
+                unionSet.remove(val);
+            }
+
+            for (E val : thisDiffSet) {
                 unionSet.remove(val);
             }
         }
