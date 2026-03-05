@@ -77,15 +77,19 @@ public abstract class AbstractSet<E> implements ISet<E> {
 
         // Precondition
         if (otherSet == null) {
-            throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
+            throw new IllegalArgumentException("The Parameter cannot be Null.");
         }
 
-        if (otherSet.size() > this.size()) {
+        if (otherSet == this) {
+            return true;
+        }
+
+        if (this.size() < otherSet.size()) {
             return false;
         }
 
-        for (E item : otherSet) {
-            if (!this.contains(item)) {
+        for (E val : otherSet) {
+            if (!this.contains(val)) {
                 return false;
             }
         }
@@ -94,8 +98,53 @@ public abstract class AbstractSet<E> implements ISet<E> {
     }
 
     /**
-     * create a new set that is the intersection of this set and otherSet and
-     * otherSet. Neither this set or otherSet are altered as a result of this
+     * Determine if all of the elements of otherSet are in this set.
+     * 
+     * @param otherSet != null
+     * @return true if this set contains all of the elements in otherSet,
+     *         false otherwise.
+     */
+    public boolean addAll(ISet<E> otherSet) {
+        if (otherSet == null) {
+            throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
+        }
+        int startSize = this.size();
+        for (E item : otherSet) {
+            this.add(item);
+        }
+        return startSize != this.size();
+    }
+
+    /**
+     * Create a new set that is the difference of this set and otherSet. Return an
+     * ISet of elements that are in this Set but not in otherSet. Also called the
+     * relative complement. Example: If ISet A contains [X, Y, Z] and ISet B
+     * contains [W, Z] then A.difference(B) would return an ISet with elements [X,
+     * Y] while B.difference(A) would return an ISet with elements [W]. Neither this
+     * set or otherSet are altered as a result of this operation.
+     * 
+     * @param otherSet != null
+     * @return a set that is the difference of this set and otherSet
+     */
+    public ISet<E> difference(ISet<E> otherSet) {
+        
+        // Preconditions
+        if (otherSet == null) {
+            throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
+        }
+
+        ISet<E> result = this.union(otherSet);
+        
+        for (E val : otherSet) {
+            result.remove(val);
+        }
+
+        return result;
+    }
+
+    /**
+     * create a new set that is the intersection of this set and otherSet.
+     * Neither this set or otherSet are altered as a result of this
      * operation.
      * 
      * @param otherSet != null
@@ -103,28 +152,21 @@ public abstract class AbstractSet<E> implements ISet<E> {
      */
     public ISet<E> intersection(ISet<E> otherSet) {
 
-        // Precondition
+        // Preconditions
         if (otherSet == null) {
             throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
         }
 
-        // Union - Difference = Intersection
-        ISet<E> unionSet = this.union(otherSet);
+        ISet<E> result = this.union(otherSet);
+        result.clear();
 
-        ISet<E> thisDiffSet = this.difference(otherSet);
-        ISet<E> otherDiffSet = this.difference(this);
-
-        if (unionSet.size() != 0) {
-            for (E val : thisDiffSet) {
-                unionSet.remove(val);
-            }
-
-            for (E val : otherDiffSet) {
-                unionSet.remove(val);
+        for (E item : otherSet) {
+            if (this.contains(item)) {
+                result.add(item);
             }
         }
 
-        return unionSet;
+        return result;
     }
 
     /**
