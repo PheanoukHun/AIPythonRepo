@@ -235,6 +235,8 @@ public abstract class AbstractSet<E> implements ISet<E> {
      * Return a String version of this set.
      * Format is (e1, e2, ... en)
      * 
+     * Big O Notation: O(N)
+     * 
      * @return A String version of this set.
      */
     public String toString() {
