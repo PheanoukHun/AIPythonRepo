@@ -192,9 +192,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("The Parameter cannot be Null.");
         }
 
-        
         if (otherSet instanceof SortedSet<?>) {
-            
+
             if (this.size() < otherSet.size()) {
                 return false;
             }
@@ -208,7 +207,9 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             E otherVal = getSafeIteratorNext(otherIt);
 
             while (thisVal != null && otherVal != null) {
+
                 int comparedVal = thisVal.compareTo(otherVal);
+
                 if (comparedVal == 0) {
                     thisVal = getSafeIteratorNext(thisIt);
                     otherVal = getSafeIteratorNext(otherIt);
@@ -219,11 +220,11 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
                 }
             }
 
-        } else {
-            return super.containsAll(otherSet);
+            return true;
+
         }
 
-        return true;
+        return super.containsAll(otherSet);
     }
 
     /**

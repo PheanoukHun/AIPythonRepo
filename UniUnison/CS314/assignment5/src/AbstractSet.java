@@ -39,7 +39,7 @@ public abstract class AbstractSet<E> implements ISet<E> {
             this.add(item);
         }
 
-        return startSize == this.size();
+        return startSize != this.size();
     }
 
     /**

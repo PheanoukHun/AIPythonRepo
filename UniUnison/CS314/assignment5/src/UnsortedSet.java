@@ -29,6 +29,11 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         this.myCon = new ArrayList<>();
     }
 
+    /**
+     * create a SortedSet out of an unsorted set.
+     * 
+     * @param other != null
+     */
     public UnsortedSet(ISet<E> other) {
 
         // Preconditions
@@ -43,6 +48,13 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         }
     }
 
+    /**
+     * Add an item to this set.
+     * 
+     * @param item the item to be added to this set. item may not equal null.
+     * @return true if this set changed as a result of this operation, false
+     *         otherwise.
+     */
     public boolean add(E item) {
 
         // Precondition
@@ -58,10 +70,42 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         return true;
     }
 
+    /**
+     * Make this set empty.
+     */
     public void clear() {
         this.myCon.clear();
     }
 
+    /**
+     * Return an Iterator object for the elements of this set.
+     * 
+     * @return an Iterator object for the elements of this set
+     */
+    public Iterator<E> iterator() {
+        return this.myCon.iterator();
+    }
+
+    /**
+     * Return the number of elements of this set.
+     * 
+     * @return the number of items in this set
+     */
+    public int size() {
+        return this.myCon.size();
+    }
+
+    /**
+     * Create a new set that is the difference of this set and otherSet. Return an
+     * ISet of elements that are in this Set but not in otherSet. Also called the
+     * relative complement. Example: If ISet A contains [X, Y, Z] and ISet B
+     * contains [W, Z]then A.difference(B) would return an ISet with elements [X, Y]
+     * while B.difference(A) would return an ISet with elements [W]. Neither this
+     * set or otherSet are altered as a result of this operation.
+     * 
+     * @param otherSet != null
+     * @return a set that is the difference of this set and otherSet
+     */
     public ISet<E> difference(ISet<E> otherSet) {
 
         ISet<E> results = new UnsortedSet<>();
@@ -74,14 +118,13 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         return results;
     }
 
-    public Iterator<E> iterator() {
-        return this.myCon.iterator();
-    }
-
-    public int size() {
-        return this.myCon.size();
-    }
-
+    /**
+     * Create a new set that is the union of this set and otherSet. Neither this set
+     * or otherSet are altered as a result of this operation.
+     * 
+     * @param otherSet != null
+     * @return - returns a set that is the union of this set and otherSet.
+     */
     public ISet<E> union(ISet<E> otherSet) {
 
         UnsortedSet<E> results = new UnsortedSet<>();
