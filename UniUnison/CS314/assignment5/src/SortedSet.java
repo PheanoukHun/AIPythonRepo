@@ -298,14 +298,17 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("The Item Parameter cannot be null.");
         }
 
+        SortedSet<E> result = new SortedSet<>();
+        SortedSet<E> otherSortedSet;
+        
         if (!(otherSet instanceof SortedSet<?>)) {
-            return super.intersection(otherSet);
+            otherSortedSet = new SortedSet<>(otherSet);
+        } else {
+            otherSortedSet = (SortedSet<E>) otherSet;
         }
 
-        SortedSet<E> result = new SortedSet<>();
-
         Iterator<E> thisIt = this.iterator();
-        Iterator<E> otherIt = ((SortedSet<E>) otherSet).iterator();
+        Iterator<E> otherIt = otherSortedSet.iterator();
 
         final boolean IS_UNION = false;
 
