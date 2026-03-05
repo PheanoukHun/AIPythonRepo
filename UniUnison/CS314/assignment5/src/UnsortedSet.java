@@ -30,25 +30,6 @@ public class UnsortedSet<E> extends AbstractSet<E> {
     }
 
     /**
-     * create a SortedSet out of an unsorted set.
-     * 
-     * @param other != null
-     */
-    public UnsortedSet(ISet<E> other) {
-
-        // Preconditions
-        if (other == null) {
-            throw new IllegalArgumentException("The Parameter Cannot Equal Null");
-        }
-
-        this.myCon = new ArrayList<>();
-
-        for (E item : other) {
-            this.add(item);
-        }
-    }
-
-    /**
      * Add an item to this set.
      * 
      * @param item the item to be added to this set. item may not equal null.
