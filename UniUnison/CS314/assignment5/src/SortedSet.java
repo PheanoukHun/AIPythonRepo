@@ -452,7 +452,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     private ArrayList<E> mergeArrays(Iterator<E> thisIt, Iterator<E> otherIt, boolean isUnion) {
 
         ArrayList<E> results = new ArrayList<>();
-        E thisCurrVal = getSafeIteratorNext(thisIt), otherCurrVal = getSafeIteratorNext(otherIt);
+        E thisCurrVal = getSafeIteratorNext(thisIt);
+        E otherCurrVal = getSafeIteratorNext(otherIt);
 
         // Add based on the comparison of the current values
         while (thisCurrVal != null && otherCurrVal != null) {
@@ -492,9 +493,10 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     }
 
     /**
+     * Searches the sorted set for the value using the Binary Search Algorithm
      * 
-     * @param val
-     * @return
+     * @param val - the value to be searched for in the search.
+     * @return - The index value of the val index or -1 if it is not found.
      */
     private int binarySearch(E val) {
 
@@ -502,6 +504,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             return -1;
         }
 
+        // Search through the Array using Binary Search
         int start = 0;
         int end = this.size() - 1;
 
@@ -520,6 +523,13 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         return -1;
     }
 
+    /**
+     * Safely get the next element from an iterator without throwing an exception.
+     * 
+     * @param it - an iterator over a sorted set's elements.
+     * @return - The next value of iterator or null if it is null or iterator does
+     *         not have a next value.
+     */
     private E getSafeIteratorNext(Iterator<E> it) {
 
         if (it == null || !it.hasNext()) {
@@ -529,7 +539,14 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         return it.next();
     }
 
+    /**
+     * Creates a SortedSet<E> Representation of an ISet<E> Object.
+     * 
+     * @param otherSet - The set needed to be converted
+     * @return - The SortedSet<E> Representation of the the otherSet Object.
+     */
     private SortedSet<E> getSortedSetFromUnsorted(ISet<E> otherSet) {
+        
         SortedSet<E> otherSortedSet;
 
         if (!(otherSet instanceof SortedSet<?>)) {
