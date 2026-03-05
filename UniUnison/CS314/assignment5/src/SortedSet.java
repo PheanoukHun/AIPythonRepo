@@ -108,6 +108,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * Add an item to this set.
      * item != null
      * 
+     * Big O Notation: O(N)
+     * 
      * @param item the item to be added to this set. item may not equal null.
      * @return true if this set changed as a result of this operation,
      *         false otherwise.
@@ -142,6 +144,9 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * A union operation. Add all items of otherSet that
      * are not already present in this set to this set.
      * 
+     * Big O Notation: O(N) if otherSet is a SortedSet<E>; O(N^2) if otherSet is not
+     * a SortedSet<E>.
+     * 
      * @param otherSet != null
      * @return true if this set changed as a result of this operation,
      *         false otherwise.
@@ -172,6 +177,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     /**
      * Determine if item is in this set. Using Binary Search
+     * 
+     * Big O Notation: 
      * 
      * @param item element whose presence is being tested. item != null
      *             Item may not equal null.
