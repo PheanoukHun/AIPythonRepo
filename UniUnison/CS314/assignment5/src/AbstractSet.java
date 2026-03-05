@@ -98,24 +98,6 @@ public abstract class AbstractSet<E> implements ISet<E> {
     }
 
     /**
-     * Determine if all of the elements of otherSet are in this set.
-     * 
-     * @param otherSet != null
-     * @return true if this set contains all of the elements in otherSet,
-     *         false otherwise.
-     */
-    public boolean addAll(ISet<E> otherSet) {
-        if (otherSet == null) {
-            throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
-        }
-        int startSize = this.size();
-        for (E item : otherSet) {
-            this.add(item);
-        }
-        return startSize != this.size();
-    }
-
-    /**
      * Create a new set that is the difference of this set and otherSet. Return an
      * ISet of elements that are in this Set but not in otherSet. Also called the
      * relative complement. Example: If ISet A contains [X, Y, Z] and ISet B
