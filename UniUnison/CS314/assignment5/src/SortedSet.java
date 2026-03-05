@@ -158,6 +158,10 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
         }
 
+        if (!(otherSet instanceof SortedSet<?>)) {
+
+        }
+
         if (otherSet instanceof SortedSet<?>) {
 
             SortedSet<E> otherSorted = (SortedSet<E>) otherSet;
@@ -211,39 +215,39 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("The Parameter cannot be Null.");
         }
 
-        if (otherSet instanceof SortedSet<?>) {
-
-            if (this.size() < otherSet.size()) {
-                return false;
-            }
-
-            SortedSet<E> sortedOther = (SortedSet<E>) otherSet;
-
-            Iterator<E> thisIt = this.iterator();
-            Iterator<E> otherIt = sortedOther.iterator();
-
-            E thisVal = getSafeIteratorNext(thisIt);
-            E otherVal = getSafeIteratorNext(otherIt);
-
-            while (thisVal != null && otherVal != null) {
-
-                int comparedVal = thisVal.compareTo(otherVal);
-
-                if (comparedVal == 0) {
-                    thisVal = getSafeIteratorNext(thisIt);
-                    otherVal = getSafeIteratorNext(otherIt);
-                } else if (comparedVal < 0) {
-                    thisVal = getSafeIteratorNext(thisIt);
-                } else {
-                    return false;
-                }
-            }
-
-            return true;
-
+        if (this.size() < otherSet.size()) {
+            return false;
         }
 
-        return super.containsAll(otherSet);
+        SortedSet<E> sortedOther;
+
+        if (!(otherSet instanceof SortedSet<?>)) {
+            sortedOther = new SortedSet<>(otherSet);
+        } else {
+            sortedOther = (SortedSet<E>) otherSet;
+        }
+
+        Iterator<E> thisIt = this.iterator();
+        Iterator<E> otherIt = sortedOther.iterator();
+
+        E thisVal = getSafeIteratorNext(thisIt);
+        E otherVal = getSafeIteratorNext(otherIt);
+
+        while (thisVal != null && otherVal != null) {
+
+            int comparedVal = thisVal.compareTo(otherVal);
+
+            if (comparedVal == 0) {
+                thisVal = getSafeIteratorNext(thisIt);
+                otherVal = getSafeIteratorNext(otherIt);
+            } else if (comparedVal < 0) {
+                thisVal = getSafeIteratorNext(thisIt);
+            } else {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
