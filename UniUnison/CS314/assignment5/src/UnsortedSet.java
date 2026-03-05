@@ -100,11 +100,11 @@ public class UnsortedSet<E> extends AbstractSet<E> {
     }
 
     public ISet<E> union(ISet<E> otherSet) {
-        
+
         UnsortedSet<E> results = new UnsortedSet<>();
 
-       results.addAll(this);
-       results.addAll(otherSet);
+        results.addAll(this);
+        results.addAll(otherSet);
 
         return results;
     }
