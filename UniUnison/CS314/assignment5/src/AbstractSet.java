@@ -168,7 +168,7 @@ public abstract class AbstractSet<E> implements ISet<E> {
             return false;
         }
 
-        ISet<?> otherSet = (ISet<?>) other;
+        ISet<E> otherSet = (ISet<E>) other;
 
         if (this.size() != otherSet.size()) {
             return false;
