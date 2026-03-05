@@ -50,7 +50,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
         this();
 
-        if (other instanceof SortedSet<E>) {
+        if (other instanceof SortedSet<?>) {
             SortedSet<E> otherSet = (SortedSet<E>) other;
             for (E item : otherSet.myCon) {
                 this.myCon.add(item);
@@ -263,6 +263,10 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         }
 
         ISet<?> otherSet = (ISet<?>) other;
+
+        if (otherSet.size() != this.size()) {
+            return false;
+        }
 
         if (otherSet instanceof SortedSet<?>) {
             Iterator<E> thisIt = this.iterator();
