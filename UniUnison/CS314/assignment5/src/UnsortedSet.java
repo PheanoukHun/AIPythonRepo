@@ -78,20 +78,6 @@ public class UnsortedSet<E> extends AbstractSet<E> {
         return this.myCon.iterator();
     }
 
-    public boolean remove(E item) {
-        // Precondition
-        if (item == null) {
-            throw new IllegalArgumentException("The Item Parameter cannot be null.");
-        }
-
-        if (this.contains(item)) {
-            myCon.remove(item);
-            return true;
-        }
-
-        return false;
-    }
-
     public int size() {
         return this.myCon.size();
     }

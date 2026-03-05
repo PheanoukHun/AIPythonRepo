@@ -187,7 +187,9 @@ public abstract class AbstractSet<E> implements ISet<E> {
     public boolean remove(E item) {
 
         // Precondition
-        
+        if (item == null) {
+            throw new IllegalArgumentException("The Parameter item cannot be Null.");
+        }
         
         Iterator<E> it = this.iterator();
         
