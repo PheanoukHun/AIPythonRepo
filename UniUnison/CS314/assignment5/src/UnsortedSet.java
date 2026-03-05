@@ -55,7 +55,7 @@ public class UnsortedSet<E> extends AbstractSet<E> {
      * Make this set empty.
      */
     public void clear() {
-        this.myCon.clear();
+        this.myCon = new ArrayList<>();
     }
 
     /**
