@@ -23,6 +23,8 @@ public abstract class AbstractSet<E> implements ISet<E> {
      * A union operation. Add all items of otherSet that
      * are not already present in this set to this set.
      * 
+     * Big O Notation: O(N^2)
+     * 
      * @param otherSet != null
      * @return true if this set changed as a result of this operation,
      *         false otherwise.
@@ -44,6 +46,8 @@ public abstract class AbstractSet<E> implements ISet<E> {
 
     /**
      * Make this set empty.
+     * 
+     * Big O Notation: O(N^2)
      */
     public void clear() {
         Iterator<E> it = this.iterator();
@@ -55,6 +59,8 @@ public abstract class AbstractSet<E> implements ISet<E> {
 
     /**
      * Determine if item is in this set.
+     * 
+     * Big O Notation: O(N)
      * 
      * @param item element whose presence is being tested. item != null
      *             Item may not equal null.
@@ -79,6 +85,8 @@ public abstract class AbstractSet<E> implements ISet<E> {
 
     /**
      * Determine if all of the elements of otherSet are in this set.
+     * 
+     * Big O Notation: O(N^2)
      * 
      * @param otherSet != null
      * @return true if this set contains all of the elements in otherSet,
@@ -116,6 +124,8 @@ public abstract class AbstractSet<E> implements ISet<E> {
      * Y] while B.difference(A) would return an ISet with elements [W]. Neither this
      * set or otherSet are altered as a result of this operation.
      * 
+     * Big O Notation: O(N^2)
+     * 
      * @param otherSet != null
      * @return a set that is the difference of this set and otherSet
      */
@@ -139,6 +149,8 @@ public abstract class AbstractSet<E> implements ISet<E> {
      * create a new set that is the intersection of this set and otherSet.
      * Neither this set or otherSet are altered as a result of this
      * operation.
+     * 
+     * Big O Notation: O(N^2)
      * 
      * @param otherSet != null
      * @return a set that is the intersection of this set and otherSet
@@ -166,6 +178,8 @@ public abstract class AbstractSet<E> implements ISet<E> {
      * Determine if this set is equal to other. Two sets are equal if they have
      * exactly the same elements. The order of the elements does not matter.
      * 
+     * Big O Notation: O(N^2)
+     * 
      * @param other the object to compare to this set
      * @return true if other is a Set and has the same elements as this set
      */
@@ -190,7 +204,9 @@ public abstract class AbstractSet<E> implements ISet<E> {
 
     /**
      * Remove the specified item from this set if it is present.
-     * pre: item != null
+     * 
+     * Big O Notation: O(N)
+     * 
      * @param item the item to remove from the set. item may not equal null.
      * @return true if this set changed as a result of this operation,
      * false otherwise
