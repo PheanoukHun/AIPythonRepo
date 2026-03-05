@@ -179,6 +179,54 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     }
 
     /**
+     * Determine if all of the elements of otherSet are in this set.
+     * 
+     * @param otherSet != null
+     * @return true if this set contains all of the elements in otherSet,
+     *         false otherwise.
+     */
+    public boolean containsAll(ISet<E> otherSet) {
+
+        // Precondition
+        if (otherSet == null) {
+            throw new IllegalArgumentException("The Parameter cannot be Null.");
+        }
+
+        
+        if (otherSet instanceof SortedSet<?>) {
+            
+            if (this.size() < otherSet.size()) {
+                return false;
+            }
+
+            SortedSet<E> sortedOther = (SortedSet<E>) otherSet;
+
+            Iterator<E> thisIt = this.iterator();
+            Iterator<E> otherIt = sortedOther.iterator();
+
+            E thisVal = getSafeIteratorNext(thisIt);
+            E otherVal = getSafeIteratorNext(otherIt);
+
+            while (thisVal != null && otherVal != null) {
+                int comparedVal = thisVal.compareTo(otherVal);
+                if (comparedVal == 0) {
+                    thisVal = getSafeIteratorNext(thisIt);
+                    otherVal = getSafeIteratorNext(otherIt);
+                } else if (comparedVal < 0) {
+                    thisVal = getSafeIteratorNext(thisIt);
+                } else {
+                    return false;
+                }
+            }
+
+        } else {
+            return super.containsAll(otherSet);
+        }
+
+        return true;
+    }
+
+    /**
      * Make this set empty.
      */
     public void clear() {
@@ -300,7 +348,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
         SortedSet<E> result = new SortedSet<>();
         SortedSet<E> otherSortedSet;
-        
+
         if (!(otherSet instanceof SortedSet<?>)) {
             otherSortedSet = new SortedSet<>(otherSet);
         } else {
@@ -393,10 +441,14 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
                 thisCurrVal = getSafeIteratorNext(thisIt);
                 otherCurrVal = getSafeIteratorNext(otherIt);
             } else if (comparedVal > 0) {
-                if (isUnion) { results.add(otherCurrVal); }
+                if (isUnion) {
+                    results.add(otherCurrVal);
+                }
                 otherCurrVal = getSafeIteratorNext(otherIt);
             } else {
-                if (isUnion) { results.add(thisCurrVal); }
+                if (isUnion) {
+                    results.add(thisCurrVal);
+                }
                 thisCurrVal = getSafeIteratorNext(thisIt);
             }
         }
