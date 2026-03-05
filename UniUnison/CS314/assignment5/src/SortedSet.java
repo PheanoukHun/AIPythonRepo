@@ -321,7 +321,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * Two sets are equal if they have exactly the same elements.
      * The order of the elements does not matter.
      * 
-     * Big O Notation: O(N) if other is a SortedSet<E>
+     * Big O Notation: O(N) if other is a SortedSet<E>, else O(N^2)
      * 
      * @param other the object to compare to this set
      * @return true if other is a Set and has the same elements as this set
@@ -362,6 +362,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * create a new set that is the intersection of this set and otherSet.
      * Neither this set or otherSet are altered as a result of this operation.
      * 
+     * Big O Notation: O(N) if otherSet is SortedSet<E>; else O(N * log(N))
+     * 
      * @param otherSet != null
      * @return a set that is the intersection of this set and otherSet
      */
@@ -393,12 +395,23 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     /**
      * Return an Iterator object for the elements of this set.
      * 
+     * Big O Notation: O(1)
+     * 
      * @return an Iterator object for the elements of this set
      */
     public Iterator<E> iterator() {
         return this.myCon.iterator();
     }
 
+    /**
+     * Remove the specified item from this set if it is present.
+     * 
+     * Big O Notation: O(N)
+     * 
+     * @param item the item to remove from the set. item may not equal null.
+     * @return true if this set changed as a result of this operation,
+     *         false otherwise
+     */
     public boolean remove(E item) {
         // Precondition
         if (item == null) {
