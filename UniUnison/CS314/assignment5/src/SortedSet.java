@@ -144,7 +144,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * A union operation. Add all items of otherSet that
      * are not already present in this set to this set.
      * 
-     * Big O Notation: O(N) if otherSet is a SortedSet<E>; O(N^2) if otherSet is not
+     * Big O Notation: O(N) if otherSet is a SortedSet<E>; O(N * log(N)) if otherSet
+     * is not
      * a SortedSet<E>.
      * 
      * @param otherSet != null
@@ -158,25 +159,18 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("The Parameter Other Set cannot be Null.");
         }
 
-        if (!(otherSet instanceof SortedSet<?>)) {
+        // Converts the otherSet to a Sorted Set
+        SortedSet<E> sortedOther = getSortedSetFromUnsorted(otherSet);
 
-        }
+        // Add all values
+        Iterator<E> otherIt = sortedOther.iterator();
+        Iterator<E> thisIt = this.iterator();
 
-        if (otherSet instanceof SortedSet<?>) {
+        int oldSize = this.size();
+        final boolean IS_UNION = true;
+        this.myCon = mergeArrays(thisIt, otherIt, IS_UNION);
 
-            SortedSet<E> otherSorted = (SortedSet<E>) otherSet;
-            Iterator<E> otherIt = otherSorted.iterator();
-
-            Iterator<E> thisIt = this.iterator();
-
-            int oldSize = this.size();
-            final boolean IS_UNION = true;
-            this.myCon = mergeArrays(thisIt, otherIt, IS_UNION);
-
-            return oldSize != this.size();
-        } else {
-            return super.addAll(otherSet);
-        }
+        return oldSize != this.size();
     }
 
     /**
@@ -219,14 +213,10 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             return false;
         }
 
-        SortedSet<E> sortedOther;
+        // Converts the otherSet to a Sorted Set
+        SortedSet<E> sortedOther = getSortedSetFromUnsorted(otherSet);
 
-        if (!(otherSet instanceof SortedSet<?>)) {
-            sortedOther = new SortedSet<>(otherSet);
-        } else {
-            sortedOther = (SortedSet<E>) otherSet;
-        }
-
+        // Going in and checking the Values for containment
         Iterator<E> thisIt = this.iterator();
         Iterator<E> otherIt = sortedOther.iterator();
 
@@ -268,7 +258,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * while B.difference(A) would return an ISet with elements [W]. Neither this
      * set or otherSet are altered as a result of this operation.
      * 
-     * Big O Notation: O(N) if otherSet is a SortedSet<E>; else O(N^2)
+     * Big O Notation: O(N) if otherSet is a SortedSet<E>; else O(N * log(N))
      * 
      * @param otherSet != null
      * @return a set that is the difference of this set and otherSet
@@ -282,39 +272,30 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
         SortedSet<E> diffSet = new SortedSet<>();
 
-        if (!(otherSet instanceof SortedSet<?>)) {
-            for (E val : this) {
-                if (!otherSet.contains(val)) {
-                    diffSet.add(val);
-                }
-            }
-        } else {
+        SortedSet<E> otherSorted = getSortedSetFromUnsorted(otherSet);
+        
+        Iterator<E> thisIt = this.iterator();
+        Iterator<E> otherIt = otherSorted.iterator();
 
-            SortedSet<E> otherSorted = (SortedSet<E>) otherSet;
-            Iterator<E> otherIt = otherSorted.iterator();
+        E thisCurrVal = getSafeIteratorNext(thisIt);
+        E otherCurrVal = getSafeIteratorNext(otherIt);
 
-            Iterator<E> thisIt = this.iterator();
-
-            E thisCurrVal = getSafeIteratorNext(thisIt);
-            E otherCurrVal = getSafeIteratorNext(otherIt);
-
-            while (thisCurrVal != null && otherCurrVal != null) {
-                int comparedVal = thisCurrVal.compareTo(otherCurrVal);
-                if (comparedVal < 0) {
-                    diffSet.add(thisCurrVal);
-                    thisCurrVal = getSafeIteratorNext(thisIt);
-                } else if (comparedVal > 0) {
-                    otherCurrVal = getSafeIteratorNext(otherIt);
-                } else {
-                    thisCurrVal = getSafeIteratorNext(thisIt);
-                    otherCurrVal = getSafeIteratorNext(otherIt);
-                }
-            }
-
-            while (thisCurrVal != null) {
+        while (thisCurrVal != null && otherCurrVal != null) {
+            int comparedVal = thisCurrVal.compareTo(otherCurrVal);
+            if (comparedVal < 0) {
                 diffSet.add(thisCurrVal);
                 thisCurrVal = getSafeIteratorNext(thisIt);
+            } else if (comparedVal > 0) {
+                otherCurrVal = getSafeIteratorNext(otherIt);
+            } else {
+                thisCurrVal = getSafeIteratorNext(thisIt);
+                otherCurrVal = getSafeIteratorNext(otherIt);
             }
+        }
+
+        while (thisCurrVal != null) {
+            diffSet.add(thisCurrVal);
+            thisCurrVal = getSafeIteratorNext(thisIt);
         }
 
         return diffSet;
@@ -379,13 +360,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         }
 
         SortedSet<E> result = new SortedSet<>();
-        SortedSet<E> otherSortedSet;
-
-        if (!(otherSet instanceof SortedSet<?>)) {
-            otherSortedSet = new SortedSet<>(otherSet);
-        } else {
-            otherSortedSet = (SortedSet<E>) otherSet;
-        }
+        SortedSet<E> otherSortedSet = getSortedSetFromUnsorted(otherSet);
 
         Iterator<E> thisIt = this.iterator();
         Iterator<E> otherIt = otherSortedSet.iterator();
@@ -546,4 +521,17 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
         return null;
     }
+
+    private SortedSet<E> getSortedSetFromUnsorted(ISet<E> otherSet) {
+        SortedSet<E> otherSortedSet;
+
+        if (!(otherSet instanceof SortedSet<?>)) {
+            otherSortedSet = new SortedSet<>(otherSet);
+        } else {
+            otherSortedSet = (SortedSet<E>) otherSet;
+        }
+
+        return otherSortedSet;
+    }
+
 }
