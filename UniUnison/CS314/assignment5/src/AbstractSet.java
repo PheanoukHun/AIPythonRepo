@@ -178,6 +178,31 @@ public abstract class AbstractSet<E> implements ISet<E> {
     }
 
     /**
+     * Remove the specified item from this set if it is present.
+     * pre: item != null
+     * @param item the item to remove from the set. item may not equal null.
+     * @return true if this set changed as a result of this operation,
+     * false otherwise
+     */
+    public boolean remove(E item) {
+
+        // Precondition
+        
+        
+        Iterator<E> it = this.iterator();
+        
+        while (it.hasNext()) {
+            E currVal = it.next();
+            if (currVal.equals(item)) {
+                it.remove();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Return a String version of this set.
      * Format is (e1, e2, ... en)
      * 
