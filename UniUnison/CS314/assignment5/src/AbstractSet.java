@@ -119,7 +119,7 @@ public abstract class AbstractSet<E> implements ISet<E> {
                 unionSet.remove(val);
             }
 
-            for (E val : thisDiffSet) {
+            for (E val : otherDiffSet) {
                 unionSet.remove(val);
             }
         }
