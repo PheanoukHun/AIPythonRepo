@@ -152,7 +152,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             Iterator<E> thisIt = this.iterator();
 
             int oldSize = this.size();
-            this.myCon = mergeArrays(thisIt, otherIt);
+            final boolean IS_UNION = true;
+            this.myCon = mergeArrays(thisIt, otherIt, IS_UNION);
 
             return oldSize != this.size();
         } else {
@@ -217,7 +218,6 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
             Iterator<E> thisIt = this.iterator();
 
-
             E thisCurrVal = getSafeIteratorNext(thisIt);
             E otherCurrVal = getSafeIteratorNext(otherIt);
 
@@ -264,10 +264,6 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
         ISet<?> otherSet = (ISet<?>) other;
 
-        if (this.size() != otherSet.size()) {
-            return false;
-        }
-
         if (otherSet instanceof SortedSet<?>) {
             Iterator<E> thisIt = this.iterator();
             Iterator<?> otherIt = otherSet.iterator();
@@ -281,7 +277,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             return true;
         }
 
-        return this.containsAll((ISet<E>) otherSet);
+        return super.equals(other);
     }
 
     /**
@@ -304,6 +300,12 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
         SortedSet<E> result = new SortedSet<>();
 
+        Iterator<E> thisIt = this.iterator();
+        Iterator<E> otherIt = ((SortedSet<E>) otherSet).iterator();
+
+        final boolean IS_UNION = false;
+
+        result.myCon = mergeArrays(thisIt, otherIt, IS_UNION);
         return result;
     }
 
@@ -368,7 +370,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * @param otherIt
      * @return
      */
-    private ArrayList<E> mergeArrays(Iterator<E> thisIt, Iterator<E> otherIt) {
+    private ArrayList<E> mergeArrays(Iterator<E> thisIt, Iterator<E> otherIt, boolean isUnion) {
 
         ArrayList<E> results = new ArrayList<>();
 
@@ -384,20 +386,20 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
                 thisCurrVal = getSafeIteratorNext(thisIt);
                 otherCurrVal = getSafeIteratorNext(otherIt);
             } else if (comparedVal > 0) {
-                results.add(otherCurrVal);
+                if (isUnion) { results.add(otherCurrVal); }
                 otherCurrVal = getSafeIteratorNext(otherIt);
             } else {
-                results.add(thisCurrVal);
+                if (isUnion) { results.add(thisCurrVal); }
                 thisCurrVal = getSafeIteratorNext(thisIt);
             }
         }
 
-        while (thisCurrVal != null) {
+        while (thisCurrVal != null && isUnion) {
             results.add(thisCurrVal);
             thisCurrVal = getSafeIteratorNext(thisIt);
         }
 
-        while (otherCurrVal != null) {
+        while (otherCurrVal != null && isUnion) {
             results.add(otherCurrVal);
             otherCurrVal = getSafeIteratorNext(otherIt);
         }
