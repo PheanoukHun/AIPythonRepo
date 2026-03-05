@@ -178,7 +178,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     /**
      * Determine if item is in this set. Using Binary Search
      * 
-     * Big O Notation: 
+     * Big O Notation: O(log(N))
      * 
      * @param item element whose presence is being tested. item != null
      *             Item may not equal null.
@@ -196,6 +196,9 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     /**
      * Determine if all of the elements of otherSet are in this set.
+     * 
+     * Big O Notation: O(N) if otherSet is a sortedSet<E>; O(N * log(n)) if other is
+     * not a SortedSet<E>
      * 
      * @param otherSet != null
      * @return true if this set contains all of the elements in otherSet,
@@ -245,6 +248,9 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     /**
      * Make this set empty.
+     * 
+     * Big O Notation: O(N) because the Java Garbage Compiler has to go null out all
+     * values in it.
      */
     public void clear() {
         this.myCon = new ArrayList<>();
@@ -257,6 +263,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * contains [W, Z]then A.difference(B) would return an ISet with elements [X, Y]
      * while B.difference(A) would return an ISet with elements [W]. Neither this
      * set or otherSet are altered as a result of this operation.
+     * 
+     * Big O Notation: O(N) if otherSet is a SortedSet<E>; else O(N^2)
      * 
      * @param otherSet != null
      * @return a set that is the difference of this set and otherSet
@@ -312,7 +320,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * Determine if this set is equal to other.
      * Two sets are equal if they have exactly the same elements.
      * The order of the elements does not matter.
-     * pre: none
+     * 
+     * Big O Notation: O(N) if other is a SortedSet<E>
      * 
      * @param other the object to compare to this set
      * @return true if other is a Set and has the same elements as this set
