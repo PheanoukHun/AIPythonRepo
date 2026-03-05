@@ -204,27 +204,27 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
         SortedSet<E> diffSet = new SortedSet<>();
 
-        if (!(otherSet instanceof SortedSet<E>)) {
+        if (!(otherSet instanceof SortedSet<?>)) {
             for (E val : this) {
                 if (!otherSet.contains(val)) {
                     diffSet.add(val);
                 }
             }
         } else {
-            SortedSet<E> otherSorted = new SortedSet<>();
 
+            SortedSet<E> otherSorted = (SortedSet<E>) otherSet;
             Iterator<E> otherIt = otherSorted.iterator();
+
             Iterator<E> thisIt = this.iterator();
 
-            ArrayList<E> results = new ArrayList<>();
 
             E thisCurrVal = getSafeIteratorNext(thisIt);
             E otherCurrVal = getSafeIteratorNext(otherIt);
 
-            while (thisCurrVal != null || otherCurrVal != null) {
+            while (thisCurrVal != null && otherCurrVal != null) {
                 int comparedVal = thisCurrVal.compareTo(otherCurrVal);
                 if (comparedVal < 0) {
-                    results.add(thisCurrVal);
+                    diffSet.add(thisCurrVal);
                     thisCurrVal = getSafeIteratorNext(thisIt);
                 } else if (comparedVal > 0) {
                     otherCurrVal = getSafeIteratorNext(otherIt);
@@ -235,11 +235,9 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             }
 
             while (thisCurrVal != null) {
-                results.add(thisCurrVal);
+                diffSet.add(thisCurrVal);
                 thisCurrVal = getSafeIteratorNext(thisIt);
             }
-
-            diffSet.myCon = results;
         }
 
         return diffSet;
@@ -300,7 +298,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("The Item Parameter cannot be null.");
         }
 
-        if (!(otherSet instanceof SortedSet<E>)) {
+        if (!(otherSet instanceof SortedSet<?>)) {
             return super.intersection(otherSet);
         }
 
