@@ -273,7 +273,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         SortedSet<E> diffSet = new SortedSet<>();
 
         SortedSet<E> otherSorted = getSortedSetFromUnsorted(otherSet);
-        
+
         Iterator<E> thisIt = this.iterator();
         Iterator<E> otherIt = otherSorted.iterator();
 
@@ -438,22 +438,28 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     }
 
     /**
+     * Merges two sorted iterators into an ArrayList based on either the Union or
+     * Intersection operator based on the isUnion parameter.
      * 
-     * @param thisIt
-     * @param otherIt
-     * @return
+     * @param thisIt  - an iterator over this sorted set's elements.
+     * @param otherIt - an iterator over the other sorted set's elements.
+     * @param isUnion - if true, uses makes the method add all elements from both
+     *                iterator, else makes sure they have to appear in both
+     *                iteators.
+     * @return - An ArrayList Object that contains either the Union or Intersection
+     *         of the two iterators.
      */
     private ArrayList<E> mergeArrays(Iterator<E> thisIt, Iterator<E> otherIt, boolean isUnion) {
 
         ArrayList<E> results = new ArrayList<>();
+        E thisCurrVal = getSafeIteratorNext(thisIt), otherCurrVal = getSafeIteratorNext(otherIt);
 
-        E thisCurrVal = getSafeIteratorNext(thisIt);
-        E otherCurrVal = getSafeIteratorNext(otherIt);
-
+        // Add based on the comparison of the current values
         while (thisCurrVal != null && otherCurrVal != null) {
 
             int comparedVal = thisCurrVal.compareTo(otherCurrVal);
 
+            // Check for Equality, Greater than, or Less Than
             if (comparedVal == 0) {
                 results.add(thisCurrVal);
                 thisCurrVal = getSafeIteratorNext(thisIt);
@@ -471,6 +477,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             }
         }
 
+        // Add the Rest of the Value based on whether it is a union call or not.
         while (thisCurrVal != null && isUnion) {
             results.add(thisCurrVal);
             thisCurrVal = getSafeIteratorNext(thisIt);
@@ -515,11 +522,11 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     private E getSafeIteratorNext(Iterator<E> it) {
 
-        if (it.hasNext()) {
-            return it.next();
+        if (it == null || !it.hasNext()) {
+            return null;
         }
 
-        return null;
+        return it.next();
     }
 
     private SortedSet<E> getSortedSetFromUnsorted(ISet<E> otherSet) {
