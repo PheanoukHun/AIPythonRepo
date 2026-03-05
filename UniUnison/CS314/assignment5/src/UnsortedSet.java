@@ -25,12 +25,19 @@ public class UnsortedSet<E> extends AbstractSet<E> {
 
     private ArrayList<E> myCon;
 
+    /**
+     * Create an empty SortedSet
+     * 
+     * Big O Notation: O(1)
+     */
     public UnsortedSet() {
         this.myCon = new ArrayList<>();
     }
 
     /**
      * Add an item to this set.
+     * 
+     * Big O Notation: O(N)
      * 
      * @param item the item to be added to this set. item may not equal null.
      * @return true if this set changed as a result of this operation, false
@@ -53,6 +60,8 @@ public class UnsortedSet<E> extends AbstractSet<E> {
 
     /**
      * Make this set empty.
+     * 
+     * Big O Notation: O(N)
      */
     public void clear() {
         this.myCon = new ArrayList<>();
@@ -60,6 +69,8 @@ public class UnsortedSet<E> extends AbstractSet<E> {
 
     /**
      * Return an Iterator object for the elements of this set.
+     * 
+     * Big O Notation: O(1)
      * 
      * @return an Iterator object for the elements of this set
      */
@@ -69,6 +80,8 @@ public class UnsortedSet<E> extends AbstractSet<E> {
 
     /**
      * Return the number of elements of this set.
+     * 
+     * Big O Notation: O(1)
      * 
      * @return the number of items in this set
      */
@@ -84,12 +97,15 @@ public class UnsortedSet<E> extends AbstractSet<E> {
      * while B.difference(A) would return an ISet with elements [W]. Neither this
      * set or otherSet are altered as a result of this operation.
      * 
+     * Big O Notation: O(N^2)
+     * 
      * @param otherSet != null
      * @return a set that is the difference of this set and otherSet
      */
     public ISet<E> difference(ISet<E> otherSet) {
 
         ISet<E> results = new UnsortedSet<>();
+
         for (E item : this) {
             if (!otherSet.contains(item)) {
                 results.add(item);
@@ -102,6 +118,8 @@ public class UnsortedSet<E> extends AbstractSet<E> {
     /**
      * Create a new set that is the union of this set and otherSet. Neither this set
      * or otherSet are altered as a result of this operation.
+     * 
+     * Big O Notation: O(N^2)
      * 
      * @param otherSet != null
      * @return - returns a set that is the union of this set and otherSet.

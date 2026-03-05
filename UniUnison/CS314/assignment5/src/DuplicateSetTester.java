@@ -1,15 +1,3 @@
-/*
- * SetTester.java - CS 314 Assignment 7
- *
- * By signing my/our name(s) below, I/we affirm that this assignment is my/our
- * own work. I/we have neither given nor received unauthorized assistance on
- * this assignment.
- *
- * Name 1: Pheanouk Hun
- * Email address 1: ph23434@eid.utexas.edu
- * UTEID 1: ph23434
- */
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -28,7 +16,7 @@ import javax.swing.JFileChooser;
  * intersection, union, and difference methods in the AbstractSet class:
  */
 
-public class SetTester {
+public class DuplicateSetTester {
 
         public static void main(String[] args) {
 
