@@ -31,6 +31,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     /**
      * create an empty SortedSet
+     * 
+     * Big O Notation: O(1)
      */
     public SortedSet() {
         this.myCon = new ArrayList<>();
@@ -38,6 +40,9 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
     /**
      * create a SortedSet out of an unsorted set.
+     * 
+     * Big O Notation: O(N) if other is a SortedSet<E>; N * log(N) if other isn't a
+     * SortedSet<E>.
      * 
      * @param other != null
      */
@@ -67,6 +72,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * 
      * pre: size() != 0
      * 
+     * Big O Notation: O(1)
+     * 
      * @return the smallest element in this SortedSet.
      */
     public E min() {
@@ -82,6 +89,8 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * Return the largest element in this SortedSet.
      * 
      * pre: size() != 0
+     * 
+     * Big O Notation: O(1)
      * 
      * @return the largest element in this SortedSet.
      */
