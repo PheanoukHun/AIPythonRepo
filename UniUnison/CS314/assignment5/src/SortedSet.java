@@ -33,7 +33,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * create an empty SortedSet
      */
     public SortedSet() {
-        this.myCon = new ArrayList<E>();
+        this.myCon = new ArrayList<>();
     }
 
     /**
@@ -48,7 +48,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
             throw new IllegalArgumentException("The Parameter Cannot Equal Null");
         }
 
-        this();
+        this.myCon = new ArrayList<>();
 
         if (other instanceof SortedSet<?>) {
             SortedSet<E> otherSet = (SortedSet<E>) other;

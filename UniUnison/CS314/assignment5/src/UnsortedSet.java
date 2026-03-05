@@ -26,16 +26,17 @@ public class UnsortedSet<E> extends AbstractSet<E> {
     private ArrayList<E> myCon;
 
     public UnsortedSet() {
-        myCon = new ArrayList<>();
+        this.myCon = new ArrayList<>();
     }
 
     public UnsortedSet(ISet<E> other) {
 
+        // Preconditions
         if (other == null) {
             throw new IllegalArgumentException("The Parameter Cannot Equal Null");
         }
 
-        this();
+        this.myCon = new ArrayList<>();
 
         for (E item : other) {
             this.add(item);
