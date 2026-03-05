@@ -43,6 +43,17 @@ public abstract class AbstractSet<E> implements ISet<E> {
     }
 
     /**
+     * Make this set empty.
+     */
+    public void clear() {
+        Iterator<E> it = this.iterator();
+        while (it.hasNext()) {
+            it.next();
+            it.remove();
+        }
+    }
+
+    /**
      * Determine if item is in this set.
      * 
      * @param item element whose presence is being tested. item != null
