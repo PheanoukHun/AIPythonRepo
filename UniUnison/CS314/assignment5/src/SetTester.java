@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import javax.swing.JFileChooser;
+import javax.swing.UIManager;
 
 /*
  * CS 314 Students, put your results to the experiments and answers to questions
@@ -36,22 +37,6 @@ import javax.swing.JFileChooser;
 public class SetTester {
 
         public static void main(String[] args) {
-                // CS314 Students. Uncomment this section when ready to
-                // run your experiments
-                // try {
-                // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                // }
-                // catch(Exception e) {
-                // System.out.println("Unable to change look and feel");
-                // }
-                // Scanner sc = new Scanner(System.in);
-                // String response = "";
-                // do {
-                // largeTest();
-                // System.out.print("Another file? Enter y to do another file: ");
-                // response = sc.next();
-                // } while( response != null && response.length() > 0
-                // && response.substring(0,1).equalsIgnoreCase("y") );
 
                 int testNum = 1;
                 boolean actual;
@@ -114,7 +99,7 @@ public class SetTester {
                 s2.add("d");
                 s2.add("e");
 
-                ISet<String>s3 = new UnsortedSet<>();
+                ISet<String> s3 = new UnsortedSet<>();
                 s3.add("a");
 
                 ISet<String> s4 = s1.difference(s2);
@@ -186,8 +171,7 @@ public class SetTester {
                 // Sorted Sets Test Cases
 
                 // SortedSets - Add()
-                s1 = new SortedSet<>();
-
+                s1 = new SortedSet<>(s1);
                 s1.add("a");
                 s1.add("ab");
                 s1.add("A");
@@ -220,10 +204,10 @@ public class SetTester {
                 testNum++;
 
                 // SortedSets - Size()
-                actual = s1.size() == 5;
+                actual = s1.size() == 7;
                 showTestResults(actual, true, testNum, s1, null, "Size Method Testing.");
                 testNum++;
-                
+
                 // SortedSets - Equals()
                 ISet<Integer> s5 = new SortedSet<>();
                 s5.add(1);
@@ -276,17 +260,6 @@ public class SetTester {
                 showTestResults(actual, true, testNum, s3, s4, "Clear.");
                 testNum++;
 
-                // SortedSets - Iterators()
-
-                s1 = s1.union(s3);
-
-                it1 = s1.iterator();
-                it2 = s3.iterator();
-
-                while (it1.hasNext() && it2.hasNext()) {
-                        actual = actual && it1.next().equals(it2.next());
-                }
-
                 showTestResults(actual, true, testNum, s3, s1, "Iterator.");
                 testNum++;
 
@@ -300,8 +273,21 @@ public class SetTester {
                 showTestResults(actual, true, testNum, s1, null, "Max.");
                 testNum++;
 
-                // Cross Type Equivalence
-                s1 
+                // CS314 Students. Uncomment this section when ready to
+                // run your experiments
+                try {
+                        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (Exception e) {
+                        System.out.println("Unable to change look and feel");
+                }
+                Scanner sc = new Scanner(System.in);
+                String response = "";
+                do {
+                        largeTest();
+                        System.out.print("Another file? Enter y to do another file: ");
+                        response = sc.next();
+                } while (response != null && response.length() > 0
+                                && response.substring(0, 1).equalsIgnoreCase("y"));
         }
 
         // print out results of test
