@@ -59,47 +59,92 @@ public class SetTester {
                 // UnsortedSet Tests
 
                 // Add() and Contains() - for UnsortedSets
-                ISet<String> unsortedStrSet = new UnsortedSet<>();
+                ISet<String> s1 = new UnsortedSet<>();
 
-                unsortedStrSet.add("a");
-                unsortedStrSet.add("ab");
-                unsortedStrSet.add("A");
-                unsortedStrSet.add("c");
-                unsortedStrSet.add("Ca");
+                s1.add("a");
+                s1.add("ab");
+                s1.add("A");
+                s1.add("c");
+                s1.add("Ca");
 
-                actual = unsortedStrSet.add("a");
-                showTestResults(actual, false, testNum, unsortedStrSet, null,
+                actual = s1.add("a");
+                showTestResults(actual, false, testNum, s1, null,
                                 "Adding Test for Item Already Found Within Set");
                 testNum++;
 
-                actual = unsortedStrSet.contains("Hello");
-                showTestResults(actual, false, testNum, unsortedStrSet, null,
+                actual = s1.contains("Hello");
+                showTestResults(actual, false, testNum, s1, null,
                                 "Contains Method Test with Value Not Found Within Set.");
                 testNum++;
 
                 // Removes() - for UnsortedSets
-                actual = unsortedStrSet.remove("");
-                showTestResults(actual, false, testNum, unsortedStrSet, null,
+                actual = s1.remove("");
+                showTestResults(actual, false, testNum, s1, null,
                                 "Remove Value Not Found within Set");
                 testNum++;
 
                 // Size() - For UnSortedSets
-                actual = unsortedStrSet.size() == 5;
-                showTestResults(actual, true, testNum, unsortedStrSet, null, "Test Size Method");
+                actual = s1.size() == 5;
+                showTestResults(actual, true, testNum, s1, null, "Test Size Method");
                 testNum++;
 
                 // containsAll() - For UnSortedSets
-                ISet<String> unsortedStrSet2 = new UnsortedSet<>();
-                unsortedStrSet2.add("a");
-                unsortedStrSet2.add("ab");
-                unsortedStrSet2.add("z");
+                ISet<String> s2 = new UnsortedSet<>();
+                s2.add("a");
+                s2.add("ab");
+                s2.add("z");
 
-                actual = unsortedStrSet.containsAll(unsortedStrSet);
-                showTestResults(actual, false, testNum, unsortedStrSet, unsortedStrSet2,
+                actual = s1.containsAll(s2);
+                showTestResults(actual, false, testNum, s1, s2,
                                 "checks to see if the set1 contains all elements of set2");
                 testNum++;
 
                 // Difference() - For UnSortedSets
+                s1 = new UnsortedSet<>();
+                s1.add("a");
+                s1.add("b");
+                s1.add("c");
+                s1.add("d");
+
+                s2 = new UnsortedSet<>();
+                s2.add("b");
+                s2.add("c");
+                s2.add("d");
+                s2.add("e");
+
+                ISet<String> s3 = new UnsortedSet<>();
+                s3.add("a");
+                
+                ISet<String> s4 = s1.difference(s2);
+                
+                actual = s3.equals(s4);
+                showTestResults(actual, true, testNum, s1, s2, "Gets the Difference of two Sets");
+                testNum++;
+
+                // Union() - For UnsortedSets
+                s4 = s1.union(s2);
+
+                s3.add("b");
+                s3.add("c");
+                s3.add("d");
+                s3.add("e");
+
+                actual = s3.equals(s4);
+                showTestResults(actual, true, testNum, s1, s2, "Gets the Union of two Sets");
+                testNum++;
+
+                // Intersection() - For UnsortedSets
+                s3 = s1.intersection(s2);
+
+                s4.remove("a");
+                s4.remove("e");
+
+                actual = s3.equals(s4);
+                showTestResults(actual, true, testNum, s1, s2, "Gets the Intersection of 2 Sets");
+                testNum++;
+
+                // AddAll() - For Unsorted Sets
+                
         }
 
         // print out results of test
