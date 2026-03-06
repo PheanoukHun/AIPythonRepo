@@ -170,6 +170,19 @@ public class SetTester {
                 showTestResults(actual, true, testNum, s1, s3, "Tests the Equal() method");
                 testNum++;
 
+                // UnsortedSets - Iterator()
+                Iterator<String> it1 = s1.iterator();
+                Iterator<String> it2 = s3.iterator();
+                while (it1.hasNext() && it2.hasNext()) {
+                        it1.next();
+                        it2.next();
+                }
+
+                actual = !(it1.hasNext() || it2.hasNext());
+                showTestResults(actual, true, testNum, s1, s3,
+                                "Testing the Iterator Method for Set 1 and Set 2");
+                testNum++;
+
                 // Sorted Sets Test Cases
 
                 // SortedSets - Add()
@@ -181,14 +194,14 @@ public class SetTester {
                 s1.add("c");
                 s1.add("Ca");
 
-                actual = s1.add("a");
-                showTestResults(actual, false, testNum, s1, null,
+                actual = s1.add("Cab");
+                showTestResults(actual, true, testNum, s1, null,
                                 "Adding Test for Item Already Found Within Set");
                 testNum++;
 
                 // SortedSets - Contains()
-                actual = s1.contains("Hello");
-                showTestResults(actual, false, testNum, s1, null,
+                actual = s1.contains("a");
+                showTestResults(actual, true, testNum, s1, null,
                                 "Contains Method Test with Value Not Found Within Set.");
                 testNum++;
 
@@ -198,11 +211,25 @@ public class SetTester {
                 testNum++;
 
                 // SortedSets - Size()
-                actual = s1.size() == 4;
+                actual = s1.size() == 5;
                 showTestResults(actual, true, testNum, s1, null, "Size Method Testing.");
                 testNum++;
                 
-                
+                // SortedSets - Equals()
+                ISet<Integer> s5 = new SortedSet<>();
+                s5.add(1);
+                s5.add(2);
+                s5.add(3);
+                s5.add(4);
+                s5.add(5);
+                s5.add(6);
+
+                actual = s1.equals(s5);
+                showTestResults(actual, false, testNum, s1, null,
+                                "Equals method with different type sets.");
+                testNum++;
+
+                // SortedSets - 
         }
 
         // print out results of test
