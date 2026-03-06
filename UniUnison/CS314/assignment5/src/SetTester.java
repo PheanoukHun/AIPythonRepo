@@ -59,10 +59,10 @@ import javax.swing.UIManager;
  *      3. HashSet: 0.025 s
  *      4. TreeSet: 0.025 s
  * - Increase in Time from Previous File:
- *      1. SortedSet:
- *      2. UnsortedSet: 
- *      3. HashSet: 
- *      4. TreeSet: 
+ *      1. SortedSet: x2
+ *      2. UnsortedSet: x3.12
+ *      3. HashSet: x1.786
+ *      4. TreeSet: x1.79
  * 
  * Text 3: Canterberry Tales
  * - Size: 1.7 MB
@@ -71,20 +71,34 @@ import javax.swing.UIManager;
  * - Distinct Words: 41333
  * - Increase From Before: x3.44
  * - Time Elapsed: 
- *      1. SortedSet:
- *      2. UnsortedSet: 
- *      3. HashSet: 
- *      4. TreeSet: 
+ *      1. SortedSet: 0.208 s
+ *      2. UnsortedSet: 3.373 s
+ *      3. HashSet: 0.094 s
+ *      4. TreeSet: 0.131 s
  * - Increase in Time from Previouse File:
- *      1. SortedSet:
- *      2. UnsortedSet: 
- *      3. HashSet: 
- *      4. TreeSet: 
+ *      1. SortedSet: x2.89
+ *      2. UnsortedSet: x11.88 
+ *      3. HashSet: x3.76
+ *      4. TreeSet: x5.24
+ * 
+ * Text 4: War and Peace
+ * - Size: 3.4 MB
+ * - Total Number of Words: 566,333
+ * - Increase from the Previous File: x2
+ * - Distinct Words: 41968
+ * - Increase From Before: x1.02
+ * - Time Elapsed: 
+ *      1. SortedSet: 0.325 s
+ *      2. UnsortedSet: 4.661 s
+ *      3. HashSet: 0.116 s
+ *      4. TreeSet: 0.182 s
+ * - Increase in Time from Previouse File:
+ *      1. SortedSet: x1.5625
+ *      2. UnsortedSet: x1.382 
+ *      3. HashSet: x
+ *      4. TreeSet: x5.24
  * 
  * Experiment Part 2:
- * 
- * 
- * Experiment Part 3:
  * 
  */
 
