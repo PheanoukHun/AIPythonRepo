@@ -98,10 +98,19 @@ import javax.swing.JFileChooser;
  * 
  * Experiment Part 2:
  * - Question 2: 
- *      - The processText() method for the HashSet 
- *      - The processText() method for the TreeSet
- *      - The processText() method for the SortedSet is O(N * M)
- *      - The processText() method for the UnSortedSet is O(N * M)
+ *      - The processText() method for the HashSet is O(N) because as the number of words scales,
+ *        the time it takes for the HashSet to use the processText() scales with the same factor.
+ *      - The processText() method for the TreeSet is O(N * Log(M)) because it scaling factors
+ *        based on the times is consistent with O(N * log(M))
+ *      - The processText() method for the SortedSet is O(N * M) is O(N * Log(M)) for the worst 
+ *        case scenario because it goes searches for the insertion index in binary search so once
+ *        it scales, it will 
+ *        look like log(M) so processText() will look like O(N*log(M))
+ *      - The processText() method for the UnSortedSet is O(N * M) because each time you add in
+ *        UnSortedSet is O(N) from .contains() method so once it runs processText(), it will 
+ *        O(N * M).
+ * - Question 3: 
+ *      - The Big O Notation of SortedSet is 
  * 
  */
 
@@ -347,18 +356,18 @@ public class SetTester {
                 // CS314 Students. Uncomment this section when ready to
                 // run your experiments
                 // try {
-                //         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 // } catch (Exception e) {
-                //         System.out.println("Unable to change look and feel");
+                // System.out.println("Unable to change look and feel");
                 // }
                 // Scanner sc = new Scanner(System.in);
                 // String response = "";
                 // do {
-                //         largeTest();
-                //         System.out.print("Another file? Enter y to do another file: ");
-                //         response = sc.next();
+                // largeTest();
+                // System.out.print("Another file? Enter y to do another file: ");
+                // response = sc.next();
                 // } while (response != null && response.length() > 0
-                //                 && response.substring(0, 1).equalsIgnoreCase("y"));
+                // && response.substring(0, 1).equalsIgnoreCase("y"));
         }
 
         // print out results of test
