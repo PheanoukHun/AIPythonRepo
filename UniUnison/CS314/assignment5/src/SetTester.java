@@ -58,7 +58,7 @@ public class SetTester {
 
                 // UnsortedSet Tests
 
-                // Add() and Contains() - for UnsortedSets
+                // UnsortedSets - Add()
                 ISet<String> s1 = new UnsortedSet<>();
 
                 s1.add("a");
@@ -71,6 +71,8 @@ public class SetTester {
                 showTestResults(actual, false, testNum, s1, null,
                                 "Adding Test for Item Already Found Within Set");
                 testNum++;
+
+                // UnsortedSets - Contains()
 
                 actual = s1.contains("Hello");
                 showTestResults(actual, false, testNum, s1, null,
@@ -114,11 +116,11 @@ public class SetTester {
 
                 ISet<String> s3 = new UnsortedSet<>();
                 s3.add("a");
-                
+
                 ISet<String> s4 = s1.difference(s2);
-                
+
                 actual = s3.equals(s4);
-                showTestResults(actual, true, testNum, s1, s2, "Gets the Difference of two Sets");
+                showTestResults(actual, true, testNum, s3, s4, "Gets the Difference of two Sets");
                 testNum++;
 
                 // Union() - For UnsortedSets
@@ -130,7 +132,7 @@ public class SetTester {
                 s3.add("e");
 
                 actual = s3.equals(s4);
-                showTestResults(actual, true, testNum, s1, s2, "Gets the Union of two Sets");
+                showTestResults(actual, true, testNum, s3, s4, "Gets the Union of two Sets");
                 testNum++;
 
                 // Intersection() - For UnsortedSets
@@ -140,10 +142,66 @@ public class SetTester {
                 s4.remove("e");
 
                 actual = s3.equals(s4);
-                showTestResults(actual, true, testNum, s1, s2, "Gets the Intersection of 2 Sets");
+                showTestResults(actual, true, testNum, s3, s4, "Gets the Intersection of 2 Sets");
                 testNum++;
 
-                // AddAll() - For Unsorted Sets
+                // AddAll() - For UnsortedSets
+                s3 = new UnsortedSet<>();
+                s3.addAll(s1);
+
+                actual = s3.equals(s1);
+                showTestResults(actual, true, testNum, s1, s3,
+                                "Adds All Value from set 1 to set 3");
+                testNum++;
+
+                // Clear() - For UnsortedSets
+                s3.clear();
+
+                actual = s3.size() == 0;
+                showTestResults(actual, true, testNum, s3, null,
+                                "Clears the entry found in the set");
+                testNum++;
+
+                // Equals() - For UnsortedSets
+                s3 = new UnsortedSet<>();
+                s3.addAll(s1);
+
+                actual = s3.equals(s1);
+                showTestResults(actual, true, testNum, s1, s3, "Tests the Equal() method");
+                testNum++;
+
+                // Sorted Sets Test Cases
+
+                // SortedSets - Add()
+                s1 = new SortedSet<>();
+
+                s1.add("a");
+                s1.add("ab");
+                s1.add("A");
+                s1.add("c");
+                s1.add("Ca");
+
+                actual = s1.add("a");
+                showTestResults(actual, false, testNum, s1, null,
+                                "Adding Test for Item Already Found Within Set");
+                testNum++;
+
+                // SortedSets - Contains()
+                actual = s1.contains("Hello");
+                showTestResults(actual, false, testNum, s1, null,
+                                "Contains Method Test with Value Not Found Within Set.");
+                testNum++;
+
+                // SortedSets - Remove()
+                actual = s1.remove("ab");
+                showTestResults(actual, true, testNum, s1, null, "Removing a value from a set.");
+                testNum++;
+
+                // SortedSets - Size()
+                actual = s1.size() == 4;
+                showTestResults(actual, true, testNum, s1, null, "Size Method Testing.");
+                testNum++;
+                
                 
         }
 
