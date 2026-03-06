@@ -243,8 +243,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
     /**
      * Make this set empty.
      * 
-     * Big O Notation: O(N) because the Java Garbage Compiler has to go null out all
-     * values in it.
+     * Big O Notation: O(1)
      */
     public void clear() {
         this.myCon = new ArrayList<>();

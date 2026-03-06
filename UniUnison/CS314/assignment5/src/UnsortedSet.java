@@ -61,7 +61,7 @@ public class UnsortedSet<E> extends AbstractSet<E> {
     /**
      * Make this set empty.
      * 
-     * Big O Notation: O(N)
+     * Big O Notation: O(1)
      */
     public void clear() {
         this.myCon = new ArrayList<>();
