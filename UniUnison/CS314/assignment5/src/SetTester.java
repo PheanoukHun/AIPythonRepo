@@ -32,6 +32,20 @@ import javax.swing.UIManager;
  * AbstractSet class because you need to call one of the methods to create a ISet<E> object 
  * and if you implemented all three of the methods in AbstractSet class, you would have created
  * a recurive cycle leading to a stack overflow error as the memory starts to fill up.
+ * 
+ * Text 1: Romeo and Juliet
+ * 
+ * Text 2: Democracy True of False
+ * - Size: 354 kb
+ * - Total Number of Words: 59,866
+ * - Increase from the Previous File:
+ * 
+ * Text 3: Canterberry Tales
+ * - Size: 1.7 MB
+ * - Total Number of Words: 282,827
+ * - Increase from the Previous File:
+ * - Distinct Words: 41333
+ * - Increase in Time from Previouse File:
  */
 
 public class SetTester {
@@ -269,7 +283,7 @@ public class SetTester {
                 testNum++;
 
                 // SortedSets - Min()
-                actual = ((SortedSet<String>) s1).max().equals("z");
+                actual = ((SortedSet<String>) s1).max().equals("d");
                 showTestResults(actual, true, testNum, s1, null, "Max.");
                 testNum++;
 
