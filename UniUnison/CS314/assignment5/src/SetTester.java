@@ -114,7 +114,7 @@ public class SetTester {
                 s2.add("d");
                 s2.add("e");
 
-                ISet<String> s3 = new UnsortedSet<>();
+                ISet<String>s3 = new UnsortedSet<>();
                 s3.add("a");
 
                 ISet<String> s4 = s1.difference(s2);
@@ -253,15 +253,55 @@ public class SetTester {
                 // SortedSets - Union()
                 s4 = new SortedSet<>();
                 s4.add("z");
-                s4.union(s1);
+                s4 = s4.union(s1);
 
-                s3.add("z");
                 s3.add("z");
 
                 actual = s4.equals(s3);
                 showTestResults(actual, true, testNum, s3, s4, "Union.");
                 testNum++;
 
+                // SortedSets - AddAll()
+                s4 = new SortedSet<>();
+                s4.addAll(s1);
+
+                actual = s4.equals(s1);
+                showTestResults(actual, true, testNum, s1, s4, "AddAll Operation.");
+                testNum++;
+
+                // SortedSets - Clear()
+                s4.clear();
+
+                actual = s4.size() == 0;
+                showTestResults(actual, true, testNum, s3, s4, "Clear.");
+                testNum++;
+
+                // SortedSets - Iterators()
+
+                s1 = s1.union(s3);
+
+                it1 = s1.iterator();
+                it2 = s3.iterator();
+
+                while (it1.hasNext() && it2.hasNext()) {
+                        actual = actual && it1.next().equals(it2.next());
+                }
+
+                showTestResults(actual, true, testNum, s3, s1, "Iterator.");
+                testNum++;
+
+                // SortedSets - Min()
+                actual = ((SortedSet<String>) s1).min().equals("A");
+                showTestResults(actual, true, testNum, s1, null, "Min.");
+                testNum++;
+
+                // SortedSets - Min()
+                actual = ((SortedSet<String>) s1).max().equals("z");
+                showTestResults(actual, true, testNum, s1, null, "Max.");
+                testNum++;
+
+                // Cross Type Equivalence
+                s1 
         }
 
         // print out results of test
