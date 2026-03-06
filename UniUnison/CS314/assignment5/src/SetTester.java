@@ -64,7 +64,7 @@ import javax.swing.UIManager;
  *      3. HashSet: x1.786
  *      4. TreeSet: x1.79
  * 
- * Text 3: Canterberry Tales
+ * Text 3: Canterbury Tales
  * - Size: 1.7 MB
  * - Total Number of Words: 282,827 
  * - Increase from the Previous File: x4.72
@@ -95,10 +95,12 @@ import javax.swing.UIManager;
  * - Increase in Time from Previouse File:
  *      1. SortedSet: x1.5625
  *      2. UnsortedSet: x1.382 
- *      3. HashSet: x
- *      4. TreeSet: x5.24
+ *      3. HashSet: x1.234
+ *      4. TreeSet: x1.389
  * 
  * Experiment Part 2:
+ * - Question 1:
+ *      
  * 
  */
 
