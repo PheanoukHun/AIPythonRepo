@@ -49,8 +49,37 @@ public class SetTester {
                 // && response.substring(0,1).equalsIgnoreCase("y") );
 
                 // UnsortedSet Tests
-                
 
+                // Equals
+                ISet<Integer> intSetUnSorted = new UnsortedSet<>();
+                intSetUnSorted.add(12);
+                intSetUnSorted.add(21);
+                intSetUnSorted.add(99);
+                intSetUnSorted.add(25);
+                intSetUnSorted.add(33);
+
+                ISet<Double> doubleSetUnSorted = new UnsortedSet<>();
+                doubleSetUnSorted.add(0.1);
+                doubleSetUnSorted.add(0.11);
+                doubleSetUnSorted.add(0.121);
+                doubleSetUnSorted.add(0.1221);
+                doubleSetUnSorted.add(0.12321);
+                doubleSetUnSorted.add(0.1234321);
+
+                if (doubleSetUnSorted.equals(intSetUnSorted) == false) {
+                        System.out.println("Passed test " + 1);
+                }
+
+                showTestResults(intSetUnSorted.equals(doubleSetUnSorted), false, 1,
+                                intSetUnSorted, new ISet<Integer>(), "Testing Different Type Comparison");
+
+                ISet<String> stringSetUnSorted = new UnsortedSet<>();
+                stringSetUnSorted.add("a");
+                stringSetUnSorted.add("ab");
+                stringSetUnSorted.add("A");
+                stringSetUnSorted.add("c");
+                stringSetUnSorted.add("Ca");
+                stringSetUnSorted.add("a");
         }
 
         // print out results of test
