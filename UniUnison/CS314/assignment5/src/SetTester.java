@@ -205,6 +205,15 @@ public class SetTester {
                                 "Contains Method Test with Value Not Found Within Set.");
                 testNum++;
 
+                // SortedSets - ContainsAll()
+                s2 = new SortedSet<>();
+                s2.add("c");
+                s2.add("Ca");
+
+                actual = s1.containsAll(s2);
+                showTestResults(actual, true, testNum, s1, s2, "ContainsAll Testing.");
+                testNum++;
+
                 // SortedSets - Remove()
                 actual = s1.remove("ab");
                 showTestResults(actual, true, testNum, s1, null, "Removing a value from a set.");
@@ -229,7 +238,30 @@ public class SetTester {
                                 "Equals method with different type sets.");
                 testNum++;
 
-                // SortedSets - 
+                // SortedSets - Differences()
+                s2.addAll(s1);
+                actual = s1.difference(s2).size() == 0;
+                showTestResults(actual, true, testNum, s1, s2, "Size Method Testing.");
+                testNum++;
+
+                // SortedSets - Intersection()
+                s3 = s1.intersection(s2);
+                actual = s3.equals(s1);
+                showTestResults(actual, true, testNum, s1, null, "Same Value Intersection.");
+                testNum++;
+
+                // SortedSets - Union()
+                s4 = new SortedSet<>();
+                s4.add("z");
+                s4.union(s1);
+
+                s3.add("z");
+                s3.add("z");
+
+                actual = s4.equals(s3);
+                showTestResults(actual, true, testNum, s3, s4, "Union.");
+                testNum++;
+
         }
 
         // print out results of test
