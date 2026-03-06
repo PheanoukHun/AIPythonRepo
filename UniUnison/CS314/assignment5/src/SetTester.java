@@ -110,7 +110,16 @@ import javax.swing.JFileChooser;
  *        UnSortedSet is O(N) from .contains() method so once it runs processText(), it will 
  *        O(N * M).
  * - Question 3: 
- *      - The Big O Notation of SortedSet is 
+ *      - The Big O Notation of UnSortedSet is O(M) because it has to calls contains who has to
+ *        loop through all values in the set.
+ *      - The Big O Notation of SortedSet is O(M) even though it uses binary search to look
+ *        through all elements, the insertion of an elements makes such that it is O(M)
+ *      - From the Looks of the experiments, the Big O Notation of HashSet is O(1).
+ *      - From the looks of the experiments, the Big O Notation of HashSet is O(Log(M)) because of
+ *        how it scales.
+ * - Question 4: The Differences between how HashSet and TreeShet ares printed is that HashSets
+ *               are not printed based on order (According to the Comparable Interface) because
+ *               HashSets are not sorted.
  * 
  */
 

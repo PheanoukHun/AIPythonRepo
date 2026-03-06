@@ -55,6 +55,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
 
         this.myCon = new ArrayList<>();
 
+        // Copies Values
         if (other instanceof SortedSet<?>) {
             SortedSet<E> otherSet = (SortedSet<E>) other;
             for (E item : otherSet.myCon) {
@@ -124,6 +125,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
         int left = 0;
         int right = this.size() - 1;
 
+        // Finding the Approximately Correct Index
         while (left <= right) {
             int mid = left + ((right - left) / 2);
             int comparedVal = item.compareTo(this.myCon.get(mid));
@@ -145,8 +147,7 @@ public class SortedSet<E extends Comparable<? super E>> extends AbstractSet<E> {
      * are not already present in this set to this set.
      * 
      * Big O Notation: O(N) if otherSet is a SortedSet<E>; O(N * log(N)) if otherSet
-     * is not
-     * a SortedSet<E>.
+     * is not a SortedSet<E>.
      * 
      * @param otherSet != null
      * @return true if this set changed as a result of this operation,

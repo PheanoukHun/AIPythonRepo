@@ -50,6 +50,7 @@ public class UnsortedSet<E> extends AbstractSet<E> {
             throw new IllegalArgumentException("The Item Parameter cannot be null.");
         }
 
+        // Is it already Inside?
         if (this.contains(item)) {
             return false;
         }
@@ -106,6 +107,7 @@ public class UnsortedSet<E> extends AbstractSet<E> {
 
         ISet<E> results = new UnsortedSet<>();
 
+        // Add all items not found in otherSet
         for (E item : this) {
             if (!otherSet.contains(item)) {
                 results.add(item);
