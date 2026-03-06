@@ -97,8 +97,11 @@ import javax.swing.JFileChooser;
  *      4. TreeSet: x1.389
  * 
  * Experiment Part 2:
- * - Question 1:
- *      
+ * - Question 2: 
+ *      - The processText() method for the HashSet 
+ *      - The processText() method for the TreeSet
+ *      - The processText() method for the SortedSet is O(N * M)
+ *      - The processText() method for the UnSortedSet is O(N * M)
  * 
  */
 
