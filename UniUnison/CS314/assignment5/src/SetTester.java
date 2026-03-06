@@ -33,19 +33,59 @@ import javax.swing.UIManager;
  * and if you implemented all three of the methods in AbstractSet class, you would have created
  * a recurive cycle leading to a stack overflow error as the memory starts to fill up.
  * 
+ * Experiment Part 1:
  * Text 1: Romeo and Juliet
+ * - Size: 170 kb
+ * - Total Number of Words: 29,005
+ * - Increase from the Previous File: N/A
+ * - Distinct Words: 6,958
+ * - Increase From Before: N/A
+ * - Time Elapsed: 
+ *      1. SortedSet: 0.036 s
+ *      2. UnsortedSet: 0.091 s 
+ *      3. HashSet: 0.014 s
+ *      4. TreeSet: 0.014 s
+ * - Increase in Time From Previous File: N/A
  * 
  * Text 2: Democracy True of False
  * - Size: 354 kb
- * - Total Number of Words: 59,866
- * - Increase from the Previous File:
+ * - Total Number of Words: 59,866 
+ * - Increase from the Previous File: x2.06
+ * - Distinct Words: 12,005
+ * - Increase From Before: x1.73
+ * - Time Elapsed:
+ *      1. SortedSet: 0.072 s
+ *      2. UnsortedSet: 0.284 s
+ *      3. HashSet: 0.025 s
+ *      4. TreeSet: 0.025 s
+ * - Increase in Time from Previous File:
+ *      1. SortedSet:
+ *      2. UnsortedSet: 
+ *      3. HashSet: 
+ *      4. TreeSet: 
  * 
  * Text 3: Canterberry Tales
  * - Size: 1.7 MB
- * - Total Number of Words: 282,827
- * - Increase from the Previous File:
+ * - Total Number of Words: 282,827 
+ * - Increase from the Previous File: x4.72
  * - Distinct Words: 41333
+ * - Increase From Before: x3.44
+ * - Time Elapsed: 
+ *      1. SortedSet:
+ *      2. UnsortedSet: 
+ *      3. HashSet: 
+ *      4. TreeSet: 
  * - Increase in Time from Previouse File:
+ *      1. SortedSet:
+ *      2. UnsortedSet: 
+ *      3. HashSet: 
+ *      4. TreeSet: 
+ * 
+ * Experiment Part 2:
+ * 
+ * 
+ * Experiment Part 3:
+ * 
  */
 
 public class SetTester {
