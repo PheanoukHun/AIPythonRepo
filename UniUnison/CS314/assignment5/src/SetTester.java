@@ -26,6 +26,11 @@ import javax.swing.JFileChooser;
  * CS 314 Students, put your results to the experiments and answers to questions
  * here: CS314 Students, why is it unwise to implement all three of the
  * intersection, union, and difference methods in the AbstractSet class:
+ * 
+ * It is unwise to implement all three of the intersection, union, and difference methods in 
+ * AbstractSet class because you need to call one of the methods to create a ISet<E> object 
+ * and if you implemented all three of the methods in AbstractSet class, you would have created
+ * a recurive cycle leading to a stack overflow error as the memory starts to fill up.
  */
 
 public class SetTester {
@@ -54,26 +59,47 @@ public class SetTester {
                 // UnsortedSet Tests
 
                 // Add() and Contains() - for UnsortedSets
-                ISet<String> stringSetUnSorted = new UnsortedSet<>();
-                
-                stringSetUnSorted.add("a");
-                stringSetUnSorted.add("ab");
-                stringSetUnSorted.add("A");
-                stringSetUnSorted.add("c");
-                stringSetUnSorted.add("Ca");
-                
-                actual = stringSetUnSorted.add("a");
-                showTestResults(actual, false, testNum, stringSetUnSorted, null,
-                        "Adding Test for Item Already Found Within Set");
+                ISet<String> unsortedStrSet = new UnsortedSet<>();
+
+                unsortedStrSet.add("a");
+                unsortedStrSet.add("ab");
+                unsortedStrSet.add("A");
+                unsortedStrSet.add("c");
+                unsortedStrSet.add("Ca");
+
+                actual = unsortedStrSet.add("a");
+                showTestResults(actual, false, testNum, unsortedStrSet, null,
+                                "Adding Test for Item Already Found Within Set");
                 testNum++;
 
-                actual = stringSetUnSorted.contains("A");
-                showTestResults(actual, true, testNum, stringSetUnSorted, null,
-                                "Contains Method Test.");
+                actual = unsortedStrSet.contains("Hello");
+                showTestResults(actual, false, testNum, unsortedStrSet, null,
+                                "Contains Method Test with Value Not Found Within Set.");
                 testNum++;
-                
-                // Equals() - for UnsortedSets
-                
+
+                // Removes() - for UnsortedSets
+                actual = unsortedStrSet.remove("");
+                showTestResults(actual, false, testNum, unsortedStrSet, null,
+                                "Remove Value Not Found within Set");
+                testNum++;
+
+                // Size() - For UnSortedSets
+                actual = unsortedStrSet.size() == 5;
+                showTestResults(actual, true, testNum, unsortedStrSet, null, "Test Size Method");
+                testNum++;
+
+                // containsAll() - For UnSortedSets
+                ISet<String> unsortedStrSet2 = new UnsortedSet<>();
+                unsortedStrSet2.add("a");
+                unsortedStrSet2.add("ab");
+                unsortedStrSet2.add("z");
+
+                actual = unsortedStrSet.containsAll(unsortedStrSet);
+                showTestResults(actual, false, testNum, unsortedStrSet, unsortedStrSet2,
+                                "checks to see if the set1 contains all elements of set2");
+                testNum++;
+
+                // Difference() - For UnSortedSets
         }
 
         // print out results of test
