@@ -84,7 +84,7 @@ public class LL314<E> implements IList<E> {
 
         // the link to the next node (presumably in a list)
         private DoubleListNode<E> next;
-
+`
         // the reference to the previous node (presumably in a list)
         private DoubleListNode<E> prev;
 
