@@ -125,6 +125,8 @@ public class LL314<E> implements IList<E> {
     public void add(E item) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'add'");
+
+        
     }
 
     public void insert(int pos, E item) {
