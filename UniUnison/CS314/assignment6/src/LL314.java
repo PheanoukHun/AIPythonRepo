@@ -13,62 +13,17 @@ import java.util.Iterator;
 
 public class LL314<E> implements IList<E> {
 
-    // TODO: Add instance variables here.
+    private DoubleListNode<E> first;
+    private DoubleListNode<E> last;
+    private int size;
 
-    // TODO: Add constructors here.
-
+    public LL314() {
+        this.first = null;
+        this.last = null;
+        this.size = 0;
+    }
+    
     // TODO: Add methods here.
-
-    /**
-     * Add item to the front of the list.
-     * <br>
-     * pre: item != null
-     * <br>
-     * post: size() = old size() + 1, get(0) = item
-     *
-     * @param item the data to add to the front of this list
-     */
-    public void addFirst(E item) {
-    }
-
-    /**
-     * Add item to the end of the list.
-     * <br>
-     * pre: item != null
-     * <br>
-     * post: size() = old size() + 1, get(size() -1) = item
-     *
-     * @param item the data to add to the end of this list
-     */
-    public void addLast(E item) {
-    }
-
-    /**
-     * Remove and return the first element of this list.
-     * <br>
-     * pre: size() > 0
-     * <br>
-     * post: size() = old size() - 1
-     *
-     * @return the old first element of this list
-     */
-    public E removeFirst() {
-        return null;
-    }
-
-    /**
-     * remove and return the last element of this list.
-     * <br>
-     * pre: size() > 0
-     * <br>
-     * post: size() = old size() - 1
-     *
-     * @return the old last element of this list
-     */
-    public E removeLast() {
-        return null;
-    }
-
     /**
      * A class that represents a node to be used in a linked list.
      * These nodes are doubly linked.
@@ -84,7 +39,6 @@ public class LL314<E> implements IList<E> {
 
         // the link to the next node (presumably in a list)
         private DoubleListNode<E> next;
-`
         // the reference to the previous node (presumably in a list)
         private DoubleListNode<E> prev;
 
@@ -122,11 +76,62 @@ public class LL314<E> implements IList<E> {
         }
     }
 
+    /**
+     * Add item to the front of the list.
+     * <br>
+     * pre: item != null
+     * <br>
+     * post: size() = old size() + 1, get(0) = item
+     *
+     * @param item the data to add to the front of this list
+     */
+    public void addFirst(E item) {
+    }
+
+    /**
+     * Add item to the end of the list.
+     * <br>
+     * pre: item != null
+     * <br>
+     * post: size() = old size() + 1, get(size() -1) = item
+     *
+     * @param item the data to add to the end of this list
+     */
+    public void addLast(E item) {
+    }
+    
+    /**
+     * Remove and return the first element of this list.
+     * <br>
+     * pre: size() > 0
+     * <br>
+     * post: size() = old size() - 1
+     *
+     * @return the old first element of this list
+     */
+    public E removeFirst() {
+        return null;
+    }
+
+    /**
+     * remove and return the last element of this list.
+     * <br>
+     * pre: size() > 0
+     * <br>
+     * post: size() = old size() - 1
+     *
+     * @return the old last element of this list
+     */
+    public E removeLast() {
+        return null;
+    }
+
+
     public void add(E item) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'add'");
 
-        DoubleListNode<E> newNode = new DoubleListNode<>(this.last);
+        DoubleListNode<E> newNode = new DoubleListNode<>(this.last );
     }
 
     public void insert(int pos, E item) {
