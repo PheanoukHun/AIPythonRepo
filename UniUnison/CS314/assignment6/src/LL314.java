@@ -208,7 +208,7 @@ public class LL314<E> implements IList<E> {
             throw new IllegalStateException("You cannot Remove an Item from an Empty List");
         } else if (pos >= this.size || pos < 0) {
             throw new IllegalArgumentException("Position value must be between"
-            + " 0 and the size of the list");
+                    + " 0 and the size of the list");
         }
 
         // Removing from the Front or Back
@@ -221,7 +221,7 @@ public class LL314<E> implements IList<E> {
         // Removing From the Middle
         DoubleListNode<E> node = this.getNodeAtPos(pos);
         E oldVal = node.data;
-        
+
         node.prev.next = node.next;
         node.next.prev = node.prev;
         this.size--;
@@ -234,11 +234,43 @@ public class LL314<E> implements IList<E> {
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
 
+    /**
+     * Return a sublist of elements in this list from <tt>start</tt> inclusive to
+     * stop exclusive. This list is not changed as a result of this call. elements
+     * at positions start through stop - 1 in this list.
+     * 
+     * pre: <tt>0 <= start <= size(), start <= stop <= size()</tt>
+     * post: return a list whose size is stop - start and contains the
+     *
+     * @param start index of the first element of the sublist.
+     * @param stop  stop - 1 is the index of the last element of the sublist.
+     * @return a list with <tt>stop - start</tt> elements, the elements are
+     *         from positions <tt>start</tt> inclusive to <tt>stop</tt> exclusive in
+     *         this list. If start == stop an empty list is returned.
+     */
     public IList<E> getSubList(int start, int stop) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSubList'");
+
+        // Preconditions
+        if (start > stop || start < 0 || stop > this.size) {
+            throw new IllegalArgumentException("start and stop must satisfy: "
+                    + "0 <= start <= size() and start <= stop <= size().");
+        }
+
+        // Creating a New Result
+        LL314<E> result = new LL314<>();
+        
+        result.first = this.getNodeAtPos(start);
+        result.last = this.getNodeAtPos(stop);
+        result.size = stop - start;
+        
+        return result;
     }
 
+    /**
+     * Return the size of this list (the number of elements).
+     * 
+     * @return the number of items in this list
+     */
     public int size() {
         return this.size;
     }
