@@ -187,6 +187,14 @@ public class LL314<E> implements IList<E> {
         return oldData;
     }
 
+    /**
+     * Get an element from the list.
+     * <br>pre: 0 <= pos < size()
+     * <br>post: return the item at pos
+     *
+     * @param pos specifies which element to get
+     * @return the element at the specified position in the list
+     */
     public E get(int pos) {
         return getNodeAtPos(pos).data;
     }
@@ -301,8 +309,27 @@ public class LL314<E> implements IList<E> {
     }
 
     public void removeRange(int start, int stop) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeRange'");
+        
+        // if (start == 0 && stop == this.size - 1) {
+        //     this.makeEmpty();
+        // } 
+
+        // DoubleListNode<E> startNode;
+        // if (start == 0) {
+        //     startNode = first;
+        // } else {
+        //     startNode = this.getNodeAtPos(start);
+        // }
+        
+        // DoubleListNode<E> endNode;
+        // if (stop == this.size() - 1) {
+        //     endNode = last;
+        // } else {
+        //     endNode = this.getNodeAtPos(stop);
+        // }
+
+        // startNode = startNode.prev;
+        // this.
     }
 
     private DoubleListNode<E> getNodeAtPos(int pos) {
@@ -391,8 +418,11 @@ public class LL314<E> implements IList<E> {
             if (this.lastNode == null || this.hasUsedNext) {
                 throw new IllegalStateException("You have to use next first before remove.");
             }
-            
+
+            DoubleListNode<E> temp = this.lastNode.prev;
             LL314.this.remove(this.lastNode.data);
+            this.hasUsedNext = false;
+            this.lastNode = temp;
         }
     }
 }
