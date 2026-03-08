@@ -33,6 +33,8 @@ public class LL314<E> implements IList<E> {
      * @param item the data to add to the front of this list
      */
     public void addFirst(E item) {
+        DoubleListNode<E> newNode = new DoubleListNode<>(null, item, this.first);
+        
     }
 
     /**
@@ -49,15 +51,23 @@ public class LL314<E> implements IList<E> {
     
     /**
      * Remove and return the first element of this list.
-     * <br>
+     * 
      * pre: size() > 0
-     * <br>
      * post: size() = old size() - 1
      *
      * @return the old first element of this list
      */
     public E removeFirst() {
-        return null;
+
+        // Precondition
+        if (this.size == 0) {
+            throw new IllegalStateException("You cannot Remove an Item from an Empty List");
+        }
+        
+        E data = this.first.data;
+        this.first = this.first.next;
+        this.size--;
+        return data;
     }
 
     /**
@@ -70,15 +80,21 @@ public class LL314<E> implements IList<E> {
      * @return the old last element of this list
      */
     public E removeLast() {
-        return null;
+
+        // Precondition
+        if (this.size == 0) {
+            throw new IllegalStateException("You cannot Remove an Item from an Empty List");
+        }
+
+        E data = this.last.data;
+        this.last = this.last.prev;
+        this.size--;
+        return data;
     }
 
 
     public void add(E item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
-
-        DoubleListNode<E> newNode = new DoubleListNode<>(this.last );
+        DoubleListNode<E> newNode = new DoubleListNode<>(this.first, item, this.last);
     }
 
     public void insert(int pos, E item) {
