@@ -285,9 +285,15 @@ public class LL314<E> implements IList<E> {
         throw new UnsupportedOperationException("Unimplemented method 'indexOf'");
     }
 
+    /**
+     * Transform the list to an empty state.
+     * pre: none
+     * post: size() = 0
+     */
     public void makeEmpty() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'makeEmpty'");
+        this.first = null;
+        this.last = null;
+        this.size = 0;
     }
 
     public Iterator<E> iterator() {
@@ -354,5 +360,9 @@ public class LL314<E> implements IList<E> {
             this.data = data;
             this.next = next;
         }
+    }
+
+    private static class LL314Iterator<E> {
+        private int first;
     }
 }
