@@ -311,8 +311,7 @@ public class LL314<E> implements IList<E> {
     }
 
     /**
-     * Remove all elements in this list from <tt>start</tt> inclusive to
-     * <tt>stop</tt> exclusive.
+     * Remove all elements in this list from start inclusive to stop exclusive.
      * <br>
      * pre: <tt>0 <= start <= size(), start <= stop <= size()</tt>
      * <br>
@@ -326,7 +325,7 @@ public class LL314<E> implements IList<E> {
 
         // Preconditions
         if (start < 0 || start > stop || stop > this.size) {
-
+            throw new IllegalArgumentException("");
         }
 
         // Removes all values from the Start to Last
@@ -343,10 +342,10 @@ public class LL314<E> implements IList<E> {
         }
 
         DoubleListNode<E> endNode;
-        if (stop == this.size() - 1) {
+        if (stop == this.size()) {
             endNode = last;
         } else {
-            endNode = this.getNodeAtPos(stop);
+            endNode = this.getNodeAtPos(stop - 1);
         }
 
         // Removing the Elements
@@ -357,18 +356,23 @@ public class LL314<E> implements IList<E> {
 
     private DoubleListNode<E> getNodeAtPos(int pos) {
 
-        DoubleListNode<E> node = this.first;
-        
+        DoubleListNode<E> node;
         int middleIndex = this.size / 2;
         
         if (pos < middleIndex) {
+            node = this.first;
             int counter = 0;
             while (counter < pos) {
                 node = node.next;
                 counter++;
             }
         } else {
-
+            node = this.last;
+            int counter = this.size;
+            while (counter > pos) {
+                node = node.prev;
+                counter--;
+            }
         }
         return node;
     }
