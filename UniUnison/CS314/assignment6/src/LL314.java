@@ -167,7 +167,7 @@ public class LL314<E> implements IList<E> {
      * pre: 0 <= pos < size(), item != null
      * post: get(pos) = item, return the old get(pos)
      *
-     * @param pos the position in the list to overwrite
+     * @param pos  the position in the list to overwrite
      * @param item the new item that will overwrite the old item, item != null
      * @return the old data at the specified position
      */
@@ -180,7 +180,7 @@ public class LL314<E> implements IList<E> {
         }
 
         DoubleListNode<E> node = this.getNodeAtPos(pos);
-        
+
         E oldData = node.data;
         node.data = item;
 
@@ -188,13 +188,38 @@ public class LL314<E> implements IList<E> {
     }
 
     public E get(int pos) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
+        return getNodeAtPos(pos).data;
     }
 
+    /**
+     * Remove an element in the list based on position. all elements of list with a
+     * position > pos have a position = old position - 1
+     * 
+     * pre: 0 <= pos < size()
+     * post: size() = old size() - 1
+     *
+     * @param pos the position of the element to remove from the list
+     * @return the data at position pos
+     */
     public E remove(int pos) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+
+        // Precondition
+        if (this.size == 0) {
+            throw new IllegalStateException("You cannot Remove an Item from an Empty List");
+        } else if (pos >= this.size || pos < 0) {
+            throw new IllegalArgumentException("position value must be between 0 and the size of the list");
+        }
+
+        if (pos == 0) {
+            return this.removeFirst();
+        } else if (pos == this.size) {
+            return this.removeLast();
+        }
+
+        DoubleListNode<E> node = this.getNodeAtPos(pos);
+        E oldVal = node.data;
+
+        return oldVal;
     }
 
     public boolean remove(E obj) {
