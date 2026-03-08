@@ -189,8 +189,10 @@ public class LL314<E> implements IList<E> {
 
     /**
      * Get an element from the list.
-     * <br>pre: 0 <= pos < size()
-     * <br>post: return the item at pos
+     * <br>
+     * pre: 0 <= pos < size()
+     * <br>
+     * post: return the item at pos
      *
      * @param pos specifies which element to get
      * @return the element at the specified position in the list
@@ -266,11 +268,11 @@ public class LL314<E> implements IList<E> {
 
         // Creating a New Result
         LL314<E> result = new LL314<>();
-        
+
         result.first = this.getNodeAtPos(start);
         result.last = this.getNodeAtPos(stop);
         result.size = stop - start;
-        
+
         return result;
     }
 
@@ -311,15 +313,17 @@ public class LL314<E> implements IList<E> {
     /**
      * Remove all elements in this list from <tt>start</tt> inclusive to
      * <tt>stop</tt> exclusive.
-     * <br>pre: <tt>0 <= start <= size(), start <= stop <= size()</tt>
-     * <br>post: <tt>size() = old size() - (stop - start)</tt>
+     * <br>
+     * pre: <tt>0 <= start <= size(), start <= stop <= size()</tt>
+     * <br>
+     * post: <tt>size() = old size() - (stop - start)</tt>
      *
      * @param start position at beginning of range of elements to be removed
-     * @param stop stop - 1 is the position at the end of the range of elements
-     *            to be removed
+     * @param stop  stop - 1 is the position at the end of the range of elements
+     *              to be removed
      */
     public void removeRange(int start, int stop) {
-        
+
         // Preconditions
         if (start < 0 || start > stop || stop > this.size) {
 
@@ -328,7 +332,7 @@ public class LL314<E> implements IList<E> {
         // Removes all values from the Start to Last
         if (start == 0 && stop == this.size - 1) {
             this.makeEmpty();
-        } 
+        }
 
         // Get Node at the Start and End
         DoubleListNode<E> startNode;
@@ -337,7 +341,7 @@ public class LL314<E> implements IList<E> {
         } else {
             startNode = this.getNodeAtPos(start);
         }
-        
+
         DoubleListNode<E> endNode;
         if (stop == this.size() - 1) {
             endNode = last;
@@ -345,21 +349,27 @@ public class LL314<E> implements IList<E> {
             endNode = this.getNodeAtPos(stop);
         }
 
-        // Removing the Elements 
+        // Removing the Elements
         startNode.next = endNode.next;
         endNode.prev = startNode.prev;
         this.size -= (stop - start);
     }
 
     private DoubleListNode<E> getNodeAtPos(int pos) {
-        
-        int counter = 0;
+
         DoubleListNode<E> node = this.first;
+        
+        int middleIndex = this.size / 2;
+        
+        if (pos < middleIndex) {
+            int counter = 0;
+            while (counter < pos) {
+                node = node.next;
+                counter++;
+            }
+        } else {
 
-        while (counter < pos) {
-            
         }
-
         return node;
     }
 
@@ -428,9 +438,9 @@ public class LL314<E> implements IList<E> {
         public boolean hasNext() {
             return this.currNode != null;
         }
-        
+
         public E next() {
-            
+
             this.lastNode = this.currNode;
             this.currNode = this.lastNode.next;
 
