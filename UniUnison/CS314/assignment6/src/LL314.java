@@ -10,6 +10,7 @@
  */
 
 import java.util.Iterator;
+import java.io.Iterable;
 
 public class LL314<E> implements IList<E> {
 
@@ -362,7 +363,8 @@ public class LL314<E> implements IList<E> {
         }
     }
 
-    private static class LL314Iterator<E> {
-        private int first;
+    private static class LL314Iterator<E> implements Iteratable<E> {
+        private DoubleListNode<E> currNode;
+        private DoubleListNode<E> lastNode;
     }
 }
