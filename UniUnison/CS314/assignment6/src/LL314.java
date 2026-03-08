@@ -207,17 +207,24 @@ public class LL314<E> implements IList<E> {
         if (this.size == 0) {
             throw new IllegalStateException("You cannot Remove an Item from an Empty List");
         } else if (pos >= this.size || pos < 0) {
-            throw new IllegalArgumentException("position value must be between 0 and the size of the list");
+            throw new IllegalArgumentException("Position value must be between"
+            + " 0 and the size of the list");
         }
 
+        // Removing from the Front or Back
         if (pos == 0) {
             return this.removeFirst();
         } else if (pos == this.size) {
             return this.removeLast();
         }
 
+        // Removing From the Middle
         DoubleListNode<E> node = this.getNodeAtPos(pos);
         E oldVal = node.data;
+        
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        this.size--;
 
         return oldVal;
     }
@@ -233,8 +240,7 @@ public class LL314<E> implements IList<E> {
     }
 
     public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return this.size;
     }
 
     public int indexOf(E item) {
