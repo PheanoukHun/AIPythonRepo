@@ -126,7 +126,7 @@ public class LL314<E> implements IList<E> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'add'");
 
-        
+        DoubleListNode<E> newNode = new DoubleListNode<>(this.last);
     }
 
     public void insert(int pos, E item) {
