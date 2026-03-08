@@ -4,13 +4,12 @@
  * By signing my name below, I affirm that this assignment is my own work. I
  * have neither given nor received unauthorized assistance on this assignment.
  *
- * Name:
- * Email address:
- * UTEID:
+ * Name: Pheanouk Hun
+ * Email address: ph23434@eid.utexas.edu
+ * UTEID: ph23434
  */
 
 import java.util.Iterator;
-import java.io.Iterable;
 
 public class LL314<E> implements IList<E> {
 
@@ -298,8 +297,7 @@ public class LL314<E> implements IList<E> {
     }
 
     public Iterator<E> iterator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+        return new LL314Iterator();
     }
 
     public void removeRange(int start, int stop) {
@@ -363,8 +361,38 @@ public class LL314<E> implements IList<E> {
         }
     }
 
-    private static class LL314Iterator<E> implements Iteratable<E> {
+    private class LL314Iterator implements Iterator<E> {
+
         private DoubleListNode<E> currNode;
         private DoubleListNode<E> lastNode;
+        private boolean hasUsedNext;
+
+        public LL314Iterator() {
+            this.lastNode = null;
+            this.currNode = LL314.this.first;
+        }
+
+        public boolean hasNext() {
+            return this.currNode != null;
+        }
+        
+        public E next() {
+            
+            this.lastNode = this.currNode;
+            this.currNode = this.lastNode.next;
+
+            this.hasUsedNext = true;
+
+            return this.lastNode.data;
+        }
+
+        public void remove() {
+
+            if (this.lastNode == null || this.hasUsedNext) {
+                throw new IllegalStateException("You have to use next first before remove.");
+            }
+            
+            LL314.this.remove(this.lastNode.data);
+        }
     }
 }
