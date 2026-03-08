@@ -22,59 +22,6 @@ public class LL314<E> implements IList<E> {
         this.last = null;
         this.size = 0;
     }
-    
-    // TODO: Add methods here.
-    /**
-     * A class that represents a node to be used in a linked list.
-     * These nodes are doubly linked.
-     *
-     * @author Mike Scott
-     * @version July 25, 2005
-     */
-
-    private static class DoubleListNode<E> {
-
-        // the data to store in this node
-        private E data;
-
-        // the link to the next node (presumably in a list)
-        private DoubleListNode<E> next;
-        // the reference to the previous node (presumably in a list)
-        private DoubleListNode<E> prev;
-
-        /**
-         * default constructor.
-         * <br>
-         * pre: none
-         * <br>
-         * post: data = null, next = null, prev = null
-         * <br>
-         * O(1)
-         */
-        public DoubleListNode() {
-            this(null, null, null);
-        }
-
-        /**
-         * Create a DoubleListNode that holds the specified data
-         * and refers to the specified next and previous elements.
-         * <br>
-         * pre: none
-         * <br>
-         * post: this.data = data, this.next = next, this.prev = prev
-         * <br>
-         * O(1)
-         *
-         * @param prev the previous node
-         * @param data the data this DoubleListNode should hold
-         * @param next the next node
-         */
-        public DoubleListNode(DoubleListNode<E> prev, E data, DoubleListNode<E> next) {
-            this.prev = prev;
-            this.data = data;
-            this.next = next;
-        }
-    }
 
     /**
      * Add item to the front of the list.
@@ -192,5 +139,56 @@ public class LL314<E> implements IList<E> {
     public void removeRange(int start, int stop) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'removeRange'");
+    }
+
+    /**
+     * A class that represents a node to be used in a linked list.
+     * These nodes are doubly linked.
+     *
+     * @author Mike Scott
+     * @version July 25, 2005
+     */
+    private static class DoubleListNode<E> {
+
+        // the data to store in this node
+        private E data;
+
+        // the link to the next node (presumably in a list)
+        private DoubleListNode<E> next;
+        // the reference to the previous node (presumably in a list)
+        private DoubleListNode<E> prev;
+
+        /**
+         * default constructor.
+         * <br>
+         * pre: none
+         * <br>
+         * post: data = null, next = null, prev = null
+         * <br>
+         * O(1)
+         */
+        public DoubleListNode() {
+            this(null, null, null);
+        }
+
+        /**
+         * Create a DoubleListNode that holds the specified data
+         * and refers to the specified next and previous elements.
+         * <br>
+         * pre: none
+         * <br>
+         * post: this.data = data, this.next = next, this.prev = prev
+         * <br>
+         * O(1)
+         *
+         * @param prev the previous node
+         * @param data the data this DoubleListNode should hold
+         * @param next the next node
+         */
+        public DoubleListNode(DoubleListNode<E> prev, E data, DoubleListNode<E> next) {
+            this.prev = prev;
+            this.data = data;
+            this.next = next;
+        }
     }
 }
