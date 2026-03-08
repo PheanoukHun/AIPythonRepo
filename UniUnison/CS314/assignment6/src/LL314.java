@@ -285,13 +285,53 @@ public class LL314<E> implements IList<E> {
         return this.size;
     }
 
+    /**
+     * Find the position of an element in the list.
+     * 
+     * pre: item != null
+     * post: return the index of the first element equal to item or -1 if item is
+     * not present
+     *
+     * @param item the element to search for in the list. item != null
+     * @return return the index of the first element equal to item or a -1 if
+     *         item is not present
+     */
     public int indexOf(E item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'indexOf'");
+
+        // Precondition
+        if (item == null) {
+            throw new IllegalArgumentException("The Value of the new Element cannot be null");
+        }
+
+        return this.indexOf(item, 0);
     }
 
+    /**
+     * Find the position of an element in the list starting at a specified
+     * position.
+     * <br>
+     * pre: 0 <= pos < size(), item != null
+     * <br>
+     * post: return the index of the first element equal to item starting
+     * at pos or -1 if item is not present from position pos onward.
+     *
+     * @param item the element to search for in the list. Item != null
+     * @param pos  the position in the list to start searching from
+     * @return starting from the specified position return the index of the
+     *         first element equal to item or a -1 if item is not present between
+     *         pos
+     *         and the end of the list.
+     */
     public int indexOf(E item, int pos) {
-        // TODO Auto-generated method stub
+
+        // Precondition
+        if (item == null) {
+            throw new IllegalArgumentException("The Value of the new Element cannot be null");
+        } else if (pos < 0 || pos >= this.size) {
+            throw new IllegalArgumentException("You must give a position value that must "
+                    + "between 0 and size.");
+        }
+
         throw new UnsupportedOperationException("Unimplemented method 'indexOf'");
     }
 
@@ -358,7 +398,7 @@ public class LL314<E> implements IList<E> {
 
         DoubleListNode<E> node;
         int middleIndex = this.size / 2;
-        
+
         if (pos < middleIndex) {
             node = this.first;
             int counter = 0;
