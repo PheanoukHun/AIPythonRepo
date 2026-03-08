@@ -352,8 +352,15 @@ public class LL314<E> implements IList<E> {
     }
 
     private DoubleListNode<E> getNodeAtPos(int pos) {
+        
+        int counter = 0;
+        DoubleListNode<E> node = this.first;
 
-        return null;
+        while (counter < pos) {
+            
+        }
+
+        return node;
     }
 
     /**
