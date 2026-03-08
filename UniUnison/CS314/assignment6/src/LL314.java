@@ -308,28 +308,47 @@ public class LL314<E> implements IList<E> {
         return new LL314Iterator();
     }
 
+    /**
+     * Remove all elements in this list from <tt>start</tt> inclusive to
+     * <tt>stop</tt> exclusive.
+     * <br>pre: <tt>0 <= start <= size(), start <= stop <= size()</tt>
+     * <br>post: <tt>size() = old size() - (stop - start)</tt>
+     *
+     * @param start position at beginning of range of elements to be removed
+     * @param stop stop - 1 is the position at the end of the range of elements
+     *            to be removed
+     */
     public void removeRange(int start, int stop) {
         
-        // if (start == 0 && stop == this.size - 1) {
-        //     this.makeEmpty();
-        // } 
+        // Preconditions
+        if (start < 0 || start > stop || stop > this.size) {
 
-        // DoubleListNode<E> startNode;
-        // if (start == 0) {
-        //     startNode = first;
-        // } else {
-        //     startNode = this.getNodeAtPos(start);
-        // }
+        }
+
+        // Removes all values from the Start to Last
+        if (start == 0 && stop == this.size - 1) {
+            this.makeEmpty();
+        } 
+
+        // Get Node at the Start and End
+        DoubleListNode<E> startNode;
+        if (start == 0) {
+            startNode = first;
+        } else {
+            startNode = this.getNodeAtPos(start);
+        }
         
-        // DoubleListNode<E> endNode;
-        // if (stop == this.size() - 1) {
-        //     endNode = last;
-        // } else {
-        //     endNode = this.getNodeAtPos(stop);
-        // }
+        DoubleListNode<E> endNode;
+        if (stop == this.size() - 1) {
+            endNode = last;
+        } else {
+            endNode = this.getNodeAtPos(stop);
+        }
 
-        // startNode = startNode.prev;
-        // this.
+        // Removing the Elements 
+        startNode.next = endNode.next;
+        endNode.prev = startNode.prev;
+        this.size -= (stop - start);
     }
 
     private DoubleListNode<E> getNodeAtPos(int pos) {
