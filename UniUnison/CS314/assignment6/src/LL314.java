@@ -39,7 +39,7 @@ public class LL314<E> implements IList<E> {
         }
 
         DoubleListNode<E> newNode = new DoubleListNode<>(null, item, this.first);
-        
+
         if (this.first != null) {
             this.first.prev = newNode;
         }
@@ -62,14 +62,14 @@ public class LL314<E> implements IList<E> {
         }
 
         DoubleListNode<E> newNode = new DoubleListNode<>(this.last, item, null);
-        
+
         if (this.last != null) {
-            this.last.next= newNode;
+            this.last.next = newNode;
         }
 
         this.size++;
     }
-    
+
     /**
      * Remove and return the first element of this list.
      * 
@@ -84,7 +84,7 @@ public class LL314<E> implements IList<E> {
         if (this.size == 0) {
             throw new IllegalStateException("You cannot Remove an Item from an Empty List");
         }
-        
+
         E data = this.first.data;
         this.first = this.first.next;
         this.size--;
@@ -121,40 +121,70 @@ public class LL314<E> implements IList<E> {
      * @param item the data to be added to the end of this list, item != null
      */
     public void add(E item) {
-        
+
         // Precondition
         if (item == null) {
             throw new IllegalArgumentException("The Value of the new Element cannot be null");
         }
-        
+
         addLast(item);
     }
 
     /**
-     * Insert an item at a specified position in the list.
+     * Insert an item at a specified position in the list. All elements in the list
+     * with a position >= pos have a position = old position + 1
+     * 
      * pre: 0 <= pos <= size(), item != null
      * post: size() = old size() + 1, get(pos) = item,
-     * all elements in the list with a position >= pos have a
-     * position = old position + 1
      *
-     * @param pos the position to insert the data at in the list
+     * @param pos  the position to insert the data at in the list
      * @param item the data to add to the list, item != null
      */
     public void insert(int pos, E item) {
 
         // Precondition
-        if (item == null) {
-            throw new IllegalArgumentException("The Value of the new Element cannot be null");
+        if (item == null || pos > this.size || pos < 0) {
+            throw new IllegalArgumentException("The Value of the new Element cannot be null"
+                    + "or position value must be between 0 and the size of the list");
         }
 
         if (pos == 0) {
             addFirst(item);
+        } else if (pos == this.size) {
+            addLast(item);
+        } else {
+            DoubleListNode<E> oldNode = this.getNodeAtPos(pos);
+            DoubleListNode<E> newNode = new DoubleListNode<>(oldNode.prev, item, oldNode);
+            oldNode.prev = newNode;
+            this.size++;
         }
     }
 
+    /**
+     * Change the data at the specified position in the list.
+     * The old data at that position is returned.
+     * 
+     * pre: 0 <= pos < size(), item != null
+     * post: get(pos) = item, return the old get(pos)
+     *
+     * @param pos the position in the list to overwrite
+     * @param item the new item that will overwrite the old item, item != null
+     * @return the old data at the specified position
+     */
     public E set(int pos, E item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'set'");
+
+        // Precondition
+        if (item == null || pos > this.size || pos < 0) {
+            throw new IllegalArgumentException("The Value of the new Element cannot be null"
+                    + "or position value must be between 0 and the size of the list");
+        }
+
+        DoubleListNode<E> node = this.getNodeAtPos(pos);
+        
+        E oldData = node.data;
+        node.data = item;
+
+        return oldData;
     }
 
     public E get(int pos) {
@@ -205,6 +235,11 @@ public class LL314<E> implements IList<E> {
     public void removeRange(int start, int stop) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'removeRange'");
+    }
+
+    private DoubleListNode<E> getNodeAtPos(int pos) {
+
+        return null;
     }
 
     /**
