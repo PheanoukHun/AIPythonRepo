@@ -25,28 +25,49 @@ public class LL314<E> implements IList<E> {
 
     /**
      * Add item to the front of the list.
-     * <br>
+     * 
      * pre: item != null
-     * <br>
      * post: size() = old size() + 1, get(0) = item
      *
      * @param item the data to add to the front of this list
      */
     public void addFirst(E item) {
+
+        // Precondition
+        if (item == null) {
+            throw new IllegalArgumentException("The Value of the new Element cannot be null");
+        }
+
         DoubleListNode<E> newNode = new DoubleListNode<>(null, item, this.first);
         
+        if (this.first != null) {
+            this.first.prev = newNode;
+        }
+
+        this.size++;
     }
 
     /**
      * Add item to the end of the list.
-     * <br>
      * pre: item != null
-     * <br>
      * post: size() = old size() + 1, get(size() -1) = item
      *
      * @param item the data to add to the end of this list
      */
     public void addLast(E item) {
+
+        // Precondition
+        if (item == null) {
+            throw new IllegalArgumentException("The Value of the new Element cannot be null");
+        }
+
+        DoubleListNode<E> newNode = new DoubleListNode<>(this.last, item, null);
+        
+        if (this.last != null) {
+            this.last.next= newNode;
+        }
+
+        this.size++;
     }
     
     /**
@@ -92,14 +113,43 @@ public class LL314<E> implements IList<E> {
         return data;
     }
 
-
+    /**
+     * Add an item to the end of this list.
+     * pre: item != null
+     * post: size() = old size() + 1, get(size() - 1) = item
+     *
+     * @param item the data to be added to the end of this list, item != null
+     */
     public void add(E item) {
-        DoubleListNode<E> newNode = new DoubleListNode<>(this.first, item, this.last);
+        
+        // Precondition
+        if (item == null) {
+            throw new IllegalArgumentException("The Value of the new Element cannot be null");
+        }
+        
+        addLast(item);
     }
 
+    /**
+     * Insert an item at a specified position in the list.
+     * pre: 0 <= pos <= size(), item != null
+     * post: size() = old size() + 1, get(pos) = item,
+     * all elements in the list with a position >= pos have a
+     * position = old position + 1
+     *
+     * @param pos the position to insert the data at in the list
+     * @param item the data to add to the list, item != null
+     */
     public void insert(int pos, E item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+
+        // Precondition
+        if (item == null) {
+            throw new IllegalArgumentException("The Value of the new Element cannot be null");
+        }
+
+        if (pos == 0) {
+            addFirst(item);
+        }
     }
 
     public E set(int pos, E item) {
