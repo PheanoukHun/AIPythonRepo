@@ -40,6 +40,7 @@ public class LL314<E> implements IList<E> {
 
         DoubleListNode<E> newNode = new DoubleListNode<>(null, item, this.first);
 
+        // When the LinkedList is Empty
         if (this.first != null) {
             this.first.prev = newNode;
         } else {
@@ -52,6 +53,7 @@ public class LL314<E> implements IList<E> {
 
     /**
      * Add item to the end of the list.
+     * 
      * pre: item != null
      * post: size() = old size() + 1, get(size() -1) = item
      *
@@ -66,6 +68,7 @@ public class LL314<E> implements IList<E> {
 
         DoubleListNode<E> newNode = new DoubleListNode<>(this.last, item, null);
 
+        // When are LinkedLists are Empty
         if (this.last != null) {
             this.last.next = newNode;
         } else {
@@ -154,10 +157,13 @@ public class LL314<E> implements IList<E> {
         }
 
         if (pos == 0) {
+            // Insert in front
             addFirst(item);
         } else if (pos == this.size) {
+            // Insert at the End
             addLast(item);
         } else {
+            // Insert in the Middle
             DoubleListNode<E> oldNode = this.getNodeAtPos(pos);
             DoubleListNode<E> newNode = new DoubleListNode<>(oldNode.prev, item, oldNode);
             oldNode.prev = newNode;
