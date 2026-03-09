@@ -42,8 +42,11 @@ public class LL314<E> implements IList<E> {
 
         if (this.first != null) {
             this.first.prev = newNode;
+        } else {
+            this.last = newNode;
         }
 
+        this.first = newNode;
         this.size++;
     }
 
@@ -65,8 +68,11 @@ public class LL314<E> implements IList<E> {
 
         if (this.last != null) {
             this.last.next = newNode;
+        } else {
+            this.first = newNode;
         }
 
+        this.last = newNode;
         this.size++;
     }
 
