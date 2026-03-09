@@ -189,9 +189,8 @@ public class LL314<E> implements IList<E> {
 
     /**
      * Get an element from the list.
-     * <br>
+     * 
      * pre: 0 <= pos < size()
-     * <br>
      * post: return the item at pos
      *
      * @param pos specifies which element to get
@@ -239,9 +238,36 @@ public class LL314<E> implements IList<E> {
         return oldVal;
     }
 
+    /**
+     * Remove the first occurrence of obj in this list. Return true if this list
+     * changed as a result of this call, false otherwise. If obj is not present the
+     * list is not altered in any way.
+     * 
+     * pre: obj != null
+     * post: if obj is in this list the first occurrence has been removed and size()
+     * = old size() - 1.
+     *
+     * @param obj The item to remove from this list. obj != null
+     * @return Return true if this list changed as a result of this call, false
+     *         otherwise.
+     */
     public boolean remove(E obj) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+
+        // Preconditions
+        if (obj == null) {
+            throw new IllegalArgumentException("The Value of the new Element cannot be null");
+        }
+
+        // Check for Object Existence
+        int index = this.indexOf(obj);
+
+        if (index == -1) {
+            return false;
+        }
+
+        // Remove Object from List
+        this.remove(index);
+        return true;
     }
 
     /**
@@ -332,7 +358,18 @@ public class LL314<E> implements IList<E> {
                     + "between 0 and size.");
         }
 
-        throw new UnsupportedOperationException("Unimplemented method 'indexOf'");
+        int counter = pos;
+        DoubleListNode<E> currNode = getNodeAtPos(pos);
+        while (currNode.next != null && !currNode.data.equals(item)) {
+            currNode = currNode.next;
+            counter++;
+        }
+
+        if (currNode.data.equals(currNode)) {
+            return counter;
+        }
+
+        return -1;
     }
 
     /**
