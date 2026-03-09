@@ -71,7 +71,7 @@ public class LL314<E> implements IList<E> {
         DoubleListNode<E> newNode;
         
         // When are LinkedLists are Empty
-        if (this.last == null) {
+        if (this.last != null) {
             newNode = new DoubleListNode<>(this.last, item, null);
             this.last.next = newNode;
         } else {
@@ -100,6 +100,7 @@ public class LL314<E> implements IList<E> {
 
         E data = this.first.data;
         this.first = this.first.next;
+        this.first.prev = null;
         this.size--;
         return data;
     }
