@@ -93,9 +93,8 @@ public class LL314<E> implements IList<E> {
 
     /**
      * remove and return the last element of this list.
-     * <br>
+     * 
      * pre: size() > 0
-     * <br>
      * post: size() = old size() - 1
      *
      * @return the old last element of this list
