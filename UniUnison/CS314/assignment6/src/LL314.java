@@ -38,12 +38,14 @@ public class LL314<E> implements IList<E> {
             throw new IllegalArgumentException("The Value of the new Element cannot be null");
         }
 
-        DoubleListNode<E> newNode = new DoubleListNode<>(null, item, this.first);
+        DoubleListNode<E> newNode;
 
         // When the LinkedList is Empty
         if (this.first != null) {
+            newNode = new DoubleListNode<>(null, item, this.first);
             this.first.prev = newNode;
         } else {
+            newNode = new DoubleListNode<>(null, item, null);
             this.last = newNode;
         }
 
@@ -66,12 +68,14 @@ public class LL314<E> implements IList<E> {
             throw new IllegalArgumentException("The Value of the new Element cannot be null");
         }
 
-        DoubleListNode<E> newNode = new DoubleListNode<>(this.last, item, null);
-
+        DoubleListNode<E> newNode;
+        
         // When are LinkedLists are Empty
-        if (this.last != null) {
+        if (this.last == null) {
+            newNode = new DoubleListNode<>(this.last, item, null);
             this.last.next = newNode;
         } else {
+            newNode = new DoubleListNode<>(null, item, null);
             this.first = newNode;
         }
 
@@ -462,7 +466,29 @@ public class LL314<E> implements IList<E> {
                 counter--;
             }
         }
+
         return node;
+    }
+
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder("[");
+        
+        if (this.size != 0) {
+            
+            DoubleListNode<E> currNode = this.first;
+            sb.append(currNode.data);
+            currNode = currNode.next;
+
+            while (currNode != null) {
+                sb.append(", ");
+                sb.append(currNode.data);
+                currNode = currNode.next;
+            }
+        }
+
+        sb.append("]");
+        return sb.toString();
     }
 
     /**
