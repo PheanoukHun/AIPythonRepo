@@ -440,7 +440,7 @@ public class LL314<E> implements IList<E> {
 
         // Preconditions
         if (start < 0 || start > stop || stop > this.size) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("You must choose a range between 0 and size()");
         }
 
         // Removes all values from the Start to Last
@@ -449,7 +449,16 @@ public class LL314<E> implements IList<E> {
         }
 
         // Get Node at the Start and End
-        DoubleListNode<E> startNode = (start == 0) ? this.first : this.getNodeAtPos(start - 1);
+        if (start == 0) {
+            DoubleListNode<E> endNode = this.getNodeAtPos(stop - 1);
+            this.first = endNode.next;
+        } else if (stop == this.size) {
+            DoubleListNode<E> startNode = this.getNodeAtPos(start);
+            this.last = startNode.prev;
+        } else {
+            DoubleListNode<E> startNode = this.getNodeAtPos(start - 1);
+        }
+
         DoubleListNode<E> endNode = (stop == this.size) ? this.last : this.getNodeAtPos(stop);
 
         // Removing the Elements
