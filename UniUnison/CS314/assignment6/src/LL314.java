@@ -493,7 +493,24 @@ public class LL314<E> implements IList<E> {
             return false;
         }
 
+        LL314<E> otherList = (LL314<E>) other;
+
+        if (otherList.size != this.size) {
+            return false;
+        }
+
+        DoubleListNode<E> thisNodeFirst = this.first;
+        DoubleListNode<E> otherNodeFirst = otherList.first;
         
+        while (thisNodeFirst != null && otherNodeFirst != null) {
+            
+            if (!thisNodeFirst.data.equals(otherNodeFirst.data)) {
+                return false;
+            }
+
+            thisNodeFirst = thisNodeFirst.next;
+            otherNodeFirst = otherNodeFirst.next;
+        }
 
         return true;
     }
