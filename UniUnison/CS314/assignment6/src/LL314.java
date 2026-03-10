@@ -186,6 +186,8 @@ public class LL314<E> implements IList<E> {
             // Insert in the Middle
             DoubleListNode<E> oldNode = this.getNodeAtPos(pos);
             DoubleListNode<E> newNode = new DoubleListNode<>(oldNode.prev, item, oldNode);
+
+            oldNode.prev.next = newNode;
             oldNode.prev = newNode;
             this.size++;
         }
@@ -254,7 +256,7 @@ public class LL314<E> implements IList<E> {
         // Removing from the Front or Back
         if (pos == 0) {
             return this.removeFirst();
-        } else if (pos == this.size) {
+        } else if (pos == this.size - 1) {
             return this.removeLast();
         }
 
@@ -325,10 +327,12 @@ public class LL314<E> implements IList<E> {
 
         // Creating a New Result
         LL314<E> result = new LL314<>();
+        DoubleListNode<E> node = this.first;
 
-        result.first = this.getNodeAtPos(start);
-        result.last = this.getNodeAtPos(stop);
-        result.size = stop - start;
+        while (node != null) {
+            result.add(node.data);
+            node = node.next;
+        }
 
         return result;
     }
@@ -396,7 +400,7 @@ public class LL314<E> implements IList<E> {
             counter++;
         }
 
-        if (currNode.data.equals(currNode)) {
+        if (currNode.data.equals(item)) {
             return counter;
         }
 
