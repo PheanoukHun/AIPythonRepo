@@ -448,24 +448,24 @@ public class LL314<E> implements IList<E> {
         // Removes all values from the Start to Last
         if (start == 0 && stop == this.size) {
             this.makeEmpty();
-        }
-
-        // Get Node at the Start and End
-        if (start == 0) {
-            DoubleListNode<E> endNode = this.getNodeAtPos(stop - 1);
-            this.first = endNode.next;
-        } else if (stop == this.size) {
-            DoubleListNode<E> startNode = this.getNodeAtPos(start);
-            this.last = startNode.prev;
         } else {
+            // Get Node at the Start and End
             DoubleListNode<E> startNode = this.getNodeAtPos(start);
             DoubleListNode<E> endNode = this.getNodeAtPos(stop - 1);
 
-            startNode.prev.next = endNode.next;
-            endNode.next.prev = startNode.prev;
-        }
+            if (start == 0) {
+                this.first = endNode.next;
+                this.first.prev = null;
+            } else if (stop == this.size) {
+                this.last = startNode.prev;
+                this.last.next = null;
+            } else {
+                startNode.prev.next = endNode.next;
+                endNode.next.prev = startNode.prev;
+            }
 
-        this.size -= (stop - start);
+            this.size -= (stop - start);
+        }
     }
 
     public String toString() {
@@ -605,6 +605,7 @@ public class LL314<E> implements IList<E> {
     private class LL314Iterator implements Iterator<E> {
 
         private DoubleListNode<E> currNode;
+        private DoubleListNode<E> lastNode;
         private boolean hasUsedNext;
 
         public LL314Iterator() {
@@ -618,15 +619,14 @@ public class LL314<E> implements IList<E> {
         public E next() {
 
             if (!this.hasNext()) {
-                throw new IndexOutOfBoundsException("No Such Elements Left to Get.");
+                throw new IllegalStateException("No Such Elements Left to Get.");
             }
 
+            this.lastNode = this.currNode;
+            this.currNode = this.currNode.next;
             this.hasUsedNext = true;
 
-            E val = currNode.data;
-            this.currNode = this.currNode.next;
-
-            return val;
+            return this.lastNode.data;
         }
 
         public void remove() {
@@ -634,6 +634,8 @@ public class LL314<E> implements IList<E> {
             if (!hasUsedNext && this.currNode != null) {
                 throw new IllegalStateException("You have to use next first before remove.");
             }
+
+            if ()
 
             this.currNode = this.currNode.prev;
             this.currNode.prev.next = this.currNode.next;
