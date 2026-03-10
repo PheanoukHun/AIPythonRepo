@@ -456,14 +456,12 @@ public class LL314<E> implements IList<E> {
             DoubleListNode<E> startNode = this.getNodeAtPos(start);
             this.last = startNode.prev;
         } else {
-            DoubleListNode<E> startNode = this.getNodeAtPos(start - 1);
+            DoubleListNode<E> startNode = this.getNodeAtPos(start);
+            DoubleListNode<E> endNode = this.getNodeAtPos(stop - 1);
+
+            startNode.prev.next = endNode.next;
         }
 
-        DoubleListNode<E> endNode = (stop == this.size) ? this.last : this.getNodeAtPos(stop);
-
-        // Removing the Elements
-        startNode.next = endNode.next;
-        endNode.prev = startNode.prev;
         this.size -= (stop - start);
     }
 
