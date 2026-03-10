@@ -24,6 +24,23 @@ public class LL314<E> implements IList<E> {
     }
 
     /**
+     * Add an item to the end of this list.
+     * pre: item != null
+     * post: size() = old size() + 1, get(size() - 1) = item
+     *
+     * @param item the data to be added to the end of this list, item != null
+     */
+    public void add(E item) {
+
+        // Precondition
+        if (item == null) {
+            throw new IllegalArgumentException("The Value of the new Element cannot be null");
+        }
+
+        addLast(item);
+    }
+
+    /**
      * Add item to the front of the list.
      * 
      * pre: item != null
@@ -81,6 +98,41 @@ public class LL314<E> implements IList<E> {
 
         this.last = newNode;
         this.size++;
+    }
+
+    /**
+     * Insert an item at a specified position in the list. All elements in the list
+     * with a position >= pos have a position = old position + 1
+     * 
+     * pre: 0 <= pos <= size(), item != null
+     * post: size() = old size() + 1, get(pos) = item,
+     *
+     * @param pos  the position to insert the data at in the list
+     * @param item the data to add to the list, item != null
+     */
+    public void insert(int pos, E item) {
+
+        // Precondition
+        if (item == null || pos > this.size || pos < 0) {
+            throw new IllegalArgumentException("The Value of the new Element cannot be null"
+                    + "or position value must be between 0 and the size of the list");
+        }
+
+        if (pos == 0) {
+            // Insert in front
+            addFirst(item);
+        } else if (pos == this.size) {
+            // Insert at the End
+            addLast(item);
+        } else {
+            // Insert in the Middle
+            DoubleListNode<E> oldNode = this.getNodeAtPos(pos);
+            DoubleListNode<E> newNode = new DoubleListNode<>(oldNode.prev, item, oldNode);
+
+            oldNode.prev.next = newNode;
+            oldNode.prev = newNode;
+            this.size++;
+        }
     }
 
     /**
@@ -142,58 +194,6 @@ public class LL314<E> implements IList<E> {
     }
 
     /**
-     * Add an item to the end of this list.
-     * pre: item != null
-     * post: size() = old size() + 1, get(size() - 1) = item
-     *
-     * @param item the data to be added to the end of this list, item != null
-     */
-    public void add(E item) {
-
-        // Precondition
-        if (item == null) {
-            throw new IllegalArgumentException("The Value of the new Element cannot be null");
-        }
-
-        addLast(item);
-    }
-
-    /**
-     * Insert an item at a specified position in the list. All elements in the list
-     * with a position >= pos have a position = old position + 1
-     * 
-     * pre: 0 <= pos <= size(), item != null
-     * post: size() = old size() + 1, get(pos) = item,
-     *
-     * @param pos  the position to insert the data at in the list
-     * @param item the data to add to the list, item != null
-     */
-    public void insert(int pos, E item) {
-
-        // Precondition
-        if (item == null || pos > this.size || pos < 0) {
-            throw new IllegalArgumentException("The Value of the new Element cannot be null"
-                    + "or position value must be between 0 and the size of the list");
-        }
-
-        if (pos == 0) {
-            // Insert in front
-            addFirst(item);
-        } else if (pos == this.size) {
-            // Insert at the End
-            addLast(item);
-        } else {
-            // Insert in the Middle
-            DoubleListNode<E> oldNode = this.getNodeAtPos(pos);
-            DoubleListNode<E> newNode = new DoubleListNode<>(oldNode.prev, item, oldNode);
-
-            oldNode.prev.next = newNode;
-            oldNode.prev = newNode;
-            this.size++;
-        }
-    }
-
-    /**
      * Change the data at the specified position in the list.
      * The old data at that position is returned.
      * 
@@ -207,7 +207,7 @@ public class LL314<E> implements IList<E> {
     public E set(int pos, E item) {
 
         // Precondition
-        if (item == null || pos > this.size || pos < 0) {
+        if (item == null || pos >= this.size || pos < 0) {
             throw new IllegalArgumentException("The Value of the new Element cannot be null"
                     + "or position value must be between 0 and the size of the list");
         }
@@ -327,11 +327,14 @@ public class LL314<E> implements IList<E> {
 
         // Creating a New Result
         LL314<E> result = new LL314<>();
-        DoubleListNode<E> node = this.first;
 
-        while (node != null) {
+        DoubleListNode<E> node = this.getNodeAtPos(start);
+        int counter = start;
+        
+        while (counter < stop) {
             result.add(node.data);
             node = node.next;
+            counter++;
         }
 
         return result;
@@ -395,12 +398,12 @@ public class LL314<E> implements IList<E> {
 
         int counter = pos;
         DoubleListNode<E> currNode = getNodeAtPos(pos);
-        while (currNode.next != null && !currNode.data.equals(item)) {
+        while (currNode != null && !currNode.data.equals(item)) {
             currNode = currNode.next;
             counter++;
         }
 
-        if (currNode.data.equals(item)) {
+        if (currNode != null) {
             return counter;
         }
 
@@ -600,9 +603,16 @@ public class LL314<E> implements IList<E> {
             }
 
             this.hasUsedNext = false;
+            
             DoubleListNode<E> temp = this.currNode;
             this.currNode = this.currNode.prev;
-            LL314.this.remove(temp.data);
+            
+            LL314.this.size--;
+
+            temp.prev = null;
+            temp.next = null;
+
+            
         }
     }
 }
