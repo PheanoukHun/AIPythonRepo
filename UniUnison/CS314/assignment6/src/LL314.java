@@ -501,7 +501,7 @@ public class LL314<E> implements IList<E> {
 
         DoubleListNode<E> thisNodeFirst = this.first;
         DoubleListNode<E> otherNodeFirst = otherList.first;
-        
+
         while (thisNodeFirst != null && otherNodeFirst != null) {
             
             if (!thisNodeFirst.data.equals(otherNodeFirst.data)) {
@@ -627,14 +627,12 @@ public class LL314<E> implements IList<E> {
                 throw new IllegalStateException("You have to use next first before remove.");
             }
 
-            DoubleListNode<E> temp = this.currNode;
-            temp.prev.next = temp.next;
-            temp.next.prev = temp.prev;
+            this.currNode = this.currNode.prev;
+            this.currNode.prev.next = this.currNode.next;
+            this.currNode.next.prev = this.currNode.prev;
             
             LL314.this.size--;
-            
             this.hasUsedNext = false;
-            this.currNode = this.currNode.prev;
 
         }
     }
