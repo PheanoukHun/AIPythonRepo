@@ -69,7 +69,7 @@ public class LL314<E> implements IList<E> {
         }
 
         DoubleListNode<E> newNode;
-        
+
         // When are LinkedLists are Empty
         if (this.last != null) {
             newNode = new DoubleListNode<>(this.last, item, null);
@@ -99,8 +99,15 @@ public class LL314<E> implements IList<E> {
         }
 
         E data = this.first.data;
-        this.first = this.first.next;
-        this.first.prev = null;
+
+        if (this.size == 1) {
+            this.first = null;
+            this.last = null;
+        } else {
+            this.first = this.first.next;
+            this.first.prev = null;
+        }
+        
         this.size--;
         return data;
     }
@@ -121,7 +128,15 @@ public class LL314<E> implements IList<E> {
         }
 
         E data = this.last.data;
-        this.last = this.last.prev;
+
+        if (this.size == 1) {
+            this.first = null;
+            this.last = null;
+        } else {
+            this.last = this.last.prev;
+            this.last.next = null;
+        }
+
         this.size--;
         return data;
     }
@@ -474,9 +489,9 @@ public class LL314<E> implements IList<E> {
     public String toString() {
 
         StringBuilder sb = new StringBuilder("[");
-        
+
         if (this.size != 0) {
-            
+
             DoubleListNode<E> currNode = this.first;
             sb.append(currNode.data);
             currNode = currNode.next;
@@ -546,11 +561,9 @@ public class LL314<E> implements IList<E> {
     private class LL314Iterator implements Iterator<E> {
 
         private DoubleListNode<E> currNode;
-        private DoubleListNode<E> lastNode;
         private boolean hasUsedNext;
 
         public LL314Iterator() {
-            this.lastNode = null;
             this.currNode = LL314.this.first;
         }
 
@@ -559,25 +572,28 @@ public class LL314<E> implements IList<E> {
         }
 
         public E next() {
+            
+            if (!this.hasNext()) {
+                throw new IndexOutOfBoundsException();
+            }
 
-            this.lastNode = this.currNode;
-            this.currNode = this.lastNode.next;
-
+            E val = currNode.data;
             this.hasUsedNext = true;
-
-            return this.lastNode.data;
+            
+            this.currNode = this.currNode.next;
+            
+            return val;
         }
 
         public void remove() {
 
-            if (this.lastNode == null || this.hasUsedNext) {
+            if (!hasUsedNext) {
                 throw new IllegalStateException("You have to use next first before remove.");
             }
 
-            DoubleListNode<E> temp = this.lastNode.prev;
-            LL314.this.remove(this.lastNode.data);
             this.hasUsedNext = false;
-            this.lastNode = temp;
+            DoubleListNode<E> temp = this.currNode;
+
         }
     }
 }
