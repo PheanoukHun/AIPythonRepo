@@ -468,15 +468,19 @@ public class LL314<E> implements IList<E> {
         int middleIndex = this.size / 2;
 
         if (pos < middleIndex) {
+            
             node = this.first;
             int counter = 0;
+
             while (counter < pos) {
                 node = node.next;
                 counter++;
             }
         } else {
+            
             node = this.last;
-            int counter = this.size;
+            int counter = this.size - 1;
+            
             while (counter > pos) {
                 node = node.prev;
                 counter--;
@@ -574,12 +578,12 @@ public class LL314<E> implements IList<E> {
         public E next() {
             
             if (!this.hasNext()) {
-                throw new IndexOutOfBoundsException();
+                throw new IndexOutOfBoundsException("No Such Elements Left to Get.");
             }
 
-            E val = currNode.data;
             this.hasUsedNext = true;
             
+            E val = currNode.data;
             this.currNode = this.currNode.next;
             
             return val;
@@ -587,13 +591,14 @@ public class LL314<E> implements IList<E> {
 
         public void remove() {
 
-            if (!hasUsedNext) {
+            if (!hasUsedNext && this.currNode != null) {
                 throw new IllegalStateException("You have to use next first before remove.");
             }
 
             this.hasUsedNext = false;
             DoubleListNode<E> temp = this.currNode;
-
+            this.currNode = this.currNode.prev;
+            LL314.this.remove(temp.data);
         }
     }
 }
