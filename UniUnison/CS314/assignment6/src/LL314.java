@@ -444,24 +444,13 @@ public class LL314<E> implements IList<E> {
         }
 
         // Removes all values from the Start to Last
-        if (start == 0 && stop == this.size - 1) {
+        if (start == 0 && stop == this.size) {
             this.makeEmpty();
         }
 
         // Get Node at the Start and End
-        DoubleListNode<E> startNode;
-        if (start == 0) {
-            startNode = first;
-        } else {
-            startNode = this.getNodeAtPos(start);
-        }
-
-        DoubleListNode<E> endNode;
-        if (stop == this.size()) {
-            endNode = last;
-        } else {
-            endNode = this.getNodeAtPos(stop - 1);
-        }
+        DoubleListNode<E> startNode = (start == 0) ? this.first : this.getNodeAtPos(start - 1);
+        DoubleListNode<E> endNode = (stop == this.size) ? this.last : this.getNodeAtPos(stop);
 
         // Removing the Elements
         startNode.next = endNode.next;
@@ -602,17 +591,15 @@ public class LL314<E> implements IList<E> {
                 throw new IllegalStateException("You have to use next first before remove.");
             }
 
-            this.hasUsedNext = false;
-            
             DoubleListNode<E> temp = this.currNode;
-            this.currNode = this.currNode.prev;
+            temp.prev.next = temp.next;
+            temp.next.prev = temp.prev;
             
             LL314.this.size--;
-
-            temp.prev = null;
-            temp.next = null;
-
             
+            this.hasUsedNext = false;
+            this.currNode = this.currNode.prev;
+
         }
     }
 }
