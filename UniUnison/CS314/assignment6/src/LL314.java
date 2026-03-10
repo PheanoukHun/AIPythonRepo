@@ -24,6 +24,15 @@ public class LL314<E> implements IList<E> {
     }
 
     /**
+     * Return the size of this list (the number of elements).
+     * 
+     * @return the number of items in this list
+     */
+    public int size() {
+        return this.size;
+    }
+
+    /**
      * Add an item to the end of this list.
      * pre: item != null
      * post: size() = old size() + 1, get(size() - 1) = item
@@ -194,46 +203,6 @@ public class LL314<E> implements IList<E> {
     }
 
     /**
-     * Change the data at the specified position in the list.
-     * The old data at that position is returned.
-     * 
-     * pre: 0 <= pos < size(), item != null
-     * post: get(pos) = item, return the old get(pos)
-     *
-     * @param pos  the position in the list to overwrite
-     * @param item the new item that will overwrite the old item, item != null
-     * @return the old data at the specified position
-     */
-    public E set(int pos, E item) {
-
-        // Precondition
-        if (item == null || pos >= this.size || pos < 0) {
-            throw new IllegalArgumentException("The Value of the new Element cannot be null"
-                    + "or position value must be between 0 and the size of the list");
-        }
-
-        DoubleListNode<E> node = this.getNodeAtPos(pos);
-
-        E oldData = node.data;
-        node.data = item;
-
-        return oldData;
-    }
-
-    /**
-     * Get an element from the list.
-     * 
-     * pre: 0 <= pos < size()
-     * post: return the item at pos
-     *
-     * @param pos specifies which element to get
-     * @return the element at the specified position in the list
-     */
-    public E get(int pos) {
-        return getNodeAtPos(pos).data;
-    }
-
-    /**
      * Remove an element in the list based on position. all elements of list with a
      * position > pos have a position = old position - 1
      * 
@@ -304,6 +273,46 @@ public class LL314<E> implements IList<E> {
     }
 
     /**
+     * Change the data at the specified position in the list.
+     * The old data at that position is returned.
+     * 
+     * pre: 0 <= pos < size(), item != null
+     * post: get(pos) = item, return the old get(pos)
+     *
+     * @param pos  the position in the list to overwrite
+     * @param item the new item that will overwrite the old item, item != null
+     * @return the old data at the specified position
+     */
+    public E set(int pos, E item) {
+
+        // Precondition
+        if (item == null || pos >= this.size || pos < 0) {
+            throw new IllegalArgumentException("The Value of the new Element cannot be null"
+                    + "or position value must be between 0 and the size of the list");
+        }
+
+        DoubleListNode<E> node = this.getNodeAtPos(pos);
+
+        E oldData = node.data;
+        node.data = item;
+
+        return oldData;
+    }
+
+    /**
+     * Get an element from the list.
+     * 
+     * pre: 0 <= pos < size()
+     * post: return the item at pos
+     *
+     * @param pos specifies which element to get
+     * @return the element at the specified position in the list
+     */
+    public E get(int pos) {
+        return getNodeAtPos(pos).data;
+    }
+
+    /**
      * Return a sublist of elements in this list from <tt>start</tt> inclusive to
      * stop exclusive. This list is not changed as a result of this call. elements
      * at positions start through stop - 1 in this list.
@@ -338,15 +347,6 @@ public class LL314<E> implements IList<E> {
         }
 
         return result;
-    }
-
-    /**
-     * Return the size of this list (the number of elements).
-     * 
-     * @return the number of items in this list
-     */
-    public int size() {
-        return this.size;
     }
 
     /**
@@ -460,9 +460,42 @@ public class LL314<E> implements IList<E> {
             DoubleListNode<E> endNode = this.getNodeAtPos(stop - 1);
 
             startNode.prev.next = endNode.next;
+            endNode.next.prev = startNode.prev;
         }
 
         this.size -= (stop - start);
+    }
+
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder("[");
+
+        if (this.size != 0) {
+
+            DoubleListNode<E> currNode = this.first;
+            sb.append(currNode.data);
+            currNode = currNode.next;
+
+            while (currNode != null) {
+                sb.append(", ");
+                sb.append(currNode.data);
+                currNode = currNode.next;
+            }
+        }
+
+        sb.append("]");
+        return sb.toString();
+    }
+
+    public boolean equals(Object other) {
+
+        if (!(other instanceof LL314<?>)) {
+            return false;
+        }
+
+        
+
+        return true;
     }
 
     private DoubleListNode<E> getNodeAtPos(int pos) {
@@ -491,27 +524,6 @@ public class LL314<E> implements IList<E> {
         }
 
         return node;
-    }
-
-    public String toString() {
-
-        StringBuilder sb = new StringBuilder("[");
-
-        if (this.size != 0) {
-
-            DoubleListNode<E> currNode = this.first;
-            sb.append(currNode.data);
-            currNode = currNode.next;
-
-            while (currNode != null) {
-                sb.append(", ");
-                sb.append(currNode.data);
-                currNode = currNode.next;
-            }
-        }
-
-        sb.append("]");
-        return sb.toString();
     }
 
     /**
