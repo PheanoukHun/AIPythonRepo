@@ -168,7 +168,7 @@ public class LL314<E> implements IList<E> {
             this.first = this.first.next;
             this.first.prev = null;
         }
-        
+
         this.size--;
         return data;
     }
@@ -337,13 +337,15 @@ public class LL314<E> implements IList<E> {
         // Creating a New Result
         LL314<E> result = new LL314<>();
 
-        DoubleListNode<E> node = this.getNodeAtPos(start);
-        int counter = start;
-        
-        while (counter < stop) {
-            result.add(node.data);
-            node = node.next;
-            counter++;
+        if (start != stop) {
+            DoubleListNode<E> node = this.getNodeAtPos(start);
+            int counter = start;
+
+            while (counter < stop) {
+                result.add(node.data);
+                node = node.next;
+                counter++;
+            }
         }
 
         return result;
@@ -503,7 +505,7 @@ public class LL314<E> implements IList<E> {
         DoubleListNode<E> otherNodeFirst = otherList.first;
 
         while (thisNodeFirst != null && otherNodeFirst != null) {
-            
+
             if (!thisNodeFirst.data.equals(otherNodeFirst.data)) {
                 return false;
             }
@@ -517,11 +519,17 @@ public class LL314<E> implements IList<E> {
 
     private DoubleListNode<E> getNodeAtPos(int pos) {
 
+        if (pos == 0) {
+            return this.first;
+        } else if (pos == this.size - 1) {
+            return this.last;
+        }
+
         DoubleListNode<E> node;
         int middleIndex = this.size / 2;
 
         if (pos < middleIndex) {
-            
+
             node = this.first;
             int counter = 0;
 
@@ -530,10 +538,10 @@ public class LL314<E> implements IList<E> {
                 counter++;
             }
         } else {
-            
+
             node = this.last;
             int counter = this.size - 1;
-            
+
             while (counter > pos) {
                 node = node.prev;
                 counter--;
@@ -608,16 +616,16 @@ public class LL314<E> implements IList<E> {
         }
 
         public E next() {
-            
+
             if (!this.hasNext()) {
                 throw new IndexOutOfBoundsException("No Such Elements Left to Get.");
             }
 
             this.hasUsedNext = true;
-            
+
             E val = currNode.data;
             this.currNode = this.currNode.next;
-            
+
             return val;
         }
 
@@ -630,7 +638,7 @@ public class LL314<E> implements IList<E> {
             this.currNode = this.currNode.prev;
             this.currNode.prev.next = this.currNode.next;
             this.currNode.next.prev = this.currNode.prev;
-            
+
             LL314.this.size--;
             this.hasUsedNext = false;
 
