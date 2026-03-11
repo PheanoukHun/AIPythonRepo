@@ -635,7 +635,9 @@ public class LL314<E> implements IList<E> {
                 throw new IllegalStateException("You have to use next first before remove.");
             }
 
-            if ()
+            if (this.lastNode.prev == null) {
+                
+            }
 
             this.currNode = this.currNode.prev;
             this.currNode.prev.next = this.currNode.next;
