@@ -17,6 +17,9 @@ public class LL314<E> implements IList<E> {
     private DoubleListNode<E> last;
     private int size;
 
+    /**
+     * 
+     */
     public LL314() {
         this.first = null;
         this.last = null;
