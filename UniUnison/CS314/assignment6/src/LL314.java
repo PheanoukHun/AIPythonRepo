@@ -631,29 +631,24 @@ public class LL314<E> implements IList<E> {
 
         public void remove() {
 
-            if (!hasUsedNext && this.currNode != null) {
+            if (!hasUsedNext) {
                 throw new IllegalStateException("You have to use next first before remove.");
             }
 
             if (this.lastNode.prev == null) {
-                
-            }
-
-            // this.currNode = this.currNode.prev;
-            // this.currNode.prev.next = this.currNode.next;
-            // this.currNode.next.prev = this.currNode.prev;
-
-            // LL314.this.size--;
-            // this.hasUsedNext = false;
-
-            if (this.lastNode.prev == null) {
-                LL314.this.removeFirst();
-            } else if (this.lastNode.next == null) {
-                LL314.this.removeLast();
+                LL314.this.first = this.lastNode.next;   
             } else {
-                
+                this.lastNode.prev.next = this.lastNode.next;
             }
 
+            if (this.currNode == null) {
+                LL314.this.last = this.lastNode.prev;
+            } else {
+                this.currNode = this.lastNode.prev;
+            }
+
+            this.hasUsedNext = false;
+            LL314.this.size--;
         }
     }
 }
