@@ -454,6 +454,14 @@ public class LL314<E> implements IList<E> {
         this.size = 0;
     }
 
+    /**
+     * Return an Iterator for this list.
+     * 
+     * pre: none
+     * post: return an Iterator object for this List
+     * 
+     * Big O Notation: O(1)
+     */
     public Iterator<E> iterator() {
         return new LL314Iterator();
     }
@@ -501,9 +509,13 @@ public class LL314<E> implements IList<E> {
     }
 
     /**
-     * 
-     * 
+     * Return a String version of this list enclosed in square brackets, [].
+     * Elements are in order based on position in the list with the first
+     * element first. Adjacent elements are separated by comma's.
+     *
      * Big O Notation: O(N)
+     * 
+     * @return a String representation of this IList
      */
     public String toString() {
 
@@ -526,6 +538,15 @@ public class LL314<E> implements IList<E> {
         return sb.toString();
     }
 
+    /**
+     * Determine if this IList is equal to other. Two ILists are equal if they
+     * contain the same elements in the same order.
+     *
+     * Big O Notation: O(N)
+     * 
+     * @param other The other object to compare this IList to
+     * @return true if this IList is equal to other, false otherwise
+     */
     public boolean equals(Object other) {
 
         if (!(other instanceof IList<?>)) {
@@ -550,6 +571,12 @@ public class LL314<E> implements IList<E> {
         return true;
     }
 
+    /**
+     * Gets the DoubleListNode object found at the position found at the pos index.
+     * 
+     * @param pos - the position to insert the data at in the list
+     * @return - The DoubleListNode object found at the pos index.
+     */
     private DoubleListNode<E> getNodeAtPos(int pos) {
 
         if (pos == 0) {
@@ -635,6 +662,10 @@ public class LL314<E> implements IList<E> {
         }
     }
 
+    /**
+     * This class creates a custom iterator object that can iterates over the LL314 Class.
+     * 
+     */
     private class LL314Iterator implements Iterator<E> {
 
         private DoubleListNode<E> currNode;
