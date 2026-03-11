@@ -464,6 +464,8 @@ public class LL314<E> implements IList<E> {
      * pre: <tt>0 <= start <= size(), start <= stop <= size()
      * post: size() = old size() - (stop - start)
      *
+     * Big O Notation: O(N)
+     * 
      * @param start position at beginning of range of elements to be removed
      * @param stop  stop - 1 is the position at the end of the range of elements
      *              to be removed
@@ -498,6 +500,11 @@ public class LL314<E> implements IList<E> {
         }
     }
 
+    /**
+     * 
+     * 
+     * Big O Notation: O(N)
+     */
     public String toString() {
 
         StringBuilder sb = new StringBuilder("[");
