@@ -338,13 +338,12 @@ public class LL314<E> implements IList<E> {
         LL314<E> result = new LL314<>();
 
         if (start != stop) {
+            
             DoubleListNode<E> node = this.getNodeAtPos(start);
-            int counter = start;
 
-            while (counter < stop) {
+            for (int i = start; i < stop; i++) {
                 result.add(node.data);
                 node = node.next;
-                counter++;
             }
         }
 
@@ -448,7 +447,7 @@ public class LL314<E> implements IList<E> {
         // Removes all values from the Start to Last
         if (start == 0 && stop == this.size) {
             this.makeEmpty();
-        } else {
+        } else if (start != stop) {
             // Get Node at the Start and End
             DoubleListNode<E> startNode = this.getNodeAtPos(start);
             DoubleListNode<E> endNode = this.getNodeAtPos(stop - 1);
@@ -495,14 +494,14 @@ public class LL314<E> implements IList<E> {
             return false;
         }
 
-        LL314<E> otherList = (LL314<E>) other;
+        LL314<?> otherList = (LL314<?>) other;
 
         if (otherList.size != this.size) {
             return false;
         }
 
         DoubleListNode<E> thisNodeFirst = this.first;
-        DoubleListNode<E> otherNodeFirst = otherList.first;
+        DoubleListNode<?> otherNodeFirst = otherList.first;
 
         while (thisNodeFirst != null && otherNodeFirst != null) {
 
@@ -610,6 +609,7 @@ public class LL314<E> implements IList<E> {
 
         public LL314Iterator() {
             this.currNode = LL314.this.first;
+            this.hasUsedNext = false;
         }
 
         public boolean hasNext() {
@@ -636,15 +636,18 @@ public class LL314<E> implements IList<E> {
             }
 
             if (this.lastNode.prev == null) {
-                LL314.this.first = this.lastNode.next;   
+                LL314.this.first = this.lastNode.next;
+                if (LL314.this.first != null) {
+                    LL314.this.first.prev = null;
+                }
             } else {
                 this.lastNode.prev.next = this.lastNode.next;
             }
 
-            if (this.currNode == null) {
+            if (this.lastNode.next == null) {
                 LL314.this.last = this.lastNode.prev;
             } else {
-                this.currNode = this.lastNode.prev;
+                this.lastNode.next.prev = this.lastNode.prev;
             }
 
             this.hasUsedNext = false;
