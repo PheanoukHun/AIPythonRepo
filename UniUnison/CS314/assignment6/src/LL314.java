@@ -648,7 +648,11 @@ public class LL314<E> implements IList<E> {
 
             if (this.lastNode.prev == null) {
                 LL314.this.removeFirst();
-            } else if 
+            } else if (this.lastNode.next == null) {
+                LL314.this.removeLast();
+            } else {
+                
+            }
 
         }
     }
