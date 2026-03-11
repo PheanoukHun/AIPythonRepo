@@ -531,17 +531,13 @@ public class LL314<E> implements IList<E> {
             return false;
         }
 
-        DoubleListNode<E> thisNodeFirst = this.first;
-        DoubleListNode<?> otherNodeFirst = otherList.first;
+        Iterator<E> thisIt = this.iterator();
+        Iterator<?> otherIt = otherList.iterator();
 
-        while (thisNodeFirst != null && otherNodeFirst != null) {
-
-            if (!thisNodeFirst.data.equals(otherNodeFirst.data)) {
+        while (thisIt.hasNext()) {
+            if (!thisIt.next().equals(otherIt.next())) {
                 return false;
             }
-
-            thisNodeFirst = thisNodeFirst.next;
-            otherNodeFirst = otherNodeFirst.next;
         }
 
         return true;
