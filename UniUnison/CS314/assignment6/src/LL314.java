@@ -639,12 +639,16 @@ public class LL314<E> implements IList<E> {
                 
             }
 
-            this.currNode = this.currNode.prev;
-            this.currNode.prev.next = this.currNode.next;
-            this.currNode.next.prev = this.currNode.prev;
+            // this.currNode = this.currNode.prev;
+            // this.currNode.prev.next = this.currNode.next;
+            // this.currNode.next.prev = this.currNode.prev;
 
-            LL314.this.size--;
-            this.hasUsedNext = false;
+            // LL314.this.size--;
+            // this.hasUsedNext = false;
+
+            if (this.lastNode.prev == null) {
+                LL314.this.removeFirst();
+            } else if 
 
         }
     }
