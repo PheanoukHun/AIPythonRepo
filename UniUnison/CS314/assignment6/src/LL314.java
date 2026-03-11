@@ -18,7 +18,7 @@ public class LL314<E> implements IList<E> {
     private int size;
 
     /**
-     * 
+     * Creates a empty linked list object.
      */
     public LL314() {
         this.first = null;
@@ -29,6 +29,8 @@ public class LL314<E> implements IList<E> {
     /**
      * Return the size of this list (the number of elements).
      * 
+     * Big O Notation: O(1)
+     * 
      * @return the number of items in this list
      */
     public int size() {
@@ -37,8 +39,11 @@ public class LL314<E> implements IList<E> {
 
     /**
      * Add an item to the end of this list.
+     * 
      * pre: item != null
      * post: size() = old size() + 1, get(size() - 1) = item
+     * 
+     * Big O Notation: O(1)
      *
      * @param item the data to be added to the end of this list, item != null
      */
@@ -57,6 +62,8 @@ public class LL314<E> implements IList<E> {
      * 
      * pre: item != null
      * post: size() = old size() + 1, get(0) = item
+     * 
+     * Big O Notation: O(1)
      *
      * @param item the data to add to the front of this list
      */
@@ -87,6 +94,8 @@ public class LL314<E> implements IList<E> {
      * 
      * pre: item != null
      * post: size() = old size() + 1, get(size() -1) = item
+     * 
+     * Big O Notation: O(1)
      *
      * @param item the data to add to the end of this list
      */
@@ -118,6 +127,8 @@ public class LL314<E> implements IList<E> {
      * 
      * pre: 0 <= pos <= size(), item != null
      * post: size() = old size() + 1, get(pos) = item,
+     * 
+     * Big O Notation: O(N)
      *
      * @param pos  the position to insert the data at in the list
      * @param item the data to add to the list, item != null
@@ -152,6 +163,8 @@ public class LL314<E> implements IList<E> {
      * 
      * pre: size() > 0
      * post: size() = old size() - 1
+     * 
+     * Big O Notation: O(1)
      *
      * @return the old first element of this list
      */
@@ -181,6 +194,8 @@ public class LL314<E> implements IList<E> {
      * 
      * pre: size() > 0
      * post: size() = old size() - 1
+     * 
+     * Big O Notation: O(1)
      *
      * @return the old last element of this list
      */
@@ -211,6 +226,8 @@ public class LL314<E> implements IList<E> {
      * 
      * pre: 0 <= pos < size()
      * post: size() = old size() - 1
+     *
+     * Big O Notation: O(N)
      *
      * @param pos the position of the element to remove from the list
      * @return the data at position pos
@@ -251,6 +268,8 @@ public class LL314<E> implements IList<E> {
      * pre: obj != null
      * post: if obj is in this list the first occurrence has been removed and size()
      * = old size() - 1.
+     * 
+     * Big O Notation: O(N)
      *
      * @param obj The item to remove from this list. obj != null
      * @return Return true if this list changed as a result of this call, false
@@ -281,6 +300,8 @@ public class LL314<E> implements IList<E> {
      * 
      * pre: 0 <= pos < size(), item != null
      * post: get(pos) = item, return the old get(pos)
+     * 
+     * Big O Notation: O(N)
      *
      * @param pos  the position in the list to overwrite
      * @param item the new item that will overwrite the old item, item != null
@@ -307,6 +328,8 @@ public class LL314<E> implements IList<E> {
      * 
      * pre: 0 <= pos < size()
      * post: return the item at pos
+     * 
+     * Big O Notation: O(N)
      *
      * @param pos specifies which element to get
      * @return the element at the specified position in the list
@@ -316,18 +339,20 @@ public class LL314<E> implements IList<E> {
     }
 
     /**
-     * Return a sublist of elements in this list from <tt>start</tt> inclusive to
-     * stop exclusive. This list is not changed as a result of this call. elements
-     * at positions start through stop - 1 in this list.
+     * Return a sublist of elements in this list from start inclusive to stop
+     * exclusive. This list is not changed as a result of this call. elements at
+     * positions start through stop - 1 in this list.
      * 
-     * pre: <tt>0 <= start <= size(), start <= stop <= size()</tt>
+     * pre: 0 <= start <= size(), start <= stop <= size()
      * post: return a list whose size is stop - start and contains the
+     * 
+     * Big O Notation: O(N)
      *
      * @param start index of the first element of the sublist.
      * @param stop  stop - 1 is the index of the last element of the sublist.
-     * @return a list with <tt>stop - start</tt> elements, the elements are
-     *         from positions <tt>start</tt> inclusive to <tt>stop</tt> exclusive in
-     *         this list. If start == stop an empty list is returned.
+     * @return a list with stop - start elements, the elements are from positions
+     *         start inclusive to stop exclusive in this list. If start == stop an
+     *         empty list is returned.
      */
     public IList<E> getSubList(int start, int stop) {
 
@@ -341,7 +366,7 @@ public class LL314<E> implements IList<E> {
         LL314<E> result = new LL314<>();
 
         if (start != stop) {
-            
+
             DoubleListNode<E> node = this.getNodeAtPos(start);
 
             for (int i = start; i < stop; i++) {
@@ -359,6 +384,8 @@ public class LL314<E> implements IList<E> {
      * pre: item != null
      * post: return the index of the first element equal to item or -1 if item is
      * not present
+     * 
+     * Big O Notation: O(N)
      *
      * @param item the element to search for in the list. item != null
      * @return return the index of the first element equal to item or a -1 if
@@ -377,18 +404,18 @@ public class LL314<E> implements IList<E> {
     /**
      * Find the position of an element in the list starting at a specified
      * position.
-     * <br>
+     * 
      * pre: 0 <= pos < size(), item != null
-     * <br>
-     * post: return the index of the first element equal to item starting
-     * at pos or -1 if item is not present from position pos onward.
+     * post: return the index of the first element equal to item starting at pos or
+     * -1 if item is not present from position pos onward.
+     * 
+     * Big O Notation: O(N)
      *
      * @param item the element to search for in the list. Item != null
      * @param pos  the position in the list to start searching from
-     * @return starting from the specified position return the index of the
-     *         first element equal to item or a -1 if item is not present between
-     *         pos
-     *         and the end of the list.
+     * @return starting from the specified position return the index of the first
+     *         element equal to item or a -1 if item is not present between pos and
+     *         the end of the list.
      */
     public int indexOf(E item, int pos) {
 
@@ -402,6 +429,7 @@ public class LL314<E> implements IList<E> {
 
         int counter = pos;
         DoubleListNode<E> currNode = getNodeAtPos(pos);
+        
         while (currNode != null && !currNode.data.equals(item)) {
             currNode = currNode.next;
             counter++;
