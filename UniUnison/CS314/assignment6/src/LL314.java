@@ -21,9 +21,7 @@ public class LL314<E> implements IList<E> {
      * Creates a empty linked list object.
      */
     public LL314() {
-        this.first = null;
-        this.last = null;
-        this.size = 0;
+        this.makeEmpty();
     }
 
     /**
@@ -429,7 +427,7 @@ public class LL314<E> implements IList<E> {
 
         int counter = pos;
         DoubleListNode<E> currNode = getNodeAtPos(pos);
-        
+
         while (currNode != null && !currNode.data.equals(item)) {
             currNode = currNode.next;
             counter++;
@@ -444,8 +442,11 @@ public class LL314<E> implements IList<E> {
 
     /**
      * Transform the list to an empty state.
+     * 
      * pre: none
      * post: size() = 0
+     * 
+     * Big O Notation: O(1)
      */
     public void makeEmpty() {
         this.first = null;
@@ -460,9 +461,8 @@ public class LL314<E> implements IList<E> {
     /**
      * Remove all elements in this list from start inclusive to stop exclusive.
      * <br>
-     * pre: <tt>0 <= start <= size(), start <= stop <= size()</tt>
-     * <br>
-     * post: <tt>size() = old size() - (stop - start)</tt>
+     * pre: <tt>0 <= start <= size(), start <= stop <= size()
+     * post: size() = old size() - (stop - start)
      *
      * @param start position at beginning of range of elements to be removed
      * @param stop  stop - 1 is the position at the end of the range of elements
@@ -521,13 +521,13 @@ public class LL314<E> implements IList<E> {
 
     public boolean equals(Object other) {
 
-        if (!(other instanceof LL314<?>)) {
+        if (!(other instanceof IList<?>)) {
             return false;
         }
 
-        LL314<?> otherList = (LL314<?>) other;
+        IList<?> otherList = (IList<?>) other;
 
-        if (otherList.size != this.size) {
+        if (otherList.size() != this.size) {
             return false;
         }
 
