@@ -194,7 +194,7 @@ public class LinkedListTester {
         expectedList = copyLLToALForStr(actualLL);
 
         // Iterator.hasNext()
-        
+
     }
 
     // Convert elements of list to an array. Uses the list
@@ -226,11 +226,8 @@ public class LinkedListTester {
 
         sb.append("\n\tResults: ");
 
-        if (results) {
-            sb.append("PASSED");
-        } else {
-            sb.append("FAILED");
-        }
+        String passedString = results ? "PASSED" : "FAILED";
+        sb.append(passedString);
 
         if (list != null) {
             sb.append("\n\tActual List:    ");
