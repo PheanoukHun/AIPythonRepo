@@ -343,13 +343,51 @@ public class LinkedListTester {
                 testNum++;
 
                 result = !actualLL.equals(expectedList);
-                
+                printResults(result, actualLL, expectedList, "Comparing LL to AL", testNum);
+                testNum++;
+
+                // Reset LL
+                actualLL = addAllLLWithStrs(new String[] { "A" });
 
                 // addFirst
+                actualLL.addFirst("Z");
+                result = actualLL.get(0).equals("Z");
+                printResults(result, actualLL, null,
+                                "Adding to the Front with One Element", testNum);
+                testNum++;
+
+                actualLL.makeEmpty();
+
+                actualLL.addFirst("Z");
+                result = actualLL.size() == 1;
+                printResults(result, actualLL, null,
+                                "Adding ot the Front with Zero Element", testNum);
+                testNum++;
+
+                // Reset LL
+                actualLL = addAllLLWithStrs(new String[] { "A" });
 
                 // addLast
+                actualLL.addLast("Z");
+                result = actualLL.get(actualLL.size() - 1).equals("Z");
+                printResults(result, actualLL, null,
+                                "Adding to the Last to a List with One Element", testNum);
+                testNum++;
+
+                actualLL.makeEmpty();
+                actualLL.addLast("Z");
+                result = actualLL.size() == 1;
+                printResults(result, actualLL, null, "Adding Last to an Empty List",
+                                testNum);
+                testNum++;
+
+                // Reset LL
+                actualLL = addAllLLWithStrs(new String[] { "A", "B" });
 
                 // removeFirst
+                actualLL.removeFirst();
+                result = actualLL.size() == 1;
+                printResults(result, actualLL, null, alVal, testNum);
 
                 // removeLast
         }
