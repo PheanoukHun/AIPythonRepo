@@ -37,20 +37,62 @@ public class LinkedListTester {
     private static void myTestSuite() {
         
         LL314<String> actualLL = new LL314<>();
-        ArrayList<String> resultList = new ArrayList<>();
+        ArrayList<String> expectedList = new ArrayList<>();
+        
+        // Add Tests
 
         actualLL.add("A");
-        resultList.add("A");
-        resultList.add("B");
+        expectedList.add("A");
+        expectedList.add("B");
         actualLL.add("B");
-        resultList.add("C");
+        expectedList.add("C");
         actualLL.add("C");
-        resultList.add("A");
-        actualLL.add("A");
-
+        
         boolean result = arraysSame(toArray(actualLL), toArray(actualLL));
         if (result) {
-            System.out.println("Passed Test Case 1, Adding Based with Duplicates and ");
+            System.out.println("\nPassed Test Case 1, Adding Ordered");
+        } else {
+            System.out.println("\nTest 1 Failed");
+        }
+        
+        expectedList.add("A");
+        actualLL.add("A");
+
+        result = arraysSame(toArray(actualLL), toArray(actualLL));
+        if (result) {
+            System.out.println("Passed Test Case 2, Adding Based with Duplicates");
+        } else {
+            System.out.println("\nTest 2 Failed");
+        }
+
+        // Set Tests
+
+        actualLL.insert(1, "Z");
+        expectedList.add(1, "Z");
+
+        result = arraysSame(toArray(actualLL), toArray(actualLL));
+        if (result) {
+            System.out.println("Passed Test Case 3, Inserting Closer to front");
+        } else {
+            System.out.println("\nTest 3 Failed");
+        }
+
+        actualLL.insert(actualLL.size() - 2, "X");
+        expectedList.add(actualLL.size() - 2, "X");
+
+        result = arraysSame(toArray(actualLL), toArray(actualLL));
+        if (result) {
+            System.out.println("Passed Test Case 4, Inserting Closer to End");
+        } else {
+            System.out.println("\nTest 4 Failed");
+        }
+
+        // Get Tests
+        result = actualLL.get(1).equals("A");
+        if (result) {
+            System.out.println("Passed Test Case 5, Getting Val Closer to front");
+        } else {
+            System.out.println("\nTest 5 Failed");
         }
     }
 
@@ -71,5 +113,12 @@ public class LinkedListTester {
     // post: return true if the 
     private static boolean arraysSame(Object[] one, Object[] two)  {
         return Arrays.equals(one, two);
+    }
+
+    private static void printResults(boolean results, LL314 list, String detail, int testNum) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n");
+        sb.append("Test ", testNum);sb.append(testNum);
+
     }
 }
