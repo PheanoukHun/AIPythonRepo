@@ -574,6 +574,8 @@ public class LL314<E> implements IList<E> {
     /**
      * Gets the DoubleListNode object found at the position found at the pos index.
      * 
+     * Big O Notation: O(N)
+     * 
      * @param pos - the position to insert the data at in the list
      * @return - The DoubleListNode object found at the pos index.
      */
@@ -630,11 +632,10 @@ public class LL314<E> implements IList<E> {
 
         /**
          * default constructor.
-         * <br>
+         * 
          * pre: none
-         * <br>
          * post: data = null, next = null, prev = null
-         * <br>
+         * 
          * O(1)
          */
         public DoubleListNode() {
@@ -644,12 +645,11 @@ public class LL314<E> implements IList<E> {
         /**
          * Create a DoubleListNode that holds the specified data
          * and refers to the specified next and previous elements.
-         * <br>
+         * 
          * pre: none
-         * <br>
          * post: this.data = data, this.next = next, this.prev = prev
-         * <br>
-         * O(1)
+         * 
+         * Big O Notation: O(1)
          *
          * @param prev the previous node
          * @param data the data this DoubleListNode should hold
@@ -663,7 +663,8 @@ public class LL314<E> implements IList<E> {
     }
 
     /**
-     * This class creates a custom iterator object that can iterates over the LL314 Class.
+     * This class creates a custom iterator object that can iterates over the LL314
+     * Class.
      * 
      */
     private class LL314Iterator implements Iterator<E> {
@@ -677,10 +678,25 @@ public class LL314<E> implements IList<E> {
             this.hasUsedNext = false;
         }
 
+        /**
+         * Checks to see if the iterator is able to move to another value.
+         * 
+         * Big O Notation: O(1)
+         * 
+         * @return - A boolean value stating the fact whether the iterator is able to
+         *         move to the next module or not.
+         */
         public boolean hasNext() {
             return this.currNode != null;
         }
 
+        /**
+         * Moves the iterators to the Next Node. Returns the value of the past node.
+         * 
+         * Big O Notation: O(1)
+         * 
+         * @return - The Value of the Node the iterator was at before being moved.
+         */
         public E next() {
 
             if (!this.hasNext()) {
@@ -694,6 +710,11 @@ public class LL314<E> implements IList<E> {
             return this.lastNode.data;
         }
 
+        /**
+         * This method removes the previous node that the iterator was pointing at.
+         * 
+         * Big O Notation: O(!)
+         */
         public void remove() {
 
             if (!hasUsedNext) {
