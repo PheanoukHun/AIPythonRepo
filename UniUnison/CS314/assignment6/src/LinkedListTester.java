@@ -59,7 +59,7 @@ public class LinkedListTester {
         printResults(result, actualLL, expectedList, "Adding Duplicate Values", testNum);
         testNum++;
 
-        // Set Tests
+        // Insert Tests
 
         actualLL.insert(1, "Z");
         expectedList.add(1, "Z");
@@ -69,7 +69,7 @@ public class LinkedListTester {
         testNum++;
 
         actualLL.insert(actualLL.size() - 2, "X");
-        expectedList.add(actualLL.size() - 2, "X");
+        expectedList.add(actualLL.size() - 3, "X");
 
         result = arraysSame(toArray(actualLL), expectedList.toArray());
         printResults(result, actualLL, expectedList, "Inserting Closer to the End", testNum);
@@ -77,12 +77,12 @@ public class LinkedListTester {
 
         // Get Tests
         result = actualLL.get(1).equals("Z");
-        printResults(result, actualLL, expectedList, "Getting the Value Closer to the Front",
+        printResults(result, actualLL, null, "Getting the Value Closer to the Front",
                 testNum);
         testNum++;
 
         result = actualLL.get(actualLL.size() - 2).equals("C");
-        printResults(result, actualLL, expectedList, "Getting the Value Closer to the End",
+        printResults(result, actualLL, null, "Getting the Value Closer to the End",
                 testNum);
         testNum++;
 
@@ -125,6 +125,9 @@ public class LinkedListTester {
         printResults(result, actualLL, expectedList, "Removing the Object Closer to the End",
                 testNum);
         testNum++;
+
+        // GetSubList
+        
     }
 
     // Convert elements of list to an array. Uses the list
@@ -162,8 +165,15 @@ public class LinkedListTester {
             sb.append("FAILED");
         }
 
-        sb.append("\n\tActual List:" + list.toString());
-        sb.append("\n\tExpected Lists: " + arrList.toString());
+        if (list != null) {
+            sb.append("\n\tActual List:    ");
+            sb.append(list.toString());
+        }
+
+        if (arrList != null) {
+            sb.append("\n\tExpected Lists: ");
+            sb.append(arrList.toString());
+        }
 
         System.out.println(sb.toString());
     }
