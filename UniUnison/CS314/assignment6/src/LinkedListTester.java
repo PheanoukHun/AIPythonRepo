@@ -11,18 +11,51 @@
 
 /*
  * What is more Efficient for Each Tests:
- * - Adding to the End: About the Same efficiency, but sometimes LinkedLists are faster because
- *   ArrayLists to resize after a some additions.
- *      - ArrayList Time: 0.5314s
- *      - LinkedList Time: 0.3995s
+ * 
+ * * Adding to the End:
+ *      * ArrayList Time:
+ *              N = 30000, total time:  0.0391
+ *              N = 60000, total time:  0.0762
+ *              N = 120000, total time:  0.1535
+ *              N = 240000, total time:  0.2732
+ *              N = 480000, total time:  0.5314
+ *      * LinkedList Time:
+ *              N = 30000, total time:  0.0286
+ *              N = 60000, total time:  0.0539
+ *              N = 120000, total time:  0.1069
+ *              N = 240000, total time:  0.2197
+ *              N = 480000, total time:  0.3995
+ *              
  * - Adding to the Front: LinkedList because it doesn't need to shift the other elements
  *   to the right.
- *      - ArrayList Time: 8.4911s
- *      - LinkedList Time: 0.1293s
+ *      - ArrayList Time: 
+ *              N = 2000, total time:  0.0396
+ *              N = 4000, total time:  0.1415
+ *              N = 8000, total time:  0.5341
+ *              N = 16000, total time:  2.1195
+ *              N = 32000, total time:  8.4911
+ *      - LinkedList Time:
+ *              N = 10000, total time:  0.0094
+ *              N = 20000, total time:  0.0176
+ *              N = 40000, total time:  0.0323
+ *              N = 80000, total time:  0.0593
+ *              N = 160000, total time:  0.1293
+ *
  * - Removing from the Front: LinkedList because it doesn't need to shift other elements
  *   back to the left.
- *      - ArrayList Time: 8.2465s
- *      - LinkedList Time: 0.1241s
+ *      - ArrayList Time:
+ *              N = 2000, total time:  0.0352
+ *              N = 4000, total time:  0.1276
+ *              N = 8000, total time:  0.4729
+ *              N = 16000, total time:  1.9549
+ *              N = 32000, total time:  8.2465 
+ *      - LinkedList Time: 
+ *              N = 5000, total time:  0.0036
+ *              N = 10000, total time:  0.0051
+ *              N = 20000, total time:  0.0256
+ *              N = 40000, total time:  0.0785
+ *              N = 80000, total time:  0.1241
+ * 
  * - Getting a Value at a Random Position: ArrayList because you don't need to iterate through
  *   all values until the index.
  *      - ArrayList Time: 0.3299s
