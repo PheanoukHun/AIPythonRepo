@@ -261,7 +261,7 @@ public class LinkedListTester {
         llIterator.remove();
         alIterator.remove();
 
-        result = actualLL.equals(expectedList);
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
         printResults(result, actualLL, expectedList, "Removing the First Element using Iterator",
                 testNum);
         testNum++;
@@ -274,7 +274,7 @@ public class LinkedListTester {
         llIterator.remove();
         alIterator.remove();
 
-        result = actualLL.equals(expectedList);
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
         printResults(result, actualLL, expectedList, "Removing the Last Element using Iterator",
                 testNum);
         testNum++;
@@ -282,9 +282,39 @@ public class LinkedListTester {
         // Reseting the Lists
         actualLL = addAllLLWithStrs(new String[] { "A", "B", "C", "D", "E", "F", "G" });
         expectedList = copyLLToALForStr(actualLL);
-        
+
         // RemoveRange
-        result = 
+        actualLL.removeRange(0, actualLL.size() - 1);
+
+        expectedList.clear();
+        expectedList.add("G");
+
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
+        printResults(result, actualLL, expectedList,
+                "Removing Range from from Start to 2nd Last Element", testNum);
+        testNum++;
+
+        actualLL = addAllLLWithStrs(new String[] { "A", "B", "C", "D", "E", "F", "G" });
+        expectedList = copyLLToALForStr(actualLL);
+
+        actualLL.removeRange(1, actualLL.size());
+
+        expectedList.clear();
+        expectedList.add("A");
+
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
+        printResults(result, actualLL, expectedList, "Removing from the 2nd Element to the End",
+                testNum);
+        testNum++;
+
+        expectedList.add("G");
+
+        actualLL = addAllLLWithStrs(new String[] { "A", "B", "C", "D", "E", "F", "G" });
+        actualLL.removeRange(1, actualLL.size() - 1);
+
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
+        printResults(result, actualLL, expectedList, "Removing Range from the Middle", testNum);
+        testNum++;
 
         // toString
 

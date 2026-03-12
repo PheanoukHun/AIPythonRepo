@@ -476,7 +476,7 @@ public class LL314<E> implements IList<E> {
 
     /**
      * Remove all elements in this list from start inclusive to stop exclusive.
-     * <br>
+     * 
      * pre: <tt>0 <= start <= size(), start <= stop <= size()
      * post: size() = old size() - (stop - start)
      *
