@@ -334,6 +334,15 @@ public class LinkedListTester {
                 testNum++;
 
                 // Equals
+                LL314<String> actualLL2 = addAllLLWithStrs(new String[] { "A", "B", "C", "D" });
+                actualLL = addAllLLWithStrs(new String[] { "A", "B", "C", "D" });
+
+                result = actualLL.equals(actualLL2);
+                printResults(result, actualLL, null, "Comparing 2 LL with same elements",
+                                testNum);
+                testNum++;
+
+                result = !actualLL.equals(expectedList);
                 
 
                 // addFirst
