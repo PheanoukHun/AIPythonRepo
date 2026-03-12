@@ -513,7 +513,7 @@ public class LL314<E> implements IList<E> {
      * Elements are in order based on position in the list with the first
      * element first. Adjacent elements are separated by comma's.
      *
-     * Big O Notation: O(N)
+     * Big O Notation: O(N)f
      * 
      * @return a String representation of this IList
      */
