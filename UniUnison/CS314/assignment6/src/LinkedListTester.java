@@ -58,14 +58,42 @@
  * 
  * - Getting a Value at a Random Position: ArrayList because you don't need to iterate through
  *   all values until the index.
- *      - ArrayList Time: 0.3299s
- *      - LinkedList Time: 16.2074s
- * - Getting All Using Iterator: ArrayLists
- *      - ArrayList Time: 0.1159s
- *      - LinkedList Time: 0.2403s
- * -
  *      - ArrayList Time:
+ *              N = 10000, total time:  0.0158
+ *              N = 20000, total time:  0.0300
+ *              N = 40000, total time:  0.0560
+ *              N = 80000, total time:  0.1227
+ *              N = 160000, total time:  0.3299
  *      - LinkedList Time:
+ *              N = 1000, total time:  0.0582
+ *              N = 2000, total time:  0.2407
+ *              N = 4000, total time:  1.0000
+ *              N = 8000, total time:  4.0262
+ *              N = 16000, total time: 16.2074
+ * 
+ * - Getting All Using Iterator: ArrayLists
+ *      - ArrayList Time:
+ *              N = 50000, total time:  0.0151
+ *              N = 100000, total time:  0.0142
+ *              N = 200000, total time:  0.0265
+ *              N = 400000, total time:  0.0574
+ *              N = 800000, total time:  0.1159
+ *      - LinkedList Time: 
+ *              N = 50000, total time:  0.0174
+ *              N = 100000, total time:  0.0279
+ *              N = 200000, total time:  0.0552
+ *              N = 400000, total time:  0.1237
+ *              N = 800000, total time:  0.2403
+ * 
+ * - Getting All Using the Get Method: ArrayLists
+ *      - ArrayList Time:
+ *              N = 100000, total time:  0.0078
+ *              N = 200000, total time:  0.0177
+ *              N = 400000, total time:  0.0445
+ *              N = 800000, total time:  0.0877
+ *              N = 1600000, total time:  0.1533
+ *      - LinkedList Time:
+ * 
  * - 
  *      - ArrayList Time:
  *      - LinkedList Time:
