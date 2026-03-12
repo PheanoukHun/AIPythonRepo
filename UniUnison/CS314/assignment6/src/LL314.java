@@ -432,27 +432,19 @@ public class LL314<E> implements IList<E> {
                     + "between 0 and size.");
         }
 
-        // int counter = pos;
+        int counter = pos;
         DoubleListNode<E> currNode = getNodeAt(pos);
 
-        // while (currNode != null && !currNode.data.equals(item)) {
-        //     currNode = currNode.next;
-        //     counter++;
-        // }
+        while (currNode != null && !currNode.data.equals(item)) {
+            currNode = currNode.next;
+            counter++;
+        }
 
-        for (int i = pos + 1; i < this.size; i++) {
-            if (currNode.data.equals(item)) {
-                return i;
-            }
+        if (currNode != null) {
+            return counter;
         }
 
         return -1;
-
-        // if (currNode != null) {
-        //     return counter;
-        // }
-
-        // return -1;
     }
 
     /**
