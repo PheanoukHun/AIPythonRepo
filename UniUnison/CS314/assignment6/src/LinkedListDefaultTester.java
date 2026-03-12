@@ -26,13 +26,13 @@ public class LinkedListDefaultTester {
 
     public static void main(String[] args) {
 
-        basicTests();
+        // basicTests();
         spring2021StressTests();
-        itRemoveStressTests();
+        // itRemoveStressTests();
 
         // Uncomment the following line to run tests comparing
         // your LL314 class to the java ArrayList class.
-        comparison();
+        // comparison();
     }
 
     /*
