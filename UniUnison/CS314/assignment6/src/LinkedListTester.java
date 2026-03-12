@@ -10,91 +10,75 @@
  */
 
 /*
- * What is more Efficient for Each Tests:
- *  * - Adding at end:
- *     - ArrayList Times:
- *         N = 30000, total time:  0.0391 s
- *         N = 60000, total time:  0.0762 s
- *         N = 120000, total time:  0.1535 s
- *         N = 240000, total time:  0.2732 s
- *         N = 480000, total time:  0.5314 s
- *     - LinkedList Times:
- *         N = 30000, total time:  0.0286 s
- *         N = 60000, total time:  0.0539 s
- *         N = 120000, total time:  0.1069 s
- *         N = 240000, total time:  0.2197 s
- *         N = 480000, total time:  0.3995 s
+ * Which Data Structure is More Efficient for Each Method?
  * 
- * - Adding at front:
- *     - ArrayList Times:
- *         N = 2000, total time:  0.0396 s
- *         N = 4000, total time:  0.1415 s
- *         N = 8000, total time:  0.5341 s
- *         N = 16000, total time:  2.1195 s
- *         N = 32000, total time:  8.4911 s
- *     - LinkedList Times:
- *         N = 10000, total time:  0.0094 s
- *         N = 20000, total time:  0.0176 s
- *         N = 40000, total time:  0.0323 s
- *         N = 80000, total time:  0.0593 s
- *         N = 160000, total time:  0.1293 s
+ * Adding at End: LinkedList
+ * _________________________________________________________
+ * | Number of Elements | ArrayList Time | LinkedList Time |
+ * |--------------------|----------------|-----------------|
+ * |       30000        |     0.0391     |     0.0286      |
+ * |       60000        |     0.0762     |     0.0539      |
+ * |      120000        |     0.1535     |     0.1069      |
+ * |      240000        |     0.2732     |     0.2197      |
+ * |      480000        |     0.5314     |     0.3995      |
+ * |____________________|________________|_________________|
  * 
- * - Removing from front:
- *     - ArrayList Times:
- *         N = 2000, total time:  0.0352 s
- *         N = 4000, total time:  0.1276 s
- *         N = 8000, total time:  0.4729 s
- *         N = 16000, total time:  1.9549 s
- *         N = 32000, total time:  8.2465 s
- *     - LinkedList Times:
- *         N = 5000, total time:  0.0036 s
- *         N = 10000, total time:  0.0051 s
- *         N = 20000, total time:  0.0256 s
- *         N = 40000, total time:  0.0785 s
- *         N = 80000, total time:  0.1241 s
+ * Adding at Front: LinkedList
+ * _________________________________________________________
+ * | Number of Elements | ArrayList Time | LinkedList Time |
+ * |--------------------|----------------|-----------------|
+ * |        2000        |     0.0396     |     0.0094      |
+ * |        4000        |     0.1415     |     0.0176      |
+ * |        8000        |     0.5341     |     0.0323      |
+ * |       16000        |     2.1195     |     0.0593      |
+ * |       32000        |     8.4911     |     0.1293      |
+ * |____________________|________________|_________________|
  * 
- * - Getting random:
- *     - ArrayList Times:
- *         N = 10000, total time:  0.0158 s
- *         N = 20000, total time:  0.0300 s
- *         N = 40000, total time:  0.0560 s
- *         N = 80000, total time:  0.1227 s
- *         N = 160000, total time:  0.3299 s
- *     - LinkedList Times:
- *         N = 1000, total time:  0.0582 s
- *         N = 2000, total time:  0.2407 s
- *         N = 4000, total time:  1.0000 s
- *         N = 8000, total time:  4.0262 s
- *         N = 16000, total time: 16.2074 s
+ * Removing from Front: LinkedList
+ * _________________________________________________________
+ * | Number of Elements | ArrayList Time | LinkedList Time |
+ * |--------------------|----------------|-----------------|
+ * |        2000        |     0.0352     |     0.0036      |
+ * |        4000        |     0.1276     |     0.0051      |
+ * |        8000        |     0.4729     |     0.0256      |
+ * |       16000        |     1.9549     |     0.0785      |
+ * |       32000        |     8.2465     |     0.1241      |
+ * |____________________|________________|_________________|
  * 
- * - Getting all using iterator:
- *     - ArrayList Times:
- *         N = 50000, total time:  0.0151 s
- *         N = 100000, total time:  0.0142 s
- *         N = 200000, total time:  0.0265 s
- *         N = 400000, total time:  0.0574 s
- *         N = 800000, total time:  0.1159 s
- *     - LinkedList Times:
- *         N = 50000, total time:  0.0174 s
- *         N = 100000, total time:  0.0279 s
- *         N = 200000, total time:  0.0552 s
- *         N = 400000, total time:  0.1237 s
- *         N = 800000, total time:  0.2403 s
+ * Getting Random Element: ArrayList
+ * _________________________________________________________
+ * | Number of Elements | ArrayList Time | LinkedList Time |
+ * |--------------------|----------------|-----------------|
+ * |       10000        |     0.0158     |     0.0582      |
+ * |       20000        |     0.0300     |     0.2407      |
+ * |       40000        |     0.0560     |     1.0000      |
+ * |       80000        |     0.1227     |     4.0262      |
+ * |      160000        |     0.3299     |    16.2074      |
+ * |____________________|________________|_________________|
  * 
- * - Getting all using get method:
- *     - ArrayList Times:
- *         N = 100000, total time:  0.0078 s
- *         N = 200000, total time:  0.0177 s
- *         N = 400000, total time:  0.0445 s
- *         N = 800000, total time:  0.0877 s
- *         N = 1600000, total time:  0.1533 s
- *     - LinkedList Times:
- *         N = 1000, total time:  0.0534 s
- *         N = 2000, total time:  0.2319 s
- *         N = 4000, total time:  0.9890 s
- *         N = 8000, total time:  4.0216 s
- *         N = 16000, total time: 16.1169 s
-
+ * Getting All Using Iterator: ArrayList
+ * _________________________________________________________
+ * | Number of Elements | ArrayList Time | LinkedList Time |
+ * |--------------------|----------------|-----------------|
+ * |       50000        |     0.0151     |     0.0174      |
+ * |      100000        |     0.0142     |     0.0279      |
+ * |      200000        |     0.0265     |     0.0552      |
+ * |      400000        |     0.0574     |     0.1237      |
+ * |      800000        |     0.1159     |     0.2403      |
+ * |____________________|________________|_________________|
+ * 
+ * Getting All Using get() Method: ArrayList
+ * _________________________________________________________
+ * | Number of Elements | ArrayList Time | LinkedList Time |
+ * |--------------------|----------------|-----------------|
+ * |      100000        |     0.0078     |     0.0534      |
+ * |      200000        |     0.0177     |     0.2319      |
+ * |      400000        |     0.0445     |     0.9890      |
+ * |      800000        |     0.0877     |     4.0216      |
+ * |     1600000        |     0.1533     |    16.1169      |
+ * |____________________|________________|_________________|
+ * 
+ * 
  */
 
 import java.util.ArrayList;
