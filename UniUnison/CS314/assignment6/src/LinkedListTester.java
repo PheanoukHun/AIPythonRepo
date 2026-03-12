@@ -201,7 +201,6 @@ public class LinkedListTester {
         testNum++;
 
         // Reseting the Lists
-
         actualLL = addAllLLWithStrs(new String[] { "A", "B", "C", "D", "E", "F", "G" });
         expectedList = copyLLToALForStr(actualLL);
 
@@ -253,7 +252,51 @@ public class LinkedListTester {
         testNum++;
 
         // Iterator.remove()
+        llIterator = actualLL.iterator();
+        alIterator = expectedList.iterator();
+
+        llIterator.next();
+        alIterator.next();
+
+        llIterator.remove();
+        alIterator.remove();
+
+        result = actualLL.equals(expectedList);
+        printResults(result, actualLL, expectedList, "Removing the First Element using Iterator",
+                testNum);
+        testNum++;
+
+        while (llIterator.hasNext() && alIterator.hasNext()) {
+            llIterator.next();
+            alIterator.next();
+        }
+
+        llIterator.remove();
+        alIterator.remove();
+
+        result = actualLL.equals(expectedList);
+        printResults(result, actualLL, expectedList, "Removing the Last Element using Iterator",
+                testNum);
+        testNum++;
+
+        // Reseting the Lists
+        actualLL = addAllLLWithStrs(new String[] { "A", "B", "C", "D", "E", "F", "G" });
+        expectedList = copyLLToALForStr(actualLL);
         
+        // RemoveRange
+        result = 
+
+        // toString
+
+        // Equals
+
+        // addFirst
+
+        // addLast
+
+        // removeFirst
+
+        // removeLast
     }
 
     // Convert elements of list to an array. Uses the list
