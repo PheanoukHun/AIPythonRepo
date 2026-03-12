@@ -432,19 +432,27 @@ public class LL314<E> implements IList<E> {
                     + "between 0 and size.");
         }
 
-        int counter = pos;
+        // int counter = pos;
         DoubleListNode<E> currNode = getNodeAt(pos);
 
-        while (currNode != null && !currNode.data.equals(item)) {
-            currNode = currNode.next;
-            counter++;
-        }
+        // while (currNode != null && !currNode.data.equals(item)) {
+        //     currNode = currNode.next;
+        //     counter++;
+        // }
 
-        if (currNode != null) {
-            return counter;
+        for (int i = pos + 1; i < this.size; i++) {
+            if (currNode.data.equals(item)) {
+                return i;
+            }
         }
 
         return -1;
+
+        // if (currNode != null) {
+        //     return counter;
+        // }
+
+        // return -1;
     }
 
     /**
@@ -495,8 +503,10 @@ public class LL314<E> implements IList<E> {
         // Removes all values from the Start to Last
         if (start == 0 && stop == this.size) {
             this.makeEmpty();
+
+            // Makes Sure Elements are Actually being removed.
         } else if (start != stop) {
-            // Get Node at the Start and End
+            
             DoubleListNode<E> startNode = this.getNodeAt(start);
             DoubleListNode<E> endNode = this.getNodeAt(stop - 1);
 
@@ -520,7 +530,7 @@ public class LL314<E> implements IList<E> {
      * Elements are in order based on position in the list with the first
      * element first. Adjacent elements are separated by comma's.
      *
-     * Big O Notation: O(N)f
+     * Big O Notation: O(N)
      * 
      * @return a String representation of this IList
      */
@@ -556,16 +566,19 @@ public class LL314<E> implements IList<E> {
      */
     public boolean equals(Object other) {
 
+        // Check Based on Class
         if (!(other instanceof IList<?>)) {
             return false;
         }
 
         IList<?> otherList = (IList<?>) other;
 
+        // Check Based on Size
         if (otherList.size() != this.size) {
             return false;
         }
 
+        // Check based on Each Elements Matching
         Iterator<E> thisIt = this.iterator();
         Iterator<?> otherIt = otherList.iterator();
 
@@ -590,6 +603,7 @@ public class LL314<E> implements IList<E> {
 
         DoubleListNode<E> node;
 
+        // Search Based which End is Closest to the Node Position
         if (pos < this.size / 2) {
             node = this.first;
             for (int i = 0; i < pos; i++) {

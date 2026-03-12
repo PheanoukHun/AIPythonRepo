@@ -27,4 +27,8 @@ public class LinkedListTester {
         // your LL314 class to the java ArrayList class.
         // comparison();
     }
+
+    private static void myTestSuite() {
+        
+    }
 }
