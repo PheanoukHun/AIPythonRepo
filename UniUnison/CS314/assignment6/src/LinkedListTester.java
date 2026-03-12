@@ -10,8 +10,32 @@
  */
 
 /*
- * TODO: Place your experiment results here:
- *
+ * What is more Efficient for Each Tests:
+ * - Adding to the End: About the Same efficiency, but sometimes LinkedLists are faster because
+ *   ArrayLists to resize after a some additions.
+ *      - ArrayList Time: 0.5314s
+ *      - LinkedList Time: 0.3995s
+ * - Adding to the Front: LinkedList because it doesn't need to shift the other elements
+ *   to the right.
+ *      - ArrayList Time: 8.4911s
+ *      - LinkedList Time: 0.1293s
+ * - Removing from the Front: LinkedList because it doesn't need to shift other elements
+ *   back to the left.
+ *      - ArrayList Time: 8.2465s
+ *      - LinkedList Time: 0.1241s
+ * - Getting a Value at a Random Position: ArrayList because you don't need to iterate through
+ *   all values until the index.
+ *      - ArrayList Time: 0.3299s
+ *      - LinkedList Time: 16.2074s
+ * - Getting All Using Iterator: ArrayLists
+ *      - ArrayList Time: 0.1159s
+ *      - LinkedList Time: 0.2403s
+ * -
+ *      - ArrayList Time:
+ *      - LinkedList Time:
+ * - 
+ *      - ArrayList Time:
+ *      - LinkedList Time:
  */
 
 import java.util.ArrayList;
@@ -25,7 +49,7 @@ public class LinkedListTester {
 
         public static void main(String[] args) {
 
-                myTestSuite();
+                // myTestSuite();
                 // basicTests();
                 // spring2021StressTests();
                 // itRemoveStressTests();
