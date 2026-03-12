@@ -76,6 +76,7 @@ public class LinkedListTester {
         testNum++;
 
         // Get Tests
+
         result = actualLL.get(1).equals("Z");
         printResults(result, actualLL, null, "Getting the Value Closer to the Front",
                 testNum);
@@ -87,6 +88,7 @@ public class LinkedListTester {
         testNum++;
 
         // Remove(pos) Test
+
         actualLL.remove(2);
         expectedList.remove(2);
 
@@ -104,10 +106,12 @@ public class LinkedListTester {
         testNum++;
 
         // Reseting the Lists
+
         actualLL = addAllLLWithStrs(new String[] { "A", "B", "C", "D", "E", "F", "G" });
         expectedList = copyLLToALForStr(actualLL);
 
         // Remove(obj)
+
         actualLL.remove("C");
         expectedList.remove("C");
 
@@ -125,6 +129,7 @@ public class LinkedListTester {
         testNum++;
 
         // GetSubList
+
         expectedList = addAllArrListWithStrs(new String[] { "B", "D", "E" });
         actualLL = (LL314<String>) actualLL.getSubList(1, actualLL.size() - 1);
 
@@ -143,6 +148,7 @@ public class LinkedListTester {
         testNum++;
 
         // Size
+
         result = actualLL.size() == expectedList.size();
         printResults(result, actualLL, expectedList, "Size Method Tests", testNum);
 
@@ -153,6 +159,7 @@ public class LinkedListTester {
         testNum++;
 
         // IndexOf(item)
+
         result = actualLL.indexOf("B") == expectedList.indexOf("B");
         printResults(result, actualLL, expectedList, "Get Index Close to the Front", testNum);
         testNum++;
@@ -162,10 +169,12 @@ public class LinkedListTester {
         testNum++;
 
         // Reseting the Lists
+
         actualLL = addAllLLWithStrs(new String[] { "A", "B", "C", "D", "E", "A", "G" });
         expectedList = copyLLToALForStr(actualLL);
 
         // IndexOf(item, pos)
+
         result = actualLL.indexOf("A", 3) == 5;
         printResults(result, actualLL, null, "Index of A skipping over index 3", testNum);
         testNum++;
@@ -173,8 +182,9 @@ public class LinkedListTester {
         result = actualLL.indexOf("A", 0) == 0;
         printResults(result, actualLL, null, "Index of A not skipping any values", testNum);
         testNum++;
-        
+
         // makeEmpty
+
         actualLL.makeEmpty();
         result = actualLL.size() == 0;
         printResults(result, actualLL, null, "Make Empty Method", testNum);
@@ -184,17 +194,40 @@ public class LinkedListTester {
 
         actualLL.makeEmpty();
         expectedList.clear();
-        
+
         result = actualLL.size() == expectedList.size();
         printResults(result, actualLL, expectedList, "Make Empty, Comparing LL to AL", testNum);
         testNum++;
-        
+
         // Reseting the Lists
+
         actualLL = addAllLLWithStrs(new String[] { "A", "B", "C", "D", "E", "F", "G" });
         expectedList = copyLLToALForStr(actualLL);
 
-        // Iterator.hasNext()
+        // Set
+        actualLL.set(2, "Z");
+        expectedList.set(2, "Z");
 
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
+        printResults(result, actualLL, expectedList, "Setting Closer to the Front", testNum);
+        testNum++;
+
+        actualLL.set(actualLL.size() - 2, "X");
+        expectedList.set(expectedList.size() - 2, "X");
+        
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
+        printResults(result, actualLL, expectedList, "Setting Closer to the End", testNum);
+        testNum++;
+
+        // Iterator.hasNext() and next()
+        Iterator<String> llIterator = actualLL.iterator();
+        Iterator<String> alIterator = expectedList.iterator();
+
+        result = llIterator.hasNext() && alIterator.hasNext();
+        printResults(result, actualLL, expectedList, "Checking Iterator.hasNext()", testNum);
+        testNum++;
+
+        result = llIterator.next().equals(alIterator)
     }
 
     // Convert elements of list to an array. Uses the list
@@ -224,37 +257,37 @@ public class LinkedListTester {
         sb.append("\nTest " + testNum + ":");
         sb.append("\n\tDescription: " + detail);
 
-        sb.append("\n\tResults: ");
-
         String passedString = results ? "PASSED" : "FAILED";
-        sb.append(passedString);
+        sb.append("\n\tResults: " + passedString);
 
-        if (list != null) {
-            sb.append("\n\tActual List:    ");
-            sb.append(list.toString());
-        }
+        String displayActual = list != null ? "\n\tActual List:    "
+                + list.toString() : "";
+        sb.append(displayActual);
 
-        if (arrList != null) {
-            sb.append("\n\tExpected Lists: ");
-            sb.append(arrList.toString());
-        }
+        String displayExpected = arrList != null ? "\n\tExpected Lists: "
+                + arrList.toString() : "";
+        sb.append(displayExpected);
 
         System.out.println(sb.toString());
     }
 
     private static LL314<String> addAllLLWithStrs(String[] str) {
         LL314<String> list = new LL314<>();
+        
         for (String s : str) {
             list.add(s);
         }
+
         return list;
     }
 
     private static ArrayList<String> addAllArrListWithStrs(String[] str) {
         ArrayList<String> list = new ArrayList<>();
+        
         for (String s : str) {
             list.add(s);
         }
+
         return list;
     }
 
