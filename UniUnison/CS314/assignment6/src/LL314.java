@@ -440,7 +440,7 @@ public class LL314<E> implements IList<E> {
         while (currNode != null && !currNode.data.equals(item)) {
             currNode = currNode.next;
             counter++;
-        }A
+        }
         if (currNode != null) {
             return counter;
         }

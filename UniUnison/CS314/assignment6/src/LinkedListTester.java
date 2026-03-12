@@ -104,7 +104,7 @@ public class LinkedListTester {
         testNum++;
 
         // Reseting the Lists
-        actualLL = replenishLLWithStrings(new String[] { "A", "B", "C", "D", "E", "F", "G" });
+        actualLL = addAllLLWithStrs(new String[] { "A", "B", "C", "D", "E", "F", "G" });
         expectedList = copyLLToALForStr(actualLL);
 
         // Remove(obj)
@@ -125,7 +125,7 @@ public class LinkedListTester {
         testNum++;
 
         // GetSubList
-        expectedList = replenishArrListWithStrings(new String[] { "B", "D", "E" });
+        expectedList = addAllArrListWithStrs(new String[] { "B", "D", "E" });
         actualLL = (LL314<String>) actualLL.getSubList(1, actualLL.size() - 1);
 
         result = arraysSame(toArray(actualLL), expectedList.toArray());
@@ -133,7 +133,7 @@ public class LinkedListTester {
                 testNum);
         testNum++;
 
-        actualLL = replenishLLWithStrings(new String[] { "A", "B", "C", "D" });
+        actualLL = addAllLLWithStrs(new String[] { "A", "B", "C", "D" });
         expectedList = copyLLToALForStr(actualLL);
         actualLL = (LL314<String>) actualLL.getSubList(0, actualLL.size());
 
@@ -162,11 +162,39 @@ public class LinkedListTester {
         testNum++;
 
         // Reseting the Lists
-        actualLL = replenishLLWithStrings(new String[] { "A", "B", "C", "D", "E", "F", "G" });
+        actualLL = addAllLLWithStrs(new String[] { "A", "B", "C", "D", "E", "A", "G" });
         expectedList = copyLLToALForStr(actualLL);
 
         // IndexOf(item, pos)
-        result = actualLL.indexOf("")
+        result = actualLL.indexOf("A", 3) == 5;
+        printResults(result, actualLL, null, "Index of A skipping over index 3", testNum);
+        testNum++;
+
+        result = actualLL.indexOf("A", 0) == 0;
+        printResults(result, actualLL, null, "Index of A not skipping any values", testNum);
+        testNum++;
+        
+        // makeEmpty
+        actualLL.makeEmpty();
+        result = actualLL.size() == 0;
+        printResults(result, actualLL, null, "Make Empty Method", testNum);
+        testNum++;
+
+        expectedList = addAllArrListWithStrs(new String[] { "A", "B", "C", "D", "E", "A", "G" });
+
+        actualLL.makeEmpty();
+        expectedList.clear();
+        
+        result = actualLL.size() == expectedList.size();
+        printResults(result, actualLL, expectedList, "Make Empty, Comparing LL to AL", testNum);
+        testNum++;
+        
+        // Reseting the Lists
+        actualLL = addAllLLWithStrs(new String[] { "A", "B", "C", "D", "E", "F", "G" });
+        expectedList = copyLLToALForStr(actualLL);
+
+        // Iterator.hasNext()
+        
     }
 
     // Convert elements of list to an array. Uses the list
@@ -217,7 +245,7 @@ public class LinkedListTester {
         System.out.println(sb.toString());
     }
 
-    private static LL314<String> replenishLLWithStrings(String[] str) {
+    private static LL314<String> addAllLLWithStrs(String[] str) {
         LL314<String> list = new LL314<>();
         for (String s : str) {
             list.add(s);
@@ -225,7 +253,7 @@ public class LinkedListTester {
         return list;
     }
 
-    private static ArrayList<String> replenishArrListWithStrings(String[] str) {
+    private static ArrayList<String> addAllArrListWithStrs(String[] str) {
         ArrayList<String> list = new ArrayList<>();
         for (String s : str) {
             list.add(s);
