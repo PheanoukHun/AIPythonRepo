@@ -106,7 +106,7 @@ public class LinkedListTester {
         // Reseting the Lists
         actualLL.makeEmpty();
 
-        replenishLLWithStrings(actualLL, new String[] { "A", "B", "C", "D", "E", "F", "G" });
+        actualLL = replenishLLWithStrings(new String[] { "A", "B", "C", "D", "E", "F", "G" });
         expectedList = copyLLToALForStr(actualLL);
 
         // Remove(obj)
@@ -127,7 +127,28 @@ public class LinkedListTester {
         testNum++;
 
         // GetSubList
-        
+        expectedList = replenishArrListWithStrings(new String[] { "B", "D", "E" });
+        actualLL = (LL314<String>) actualLL.getSubList(1, actualLL.size() - 1);
+
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
+        printResults(result, actualLL, expectedList, "Getting the Sublists from the Middle",
+                testNum);
+        testNum++;
+
+        actualLL = replenishLLWithStrings(new String[] { "A", "B", "C", "D" });
+        expectedList = copyLLToALForStr(actualLL);
+        actualLL = (LL314<String>) actualLL.getSubList(0, actualLL.size());
+
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
+        printResults(result, actualLL, expectedList, "Getting the Sublists of the Entire LL",
+                testNum);
+        testNum++;
+
+        // Size
+        result = actualLL.size() == expectedList.size();
+        printResults(result, actualLL, expectedList, "Size Method Tests", testNum);
+
+        actualLL,.add
     }
 
     // Convert elements of list to an array. Uses the list
@@ -178,10 +199,20 @@ public class LinkedListTester {
         System.out.println(sb.toString());
     }
 
-    private static void replenishLLWithStrings(LL314<String> list, String[] str) {
+    private static LL314<String> replenishLLWithStrings(String[] str) {
+        LL314<String> list = new LL314<>();
         for (String s : str) {
             list.add(s);
         }
+        return list;
+    }
+
+    private static ArrayList<String> replenishArrListWithStrings(String[] str) {
+        ArrayList<String> list = new ArrayList<>();
+        for (String s : str) {
+            list.add(s);
+        }
+        return list;
     }
 
     private static ArrayList<String> copyLLToALForStr(LL314<String> lL) {
