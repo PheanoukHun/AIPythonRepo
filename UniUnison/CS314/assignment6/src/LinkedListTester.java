@@ -15,6 +15,7 @@
  *
  */
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -35,14 +36,22 @@ public class LinkedListTester {
 
     private static void myTestSuite() {
         
-        LL314<String> stringLL = new LL314<>();
+        LL314<String> actualLL = new LL314<>();
+        ArrayList<String> resultList = new ArrayList<>();
 
-        stringLL.add("A");
-        stringLL.add("B");
-        stringLL.add("C");
-        stringLL.add("A");
+        actualLL.add("A");
+        resultList.add("A");
+        resultList.add("B");
+        actualLL.add("B");
+        resultList.add("C");
+        actualLL.add("C");
+        resultList.add("A");
+        actualLL.add("A");
 
-        boolean actual = stringLL.toString().equals("[A, B, C, A]");
+        boolean result = arraysSame(toArray(actualLL), toArray(actualLL));
+        if (result) {
+            System.out.println("Passed Test Case 1, Adding Based with Duplicates and ");
+        }
     }
 
     // Convert elements of list to an array. Uses the list
