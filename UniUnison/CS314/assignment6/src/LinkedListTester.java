@@ -22,10 +22,14 @@
  * |      240000        |     0.2732     |     0.2197      |
  * |      480000        |     0.5314     |     0.3995      |
  * |____________________|________________|_________________|
+ * 
  * Reason: LinkedList adding at the End is Always O(1) while
  * ArrayList is mostly O(1) with some operations needing to
  * be O(N) because the array needed to resize.
  * 
+ * Big O Notation of the Method:
+ *      LinkedList: O(1)
+ *      ArrayList: O(N)
  * ---------------------------------------------------------
  * 
  * Adding at Front: LinkedList
@@ -38,11 +42,16 @@
  * |       16000        |     2.1195     |     0.0593      |
  * |       32000        |     8.4911     |     0.1293      |
  * |____________________|________________|_________________|
+ * 
  * Reason: LinkedList adding to the front is Always O(1) 
  * because you just need change the prev instance variable 
  * of the previous first element while ArrayList is always 
  * O(N) because you need to shift all the other elements over
+ * one position to the right.
  * 
+ * Big O Notation:
+ *      LinkedList: O(1)
+ *      ArrayList: O(N)
  * ---------------------------------------------------------
  * 
  * Removing from Front: LinkedList
@@ -55,8 +64,16 @@
  * |       16000        |     1.9549     |     0.0785      |
  * |       32000        |     8.2465     |     0.1241      |
  * |____________________|________________|_________________|
- * Reason:
  * 
+ * Reason: LinkedList removing from the front is Always O(1) 
+ * because you just need change the prev instance variable 
+ * of the previous second element while ArrayList is always 
+ * O(N) because you need to shift all the other elements over
+ * one position to the left.
+ * 
+ * Big O Notation:
+ *      LinkedList: O(1)
+ *      ArrayList: O(N)
  * ---------------------------------------------------------
  * 
  * Getting Random Element: ArrayList
@@ -69,11 +86,21 @@
  * |       80000        |     0.1227     |     4.0262      |
  * |      160000        |     0.3299     |    16.2074      |
  * |____________________|________________|_________________|
- * Reason:
  * 
+ * Reason: LinkedList is slower because you would need to
+ * need to search through the list from the start every time
+ * you call the get method, so it will always be O(N).
+ * ArrayLists is always faster because it directly access the
+ * data at the specific pos int without having to iterate
+ * through the list.
+ * 
+ * Big O Notation:
+ *      LinkedList: O(N)
+ *      ArrayList: O(1)
  * ---------------------------------------------------------
  * 
- * Getting All Using Iterator: ArrayList
+ * Getting All Using Iterator: ArrayList but Basically the
+ *                             Same
  * _________________________________________________________
  * | Number of Elements | ArrayList Time | LinkedList Time |
  * |--------------------|----------------|-----------------|
@@ -83,8 +110,14 @@
  * |      400000        |     0.0574     |     0.1237      |
  * |      800000        |     0.1159     |     0.2403      |
  * |____________________|________________|_________________|
- * Reason:
  * 
+ * Reason: Since both Implement the Iterator Interface and
+ * both use the same logic to run through the list it will
+ * similar results.
+ * 
+ * Big O Notation:
+ *      LinkedList: O(N)
+ *      ArrayList: O(N)
  * ---------------------------------------------------------
  * 
  * Getting All Using get() Method: ArrayList
@@ -97,7 +130,12 @@
  * |      800000        |     0.0877     |     4.0216      |
  * |     1600000        |     0.1533     |    16.1169      |
  * |____________________|________________|_________________|
+ * 
  * Reason:
+ * 
+ * Big O Notation:
+ *      LinkedList: 
+ *      ArrayList:
  */
 
 import java.util.ArrayList;
