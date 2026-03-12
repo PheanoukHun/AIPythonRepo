@@ -104,8 +104,6 @@ public class LinkedListTester {
         testNum++;
 
         // Reseting the Lists
-        actualLL.makeEmpty();
-
         actualLL = replenishLLWithStrings(new String[] { "A", "B", "C", "D", "E", "F", "G" });
         expectedList = copyLLToALForStr(actualLL);
 
@@ -148,7 +146,27 @@ public class LinkedListTester {
         result = actualLL.size() == expectedList.size();
         printResults(result, actualLL, expectedList, "Size Method Tests", testNum);
 
-        actualLL,.add
+        actualLL.add("FDSFHDSJKj");
+        expectedList.add("FDSFHDSJKj");
+        result = actualLL.size() == expectedList.size();
+        printResults(result, actualLL, expectedList, "Size Method Tests After Add", testNum);
+        testNum++;
+
+        // IndexOf(item)
+        result = actualLL.indexOf("B") == expectedList.indexOf("B");
+        printResults(result, actualLL, expectedList, "Get Index Close to the Front", testNum);
+        testNum++;
+
+        result = actualLL.indexOf("FDSFHDSJKj") == expectedList.indexOf("FDSFHDSJKj");
+        printResults(result, actualLL, expectedList, "Get Index Close to the End", testNum);
+        testNum++;
+
+        // Reseting the Lists
+        actualLL = replenishLLWithStrings(new String[] { "A", "B", "C", "D", "E", "F", "G" });
+        expectedList = copyLLToALForStr(actualLL);
+
+        // IndexOf(item, pos)
+        result = actualLL.indexOf("")
     }
 
     // Convert elements of list to an array. Uses the list

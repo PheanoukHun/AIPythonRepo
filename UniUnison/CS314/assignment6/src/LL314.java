@@ -427,7 +427,9 @@ public class LL314<E> implements IList<E> {
         // Precondition
         if (item == null) {
             throw new IllegalArgumentException("The Value of the new Element cannot be null");
-        } else if (pos < 0 || pos >= this.size) {
+        }
+        
+        if (pos < 0 || pos >= this.size) {
             throw new IllegalArgumentException("You must give a position value that must "
                     + "between 0 and size.");
         }
@@ -438,8 +440,7 @@ public class LL314<E> implements IList<E> {
         while (currNode != null && !currNode.data.equals(item)) {
             currNode = currNode.next;
             counter++;
-        }
-
+        }A
         if (currNode != null) {
             return counter;
         }
