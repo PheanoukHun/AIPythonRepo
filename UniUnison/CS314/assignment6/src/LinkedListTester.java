@@ -49,14 +49,14 @@ public class LinkedListTester {
         expectedList.add("C");
         actualLL.add("C");
         
-        boolean result = arraysSame(toArray(actualLL), toArray(actualLL));
+        boolean result = arraysSame(toArray(actualLL), expectedList.toArray());
         printResults(result, actualLL, "Adding and Looking for Ordered", testNum);
         testNum++;
         
         expectedList.add("A");
         actualLL.add("A");
 
-        result = arraysSame(toArray(actualLL), toArray(actualLL));
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
         printResults(result, actualLL, "Adding Duplicate Values", testNum);
         testNum++;
 
@@ -65,14 +65,14 @@ public class LinkedListTester {
         actualLL.insert(1, "Z");
         expectedList.add(1, "Z");
 
-        result = arraysSame(toArray(actualLL), toArray(actualLL));
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
         printResults(result, actualLL, "Inserting Closer to the Front", testNum);
         testNum++;
 
         actualLL.insert(actualLL.size() - 2, "X");
         expectedList.add(actualLL.size() - 2, "X");
 
-        result = arraysSame(toArray(actualLL), toArray(actualLL));
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
         printResults(result, actualLL, "Inserting Closer to the End", testNum);
         testNum++;
 
@@ -89,16 +89,28 @@ public class LinkedListTester {
         actualLL.remove(2);
         expectedList.remove(2);
 
-        result = arraysSame(toArray(actualLL), toArray(actualLL));
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
         printResults(result, actualLL, "Removing the Value closer to the Front", testNum);
         testNum++;
 
         actualLL.remove(actualLL.size() - 2);
         expectedList.remove(expectedList.size() - 2);
 
-        result = arraysSame(toArray(actualLL), toArray(actualLL));
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
         printResults(result, actualLL, "Removing the Value Closer to the End", testNum);
         testNum++;
+
+        // Reseting the Lists
+        actualLL.makeEmpty();
+        
+        replenishLLWithStrings(actualLL, new String[]{"A", "B", "C", "D", "E", "F", "G"});
+        expectedList = copyLLToALForStr(actualLL);
+        
+        // Remove(obj)
+        actualLL.remove("C");
+        expectedList.remove("C");
+
+        result = arraysSame(toArray(actualLL), expectedList.toArray());
     }
 
     // Convert elements of list to an array. Uses the list
@@ -138,5 +150,23 @@ public class LinkedListTester {
         sb.append("\n\tCurrent List:" + list.toString());
         
         System.out.println(sb.toString());
+    }
+
+    private static void replenishLLWithStrings(LL314<String> list, String[] str) {
+        for (String s : str) {
+            list.add(s);
+        }
+    }
+
+    private static ArrayList<String> copyLLToALForStr(LL314<String> lL) {
+        
+        Iterator<String> llIterator = lL.iterator();
+        ArrayList<String> arrList = new ArrayList<>();
+
+        while (llIterator.hasNext()) {
+            arrList.add(llIterator.next());
+        }
+
+        return arrList;
     }
 }
