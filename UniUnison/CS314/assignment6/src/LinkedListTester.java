@@ -151,6 +151,7 @@ public class LinkedListTester {
 
         result = actualLL.size() == expectedList.size();
         printResults(result, actualLL, expectedList, "Size Method Tests", testNum);
+        testNum++;
 
         actualLL.add("FDSFHDSJKj");
         expectedList.add("FDSFHDSJKj");
@@ -214,20 +215,45 @@ public class LinkedListTester {
 
         actualLL.set(actualLL.size() - 2, "X");
         expectedList.set(expectedList.size() - 2, "X");
-        
+
         result = arraysSame(toArray(actualLL), expectedList.toArray());
         printResults(result, actualLL, expectedList, "Setting Closer to the End", testNum);
         testNum++;
 
         // Iterator.hasNext() and next()
+
         Iterator<String> llIterator = actualLL.iterator();
         Iterator<String> alIterator = expectedList.iterator();
 
-        result = llIterator.hasNext() && alIterator.hasNext();
+        // Start
+        result = llIterator.hasNext() == alIterator.hasNext();
         printResults(result, actualLL, expectedList, "Checking Iterator.hasNext()", testNum);
         testNum++;
 
-        result = llIterator.next().equals(alIterator)
+        result = llIterator.next().equals(alIterator.next());
+        printResults(result, actualLL, expectedList, "First Value of Iterator Same", testNum);
+        testNum++;
+
+        // End
+        String llVal = "";
+        String alVal = "";
+
+        while (llIterator.hasNext() && alIterator.hasNext()) {
+            llVal = llIterator.next();
+            alVal = alIterator.next();
+        }
+
+        result = llIterator.hasNext() == alIterator.hasNext();
+        printResults(result, actualLL, expectedList, "Checking hasNext when no more elements",
+                testNum);
+        testNum++;
+
+        result = llVal.equals(alVal);
+        printResults(result, actualLL, expectedList, "End Value of Iterator Same", testNum);
+        testNum++;
+
+        // Iterator.remove()
+        
     }
 
     // Convert elements of list to an array. Uses the list
@@ -273,7 +299,7 @@ public class LinkedListTester {
 
     private static LL314<String> addAllLLWithStrs(String[] str) {
         LL314<String> list = new LL314<>();
-        
+
         for (String s : str) {
             list.add(s);
         }
@@ -283,7 +309,7 @@ public class LinkedListTester {
 
     private static ArrayList<String> addAllArrListWithStrs(String[] str) {
         ArrayList<String> list = new ArrayList<>();
-        
+
         for (String s : str) {
             list.add(s);
         }
