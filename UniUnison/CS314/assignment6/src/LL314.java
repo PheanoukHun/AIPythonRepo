@@ -175,6 +175,7 @@ public class LL314<E> implements IList<E> {
 
         E data = this.first.data;
 
+        // When they're removing from the a list with one element or more than one element
         if (this.size == 1) {
             this.first = null;
             this.last = null;
@@ -206,6 +207,7 @@ public class LL314<E> implements IList<E> {
 
         E data = this.last.data;
 
+        // When they're removing from the a list with one element or more than one element
         if (this.size == 1) {
             this.first = null;
             this.last = null;
@@ -670,9 +672,7 @@ public class LL314<E> implements IList<E> {
     }
 
     /**
-     * This class creates a custom iterator object that can iterates over the LL314
-     * Class.
-     * 
+     * This class creates a custom iterator object that can iterates over the LL314 Class.
      */
     private class LL314Iterator implements Iterator<E> {
 
