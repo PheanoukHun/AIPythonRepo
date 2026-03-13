@@ -313,8 +313,9 @@ public class LL314<E> implements IList<E> {
                     + "or position value must be between 0 and the size of the list");
         }
 
-        DoubleListNode<E> node = this.getNodeAt(pos);
 
+        // Change Value of the Node
+        DoubleListNode<E> node = this.getNodeAt(pos);
         E oldData = node.data;
         node.data = item;
 
@@ -367,9 +368,9 @@ public class LL314<E> implements IList<E> {
                     + "0 <= start <= size() and start <= stop <= size().");
         }
 
-        // Creating a New Result
         LL314<E> result = new LL314<>();
 
+        // Add All Values between start and stop
         if (start != stop) {
 
             DoubleListNode<E> node = this.getNodeAt(start);
@@ -428,19 +429,23 @@ public class LL314<E> implements IList<E> {
         if (item == null) {
             throw new IllegalArgumentException("The Value of the new Element cannot be null");
         }
-
+        
         if (pos < 0 || pos >= this.size) {
             throw new IllegalArgumentException("You must give a position value that must "
                     + "between 0 and size.");
         }
 
+        // Get Starting Node
         int counter = pos;
         DoubleListNode<E> currNode = getNodeAt(pos);
 
+        // Find the Index
         while (currNode != null && !currNode.data.equals(item)) {
             currNode = currNode.next;
             counter++;
         }
+
+        // Return the Index Value
         if (currNode != null) {
             return counter;
         }
@@ -503,6 +508,7 @@ public class LL314<E> implements IList<E> {
             DoubleListNode<E> startNode = this.getNodeAt(start);
             DoubleListNode<E> endNode = this.getNodeAt(stop - 1);
 
+            // If it start at the First Value, End at the End, or Start in the Middle
             if (start == 0) {
                 this.first = endNode.next;
                 this.first.prev = null;
@@ -533,10 +539,12 @@ public class LL314<E> implements IList<E> {
 
         if (this.size != 0) {
 
+            // Get First Value
             DoubleListNode<E> currNode = this.first;
             sb.append(currNode.data);
             currNode = currNode.next;
 
+            // Get all Other Values
             while (currNode != null) {
                 sb.append(", ");
                 sb.append(currNode.data);
@@ -698,10 +706,12 @@ public class LL314<E> implements IList<E> {
          */
         public E next() {
 
+            // Precondition
             if (!this.hasNext()) {
                 throw new IllegalStateException("No Such Elements Left to Get.");
             }
 
+            // Move on to the New Module
             this.lastNode = this.currNode;
             this.currNode = this.currNode.next;
             this.hasUsedNext = true;
@@ -713,17 +723,17 @@ public class LL314<E> implements IList<E> {
          * This method removes the previous node that the iterator was pointing at.
          * 
          * pre: next() has been called before this.
-         * post: the element most recently returned by next() is removed
-         * from the list and the size of the list decreases by 1
          * 
          * Big O Notation: O(1)
          */
         public void remove() {
 
+            // Preconditions
             if (!hasUsedNext) {
                 throw new IllegalStateException("You have to use next first before remove.");
             }
 
+            // If this is the first Element
             if (this.lastNode.prev == null) {
                 LL314.this.first = this.lastNode.next;
                 if (LL314.this.first != null) {
@@ -733,6 +743,7 @@ public class LL314<E> implements IList<E> {
                 this.lastNode.prev.next = this.lastNode.next;
             }
 
+            // If this is the last Element
             if (this.lastNode.next == null) {
                 LL314.this.last = this.lastNode.prev;
             } else {
