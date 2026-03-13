@@ -125,13 +125,21 @@
  * | Number of Elements | ArrayList Time | LinkedList Time |
  * |--------------------|----------------|-----------------|
  * |    10000 / 1000    |     0.0078     |     0.0534      |
- * |    20000 / 1000    |     0.0177     |     0.2319      |
- * |    40000 / 1000    |     0.0445     |     0.9890      |
- * |    80000 / 1000    |     0.0877     |     4.0216      |
- * |   160000 / 1000    |     0.1533     |    16.1169      |
+ * |    20000 / 2000    |     0.0177     |     0.2319      |
+ * |    40000 / 4000    |     0.0445     |     0.9890      |
+ * |    80000 / 8000    |     0.0877     |     4.0216      |
+ * |   160000 / 16000   |     0.1533     |    16.1169      |
  * |____________________|________________|_________________|
  * 
- * Reason:
+ * Reason: Since the LinkedList's get method is O(N), using
+ * it to get all elements in the LinkedList will cause it to
+ * be O(N^2) as you need to iterate through all the elements
+ * everytime you use the get method to get all elements
+ * iteratively. While ArrayList's get method is O(1) since 
+ * you can directly access the element at the position without
+ * having to directly iterate through all the element each time
+ * so using the get method to iterate through all the elements
+ * will only lead to a O(N) operation.
  * 
  * Big O Notation:
  *      LinkedList: O(N^2)
