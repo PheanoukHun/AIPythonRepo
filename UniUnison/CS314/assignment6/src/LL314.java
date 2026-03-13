@@ -428,7 +428,7 @@ public class LL314<E> implements IList<E> {
         if (item == null) {
             throw new IllegalArgumentException("The Value of the new Element cannot be null");
         }
-        
+
         if (pos < 0 || pos >= this.size) {
             throw new IllegalArgumentException("You must give a position value that must "
                     + "between 0 and size.");
@@ -499,7 +499,7 @@ public class LL314<E> implements IList<E> {
 
             // Makes Sure Elements are Actually being removed.
         } else if (start != stop) {
-            
+
             DoubleListNode<E> startNode = this.getNodeAt(start);
             DoubleListNode<E> endNode = this.getNodeAt(stop - 1);
 
@@ -712,7 +712,11 @@ public class LL314<E> implements IList<E> {
         /**
          * This method removes the previous node that the iterator was pointing at.
          * 
-         * Big O Notation: O(!)
+         * pre: next() has been called before this.
+         * post: the element most recently returned by next() is removed
+         * from the list and the size of the list decreases by 1
+         * 
+         * Big O Notation: O(1)
          */
         public void remove() {
 
@@ -734,6 +738,8 @@ public class LL314<E> implements IList<E> {
             } else {
                 this.lastNode.next.prev = this.lastNode.prev;
             }
+
+            this.currNode = this.lastNode.next;
 
             this.hasUsedNext = false;
             LL314.this.size--;

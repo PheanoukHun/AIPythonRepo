@@ -149,14 +149,14 @@ public class LinkedListTester {
 
         public static void main(String[] args) {
 
-                // myTestSuite();
+                myTestSuite();
                 // basicTests();
                 // spring2021StressTests();
                 // itRemoveStressTests();
 
                 // Uncomment the following line to run tests comparing
                 // your LL314 class to the java ArrayList class.
-                comparison();
+                // comparison();
 
         }
 
@@ -581,7 +581,7 @@ public class LinkedListTester {
 
                 return list;
         }
-
+        
         private static ArrayList<String> copyLLToALForStr(LL314<String> lL) {
 
                 Iterator<String> llIterator = lL.iterator();
