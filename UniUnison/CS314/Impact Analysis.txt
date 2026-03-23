@@ -1,0 +1,82 @@
+Impact Analysis
+
+**Overview**
+On 2023-11-02, a threat actor gained unauthorized access to Forela’s AWS S3 environment, exploiting a publicly accessible bucket and exposed credentials. The actor escalated privileges, encrypted sensitive files, and created persistent access, causing operational disruption and confirmed data exposure.
+
+**Purpose**
+The purpose of this analysis is to quantify the actual and potential impact of the incident on Forela’s business operations, data integrity, and cloud infrastructure, and to inform prioritization of containment and recovery efforts.
+
+**System Description**
+
+* **Affected System:** AWS S3 bucket `forela-fileshare` and associated IAM users/roles.
+* **Components:** S3 objects containing business-critical data, AWS KMS key for encryption, IAM policies, and EC2 instance metadata accessed for reconnaissance.
+* **Data Types:** Billing records, customer datasets, project documents, and operational logs.
+
+**IA Data Collection**
+
+* AWS CloudTrail logs capturing all object-level S3 access, IAM policy changes, key creation events, and KMS usage.
+* S3 access logs documenting GET and PUT operations.
+* IAM configuration snapshots to track privilege escalation and persistence.
+* SIEM (Splunk) correlation of API activity and failed attempts.
+
+**Determine Process and System Criticality**
+
+* Critical systems impacted include financial reporting (billing data) and customer service operations (customer datasets).
+* EC2 enumeration and access to privileged IAM accounts present high risk for additional cloud resource compromise.
+* The encrypted files are essential to ongoing business operations.
+
+**Identify Outage Impacts and Estimated Downtime**
+
+* Immediate loss of access to forela-fileshare bucket disrupted daily operational processes.
+* Estimated downtime for affected users: [REQUIRES ANALYST CONFIRMATION].
+* Recovery requires decryption of files, IAM remediation, and re-establishment of secure access.
+
+**Impact Categories**
+
+* **Data Confidentiality:** Sensitive billing and customer data were exposed.
+* **Data Integrity:** Encryption of 56 S3 files compromised operational data.
+* **Availability:** Critical business processes were temporarily halted.
+* **Regulatory/Compliance:** Potential risk due to exposure of sensitive organizational and customer data.
+
+**Mission Impact Matrix**
+
+| Mission Area       | Impact Level | Description                                         |
+| ------------------ | ------------ | --------------------------------------------------- |
+| Billing Operations | High         | Encrypted financial data prevents report generation |
+| Customer Service   | Medium       | Access to customer datasets temporarily blocked     |
+| IT Operations      | High         | Privilege escalation and persistent access risk     |
+| Strategic Projects | Medium       | Project files encrypted, causing work delays        |
+
+**Drivers**
+
+* Misconfigured S3 bucket allowing anonymous access.
+* Storage of plaintext AWS access keys within S3.
+* Insufficient IAM privilege controls for standard users.
+* Lack of monitoring for anomalous API and KMS activity.
+
+**Identify Resource Requirements**
+
+* IT and security teams for containment, eradication, and access remediation.
+* Cloud administrators for IAM, S3, and KMS configuration correction.
+* Backup systems and decryption tools for file recovery.
+* Monitoring and SIEM analysts for audit and detection of remaining threats.
+
+**Identify Recovery Priorities for System Resources**
+
+1. Restore secure access to forela-fileshare S3 bucket.
+2. Revoke all compromised access keys and remove malicious IAM policies.
+3. Decrypt encrypted files using validated backups or KMS keys.
+4. Validate all IAM user roles, privileges, and policies to prevent further escalation.
+5. Audit remaining cloud resources for any signs of residual compromise.
+
+**Summary of Impact**
+The incident caused high operational and security impact, including:
+
+* Exposure of sensitive billing and customer data.
+* Encryption of 56 files, preventing normal access.
+* Unauthorized privilege escalation within AWS environment.
+* Operational downtime affecting business-critical functions.
+* Persistent access established, requiring full audit and remediation to restore secure operations.
+
+[REQUIRES ANALYST CONFIRMATION] for exact downtime duration, business unit impacts, and verification of all potentially affected resources.
+
