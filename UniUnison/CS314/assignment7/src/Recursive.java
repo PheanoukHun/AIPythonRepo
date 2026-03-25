@@ -175,7 +175,7 @@ public class Recursive {
      */
     private static void drawSquares(Graphics g, int size, int limit,
             double x, double y) {
-        if (limit * 3 >= size) {
+        if (limit * 3 <= size) {
             
         }
     }
