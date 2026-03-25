@@ -34,16 +34,16 @@ public class Recursive {
      *
      * @param data The array to search.
      * @return The number of elements in data that are followed immediately by
-     * a value that is double the element.
+     *         a value that is double the element.
      */
     public static int nextIsDouble(int[] data) {
-        
+
         // Precondition
         if (data == null) {
             throw new IllegalArgumentException("Failed precondition: "
                     + "revString. parameter may not be null.");
         }
-        
+
         if (data.length < 2) {
             return 0;
         }
@@ -71,13 +71,31 @@ public class Recursive {
      * @return The list of all possible mnemonics for the given number
      */
     public static ArrayList<String> listMnemonics(String number) {
-        if (number == null ||  number.length() == 0 || !allDigits(number)) {
+        if (number == null || number.length() == 0 || !allDigits(number)) {
             throw new IllegalArgumentException("Failed precondition: "
                     + "listMnemonics");
         }
 
-        return null; // TODO: Change as necessary
+        ArrayList<String> results = new ArrayList<>();
+
+        if (number.length() == 0) {
+            return results;
+        }
+
+        String[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+                "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+
+        findWordMnemonic(number, "", results, alphabet);
+        return null;
     }
+
+    private static void findWordMnemonic(String number, String currNum, 
+        ArrayList<String> words, String[] alphabet) {
+        if (number.length() == 0) {
+            words.add(currNum + );
+        } else{
+
+        }
 
     /*
      * Static code blocks are run once when this class is loaded
@@ -86,8 +104,8 @@ public class Recursive {
      */
     private static final List<String> LETTERS_FOR_NUMBER;
     static {
-        String[] letters = {"0", "1", "ABC",
-                "DEF", "GHI", "JKL", "MNO", "PQRS", "TUV", "WXYZ"};
+        String[] letters = { "0", "1", "ABC",
+                "DEF", "GHI", "JKL", "MNO", "PQRS", "TUV", "WXYZ" };
         ArrayList<String> lettersAsList = new ArrayList<>();
         for (String s : letters) {
             lettersAsList.add(s);
@@ -108,7 +126,6 @@ public class Recursive {
         int index = ch - '0';
         return LETTERS_FOR_NUMBER.get(index);
     }
-
 
     /*
      * Helper method for Problem 2: Phone Mnemonics
@@ -134,14 +151,14 @@ public class Recursive {
     /**
      * Problem 3: Draw a Sierpinski Carpet.
      *
-     * @param size the size in pixels of the window
+     * @param size  the size in pixels of the window
      * @param limit the smallest size of a square in the carpet.
      */
     public static void drawCarpet(int size, int limit) {
         DrawingPanel p = new DrawingPanel(size, size);
         Graphics g = p.getGraphics();
         g.setColor(Color.BLACK);
-        g.fillRect(0,0,size,size);
+        g.fillRect(0, 0, size, size);
         g.setColor(Color.WHITE);
         drawSquares(g, size, limit, 0, 0);
     }
@@ -151,13 +168,17 @@ public class Recursive {
      * Draw the individual squares of the carpet.
      *
      * @param g The Graphics object to use to fill rectangles
+     * 
      * @param size the size of the current square
+     * 
      * @param limit the smallest allowable size of squares
+     * 
      * @param x the x coordinate of the upper left corner of the current square
+     * 
      * @param y the y coordinate of the upper left corner of the current square
      */
     private static void drawSquares(Graphics g, int size, int limit,
-                                    double x, double y) {
+            double x, double y) {
         // TODO: Complete this method
     }
 
@@ -172,7 +193,7 @@ public class Recursive {
      * @param row The starting row of a drop of water.
      * @param col The starting column of a drop of water.
      * @return true if a drop of water starting at the location specified by
-     * row, column can reach the edge of the map, false otherwise
+     *         row, column can reach the edge of the map, false otherwise
      */
     public static boolean canFlowOffMap(int[][] map, int row, int col) {
         if (map == null || map.length == 0 || !isRectangular(map)
@@ -230,11 +251,12 @@ public class Recursive {
      * post: return the minimum possible difference between the team with the
      * maximum total ability and the team with the minimum total ability.
      *
-     * @param numTeams the number of teams to form
+     * @param numTeams  the number of teams to form
      * @param abilities the ability scores of the people to distribute
      * @return return the minimum possible difference between the team with the
-     * maximum total ability and the team with the minimum total ability. The
-     * return value will be greater than or equal to 0.
+     *         maximum total ability and the team with the minimum total ability.
+     *         The
+     *         return value will be greater than or equal to 0.
      */
     public static int minDifference(int numTeams, int[] abilities) {
         return -1; // TODO: Change as necessary
