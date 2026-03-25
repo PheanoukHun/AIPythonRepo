@@ -77,24 +77,18 @@ public class Recursive {
         }
 
         ArrayList<String> results = new ArrayList<>();
-
-        if (number.length() == 0) {
-            return results;
-        }
-
-        findWordMnemonic(number, "", results, LETTERS_FOR_NUMBER);
+        findWordMnemonic(number, "", results);
         return results;
     }
 
-    private static void findWordMnemonic(String number, String currNum,
-            ArrayList<String> words, List<String> alphabet) {
+    private static void findWordMnemonic(String number, String currWord,
+            ArrayList<String> words) {
         if (number.length() == 0) {
-            words.add(currNum);
+            words.add(currWord);
         } else {
-            int currInt = number.charAt(0) - '0';
-            String letters = alphabet.get(currInt);
+            String letters = digitLetters(number.charAt(0));
             for (int i = 0; i < letters.length(); i++) {
-                findWordMnemonic(number, currNum + letters.charAt(i), words, alphabet);
+                findWordMnemonic(number.substring(1), currWord + letters.charAt(i), words);
             }
         }
     }
@@ -181,7 +175,9 @@ public class Recursive {
      */
     private static void drawSquares(Graphics g, int size, int limit,
             double x, double y) {
-        // TODO: Complete this method
+        if (limit * 3 >= size) {
+            
+        }
     }
 
     /**
