@@ -82,20 +82,22 @@ public class Recursive {
             return results;
         }
 
-        String[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-                "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-
-        findWordMnemonic(number, "", results, alphabet);
-        return null;
+        findWordMnemonic(number, "", results, LETTERS_FOR_NUMBER);
+        return results;
     }
 
-    private static void findWordMnemonic(String number, String currNum, 
-        ArrayList<String> words, String[] alphabet) {
+    private static void findWordMnemonic(String number, String currNum,
+            ArrayList<String> words, List<String> alphabet) {
         if (number.length() == 0) {
-            words.add(currNum + );
-        } else{
-
+            words.add(currNum);
+        } else {
+            int currInt = number.charAt(0) - '0';
+            String letters = alphabet.get(currInt);
+            for (int i = 0; i < letters.length(); i++) {
+                findWordMnemonic(number, currNum + letters.charAt(i), words, alphabet);
+            }
         }
+    }
 
     /*
      * Static code blocks are run once when this class is loaded
