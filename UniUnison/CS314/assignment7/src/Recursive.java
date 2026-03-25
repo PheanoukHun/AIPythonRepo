@@ -37,11 +37,29 @@ public class Recursive {
      * a value that is double the element.
      */
     public static int nextIsDouble(int[] data) {
+        
+        // Precondition
         if (data == null) {
             throw new IllegalArgumentException("Failed precondition: "
                     + "revString. parameter may not be null.");
         }
-        return 0; // TODO: Change as necessary
+        
+        if (data.length < 2) {
+            return 0;
+        }
+
+        return twoIntsAreDouble(0, 1, data);
+    }
+
+    private static int twoIntsAreDouble(int start, int end, int[] data) {
+
+        int doubled = (data[start] * 2 == data[end]) ? 1 : 0;
+
+        if (end == data.length - 1) {
+            return doubled;
+        }
+
+        return doubled + twoIntsAreDouble(start + 1, end + 1, data);
     }
 
     /**
