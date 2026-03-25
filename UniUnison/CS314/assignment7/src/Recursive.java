@@ -257,6 +257,13 @@ public class Recursive {
      *         return value will be greater than or equal to 0.
      */
     public static int minDifference(int numTeams, int[] abilities) {
-        return -1; // TODO: Change as necessary
+        
+        int min = Integer.MAX_VALUE;
+
+        for (int i : abilities) {
+            min = Math.min(min, minDiffHelper()) 
+        }
+        
+        return -1;
     }
 }
