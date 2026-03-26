@@ -215,6 +215,19 @@ public class Recursive {
         return true; // TODO: Change as necessary
     }
 
+    private static int[] findDirection(int[][] map, int row, int col) {
+        
+        if (map[row][col - 1] < map[row][col]) {
+            return new int[] {row, col - 1};
+        } else if (map[row][col + 1] < map[row][col]) {
+            return new int[] {row, col + 1};
+        } else if (map[row - 1][col] < map[row][col]) {
+            return new int[] {}
+        }
+
+        return null;
+    }
+
     /*
      * Helper method for Problem 4: Flowing Water
      * pre: mat != null,
