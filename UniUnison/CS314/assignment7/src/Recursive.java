@@ -212,20 +212,28 @@ public class Recursive {
             throw new IllegalArgumentException("Failed precondition: "
                     + "canFlowOffMap");
         }
+
+        
+
         return true; // TODO: Change as necessary
     }
 
     private static int[] findDirection(int[][] map, int row, int col) {
         
-        if (map[row][col - 1] < map[row][col]) {
-            return new int[] {row, col - 1};
-        } else if (map[row][col + 1] < map[row][col]) {
-            return new int[] {row, col + 1};
-        } else if (map[row - 1][col] < map[row][col]) {
-            return new int[] {}
+        int currVal = map[row][col];
+        int[] coord = new int[] {row, col};
+
+        if (map[row][col - 1] < currVal) {
+            coord[1]--;
+        } else if (map[row][col + 1] < currVal) {
+            coord[1]++;
+        } else if (map[row - 1][col] < currVal) {
+            coord[0]--;
+        } else if (map[row + 1][col] < currVal) {
+            coord[0]++;
         }
 
-        return null;
+        return coord;
     }
 
     /*
