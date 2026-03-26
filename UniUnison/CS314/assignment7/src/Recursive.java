@@ -175,8 +175,21 @@ public class Recursive {
      */
     private static void drawSquares(Graphics g, int size, int limit,
             double x, double y) {
-        if (limit * 3 <= size) {
+        
+        int NUM_SQUARES = 3;
+        
+        if (limit <= size) {
+            int newSize = size / NUM_SQUARES;
             
+            g.fillRect( (int) (x + newSize), (int) (y + newSize), newSize, newSize);
+            for (int r = 0; r < NUM_SQUARES; r++) {
+                for (int c = 0; c < NUM_SQUARES; c++) {
+                    if (! (r == 1 && c == 1)) {
+                        drawSquares(g, newSize, limit, x + (newSize * r), y + (newSize * c));
+                    }
+                }
+
+            }
         }
     }
 
