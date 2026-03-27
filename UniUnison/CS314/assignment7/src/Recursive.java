@@ -175,16 +175,16 @@ public class Recursive {
      */
     private static void drawSquares(Graphics g, int size, int limit,
             double x, double y) {
-        
+
         int NUM_SQUARES = 3;
-        
+
         if (limit <= size) {
             int newSize = size / NUM_SQUARES;
-            
-            g.fillRect( (int) (x + newSize), (int) (y + newSize), newSize, newSize);
+
+            g.fillRect((int) (x + newSize), (int) (y + newSize), newSize, newSize);
             for (int r = 0; r < NUM_SQUARES; r++) {
                 for (int c = 0; c < NUM_SQUARES; c++) {
-                    if (! (r == 1 && c == 1)) {
+                    if (!(r == 1 && c == 1)) {
                         drawSquares(g, newSize, limit, x + (newSize * r), y + (newSize * c));
                     }
                 }
@@ -207,7 +207,7 @@ public class Recursive {
      *         row, column can reach the edge of the map, false otherwise
      */
     public static boolean canFlowOffMap(int[][] map, int row, int col) {
-        
+
         // Preconditon
         if (map == null || map.length == 0 || !isRectangular(map)
                 || !inbounds(row, col, map)) {
@@ -215,12 +215,11 @@ public class Recursive {
                     + "canFlowOffMap");
         }
 
-        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-        
+        int[][] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
 
         // Look Through All 4 Directions to See if There is a chance to move the water
         for (int[] direction : directions) {
-            
+
             int newRow = row + direction[0];
             int newCol = col + direction[1];
 
@@ -292,8 +291,41 @@ public class Recursive {
      */
     public static int minDifference(int numTeams, int[] abilities) {
         int[] teams = new int[numTeams];
-        return minDifferenceHelper(numTeams, abilities);
+        int[] counted = new int[numTeams];
+        return minDiffHelper(0, abilities, teams, counted);
     }
 
-    private static 
+    private static int minDiffHelper(int index, int[] skillLvls, int[] teams, int[] counted) {
+        
+        // Base Case
+        if (index == skillLvls.length) {
+            
+            for (int sum : teams) {
+                if (sum == 0) {
+                    return Integer.MAX_VALUE;
+                }
+            }
+
+            int min = teams[0], max = teams[0];
+    
+            for (int sum : teams) {
+                min = Math.min(sum, min);
+                max = Math.max(sum, max);
+            }
+
+            return max - min;
+        }
+
+        int best = Integer.MAX_VALUE;
+
+        for (int i = 0; i < teams.length; i++) {
+            teams[i] += skillLvls[index];
+            int result = minDifferenceHelper(index + 1, skillLvls, teams);
+            if (result != Integer.MAX_VALUE) {
+                best = Math.min(best, result);
+            }
+        }
+
+        return best;
+    }
 }
