@@ -220,27 +220,9 @@ public class Recursive {
 
     private static boolean canFlowOffMapHelper(int[][] map, int row, int col, int xMov, int yMov) {
 
-        if 
+        
 
         return false;
-    }
-
-    private static int[] findDirection(int[][] map, int row, int col) {
-        
-        int currVal = map[row][col];
-        int[] coord = new int[] {row, col};
-
-        if (map[row][col - 1] < currVal) {
-            coord[1]--;
-        } else if (map[row][col + 1] < currVal) {
-            coord[1]++;
-        } else if (map[row - 1][col] < currVal) {
-            coord[0]--;
-        } else if (map[row + 1][col] < currVal) {
-            coord[0]++;
-        }
-
-        return coord;
     }
 
     /*
