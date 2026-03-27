@@ -221,7 +221,6 @@ public class Recursive {
         }
 
         int[][] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
-        boolean 
 
         for (int[] direction : directions) {
 
@@ -243,6 +242,8 @@ public class Recursive {
 
         return false;
     }
+
+    private static boolean 
 
     /*
      * Helper method for Problem 4: Flowing Water
