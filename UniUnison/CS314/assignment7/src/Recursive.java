@@ -207,20 +207,31 @@ public class Recursive {
      *         row, column can reach the edge of the map, false otherwise
      */
     public static boolean canFlowOffMap(int[][] map, int row, int col) {
+        
+        // Preconditon
         if (map == null || map.length == 0 || !isRectangular(map)
                 || !inbounds(row, col, map)) {
             throw new IllegalArgumentException("Failed precondition: "
                     + "canFlowOffMap");
         }
 
+        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
         
 
-        return true; // TODO: Change as necessary
-    }
+        // Look Through All 4 Directions to See if There is a chance to move the water
+        for (int[] direction : directions) {
+            
+            int newRow = row + direction[0];
+            int newCol = col + direction[1];
 
-    private static boolean canFlowOffMapHelper(int[][] map, int row, int col, int xMov, int yMov) {
-
-        
+            if (newRow < 0 || newRow >= map.length || newCol < 0 || newCol >= map[0].length) {
+                return true;
+            } else if (map[newRow][newCol] < map[row][col]) {
+                if (canFlowOffMap(map, newRow, newCol)) {
+                    return true;
+                }
+            }
+        }
 
         return false;
     }
@@ -280,7 +291,9 @@ public class Recursive {
      *         return value will be greater than or equal to 0.
      */
     public static int minDifference(int numTeams, int[] abilities) {
-        int min = Integer.MAX_VALUE;
-        return min;
+        int[] teams = new int[numTeams];
+        return minDifferenceHelper(numTeams, abilities);
     }
+
+    private static 
 }

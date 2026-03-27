@@ -84,8 +84,8 @@ public class RecursiveTester {
 
     // Test the Sierpinski carpet method.
     private static void doCarpetTest() {
-        Recursive.drawCarpet(729, 4);
-        Recursive.drawCarpet(729, 1);
+        // Recursive.drawCarpet(729, 4);
+        // Recursive.drawCarpet(729, 1);
     }
 
     private static void doFairTeamsTests() {
