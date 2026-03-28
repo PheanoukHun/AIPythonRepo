@@ -180,7 +180,7 @@ public class Recursive {
         if (limit <= size) {
             final int NUM_SQUARES = 3;
             int newSize = size / NUM_SQUARES;
-
+k
             // Draw Center Square
             g.fillRect((int) (x + newSize), (int) (y + newSize), newSize, newSize);
 
