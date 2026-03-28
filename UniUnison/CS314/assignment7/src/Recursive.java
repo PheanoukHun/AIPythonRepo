@@ -178,9 +178,10 @@ public class Recursive {
 
         // Recursive Case
         if (limit <= size) {
+            
             final int NUM_SQUARES = 3;
             int newSize = size / NUM_SQUARES;
-k
+
             // Draw Center Square
             g.fillRect((int) (x + newSize), (int) (y + newSize), newSize, newSize);
 
@@ -242,9 +243,7 @@ k
 
         return false;
     }
-
-    private static boolean 
-
+    
     /*
      * Helper method for Problem 4: Flowing Water
      * pre: mat != null,
