@@ -219,6 +219,19 @@ public class RecursiveTester {
     }
 
     private static void myMinDifferenceTest() {
+        
+        System.out.println("\nMy MinDifferenceTests: ");
 
+        // Test 1
+        int testNum = 1;
+        int[] abilities = new int[] {5, 5};
+        int results = Recursive.minDifference(2, abilities);
+        printResults(testNum, results == 0, "Two Teams, two people with equal abilities");
+
+        // Test 2
+        testNum++;
+        abilities = new int[] {1, 5, 9};
+        results = Recursive.minDifference(3, abilities);
+        printResults(testNum, results == 8, "Three Treams, One Person per Team");
     }
 }

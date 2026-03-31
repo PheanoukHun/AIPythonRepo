@@ -9,7 +9,6 @@
  * search for anagrams that match the user's phrases.
  */
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashSet;
