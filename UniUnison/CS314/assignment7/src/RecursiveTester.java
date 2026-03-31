@@ -5,13 +5,9 @@
  * own work. I/we have neither given nor received unauthorized assistance on
  * this assignment.
  *
- * Name 1:
- * Email address 1:
- * UTEID 1:
- *
- * Name 2:
- * Email address 2:
- * UTEID 2:
+ * Name 1: Pheanouk Hun
+ * Email address 1: ph23434@eid.utexas.edu
+ * UTEID 1: ph23434
  */
 
 /**
