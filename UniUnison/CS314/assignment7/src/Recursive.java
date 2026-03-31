@@ -300,11 +300,10 @@ public class Recursive {
      */
     public static int minDifference(int numTeams, int[] abilities) {
         int[] teams = new int[numTeams];
-        int[] counted = new int[numTeams];
-        return minDiffHelper(0, abilities, teams, counted);
+        return minDiffHelper(0, abilities, teams);
     }
 
-    private static int minDiffHelper(int index, int[] skillLvls, int[] teams, int[] counted) {
+    private static int minDiffHelper(int index, int[] skillLvls, int[] teams) {
 
         // Base Case
         if (index == skillLvls.length) {
@@ -332,8 +331,7 @@ public class Recursive {
 
             // Selecting
             teams[i] += skillLvls[index];
-            counted[i]++;
-            int result = minDiffHelper(index + 1, skillLvls, teams, counted);
+            int result = minDiffHelper(index + 1, skillLvls, teams);
 
             // Exploring
             if (result != Integer.MAX_VALUE) {
@@ -342,7 +340,6 @@ public class Recursive {
 
             // Deselecting
             teams[i] -= skillLvls[index];
-            counted[i]--;
         }
 
         return best;
