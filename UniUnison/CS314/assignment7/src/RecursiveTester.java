@@ -16,6 +16,9 @@
  * @author scottm
  *
  */
+
+import java.util.ArrayList;
+
 public class RecursiveTester {
 
     // run the tests
@@ -25,6 +28,7 @@ public class RecursiveTester {
         // doFairTeamsTests();
 
         myNextIsDoubleTests();
+        myListMnemonicsTests();
     }
 
     private static void doNextIsDoubleTests() {
@@ -130,22 +134,50 @@ public class RecursiveTester {
     }
 
     private static void myNextIsDoubleTests() {
-        
-        int count = 1;
+
+        System.out.println("\nMy nextIsDouble Tests:");
+
+        // Test 1
+        int testNum = 1;
         int[] data = new int[] {};
         int actual = Recursive.nextIsDouble(data);
-        printResults(count, actual == 0, "nextIsDouble with Empty List.");
+        printResults(testNum, actual == 0, "nextIsDouble with Empty List.");
+
+        // Test 2
+        testNum++;
+        data = new int[] { -4, -8 };
+        actual = Recursive.nextIsDouble(data);
+        printResults(testNum, actual == 1, "nextIsDouble with only two items");
+    }
+
+    private static void myListMnemonicsTests() {
+        System.out.println("\nMy listMnemonics Tests:");
+
+        // Test 1
+        int testNum = 1;
+        ArrayList<String> result = Recursive.listMnemonics("623").sort);;
+        String[] expectedArr = new String[] { "MAD", "MBD", "MCD", "NAD", "NBD", "NCD", "OAD",
+                "OBD", "OCD", "MAE", "MBE", "MCE", "NAE", "NBE", "NCE", "OAE", "OBE", "OCE",
+                "MAF", "MBF", "MCF", "NAF", "NBF", "NCF", "OAF", "OBF", "OCF" };
+        ArrayList<String> expected = copyMnemoicArrtoArrList(expectedArr);
+        printResults(testNum, result.equals(expected), "listMnemonics with with 623");
+        System.out.println(result.size());
+        System.out.println(expected.size());
+
     }
 
     private static void printResults(int testNum, boolean results, String detail) {
-
         System.out.println("\nTest " + testNum + ":");
-        System.out.println("\n * Description: " + detail);
-
+        System.out.println(" * Description: " + detail);
         String passedString = results ? "PASSED" : "FAILED";
-        System.out.println("\n * Results: " + passedString);
-
-        System.out.println(sb.toString());
+        System.out.println(" * Results: " + passedString);
     }
 
+    private static ArrayList<String> copyMnemoicArrtoArrList(String[] arr) {
+        ArrayList<String> result = new ArrayList<>();
+        for (String code : arr) {
+            result.add(code);
+        }
+        return result;
+    } 
 }
