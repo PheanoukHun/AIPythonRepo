@@ -11,10 +11,22 @@
  */
 
 public class LetterInventory {
-    
-    
-    
+
+    int[] numOccured;
+    final int ALPHABET_SIZE = 26;
+
     public LetterInventory(String word) {
 
+        int[] numOccured = new int[ALPHABET_SIZE];
+        for (int i = 0; i < word.length(); i++) {
+            char currChar = word.charAt(i);
+            if (currChar >= 'a' && currChar <= 'z') {
+                numOccured[currChar - 'a']++;
+            }
+        }
+    }
+
+    public int getFrequency(char needed_char) {
+        return numOccured[needed_char];
     }
 }
