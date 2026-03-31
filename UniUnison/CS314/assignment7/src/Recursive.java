@@ -51,6 +51,13 @@ public class Recursive {
         return twoIntsAreDouble(0, 1, data);
     }
 
+    /**
+     * 
+     * @param start
+     * @param end
+     * @param data
+     * @return
+     */
     private static int twoIntsAreDouble(int start, int end, int[] data) {
 
         int doubled = (data[start] * 2 == data[end]) ? 1 : 0;
@@ -81,6 +88,12 @@ public class Recursive {
         return results;
     }
 
+    /**
+     * 
+     * @param number
+     * @param currWord
+     * @param words
+     */
     private static void findWordMnemonic(String number, String currWord,
             ArrayList<String> words) {
         if (number.length() == 0) {
@@ -109,7 +122,7 @@ public class Recursive {
         LETTERS_FOR_NUMBER = Collections.unmodifiableList(lettersAsList);
     }
 
-    /*
+    /**
      * Helper method for Problem 2: Phone Mnemonics
      * pre: ch is a digit '0' through '9'
      * post: return the characters associated with this digit on a phone keypad
@@ -123,7 +136,7 @@ public class Recursive {
         return LETTERS_FOR_NUMBER.get(index);
     }
 
-    /*
+    /**
      * Helper method for Problem 2: Phone Mnemonics
      * pre: s != null
      * post: return true if every character in s is a digit ('0' through '9')
@@ -159,26 +172,21 @@ public class Recursive {
         drawSquares(g, size, limit, 0, 0);
     }
 
-    /*
+    /**
      * Helper method for Problem 3: Sierpinski Carpet
      * Draw the individual squares of the carpet.
-     *
+     * 
      * @param g The Graphics object to use to fill rectangles
-     * 
      * @param size the size of the current square
-     * 
      * @param limit the smallest allowable size of squares
-     * 
      * @param x the x coordinate of the upper left corner of the current square
-     * 
      * @param y the y coordinate of the upper left corner of the current square
      */
-    private static void drawSquares(Graphics g, int size, int limit,
-            double x, double y) {
+    private static void drawSquares(Graphics g, int size, int limit, double x, double y) {
 
         // Recursive Case
         if (limit <= size) {
-            
+
             final int NUM_SQUARES = 3;
             int newSize = size / NUM_SQUARES;
 
@@ -214,11 +222,9 @@ public class Recursive {
      */
     public static boolean canFlowOffMap(int[][] map, int row, int col) {
 
-        // Preconditon
-        if (map == null || map.length == 0 || !isRectangular(map)
-                || !inbounds(row, col, map)) {
-            throw new IllegalArgumentException("Failed precondition: "
-                    + "canFlowOffMap");
+        // Precondition
+        if (map == null || map.length == 0 || !isRectangular(map) || !inbounds(row, col, map)) {
+            throw new IllegalArgumentException("Failed precondition: " + "canFlowOffMap");
         }
 
         int[][] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
@@ -243,7 +249,7 @@ public class Recursive {
 
         return false;
     }
-    
+
     /*
      * Helper method for Problem 4: Flowing Water
      * pre: mat != null,

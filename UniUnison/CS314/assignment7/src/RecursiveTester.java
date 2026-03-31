@@ -20,9 +20,11 @@ public class RecursiveTester {
 
     // run the tests
     public static void main(String[] args) {
-        doNextIsDoubleTests();
-        doCarpetTest();
-        doFairTeamsTests();
+        // doNextIsDoubleTests();
+        // doCarpetTest();
+        // doFairTeamsTests();
+
+        myNextIsDoubleTests();
     }
 
     private static void doNextIsDoubleTests() {
@@ -86,14 +88,14 @@ public class RecursiveTester {
 
     private static void doFairTeamsTests() {
         System.out.println("Stress test for minDifference - may take up to a minute");
-        int[] testerArr = new int[] {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60,
-        65, 70, 75, 100000};
+        int[] testerArr = new int[] { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60,
+                65, 70, 75, 100000 };
         Stopwatch s = new Stopwatch();
         s.start();
         int actualInt = Recursive.minDifference(4, testerArr);
         s.stop();
         System.out.println("Time to solve for 16 people on 4 teams: " + s.time() +
-        "\n");
+                "\n");
         System.out.println(actualInt);
 
         int[] abilities = { 1, 2, 3, 4, 5, 6, 7 };
@@ -126,4 +128,24 @@ public class RecursiveTester {
             System.out.println("Actual result  : " + actual);
         }
     }
+
+    private static void myNextIsDoubleTests() {
+        
+        int count = 1;
+        int[] data = new int[] {};
+        int actual = Recursive.nextIsDouble(data);
+        printResults(count, actual == 0, "nextIsDouble with Empty List.");
+    }
+
+    private static void printResults(int testNum, boolean results, String detail) {
+
+        System.out.println("\nTest " + testNum + ":");
+        System.out.println("\n * Description: " + detail);
+
+        String passedString = results ? "PASSED" : "FAILED";
+        System.out.println("\n * Results: " + passedString);
+
+        System.out.println(sb.toString());
+    }
+
 }
