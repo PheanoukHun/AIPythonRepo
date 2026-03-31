@@ -18,6 +18,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RecursiveTester {
 
@@ -29,6 +30,8 @@ public class RecursiveTester {
 
         myNextIsDoubleTests();
         myListMnemonicsTests();
+        myCanFlowOffMapTests();
+        myMinDifferenceTest();
     }
 
     private static void doNextIsDoubleTests() {
@@ -133,6 +136,13 @@ public class RecursiveTester {
         }
     }
 
+    private static void printResults(int testNum, boolean results, String detail) {
+        System.out.println("\nTest " + testNum + ":");
+        System.out.println(" * Description: " + detail);
+        String passedString = results ? "PASSED" : "FAILED";
+        System.out.println(" * Results: " + passedString);
+    }
+
     private static void myNextIsDoubleTests() {
 
         System.out.println("\nMy nextIsDouble Tests:");
@@ -155,22 +165,26 @@ public class RecursiveTester {
 
         // Test 1
         int testNum = 1;
-        ArrayList<String> result = Recursive.listMnemonics("623").sort);;
+
+        ArrayList<String> result = Recursive.listMnemonics("623");
+        Collections.sort(result);
+
         String[] expectedArr = new String[] { "MAD", "MBD", "MCD", "NAD", "NBD", "NCD", "OAD",
                 "OBD", "OCD", "MAE", "MBE", "MCE", "NAE", "NBE", "NCE", "OAE", "OBE", "OCE",
                 "MAF", "MBF", "MCF", "NAF", "NBF", "NCF", "OAF", "OBF", "OCF" };
+
         ArrayList<String> expected = copyMnemoicArrtoArrList(expectedArr);
+        Collections.sort(expected);
+
         printResults(testNum, result.equals(expected), "listMnemonics with with 623");
-        System.out.println(result.size());
-        System.out.println(expected.size());
 
-    }
+        // Test 2
+        testNum++;
 
-    private static void printResults(int testNum, boolean results, String detail) {
-        System.out.println("\nTest " + testNum + ":");
-        System.out.println(" * Description: " + detail);
-        String passedString = results ? "PASSED" : "FAILED";
-        System.out.println(" * Results: " + passedString);
+        result = Recursive.listMnemonics("01");
+        int actual = result.size();
+        boolean equals = actual == 1;
+        printResults(testNum, equals, "Digits 0 and 1 each have 1 letter, except 1 mnemoncis");
     }
 
     private static ArrayList<String> copyMnemoicArrtoArrList(String[] arr) {
@@ -179,5 +193,32 @@ public class RecursiveTester {
             result.add(code);
         }
         return result;
-    } 
+    }
+
+    private static void myCanFlowOffMapTests() {
+        System.out.println("\nMy CanFlowOffMap Tests:");
+
+        // Test 1
+        int testNum = 1;
+
+        int[][] map = { { 5, 5, 5 }, { 5, 9, 5 }, { 5, 5, 5 } };
+        boolean result = Recursive.canFlowOffMap(map, 1, 1);
+        printResults(testNum, result, "Placed in the Center and runs off the edge");
+
+        // Test 2
+        testNum++;
+        result = Recursive.canFlowOffMap(map, 0, 0);
+        printResults(testNum, result, "Placed on (0,0) and must run off the edge");
+
+        // Test 3
+        testNum++;
+        map = new int[][] { { 10, 10, 10 }, { 10, 10, 10 }, { 10, 10, 10 } };
+        result = Recursive.canFlowOffMap(map, 1, 1);
+        printResults(testNum, !result, "Placed on the center of a flat map,"
+                + " cannot run off the edge");
+    }
+
+    private static void myMinDifferenceTest() {
+
+    }
 }
