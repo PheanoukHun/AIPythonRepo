@@ -14,13 +14,16 @@ public class LetterInventory {
 
     int[] numOccured;
     final int ALPHABET_SIZE = 26;
+    int size;
 
     public LetterInventory(String word) {
 
         int[] numOccured = new int[ALPHABET_SIZE];
-        for (int i = 0; i < word.length(); i++) {
+        size = word.length();
+
+        for (int i = 0; i < size; i++) {
             char currChar = word.charAt(i);
-            if (currChar >= 'a' && currChar <= 'z') {
+            if ('a' <= currChar && currChar <= 'z') {
                 numOccured[currChar - 'a']++;
             }
         }
@@ -29,4 +32,6 @@ public class LetterInventory {
     public int getFrequency(char needed_char) {
         return numOccured[needed_char];
     }
+
+    
 }
