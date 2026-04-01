@@ -17,8 +17,7 @@ public class LetterInventory {
     int size;
 
     public LetterInventory(String word) {
-
-        int[] numOccured = new int[ALPHABET_SIZE];
+        numOccured = new int[ALPHABET_SIZE];
         size = word.length();
         for (int i = 0; i < size; i++) {
             char currChar = word.charAt(i);
