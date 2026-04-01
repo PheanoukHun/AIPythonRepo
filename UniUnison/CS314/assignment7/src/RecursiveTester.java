@@ -25,13 +25,13 @@ public class RecursiveTester {
     // run the tests
     public static void main(String[] args) {
         // doNextIsDoubleTests();
-        doCarpetTest();
+        // doCarpetTest();
         // doFairTeamsTests();
 
         // myNextIsDoubleTests();
         // myListMnemonicsTests();
         // myCanFlowOffMapTests();
-        // myMinDifferenceTest();
+        myMinDifferenceTest();
     }
 
     private static void doNextIsDoubleTests() {
@@ -233,5 +233,12 @@ public class RecursiveTester {
         abilities = new int[] {1, 5, 9};
         results = Recursive.minDifference(3, abilities);
         printResults(testNum, results == 8, "Three Treams, One Person per Team");
+
+        // Test 3
+        testNum++;
+        abilities = new int[] {5, 100, -100};
+        results = Recursive.minDifference(2, abilities);
+        printResults(testNum, results == 5, "Two Teams, 5 Diff, one Team is 0.");
+        System.out.println(results);
     }
 }
