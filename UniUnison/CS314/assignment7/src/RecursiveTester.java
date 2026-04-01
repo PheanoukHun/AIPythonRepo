@@ -25,13 +25,13 @@ public class RecursiveTester {
     // run the tests
     public static void main(String[] args) {
         // doNextIsDoubleTests();
-        // doCarpetTest();
+        doCarpetTest();
         // doFairTeamsTests();
 
-        myNextIsDoubleTests();
-        myListMnemonicsTests();
-        myCanFlowOffMapTests();
-        myMinDifferenceTest();
+        // myNextIsDoubleTests();
+        // myListMnemonicsTests();
+        // myCanFlowOffMapTests();
+        // myMinDifferenceTest();
     }
 
     private static void doNextIsDoubleTests() {
@@ -89,8 +89,8 @@ public class RecursiveTester {
 
     // Test the Sierpinski carpet method.
     private static void doCarpetTest() {
-        // Recursive.drawCarpet(729, 4);
-        // Recursive.drawCarpet(729, 1);
+        Recursive.drawCarpet(729, 4);
+        Recursive.drawCarpet(729, 1);
     }
 
     private static void doFairTeamsTests() {
