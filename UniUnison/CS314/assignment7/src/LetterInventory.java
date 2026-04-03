@@ -97,8 +97,39 @@ public class LetterInventory {
         int[] newCounts = new int[ALPHABET_SIZE];
         int newSize = 0;
 
-        
+        for (int i = 0; i < ALPHABET_SIZE; i++) {
+            newCounts[i] = this.counts[i] - other.counts[i];
+            if (newCounts[i] < 0) {
+                return null;
+            }
+            newSize += newCounts[i];
+        }
 
         return new LetterInventory(newCounts, newSize);
+    }
+
+    public boolean equals(Object other) {
+        
+        if (this == other) {
+            return true;
+        }
+        
+        if (!(other instanceof LetterInventory)) {
+            return false;
+        }
+
+        LetterInventory otherLet = (LetterInventory) other;
+
+        if (this.size != otherLet.size) {
+            return false;
+        }
+
+        for (int i = 0; i < ALPHABET_SIZE; i++) {
+            if (this.counts[i] != otherLet.counts[i]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
