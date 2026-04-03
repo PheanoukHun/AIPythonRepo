@@ -108,7 +108,7 @@ public class AnagramSolver {
     }
 
     /**
-     * 
+     * Compares the Anagram List based on the size of the List, if the sizes are the same, the method then proceeds to compare it lexographically based on the comapareTo Method found in String.
      */
     private static class AnagramComparator implements Comparator<List<String>> {
         public int compare(List<String> listOne, List<String> listTwo) {
