@@ -33,12 +33,17 @@ public class AnagramFinderTester {
     public static void main(String[] args) {
         LIConstructor();
         LIGet();
+        LISize();
+        LIEmpty();
+        LItoString();
+        LIAdd();
+        LISubtract();
     }
 
     private static void LIConstructor() {
-        
+
         System.out.println("\nConstructor Test:\n");
-        
+
         // Test 1
         Object expected = "dehllloorw";
         LetterInventory inv = new LetterInventory("Hello World");
@@ -64,10 +69,44 @@ public class AnagramFinderTester {
         showTestResults(expected, actual, 1, "Empty List Get");
 
         // Test 2
-        inv = new LetterInventory("aaaaaaaaaaaaaaaaaaaaaabbbez");
+        inv = new LetterInventory("aaaaaaaaaaaaazaaaaaaaaaabbbe");
         expected = 1;
         actual = inv.get('z');
-        showTestResults(expected, actual, 2, "")
+        showTestResults(expected, actual, 2, "Appearance of 1 Z Character, needs to found.");
+    }
+
+    private static void LISize() {
+
+        System.out.println("\nSize Test: \n");
+
+        // Test 1
+        LetterInventory inv = new LetterInventory("");
+        Object expected = 0;
+        Object actual = inv.size();
+        showTestResults(expected, actual, 1, "Empty LetterInventory size.");
+
+        // Test 2
+        inv = new LetterInventory("aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ");
+        expected = 52;
+        actual = inv.size();
+        showTestResults(expected, actual, 2, "Size == 26 with all alphabets upper and lower.");
+    }
+
+    private static void LIEmpty() {
+        
+        System.out.println("\nisEmpty Test: \n");
+
+        // Test 1
+        LetterInventory inv = new LetterInventory("");
+        Object expected = true;
+        Object actual = inv.isEmpty();
+        showTestResults(expected, actual, 1, "Test isEmpty with Empty LetterInventory");
+
+        // Test 2
+        inv = new LetterInventory("asdfghjkl");
+        expected = false;
+        actual = inv.isEmpty();
+        showTestResults(expected, actual, 2, "Test isEmpty with Non-Empty LetterInventory");
     }
 
     private static boolean showTestResults(Object expected, Object actual,
@@ -75,8 +114,6 @@ public class AnagramFinderTester {
 
         System.out.println("Test Number " + testNum + " testing: "
                 + featureTested);
-        System.out.println("Expected result: " + expected);
-        System.out.println("Actual result: " + actual);
         boolean passed = (actual == null && expected == null)
                 || (actual != null && actual.equals(expected));
         if (passed) {
@@ -84,6 +121,8 @@ public class AnagramFinderTester {
         } else {
             System.out.println("!!! FAILED TEST !!! " + testNum);
         }
+        System.out.println("Expected result: " + expected);
+        System.out.println("Actual result: " + actual);
         System.out.println();
         return passed;
     }
