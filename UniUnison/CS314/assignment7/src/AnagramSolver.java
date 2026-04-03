@@ -64,7 +64,7 @@ public class AnagramSolver {
         // Get Candidates and Creates a Result List
         List<List<String>> results = new ArrayList<>();
         List<String> candidates = new ArrayList<>();
-        
+
         for (String word : dictionary.keySet()) {
             if (sInv.subtract(dictionary.get(word)) != null) {
                 candidates.add(word);
@@ -80,6 +80,15 @@ public class AnagramSolver {
         return results;
     }
 
+    /**
+     * A private helper method used to create 
+     * @param sInv
+     * @param candidates
+     * @param currList
+     * @param results
+     * @param maxWords
+     * @param start
+     */
     private void getAnagramHeler(LetterInventory sInv, List<String> candidates,
             List<String> currList, List<List<String>> results, int maxWords, int start) {
 
@@ -93,7 +102,7 @@ public class AnagramSolver {
             for (int i = start; i < candidates.size(); i++) {
                 LetterInventory newInv = sInv.subtract(dictionary.get(candidates.get(i)));
                 if (newInv != null) {
-                    
+
                     // Selecting
                     currList.add(candidates.get(i));
 
@@ -108,9 +117,18 @@ public class AnagramSolver {
     }
 
     /**
-     * Compares the Anagram List based on the size of the List, if the sizes are the same, the method then proceeds to compare it lexographically based on the comapareTo Method found in String.
+     * Compares the Anagram List based on the size of the List, if the sizes are the
+     * same, the method then proceeds to compare it lexographically based on the
+     * comapareTo Method found in String.
      */
     private static class AnagramComparator implements Comparator<List<String>> {
+        
+        /**
+         * The Method used to Compare the two Annagram Entries
+         * 
+         * @param listOne - The first List that is being used to compare
+         * @param listTwo - The Second List that is being used to compare
+         */
         public int compare(List<String> listOne, List<String> listTwo) {
 
             // Comparing Size
