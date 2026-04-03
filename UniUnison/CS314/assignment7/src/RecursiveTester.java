@@ -24,13 +24,13 @@ public class RecursiveTester {
 
     // run the tests
     public static void main(String[] args) {
-        // doNextIsDoubleTests();
+        doNextIsDoubleTests();
         // doCarpetTest();
-        // doFairTeamsTests();
+        doFairTeamsTests();
 
-        // myNextIsDoubleTests();
-        // myListMnemonicsTests();
-        // myCanFlowOffMapTests();
+        myNextIsDoubleTests();
+        myListMnemonicsTests();
+        myCanFlowOffMapTests();
         myMinDifferenceTest();
     }
 
