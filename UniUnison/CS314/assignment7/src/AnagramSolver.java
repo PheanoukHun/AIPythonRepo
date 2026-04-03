@@ -85,14 +85,11 @@ public class AnagramSolver {
 
         // Base Cases (Invalid Case, Successful Case)
         if (sInv.isEmpty()) {
-            results.add(currList);
-            return;
+            results.add(new ArrayList<>(currList));
         }
 
-        if (maxWords != 0 && )
-        
         // Recursive Case
-        else if (sInv.size() != 0 && maxWords != 0) {
+        else if (maxWords == 0 || currList.size() < maxWords) {
             for (int i = start; i < candidates.size(); i++) {
                 LetterInventory newInv = sInv.subtract(dictionary.get(candidates.get(i)));
                 if (newInv != null) {
@@ -101,7 +98,7 @@ public class AnagramSolver {
                     currList.add(candidates.get(i));
 
                     // Exploring
-                    getAnagramHeler(newInv, candidates, currList, results, maxWords - 1, i);
+                    getAnagramHeler(newInv, candidates, currList, results, maxWords, i);
 
                     // Unselecting
                     currList.remove(currList.size() - 1);
