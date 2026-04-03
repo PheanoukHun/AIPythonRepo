@@ -148,8 +148,8 @@ public class AnagramFinderTester {
     }
 
     private static void cs314StudentTestsForLetterInventory() {
-        // TODO: delete the above tests when you turn in your assignment
-        // TODO: add your LetterInventory tests
+        LetterInventory lInvent = new LetterInventory("");
+        
     }
 
     private static boolean getChoiceToDisplayAnagrams() {

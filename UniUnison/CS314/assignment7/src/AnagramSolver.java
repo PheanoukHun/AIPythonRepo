@@ -20,7 +20,6 @@ public class AnagramSolver {
 
     /*
      * pre: list != null
-     *
      * @param list Contains the words to form anagrams from.
      */
     public AnagramSolver(Set<String> dictionary) {
@@ -52,7 +51,12 @@ public class AnagramSolver {
 
     private void getAnagramHeler(LetterInventory sInv, int maxWords) {
         if (maxWords != 0 && sInv.size() != 0) {
-            
+            for (String word : dictionary) {
+                LetterInventory result = sInv.subtract(new LetterInventory(word));
+                if (result != null) {
+
+                }
+            }
         }
     }
 }
