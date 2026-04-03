@@ -31,5 +31,19 @@ public class LetterInventory {
         return numOccured[needed_char];
     }
 
-    
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size != 0;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < )
+
+        return sb.toString();
+    }
 }

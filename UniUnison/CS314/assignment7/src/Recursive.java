@@ -197,8 +197,8 @@ public class Recursive {
             for (int row = 0; row < NUM_SQUARES; row++) {
                 for (int col = 0; col < NUM_SQUARES; col++) {
                     if (!(row == 1 && col == 1)) {
-                        int newX = (int) (x + (newSize * row));
-                        int newY = (int) (y + (newSize * col));
+                        int newX = (int) (x + (newSize * col));
+                        int newY = (int) (y + (newSize * row));
                         drawSquares(g, newSize, limit, newX, newY);
                     }
                 }
@@ -326,17 +326,6 @@ public class Recursive {
 
                 min = Math.min(teams[i], min);
                 max = Math.max(teams[i], max);
-            }
-
-            for (int sum : teams) {
-
-                // Invalid Sum
-                if (sum == 0) {
-                    return Integer.MAX_VALUE;
-                }
-
-                min = Math.min(sum, min);
-                max = Math.max(sum, max);
             }
 
             return max - min;

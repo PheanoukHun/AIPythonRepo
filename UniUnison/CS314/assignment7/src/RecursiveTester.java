@@ -239,6 +239,5 @@ public class RecursiveTester {
         abilities = new int[] {5, 100, -100};
         results = Recursive.minDifference(2, abilities);
         printResults(testNum, results == 5, "Two Teams, 5 Diff, one Team is 0.");
-        System.out.println(results);
     }
 }
