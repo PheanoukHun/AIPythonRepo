@@ -10,8 +10,14 @@
  * UTEID 1: ph23434
  */
 
+/**
+ * This class represents an Inventory of all the english letters found inside a
+ * word. It stores the frequency of all letters from 'a' to 'z' (Case
+ * Insensitive).
+ */
 public class LetterInventory {
 
+    // Class Constants and Varaibles of the Class
     final int ALPHABET_SIZE = 26;
     int[] counts;
     int size;
@@ -42,11 +48,24 @@ public class LetterInventory {
         }
     }
 
+    /**
+     * Privte Constructor Method that takes in an already constructed frequency
+     * array and size.
+     * 
+     * @param counts - The frequency array for the new LetterInventory Object
+     * @param size   - The new size of the LetterInventory Object.
+     */
     private LetterInventory(int[] counts, int size) {
         this.counts = counts;
         this.size = size;
     }
 
+    /**
+     * Gets the Frequency at which the letter appears
+     * 
+     * @param needed_char - The char being requested, needs to be a English letter
+     * @return - The Number of times the char is found in the LetterInventory.
+     */
     public int get(char needed_char) {
 
         // Preconditions
@@ -57,14 +76,29 @@ public class LetterInventory {
         return counts[Character.toLowerCase(needed_char) - 'a'];
     }
 
+    /**
+     * Returns the Size of the LetterInventory
+     * 
+     * @return - Returns the Size of the LetterInventory
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Checks to See if the LetterInventory is Empty or Not
+     * 
+     * @return - Boolean Value based on the Emptiness of the LetterInventory.
+     */
     public boolean isEmpty() {
         return size == 0;
     }
 
+    /**
+     * Shows the String Representation of the LetterInventory.
+     * 
+     * @return - The String Representation of LetterInventory.
+     */
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < ALPHABET_SIZE; i++) {
@@ -75,6 +109,14 @@ public class LetterInventory {
         return sb.toString();
     }
 
+    /**
+     * Returns a new LetterInventory where the Frequency is the sum of both
+     * LetterInventory Objects Given to It.
+     * 
+     * @param other - The other LetterInventory Object that's frequency will be
+     *              added to the current LetterInventory Object. other != null
+     * @return - A new LetterFrquency Object that is the sum of both objects.
+     */
     public LetterInventory add(LetterInventory other) {
 
         // Precondition
@@ -82,6 +124,7 @@ public class LetterInventory {
             throw new IllegalArgumentException("the Other Inventory cannot be null");
         }
 
+        // New LetterInventory Object
         int[] newCounts = new int[ALPHABET_SIZE];
         int newSize = 0;
 
