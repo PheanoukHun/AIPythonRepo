@@ -83,10 +83,13 @@ public class AnagramSolver {
     private void getAnagramHeler(LetterInventory sInv, List<String> candidates,
             List<String> currList, List<List<String>> results, int maxWords, int start) {
 
-        // Base Case (Implicit Invalid Case (Ignored), Successful Case)
-        if (sInv.isEmpty() && (maxWords == 0 || maxWords <= currList.size())) {
+        // Base Cases (Invalid Case, Successful Case)
+        if (sInv.isEmpty()) {
             results.add(currList);
-        } 
+            return;
+        }
+
+        if (maxWords != 0 && )
         
         // Recursive Case
         else if (sInv.size() != 0 && maxWords != 0) {
