@@ -16,7 +16,7 @@ import java.util.Set;
 
 public class AnagramSolver {
 
-    private Set<String> dictionary;
+    private final Set<String> dictionary;
 
     /*
      * pre: list != null
