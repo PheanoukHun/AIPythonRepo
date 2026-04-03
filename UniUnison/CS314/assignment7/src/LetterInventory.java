@@ -26,7 +26,7 @@ public class LetterInventory {
         word = word.toLowerCase();
         counts = new int[ALPHABET_SIZE];
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < word.length(); i++) {
             char currChar = word.charAt(i);
             if ('a' <= currChar && currChar <= 'z') {
                 counts[currChar - 'a']++;
@@ -47,7 +47,7 @@ public class LetterInventory {
             throw new IllegalArgumentException("Argument is not an Alphabetical Character");
         }
         
-        return counts[Character.toLowerCase(needed_char)];
+        return counts[Character.toLowerCase(needed_char) - 'a'];
     }
 
     public int size() {
@@ -60,13 +60,11 @@ public class LetterInventory {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-
         for (int i = 0; i < ALPHABET_SIZE; i++) {
             for (int j = 0; j < counts[i]; j++) {
                 sb.append((char) ('a' + i));
             }
         }
-
         return sb.toString();
     }
 
