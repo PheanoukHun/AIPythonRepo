@@ -66,13 +66,23 @@ public class AnagramSolver {
         List<List<String>> results = new ArrayList<>();
 
         // Solve Anagrams
-        getAnagramHeler(sInv, candidates, results, maxWords);
+        getAnagramHeler(sInv, candidates, results, maxWords, new ArrayList<>());
         return results;
     }
 
     private void getAnagramHeler(LetterInventory sInv, ArrayList<LetterInventory> candidates,
-            List<List<String>> results, int maxWords, ArrayList<String>) {
+            List<List<String>> results, int maxWords, ArrayList<String> currList) {
         
+        // Base Case (Invalid, Successful)
+        if (sInv.size() == 0 && maxWords == 0) {
+
+        } else if (sInv.size() == 0 && maxWords != 0) {
+
+        } else {
+            for (LetterInventory currCand : candidates) {
+                
+            }
+        }
         
 
 
