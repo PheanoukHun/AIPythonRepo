@@ -41,13 +41,13 @@ public class LetterInventory {
     }
 
     public int get(char needed_char) {
-        
+
         // Preconditions
-        if ('a' >= needed_char || needed_char >= 'z') {
+        if (!Character.isLetter(needed_char)) {
             throw new IllegalArgumentException("Argument is not an Alphabetical Character");
         }
         
-        return counts[needed_char];
+        return counts[Character.toLowerCase(needed_char)];
     }
 
     public int size() {
