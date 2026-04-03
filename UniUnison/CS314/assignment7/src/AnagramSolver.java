@@ -10,7 +10,7 @@
  * UTEID 1: ph23434
  */
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -20,6 +20,7 @@ public class AnagramSolver {
 
     /*
      * pre: list != null
+     * 
      * @param list Contains the words to form anagrams from.
      */
     public AnagramSolver(Set<String> dictionary) {
@@ -39,17 +40,23 @@ public class AnagramSolver {
      */
     public List<List<String>> getAnagrams(String s, int maxWords) {
 
-        LetterInventory sInv = new LetterInventory(s);
-
-        if (maxWords < 0 || sInv.size() == 0) {
+        
+        // Preconditions
+        if (maxWords < 0 || s.contains(s)) {
             throw new IllegalArgumentException("Word must have At Least one English Character"
-                    + " and Max Word must be >0.");
+            + " and Max Word must be >0.");
         }
+        
+        LetterInventory sInv = new LetterInventory(s);
+        ArrayList<String> candidates = getCandidates(sInv, new ArrayList<>(dictionary));
+        List<List<String>> results = new ArrayList<>();
 
-        return null; // TODO: Change as necessary
+        getAnagramHeler(sInv, candidates, results, maxWords);
+        return results;
     }
 
-    private void getAnagramHeler(LetterInventory sInv, int maxWords) {
+    private void getAnagramHeler(LetterInventory sInv, ArrayList<String> candidates,
+            List<List<String>> results, int maxWords) {
         if (maxWords != 0 && sInv.size() != 0) {
             for (String word : dictionary) {
                 LetterInventory result = sInv.subtract(new LetterInventory(word));
@@ -60,5 +67,8 @@ public class AnagramSolver {
         }
     }
 
-    private ArrayList<String> currentCandidates(LetterInventory sInv, )
+    private ArrayList<String> getCandidates(LetterInventory sInv, ArrayList<String> pastCand) {
+
+        return null;
+    }
 }
