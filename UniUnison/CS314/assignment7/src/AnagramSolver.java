@@ -70,17 +70,20 @@ public class AnagramSolver {
         return results;
     }
 
-    private void getAnagramHeler(LetterInventory sInv, ArrayList<LetterInventory> candidates,
+    private boolean getAnagramHeler(LetterInventory sInv, ArrayList<LetterInventory> candidates,
             List<List<String>> results, int maxWords, ArrayList<String> currList) {
         
         // Base Case (Invalid, Successful)
         if (sInv.size() == 0 && maxWords == 0) {
-
+            return true;
         } else if (sInv.size() == 0 && maxWords != 0) {
 
         } else {
             for (LetterInventory currCand : candidates) {
-                
+                LetterInventory currInventory = sInv.subtract(currCand);
+                if (currInventory != null) {
+
+                }
             }
         }
         
