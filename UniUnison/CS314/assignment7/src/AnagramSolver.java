@@ -10,12 +10,15 @@
  * UTEID 1: ph23434
  */
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Set;
 
 public class AnagramSolver {
@@ -81,13 +84,15 @@ public class AnagramSolver {
     }
 
     /**
-     * A private helper method used to create 
-     * @param sInv
-     * @param candidates
-     * @param currList
-     * @param results
-     * @param maxWords
-     * @param start
+     * A private helper method used to create that builds anagrams one word at a
+     * time. Using the Recursive Method of to Select, Explore, and Unselect.
+     * 
+     * @param sInv - The remaining unused letters from the original word.
+     * @param candidates - An ArrayList of all the candidates words from the dictionary.
+     * @param currList - The current potential Anagram Entry
+     * @param results - The List of all the Anagram Entries
+     * @param maxWords - The Max Number of Words an Anagram can Have
+     * @param start - The Starting Index the Helper method should start from.
      */
     private void getAnagramHeler(LetterInventory sInv, List<String> candidates,
             List<String> currList, List<List<String>> results, int maxWords, int start) {
@@ -122,7 +127,7 @@ public class AnagramSolver {
      * comapareTo Method found in String.
      */
     private static class AnagramComparator implements Comparator<List<String>> {
-        
+
         /**
          * The Method used to Compare the two Annagram Entries
          * 
