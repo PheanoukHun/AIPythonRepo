@@ -31,7 +31,9 @@ public class AnagramFinderTester {
      * @param args Not used.
      */
     public static void main(String[] args) {
-
+        LetterInventory inv = new LetterInventory("Hello World");
+        Object expected = "dehllloo";
+        Object actual = "";
     }
 
     private static boolean showTestResults(Object expected, Object actual,
