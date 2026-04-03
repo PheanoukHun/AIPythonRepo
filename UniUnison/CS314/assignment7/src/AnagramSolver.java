@@ -19,7 +19,7 @@ import java.util.Set;
 
 public class AnagramSolver {
 
-    private final Set<String> dictionary;
+    private final Map<String, LetterInventory> dictionary;
 
     /*
      * pre: list != null
@@ -32,7 +32,10 @@ public class AnagramSolver {
             throw new IllegalArgumentException("Dictionary Cannot Equal Null.");
         }
 
-        this.dictionary = dictionary;
+        this.dictionary = new HashMap<>();
+        for (String word : dictionary) {
+            this.dictionary.put(word, new LetterInventory(word));
+        }
     }
 
     /*
@@ -57,35 +60,32 @@ public class AnagramSolver {
                     + " inside the word.");
         }
 
-        // Get Candidates and Creates a Result
-
-        Map<String, LetterInventory> candidates = new HashMap<>();
-
-        for (String candidate : dictionary) {
-            candidates.put(candidate, new LetterInventory(candidate));
+        // Get Candidates and Creates a Result List
+        List<List<String>> results = new ArrayList<>();
+        List<String> candidates = new ArrayList<>();
+        
+        for (String word : dictionary.keySet()) {
+            if (sInv.subtract(dictionary.get(word)) != null) {
+                candidates.add(word);
+            }
         }
 
-        candidates = getCandidates(sInv, candidates);
-        List<List<String>> results = new ArrayList<>();
-
         // Solve Anagrams
-        getAnagramHeler(sInv, candidates, results, maxWords, new ArrayList<>());
+        getAnagramHeler(sInv, candidates, new ArrayList<>(), results, maxWords, 0);
         return results;
     }
 
-    private void getAnagramHeler(LetterInventory sInv, Map<String, LetterInventory> candidates,
-            List<List<String>> results, int maxWords, ArrayList<String> currList) {
+    private void getAnagramHeler(LetterInventory sInv, List<String> candidates,
+            List<String> currList, List<List<String>> results, int maxWords, int start) {
 
         // Base Case (Invalid, Successful)
         if (sInv.size() == 0 && maxWords == 0) {
-            results.add();
+            results.add(currList);
         } else if (sInv.size() == 0 && maxWords != 0) {
 
         } else {
-            for (String currCand : candidates.keySet()) {
-                LetterInventory currInventory = sInv.subtract(candidates.get(currCand));
-                Map<String, LetterInventory> newCands = getCandidates(sInv, candidates);
-                getAnagramHeler(currInventory, newCands, results, maxWords - 1, currList);
+            for (int i = start; i < candidates.size(); i++) {
+                
             }
         }
 
@@ -94,30 +94,23 @@ public class AnagramSolver {
         }
     }
 
-    /**
-     * 
-     * @param sInv
-     * @param pastCand
-     */
-    private Map<String, LetterInventory> getCandidates(LetterInventory sInv,
-            Map<String, LetterInventory> pastCand) {
-
-        Map<String, LetterInventory> newCands = new HashMap<>();
-
-        for (String currInventory : pastCand.keySet()) {
-            if (sInv.subtract(pastCand.get(currInventory)) != null) {
-                newCands.put(currInventory, pastCand.get(currInventory));
-            }
-        }
-
-        return newCands;
-    }
-
     private static class AnagramComparator implements Comparator<List<String>> {
         public int compare(List<String> listOne, List<String> listTwo) {
+
+            // Comparing Size
             if (listOne.size() != listTwo.size()) {
                 return listOne.size() - listTwo.size();
             }
+
+            // Comparing Elements
+            for (int i = 0; i < listOne.size(); i++) {
+                int compared = listOne.get(i).compareTo(listTwo.get(i));
+                if (compared != 0) {
+                    return compared;
+                }
+            }
+
+            return 0;
         }
     }
 }
