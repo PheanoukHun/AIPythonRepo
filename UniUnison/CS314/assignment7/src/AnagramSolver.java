@@ -40,35 +40,57 @@ public class AnagramSolver {
      */
     public List<List<String>> getAnagrams(String s, int maxWords) {
 
-        
-        // Preconditions
-        if (maxWords < 0 || s.contains(s)) {
-            throw new IllegalArgumentException("Word must have At Least one English Character"
-            + " and Max Word must be >0.");
+        // Preconditions Part 1
+        if (maxWords < 0 || s == null) {
+            throw new IllegalArgumentException("Word cannot be null and Max Word must be >0.");
         }
-        
+
+        // Get Letter Inventory for current Word
         LetterInventory sInv = new LetterInventory(s);
-        ArrayList<String> candidates = getCandidates(sInv, new ArrayList<>(dictionary));
+
+        // Preconditions Part 2
+        if (sInv.size() == 0) {
+            throw new IllegalArgumentException("There must be at least one English letter"
+                    + " inside the word.");
+        }
+
+        // Get Candidates and Creates a Result
+
+        ArrayList<LetterInventory> candidates = new ArrayList<>();
+        
+        for (String candidate : dictionary) {
+            candidates.add(new LetterInventory(candidate));
+        }
+
+        getCandidates(sInv, candidates);
         List<List<String>> results = new ArrayList<>();
 
+        // Solve Anagrams
         getAnagramHeler(sInv, candidates, results, maxWords);
         return results;
     }
 
-    private void getAnagramHeler(LetterInventory sInv, ArrayList<String> candidates,
-            List<List<String>> results, int maxWords) {
-        if (maxWords != 0 && sInv.size() != 0) {
-            for (String word : dictionary) {
-                LetterInventory result = sInv.subtract(new LetterInventory(word));
-                if (result != null) {
+    private void getAnagramHeler(LetterInventory sInv, ArrayList<LetterInventory> candidates,
+            List<List<String>> results, int maxWords, ArrayList<String>) {
+        
+        
 
-                }
-            }
+
+        if (maxWords != 0 && sInv.size() != 0 && candidates.size() != 0) {
+            
         }
     }
 
-    private ArrayList<String> getCandidates(LetterInventory sInv, ArrayList<String> pastCand) {
-
-        return null;
+    /**
+     * 
+     * @param sInv
+     * @param pastCand
+     */
+    private void getCandidates(LetterInventory sInv, ArrayList<LetterInventory> pastCand) {
+        for (LetterInventory currInventory : pastCand) {
+            if (sInv.subtract(currInventory) != null) {
+                pastCand.remove(currInventory);                
+            }
+        }
     }
 }
