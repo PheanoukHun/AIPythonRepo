@@ -38,6 +38,7 @@ public class AnagramFinderTester {
         LItoString();
         LIAdd();
         LISubtract();
+        LIEquals();
     }
 
     private static void LIConstructor() {
@@ -89,7 +90,7 @@ public class AnagramFinderTester {
         inv = new LetterInventory("aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ");
         expected = 52;
         actual = inv.size();
-        showTestResults(expected, actual, 2, "Size == 26 with all alphabets upper and lower.");
+        showTestResults(expected, actual, 2, "Size == 52 with all alphabets upper and lower.");
     }
 
     private static void LIEmpty() {
@@ -130,14 +131,13 @@ public class AnagramFinderTester {
 
         // Test 1
         LetterInventory inv = new LetterInventory("qwertyuiopasdfghjklzxcvbnm");
-        Object expected = true;
-        Object actual = inv.equals(new LetterInventory(""));
+        Object expected = inv;
+        Object actual = inv.add(new LetterInventory(""));
         showTestResults(expected, actual, 1, "Testing Adding an Empty Inventory.");
 
         // Test 2
-        inv = new LetterInventory("");
-        LetterInventory inv2 = new LetterInventory("qwertyuiopasdfghjklzxcvbnm");
-        actual = inv.add(inv2).equals(inv2);
+        LetterInventory inv2 = new LetterInventory("");
+        actual = inv2.add(inv);
         showTestResults(expected, actual, 2, "Testing Adding to an Empty Inventory");
     }
 
@@ -146,15 +146,33 @@ public class AnagramFinderTester {
 
         // Test 1
         LetterInventory inv = new LetterInventory("qwertyuiopasdfghjklzxcvbnm");
-        Object expected = true;
-        Object actual = inv.equals(new LetterInventory(""));
-        showTestResults(expected, actual, 1, "Testing Adding an Empty Inventory.");
+        Object expected = inv;
+        Object actual = inv.subtract(new LetterInventory(""));
+        showTestResults(expected, actual, 1, "Testing Subtracting using an Empty Inventory.");
 
         // Test 2
         inv = new LetterInventory("");
         LetterInventory inv2 = new LetterInventory("qwertyuiopasdfghjklzxcvbnm");
-        actual = inv.add(inv2).equals(inv2);
+        expected = null;
+        actual = inv.subtract(inv2);
         showTestResults(expected, actual, 2, "Testing Adding to an Empty Inventory");
+    }
+
+    private static void LIEquals() {
+        
+        System.out.println("\nSubtract Method Test: \n");
+
+        // Test 1
+        LetterInventory inv = new LetterInventory("qwertyuiopasdfghjklzxcvbnm");
+        Object expected = false;
+        Object actual = inv.equals(new LetterInventory(""));
+        showTestResults(expected, actual, 1, "Testing Equals using an Empty Inventory.");
+
+        // Test 2
+        inv = new LetterInventory("qwertyuiopasdfghjklzxcvbnm");
+        expected = false;
+        actual = inv.equals(new ArrayList<>());
+        showTestResults(expected, actual, 2, "Testing Equals using an ArrayList Inventory.");
     }
 
     private static boolean showTestResults(Object expected, Object actual,
