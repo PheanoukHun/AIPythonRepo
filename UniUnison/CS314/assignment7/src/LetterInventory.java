@@ -34,6 +34,11 @@ public class LetterInventory {
         }
     }
 
+    private LetterInventory(int[] counts, int size) {
+        this.counts = counts;
+        this.size = size;
+    }
+
     public int get(char needed_char) {
         
         // Preconditions
@@ -68,9 +73,32 @@ public class LetterInventory {
         
         // Precondition
         if (other == null) {
-            throw new IllegalArgumentException("Adding the Other Inventory cannot be null");
+            throw new IllegalArgumentException("the Other Inventory cannot be null");
         }
 
-        for 
+        int[] newCounts = new int[ALPHABET_SIZE];
+        int newSize = 0;
+
+        for (int i = 0; i < ALPHABET_SIZE; i++) {
+            newCounts[i] = this.counts[i] + other.counts[i];
+            newSize += newCounts[i];
+        }
+
+        return new LetterInventory(newCounts, newSize);
+    }
+
+    public LetterInventory subtract(LetterInventory other) {
+
+        // Precondition
+        if (other == null) {
+            throw new IllegalArgumentException("the Other Inventory cannot be null.");
+        }
+        
+        int[] newCounts = new int[ALPHABET_SIZE];
+        int newSize = 0;
+
+        
+
+        return new LetterInventory(newCounts, newSize);
     }
 }
