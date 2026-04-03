@@ -15,13 +15,20 @@ import java.util.Set;
 
 public class AnagramSolver {
 
+    private Set<String> dictionary;
+
     /*
      * pre: list != null
      *
      * @param list Contains the words to form anagrams from.
      */
     public AnagramSolver(Set<String> dictionary) {
-        // TODO: add your code here
+
+        if (dictionary == null) {
+            throw new IllegalArgumentException("Dictionary Cannot Equal Null.");
+        }
+
+        this.dictionary = dictionary;
     }
 
     /*
@@ -31,10 +38,14 @@ public class AnagramSolver {
      * pre: maxWords >= 0, s != null, s contains at least one English letter.
      */
     public List<List<String>> getAnagrams(String s, int maxWords) {
-        return null; // TODO: Change as necessary
-    }
 
-    private List<String> getSetAnagrams(String s) {
-        
+        LetterInventory sInv = new LetterInventory(s);
+
+        if (maxWords < 0 || sInv.size() == 0) {
+            throw new IllegalArgumentException("Word must have At Least one English Character"
+                    + " and Max Word must be >0.");
+        }
+
+        return null; // TODO: Change as necessary
     }
 }

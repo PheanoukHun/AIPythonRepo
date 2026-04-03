@@ -16,6 +16,13 @@ public class LetterInventory {
     int[] counts;
     int size;
 
+    /**
+     * Public Constructor that takes in a Word and Generate a Frequency Array Based
+     * on the Word. It will only take in the characters that letters and no other
+     * characters.
+     * 
+     * @param word - A String of Letters and Any other Characters
+     */
     public LetterInventory(String word) {
 
         // Preconditions
@@ -46,7 +53,7 @@ public class LetterInventory {
         if (!Character.isLetter(needed_char)) {
             throw new IllegalArgumentException("Argument is not an Alphabetical Character");
         }
-        
+
         return counts[Character.toLowerCase(needed_char) - 'a'];
     }
 
@@ -69,7 +76,7 @@ public class LetterInventory {
     }
 
     public LetterInventory add(LetterInventory other) {
-        
+
         // Precondition
         if (other == null) {
             throw new IllegalArgumentException("the Other Inventory cannot be null");
@@ -92,7 +99,7 @@ public class LetterInventory {
         if (other == null) {
             throw new IllegalArgumentException("the Other Inventory cannot be null.");
         }
-        
+
         int[] newCounts = new int[ALPHABET_SIZE];
         int newSize = 0;
 
@@ -108,11 +115,11 @@ public class LetterInventory {
     }
 
     public boolean equals(Object other) {
-        
+
         if (this == other) {
             return true;
         }
-        
+
         if (!(other instanceof LetterInventory)) {
             return false;
         }
