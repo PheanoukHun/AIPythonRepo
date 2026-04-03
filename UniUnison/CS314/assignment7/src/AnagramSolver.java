@@ -34,5 +34,7 @@ public class AnagramSolver {
         return null; // TODO: Change as necessary
     }
 
-    private 
+    private List<String> getSetAnagrams(String s) {
+        
+    }
 }
