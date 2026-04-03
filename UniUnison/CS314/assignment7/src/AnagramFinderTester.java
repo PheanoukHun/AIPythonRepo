@@ -109,6 +109,54 @@ public class AnagramFinderTester {
         showTestResults(expected, actual, 2, "Test isEmpty with Non-Empty LetterInventory");
     }
 
+    private static void LItoString() {
+        System.out.println("\ntoString Test: \n");
+
+        // Test 1
+        LetterInventory inv = new LetterInventory("");
+        Object expected = "";
+        Object actual = inv.toString();
+        showTestResults(expected, actual, 1, "Empty to String");
+
+        // Test 2
+        inv = new LetterInventory("Hello World");
+        expected = "dehllloorw";
+        actual = inv.toString();
+        showTestResults(expected, actual, 2, "Test toString with real words");
+    }
+
+    private static void LIAdd() {
+        System.out.println("\nAdd Method Test: \n");
+
+        // Test 1
+        LetterInventory inv = new LetterInventory("qwertyuiopasdfghjklzxcvbnm");
+        Object expected = true;
+        Object actual = inv.equals(new LetterInventory(""));
+        showTestResults(expected, actual, 1, "Testing Adding an Empty Inventory.");
+
+        // Test 2
+        inv = new LetterInventory("");
+        LetterInventory inv2 = new LetterInventory("qwertyuiopasdfghjklzxcvbnm");
+        actual = inv.add(inv2).equals(inv2);
+        showTestResults(expected, actual, 2, "Testing Adding to an Empty Inventory");
+    }
+
+    private static void LISubtract() {
+        System.out.println("\nSubtract Method Test: \n");
+
+        // Test 1
+        LetterInventory inv = new LetterInventory("qwertyuiopasdfghjklzxcvbnm");
+        Object expected = true;
+        Object actual = inv.equals(new LetterInventory(""));
+        showTestResults(expected, actual, 1, "Testing Adding an Empty Inventory.");
+
+        // Test 2
+        inv = new LetterInventory("");
+        LetterInventory inv2 = new LetterInventory("qwertyuiopasdfghjklzxcvbnm");
+        actual = inv.add(inv2).equals(inv2);
+        showTestResults(expected, actual, 2, "Testing Adding to an Empty Inventory");
+    }
+
     private static boolean showTestResults(Object expected, Object actual,
             int testNum, String featureTested) {
 
