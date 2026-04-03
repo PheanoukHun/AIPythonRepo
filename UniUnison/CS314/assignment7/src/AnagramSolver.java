@@ -13,6 +13,7 @@
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -70,27 +71,39 @@ public class AnagramSolver {
             }
         }
 
+        Collections.sort(candidates);
+
         // Solve Anagrams
         getAnagramHeler(sInv, candidates, new ArrayList<>(), results, maxWords, 0);
+        Collections.sort(results, new AnagramComparator());
+
         return results;
     }
 
     private void getAnagramHeler(LetterInventory sInv, List<String> candidates,
             List<String> currList, List<List<String>> results, int maxWords, int start) {
 
-        // Base Case (Invalid, Successful)
-        if (sInv.size() == 0 && maxWords == 0) {
+        // Base Case (Implicit Invalid Case (Ignored), Successful Case)
+        if (sInv.isEmpty() && (maxWords == 0 || maxWords <= currList.size())) {
             results.add(currList);
-        } else if (sInv.size() == 0 && maxWords != 0) {
-
-        } else {
+        } 
+        
+        // Recursive Case
+        else if (sInv.size() != 0 && maxWords != 0) {
             for (int i = start; i < candidates.size(); i++) {
-                
+                LetterInventory newInv = sInv.subtract(dictionary.get(candidates.get(i)));
+                if (newInv != null) {
+                    
+                    // Selecting
+                    currList.add(candidates.get(i));
+
+                    // Exploring
+                    getAnagramHeler(newInv, candidates, currList, results, maxWords - 1, i);
+
+                    // Unselecting
+                    currList.remove(currList.size() - 1);
+                }
             }
-        }
-
-        if (maxWords != 0 && sInv.size() != 0 && candidates.size() != 0) {
-
         }
     }
 
