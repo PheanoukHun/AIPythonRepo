@@ -107,6 +107,9 @@ public class AnagramSolver {
         }
     }
 
+    /**
+     * 
+     */
     private static class AnagramComparator implements Comparator<List<String>> {
         public int compare(List<String> listOne, List<String> listTwo) {
 
