@@ -10,6 +10,7 @@
  * UTEID 1: ph23434
  */
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -47,5 +48,11 @@ public class AnagramSolver {
         }
 
         return null; // TODO: Change as necessary
+    }
+
+    private void getAnagramHeler(LetterInventory sInv, int maxWords) {
+        if (maxWords != 0 && sInv.size() != 0) {
+            
+        }
     }
 }
