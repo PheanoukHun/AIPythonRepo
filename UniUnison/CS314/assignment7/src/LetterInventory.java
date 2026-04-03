@@ -12,23 +12,36 @@
 
 public class LetterInventory {
 
-    int[] numOccured;
     final int ALPHABET_SIZE = 26;
+    int[] counts;
     int size;
 
     public LetterInventory(String word) {
-        numOccured = new int[ALPHABET_SIZE];
-        size = word.length();
+
+        // Preconditions
+        if (word == null) {
+            throw new IllegalArgumentException("Word Cannot be Null.");
+        }
+
+        counts = new int[ALPHABET_SIZE];
+
         for (int i = 0; i < size; i++) {
             char currChar = word.charAt(i);
             if ('a' <= currChar && currChar <= 'z') {
-                numOccured[currChar - 'a']++;
+                counts[currChar - 'a']++;
+                size++;
             }
         }
     }
 
-    public int getFrequency(char needed_char) {
-        return numOccured[needed_char];
+    public int get(char needed_char) {
+        
+        // Preconditions
+        if ('a' <= needed_char && needed_char <= 'z') {
+            throw new IllegalArgumentException("Argument is not an Alphabetical Character");
+        }
+        
+        return counts[needed_char];
     }
 
     public int size() {
@@ -36,14 +49,28 @@ public class LetterInventory {
     }
 
     public boolean isEmpty() {
-        return size != 0;
+        return size == 0;
     }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < )
+        for (int i = 0; i < ALPHABET_SIZE; i++) {
+            for (int j = 0; j < counts[i]; j++) {
+                sb.append((char) ('a' + i));
+            }
+        }
 
         return sb.toString();
+    }
+
+    public LetterInventory add(LetterInventory other) {
+        
+        // Precondition
+        if (other == null) {
+            throw new IllegalArgumentException("Adding the Other Inventory cannot be null");
+        }
+
+        for 
     }
 }
