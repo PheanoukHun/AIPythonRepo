@@ -49,7 +49,7 @@ public class AnagramSolver {
         return null; // TODO: Change as necessary
     }
 
-    private void getAnagramHeler(LetterInventory sInv, int maxWords) {
+    private void getAnagramHeler(LetterInventory sInv, int maxWords, ) {
         if (maxWords != 0 && sInv.size() != 0) {
             for (String word : dictionary) {
                 LetterInventory result = sInv.subtract(new LetterInventory(word));
