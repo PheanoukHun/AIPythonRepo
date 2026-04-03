@@ -10,7 +10,10 @@
  * UTEID 1: ph23434
  */
 
+import java.util.Map;
+import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -56,13 +59,13 @@ public class AnagramSolver {
 
         // Get Candidates and Creates a Result
 
-        ArrayList<LetterInventory> candidates = new ArrayList<>();
-        
+        Map<String, LetterInventory> candidates = new HashMap<>();
+
         for (String candidate : dictionary) {
-            candidates.add(new LetterInventory(candidate));
+            candidates.put(candidate, new LetterInventory(candidate));
         }
 
-        getCandidates(sInv, candidates);
+        candidates = getCandidates(sInv, candidates);
         List<List<String>> results = new ArrayList<>();
 
         // Solve Anagrams
@@ -70,27 +73,24 @@ public class AnagramSolver {
         return results;
     }
 
-    private boolean getAnagramHeler(LetterInventory sInv, ArrayList<LetterInventory> candidates,
+    private void getAnagramHeler(LetterInventory sInv, Map<String, LetterInventory> candidates,
             List<List<String>> results, int maxWords, ArrayList<String> currList) {
-        
+
         // Base Case (Invalid, Successful)
         if (sInv.size() == 0 && maxWords == 0) {
-            return true;
+            results.add();
         } else if (sInv.size() == 0 && maxWords != 0) {
 
         } else {
-            for (LetterInventory currCand : candidates) {
-                LetterInventory currInventory = sInv.subtract(currCand);
-                if (currInventory != null) {
-
-                }
+            for (String currCand : candidates.keySet()) {
+                LetterInventory currInventory = sInv.subtract(candidates.get(currCand));
+                Map<String, LetterInventory> newCands = getCandidates(sInv, candidates);
+                getAnagramHeler(currInventory, newCands, results, maxWords - 1, currList);
             }
         }
-        
-
 
         if (maxWords != 0 && sInv.size() != 0 && candidates.size() != 0) {
-            
+
         }
     }
 
@@ -99,10 +99,24 @@ public class AnagramSolver {
      * @param sInv
      * @param pastCand
      */
-    private void getCandidates(LetterInventory sInv, ArrayList<LetterInventory> pastCand) {
-        for (LetterInventory currInventory : pastCand) {
-            if (sInv.subtract(currInventory) != null) {
-                pastCand.remove(currInventory);                
+    private Map<String, LetterInventory> getCandidates(LetterInventory sInv,
+            Map<String, LetterInventory> pastCand) {
+
+        Map<String, LetterInventory> newCands = new HashMap<>();
+
+        for (String currInventory : pastCand.keySet()) {
+            if (sInv.subtract(pastCand.get(currInventory)) != null) {
+                newCands.put(currInventory, pastCand.get(currInventory));
+            }
+        }
+
+        return newCands;
+    }
+
+    private static class AnagramComparator implements Comparator<List<String>> {
+        public int compare(List<String> listOne, List<String> listTwo) {
+            if (listOne.size() != listTwo.size()) {
+                return listOne.size() - listTwo.size();
             }
         }
     }
