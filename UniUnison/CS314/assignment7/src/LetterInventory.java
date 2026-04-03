@@ -136,6 +136,16 @@ public class LetterInventory {
         return new LetterInventory(newCounts, newSize);
     }
 
+    /**
+     * Returns a new LetterInventory where the Frequency is the difference of both
+     * LetterInventory Objects Given to It. Returns null if the difference of one of
+     * the letter is less than 0.
+     * 
+     * @param other - The other LetterInventory Object that's frequency will be
+     *              added to the current LetterInventory Object. other != null
+     * @return - A new LetterFrquency Object that is the sum of both objects.
+     *         Returns null if the difference of one of the letter is less than 0.
+     */
     public LetterInventory subtract(LetterInventory other) {
 
         // Precondition
@@ -143,6 +153,7 @@ public class LetterInventory {
             throw new IllegalArgumentException("the Other Inventory cannot be null.");
         }
 
+        // New LetterInventory Object
         int[] newCounts = new int[ALPHABET_SIZE];
         int newSize = 0;
 
@@ -157,16 +168,27 @@ public class LetterInventory {
         return new LetterInventory(newCounts, newSize);
     }
 
+    /**
+     * Returns a Boolean value that states whether this and the Other object are
+     * equal to each other or not.
+     * 
+     * @param other - The other LetterInventory Object that is being comapred to.
+     * @return - A Boolean Value that Shows Whether two LetterInventory Objects are
+     *         the Same or Not.
+     */
     public boolean equals(Object other) {
 
+        // Same Object
         if (this == other) {
             return true;
         }
 
+        // Check Class
         if (!(other instanceof LetterInventory)) {
             return false;
         }
 
+        // Check Each Element
         LetterInventory otherLet = (LetterInventory) other;
 
         if (this.size != otherLet.size) {
