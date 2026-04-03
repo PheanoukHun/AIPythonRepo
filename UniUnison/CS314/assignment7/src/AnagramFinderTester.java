@@ -31,15 +31,49 @@ public class AnagramFinderTester {
      * @param args Not used.
      */
     public static void main(String[] args) {
+        LIConstructor();
+        LIGet();
+    }
+
+    private static void LIConstructor() {
+        
+        System.out.println("\nConstructor Test:\n");
+        
+        // Test 1
+        Object expected = "dehllloorw";
         LetterInventory inv = new LetterInventory("Hello World");
-        Object expected = "dehllloo";
-        Object actual = "";
+        Object actual = inv.toString();
+        showTestResults(expected, actual, 1, "Two Words One Space");
+
+        // Test 2
+        System.out.println();
+        expected = "";
+        inv = new LetterInventory("");
+        actual = inv.toString();
+        showTestResults(expected, actual, 2, "Empty Word");
+    }
+
+    private static void LIGet() {
+
+        System.out.println("\nGet Test: \n");
+
+        // Test 1
+        LetterInventory inv = new LetterInventory("");
+        Object expected = 0;
+        Object actual = inv.get('a');
+        showTestResults(expected, actual, 1, "Empty List Get");
+
+        // Test 2
+        inv = new LetterInventory("aaaaaaaaaaaaaaaaaaaaaabbbez");
+        expected = 1;
+        actual = inv.get('z');
+        showTestResults(expected, actual, 2, "")
     }
 
     private static boolean showTestResults(Object expected, Object actual,
             int testNum, String featureTested) {
 
-        System.out.println("Test Number " + testNum + " testing "
+        System.out.println("Test Number " + testNum + " testing: "
                 + featureTested);
         System.out.println("Expected result: " + expected);
         System.out.println("Actual result: " + actual);
@@ -51,37 +85,6 @@ public class AnagramFinderTester {
             System.out.println("!!! FAILED TEST !!! " + testNum);
         }
         System.out.println();
-        return passed;
-    }
-
-    // determine if the test passed or failed
-    private static boolean checkPassOrFailTest(TestCase currentTest,
-            List<List<String>> actualAnagrams) {
-
-        boolean passed = true;
-        System.out.println();
-        System.out.println("Test number: " + currentTest.testCaseNumber);
-        System.out.println("Phrase: " + currentTest.phrase);
-        System.out.println("Word limit: " + currentTest.maxWords);
-        System.out.println("Expected Number of Anagrams: "
-                + currentTest.anagrams.size());
-        if (actualAnagrams.equals(currentTest.anagrams)) {
-            System.out.println("Passed Test");
-        } else {
-            System.out.println("\n!!! FAILED TEST CASE !!!");
-            System.out.println("Recall MAXWORDS = 0 means no limit.");
-            System.out.println("Expected number of anagrams: "
-                    + currentTest.anagrams.size());
-            System.out.println("Actual number of anagrams:   "
-                    + actualAnagrams.size());
-            if (currentTest.anagrams.size() == actualAnagrams.size()) {
-                System.out.println("Sizes the same, "
-                        + "but either a difference in anagrams or"
-                        + " anagrams not in correct order.");
-            }
-            System.out.println();
-            passed = false;
-        }
         return passed;
     }
 }
