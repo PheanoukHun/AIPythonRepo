@@ -23,6 +23,7 @@ public class LetterInventory {
             throw new IllegalArgumentException("Word Cannot be Null.");
         }
 
+        word = word.toLowerCase();
         counts = new int[ALPHABET_SIZE];
 
         for (int i = 0; i < size; i++) {
@@ -42,7 +43,7 @@ public class LetterInventory {
     public int get(char needed_char) {
         
         // Preconditions
-        if ('a' <= needed_char && needed_char <= 'z') {
+        if ('a' >= needed_char || needed_char >= 'z') {
             throw new IllegalArgumentException("Argument is not an Alphabetical Character");
         }
         
