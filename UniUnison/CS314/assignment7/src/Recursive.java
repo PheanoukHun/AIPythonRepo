@@ -52,12 +52,12 @@ public class Recursive {
     }
 
     /**
-     * Helper Method to 
+     * Helper Method to count the number of sequences in which the next number is doubled.
      * 
-     * @param start
-     * @param end
-     * @param data
-     * @return
+     * @param start - The Starting Index Value
+     * @param end - The Ending Index Value
+     * @param data - The Array, it has to Recurse Over
+     * @return - The Count of the number of Int Doubles
      */
     private static int twoIntsAreDouble(int start, int end, int[] data) {
 
