@@ -90,10 +90,11 @@ public class Recursive {
     }
 
     /**
+     * Find all combinations of mnemonics's helper method.
      * 
-     * @param number
-     * @param currWord
-     * @param words
+     * @param number - The numbers that was pressed.
+     * @param currWord - The Current Iteration of the Mnemonics
+     * @param words - All of the Mnemoics stored so far.
      */
     private static void findWordMnemonic(String number, String currWord,
             ArrayList<String> words) {
@@ -311,6 +312,15 @@ public class Recursive {
         return minDiffHelper(0, abilities, teams, teamsAdded);
     }
 
+    /**
+     * Finds the Minimum Difference for all Possible Team Combination (Helper Method)
+     * 
+     * @param index - The Current Index at which the skillLvls is at.
+     * @param skillLvls - The Array containing all of the skill level of each person.
+     * @param teams - The current team's abilities
+     * @param teamsAdded - An Array that contains the number of people added to that team.
+     * @return - Returns an Integer value that represents the minimum difference between the teams.
+     */
     private static int minDiffHelper(int index, int[] skillLvls, int[] teams, int[] teamsAdded) {
 
         // Base Case
