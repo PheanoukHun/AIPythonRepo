@@ -120,11 +120,11 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * @return the height of this tree or -1 if the tree is empty
      */
     public int height() {
-        
+
         if (size == 0) {
             return -1;
         }
-        
+
         return -2;
     }
 
@@ -151,42 +151,67 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * @return the maximum value in this tree
      */
     public E max() {
+
+        if (size == 0) {
+            throw new IllegalStateException("The Size Must Be Greater than 0.");
+        }
+
         return null;
     }
 
     /**
      * return the minimum value in this binary search tree.
-     * <br>
-     * pre: <tt>size()</tt> > 0<br>
+     * 
+     * pre: size() > 0
      * post: return the smallest value in this Binary Search Tree
      * 
      * @return the minimum value in this tree
      */
     public E min() {
+
+        if (size == 0) {
+            throw new IllegalStateException("The Size Must Be Greater than 0.");
+        }
+
         return null;
     }
 
     /**
-     * An add method that implements the add algorithm iteratively
-     * instead of recursively.
-     * <br>
+     * An add method that implements the add algorithm iteratively instead of
+     * recursively.
      * pre: data != null
-     * <br>
-     * post: if data is not present add it to the tree,
-     * otherwise do nothing.
+     * post: if data is not present add it to the tree, otherwise do nothing.
      * 
      * @param data the item to be added to this tree
      * @return true if data was not present before this call to add,
      *         false otherwise.
      */
     public boolean iterativeAdd(E data) {
-        
-        BSTNode<E> currNode = root;
-        while (currNode.left != null && currNode.right != null) {
-            if (currNode.data.)
+
+        BSTNode<E> search = root;
+        BSTNode<E> trail = root;
+
+        while (search != null && search != null) {
+
+            int cmp = search.data.compareTo(data);
+            trail = search;
+
+            if (cmp > 1) {
+                search = search.left;
+            } else if (cmp < 1) {
+                search = search.right;
+            } else {
+                return false;
+            }
         }
-        
-        return false;
+
+        if (trail.data.compareTo(data) > 1) {
+            trail.left = new BSTNode<>(data);
+        } else {
+            trail.right = new BSTNode<>(data);
+        }
+
+        return true;
     }
 
     /**
