@@ -226,7 +226,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * @return the kth value in this Binary Search Tree
      */
     public E get(int kth) {
-                
+        return null; 
     }
 
     /**
@@ -250,8 +250,8 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         if (currNode != null && currNode.data.compareTo(val) > 1) {
             getAllLessThanHelper(lessVals, currNode.left, val);
         } else if (currNode != null) {
-            lessVals.add(currNode.data);
             getAllLessThanHelper(lessVals, currNode.left, val);
+            lessVals.add(currNode.data);
             getAllLessThanHelper(lessVals, currNode.right, val);
         }
     }
@@ -262,10 +262,10 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * <tt>value</tt> != null<br>
      * 
      * @param value the cutoff value
-     * @return a List with all values in this tree that are greater
-     *         than the parameter value. If there are no values in this tree
-     *         greater than value return an empty list.
-     *         The elements of the list are in ascending order.
+     * @return a List with all values in this tree that are greater than the
+     *         parameter value. If there are no values in this tree greater than
+     *         value return an empty list. The elements of the list are in ascending
+     *         order.
      */
     public List<E> getAllGreaterThan(E value) {
         List<E> results = new ArrayList<>();
@@ -277,8 +277,8 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         if (currNode != null && currNode.data.compareTo(val) < 1) {
             getAllLessThanHelper(lessVals, currNode.right, val);
         } else if (currNode != null) {
-            lessVals.add(currNode.data);
             getAllLessThanHelper(lessVals, currNode.left, val);
+            lessVals.add(currNode.data);
             getAllLessThanHelper(lessVals, currNode.right, val);
         }
     }
