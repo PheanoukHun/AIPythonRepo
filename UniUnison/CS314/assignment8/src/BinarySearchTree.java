@@ -38,6 +38,13 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      *         old size() + 1
      */
     public boolean add(E value) {
+        
+        // Precondition
+        if (value == null) {
+            throw new IllegalArgumentException("Value Cannot be Null.");
+        }
+        
+        // Add Values
         int oldSize = size;
         root = addHelper(root, value);
         return oldSize != size;
@@ -140,6 +147,8 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      *         if the tree is empty return an empty List
      */
     public List<E> getAll() {
+        
+        
         return null;
     }
 
@@ -226,6 +235,13 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * @return the kth value in this Binary Search Tree
      */
     public E get(int kth) {
+        
+        if (kth == 0) {
+            return min();
+        } else if (kth == size - 1) {
+            return max();
+        }
+        
         return null; 
     }
 
