@@ -43,7 +43,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     }
 
     private BSTNode<E> addHelper(BSTNode<E> currNode, E val) {
-        
+
         if (currNode == null) {
             size++;
             return new BSTNode<E>(val);
@@ -73,54 +73,58 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     }
 
     /**
-     * Check to see if the specified element is in this Binary Search Tree.
-     * <br>
-     * pre: <tt>value</tt> != null<br>
-     * post: return true if value is present in tree, false otherwise
+     * Check to see if the specified element is in this Binary Search Tree. pre:
+     * value != null post: return true if value is present in tree, false otherwise
      * 
      * @param value the value to look for in the tree
      * @return true if value is present in this tree, false otherwise
      */
     public boolean isPresent(E value) {
-        return true;
+        return isPresentHelper(root, value);
     }
 
     private boolean isPresentHelper(BSTNode<E> currNode, E val) {
-        int cmp = currNode.data.compareTo(val);
-        if (cmp == 1) {
-            return true;
-        } else if (currNode == null) {
+
+        if (currNode == null) {
             return false;
+        }
+
+        int cmp = currNode.data.compareTo(val);
+
+        if (cmp > 1) {
+            return isPresentHelper(currNode.left, val);
+        } else if (cmp < 1) {
+            return isPresentHelper(currNode.right, val);
         } else {
-            if (currNode.data.compareTo(val) > 1) {
-                return 
-            }
+            return true;
         }
     }
 
     /**
      * Return how many elements are in this Binary Search Tree.
-     * <br>
-     * pre: none<br>
+     * pre: none
      * post: return the number of items in this tree
      * 
      * @return the number of items in this Binary Search Tree
      */
     public int size() {
-        return -1;
+        return size;
     }
 
     /**
-     * return the height of this Binary Search Tree.
-     * <br>
-     * pre: none<br>
+     * return the height of this Binary Search Tree. If the tree is empty return -1,
+     * otherwise return the height of the tree
+     * pre: none
      * post: return the height of this tree.
-     * If the tree is empty return -1, otherwise return the
-     * height of the tree
      * 
      * @return the height of this tree or -1 if the tree is empty
      */
     public int height() {
+        
+        if (size == 0) {
+            return -1;
+        }
+        
         return -2;
     }
 
