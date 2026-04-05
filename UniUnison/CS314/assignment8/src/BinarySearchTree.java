@@ -37,34 +37,26 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      *         old size() + 1
      */
     public boolean add(E value) {
-
-        BSTNode<E> end = addHelper(root, value);
-        if (end.data.equals(value)) {
-            return false;
-        }
-
-        size++;
-        if 
-        return true;
+        int oldSize = size;
+        root = addHelper(root, value);
+        return oldSize != size;
     }
 
     private BSTNode<E> addHelper(BSTNode<E> currNode, E val) {
         
         if (currNode == null) {
-            return currNode;
+            size++;
+            return new BSTNode<E>(val);
         }
 
         int cmp = currNode.data.compareTo(val);
-        BSTNode<E> result = currNode;
-        
         if (cmp > 1) {
-            result = addHelper(currNode.left, val);
-            if 
-        } else {
-            result = addHelper(currNode.right, val);
+            currNode.left = addHelper(currNode.left, val);
+        } else if (cmp < 1) {
+            currNode.right = addHelper(currNode.right, val);
         }
 
-        return result;
+        return currNode;
     }
 
     /**
@@ -91,6 +83,19 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      */
     public boolean isPresent(E value) {
         return true;
+    }
+
+    private boolean isPresentHelper(BSTNode<E> currNode, E val) {
+        int cmp = currNode.data.compareTo(val);
+        if (cmp == 1) {
+            return true;
+        } else if (currNode == null) {
+            return false;
+        } else {
+            if (currNode.data.compareTo(val) > 1) {
+                return 
+            }
+        }
     }
 
     /**
