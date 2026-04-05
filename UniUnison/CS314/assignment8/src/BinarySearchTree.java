@@ -10,6 +10,7 @@
  */
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Shell for a binary search tree class.
@@ -240,7 +241,19 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      *         in ascending order.
      */
     public List<E> getAllLessThan(E value) {
-        return null;
+        List<E> results = new ArrayList<>();
+        getAllLessThanHelper(results, root, value);
+        return results;
+    }
+
+    private void getAllLessThanHelper(List<E> lessVals, BSTNode<E> currNode, E val) {
+        if (currNode != null && currNode.data.compareTo(val) > 1) {
+            getAllLessThanHelper(lessVals, currNode.left, val);
+        } else if (currNode != null) {
+            lessVals.add(currNode.data);
+            getAllLessThanHelper(lessVals, currNode.left, val);
+            getAllLessThanHelper(lessVals, currNode.right, val);
+        }
     }
 
     /**
@@ -255,7 +268,19 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      *         The elements of the list are in ascending order.
      */
     public List<E> getAllGreaterThan(E value) {
-        return null;
+        List<E> results = new ArrayList<>();
+        getAllGreaterThanHelper(results, root, value);
+        return results;
+    }
+
+    private void getAllGreaterThanHelper(List<E> lessVals, BSTNode<E> currNode, E val) {
+        if (currNode != null && currNode.data.compareTo(val) < 1) {
+            getAllLessThanHelper(lessVals, currNode.right, val);
+        } else if (currNode != null) {
+            lessVals.add(currNode.data);
+            getAllLessThanHelper(lessVals, currNode.left, val);
+            getAllLessThanHelper(lessVals, currNode.right, val);
+        }
     }
 
     /**
