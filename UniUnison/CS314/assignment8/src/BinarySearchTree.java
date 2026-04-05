@@ -226,7 +226,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * @return the kth value in this Binary Search Tree
      */
     public E get(int kth) {
-        return null;
+                
     }
 
     /**
