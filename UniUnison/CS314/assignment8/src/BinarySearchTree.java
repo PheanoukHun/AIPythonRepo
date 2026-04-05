@@ -180,6 +180,12 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      *         false otherwise.
      */
     public boolean iterativeAdd(E data) {
+        
+        BSTNode<E> currNode = root;
+        while (currNode.left != null && currNode.right != null) {
+            if (currNode.data.)
+        }
+        
         return false;
     }
 
