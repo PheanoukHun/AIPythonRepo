@@ -194,10 +194,10 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     }
 
     private E minHelper(BSTNode<E> node) {
-        if (node.right == null) {
+        if (node.left == null) {
             return node.data;
         }
-        return maxHelper(node.right);
+        return minHelper(node.left);
     }
 
     /**
@@ -212,8 +212,8 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      */
     public boolean iterativeAdd(E data) {
 
-        BSTNode<E> search = root;
         BSTNode<E> trail = root;
+        BSTNode<E> search = root.data.compareTo(data) > 1 ? root.left : root.right;
 
         while (search != null && search != null) {
 
