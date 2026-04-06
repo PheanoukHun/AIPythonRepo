@@ -33,6 +33,8 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * post: Add value to this tree if not already present. Return true if this tree
      * changed as a result of this method call, false otherwise.
      * 
+     * @author - got Help from the Lectures
+     * 
      * @param value the value to add to the tree
      * @return false if an item equivalent to value is already present in the tree,
      *         return true if value is added to the tree and size() = old size() + 1
@@ -53,6 +55,8 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     /**
      * A helper method that adds a value to its appropriate place if it is not
      * already found inside the BST yet.
+     * 
+     * @author - Got Help from the Lectures
      * 
      * @param currNode - The current Node the method is checking
      * @param val      - The value that will be added
@@ -84,12 +88,14 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * post: Remove value from the tree if present, return true if this tree changed
      * as a result of this method call, false otherwise.
      * 
+     * @author - Got Help from the Lectures
+     * 
      * @param value the value to remove from the tree if present
      * @return false if value was not present
      *         returns true if value was present and size() = old size() - 1
      */
     public boolean remove(E value) {
-        
+
         // Precondition
         if (value == null) {
             throw new IllegalArgumentException("Value Cannot be Null.");
@@ -101,6 +107,16 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         return size != oldSize;
     }
 
+    /**
+     * A helper method that removes a value from the BST if it is found inside the
+     * tree.
+     * 
+     * @author - Got Help from the Lectures
+     * 
+     * @param currNode - The Current Node the method is checking.
+     * @param val      - The value that will be added
+     * @return - Returns the newly modified node.
+     */
     private BSTNode<E> removeHelper(BSTNode<E> currNode, E val) {
 
         // Base Case 1: Did Not Find Data Value
@@ -115,10 +131,28 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
             currNode.left = removeHelper(currNode.left, val);
         } else if (cmp < 0) {
             currNode.right = removeHelper(currNode.right, val);
+
+            // Base Case
+        } else {
+            size--;
+
+            // Removing a Leaf Node
+            if (currNode.left == null && currNode.right == null) {
+                return null;
+            } else if (currNode.left == null) {
+                // Removing a Parent Node with only a Right Chold Node
+                return currNode.right;
+            } else if (currNode.right == null) {
+                // Removing a Parent Node with Only a Left Child Node
+                return currNode.left;
+            } else {
+                // Replace the Value of the Node Value and Delete the old Node of the same value.
+                currNode.data = maxHelper(currNode);
+                currNode.left = removeHelper(currNode, currNode.data);
+            }
         }
 
-        // Base Case
-        
+        return currNode;
     }
 
     /**
