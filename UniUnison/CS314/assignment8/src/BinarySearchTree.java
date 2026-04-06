@@ -175,9 +175,18 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         return isPresentHelper(root, value);
     }
 
+    /**
+     * A helper method that helps check to see if the specified element is inside
+     * the BST.
+     * 
+     * @param currNode - The Node it has to recurse through
+     * @param val      - The val that needs to be found
+     * @return - Returns a Boolean value that based on whether the value is found
+     *         within the free or not.
+     */
     private boolean isPresentHelper(BSTNode<E> currNode, E val) {
 
-        // Base Case
+        // Base Case: Did Not Find Value
         if (currNode == null) {
             return false;
         }
@@ -186,13 +195,13 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         int cmp = currNode.data.compareTo(val);
 
         if (cmp > 1) {
+            // Recurse Left Side
             return isPresentHelper(currNode.left, val);
         } else if (cmp < 1) {
+            // Recurse Right Side
             return isPresentHelper(currNode.right, val);
-        }
-
-        // Base Case
-        else {
+        } else {
+            // Base Case: Found Value
             return true;
         }
     }
@@ -230,17 +239,10 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     /**
      * A Helper method to get the height of the BST
      * 
-     * @param currNode - The Node it has to recurse through
+     * @param currNode -
      * @return - An Integer value repesenting the height of the tree.
      */
     private int heightHelper(BSTNode<E> currNode) {
-        
-        // Base Case
-        if (currNode == null) {
-            return -1;
-        }
-
-        // Recursive Case
         return 1 + Math.max(heightHelper(currNode.left), heightHelper(currNode.right));
     }
 
@@ -254,15 +256,26 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      *         is empty return an empty List
      */
     public List<E> getAll() {
-
         List<E> result = new ArrayList<>();
-        
-        return null;
+        getAllHelper(root, result);
+        return result;
     }
 
+    /**
+     * A Helper Method that Basically Turns the BST into a List.
+     * 
+     * @param currNode - The Current BSTNode the Method has to recursive search
+     *                 through.
+     * @param allNodes - A List of all the Data Values found inside the BST
+     */
+    private void getAllHelper(BSTNode<E> currNode, List<E> allNodes) {
 
-    private void getAllHelper(BSTNode<E> node, List<E> nodes) {
-
+        // Recursive Case
+        if (currNode != null) {
+            getAllHelper(currNode.left, allNodes);
+            allNodes.add(currNode.data);
+            getAllHelper(currNode.right, allNodes);
+        }
     }
 
     /**
@@ -286,18 +299,19 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     /**
      * A Recursive Helper Method to Get the Maximum Value in the Binary Search Tree
      * 
-     * @param node - The Current BSTNode the Method has to recursive search through.
+     * @param currNode - The Current BSTNode the Method has to recursive search
+     *                 through.
      * @return - The value of the Largest element.
      */
-    private E maxHelper(BSTNode<E> node) {
+    private E maxHelper(BSTNode<E> currNode) {
 
         // Base Case
-        if (node.right == null) {
-            return node.data;
+        if (currNode.right == null) {
+            return currNode.data;
         }
 
         // Recursive Case
-        return maxHelper(node.right);
+        return maxHelper(currNode.right);
     }
 
     /**
@@ -322,18 +336,19 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     /**
      * A Recursive Helper Method to Get the Minimum Value in the Binary Search Tree
      * 
-     * @param node - The Current BSTNode the Method has to recursive search through.
+     * @param currNode - The Current BSTNode the Method has to recursive search
+     *                 through.
      * @return - The value of the smallest element.
      */
-    private E minHelper(BSTNode<E> node) {
+    private E minHelper(BSTNode<E> currNode) {
 
         // Base Case
-        if (node.left == null) {
-            return node.data;
+        if (currNode.left == null) {
+            return currNode.data;
         }
 
         // Recursive Case
-        return minHelper(node.left);
+        return minHelper(currNode.left);
     }
 
     /**
@@ -351,6 +366,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         BSTNode<E> trail = root;
         BSTNode<E> search = root.data.compareTo(data) > 1 ? root.left : root.right;
 
+        // Search through the Tree
         while (search != null && search != null) {
 
             int cmp = search.data.compareTo(data);
@@ -365,26 +381,33 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
             }
         }
 
-        if (trail.data.compareTo(data) > 1) {
+        // Add to the End of the
+        if (trail.data.compareTo(data) > 0) {
             trail.left = new BSTNode<>(data);
         } else {
             trail.right = new BSTNode<>(data);
         }
 
+        size++;
         return true;
     }
 
     /**
-     * Return the "kth" element in this Binary Search Tree. If kth = 0 the
-     * smallest value (minimum) is returned.
-     * If kth = 1 the second smallest value is returned, and so forth.
-     * <br>
+     * Return the "kth" element in this Binary Search Tree. If kth = 0 the smallest
+     * value (minimum) is returned. If kth = 1 the second smallest value is
+     * returned, and so forth.
+     * 
      * pre: 0 <= kth < size()
      * 
      * @param kth indicates the rank of the element to get
      * @return the kth value in this Binary Search Tree
      */
     public E get(int kth) {
+
+        if (kth < 0 || kth >= size) {
+            throw new IllegalArgumentException("The kth Value must be within "
+                    + "the size of the BST");
+        }
 
         if (kth == 0) {
             return min();
