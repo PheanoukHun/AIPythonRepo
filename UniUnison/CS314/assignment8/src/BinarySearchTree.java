@@ -404,6 +404,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      */
     public E get(int kth) {
 
+        // Preconditions
         if (kth < 0 || kth >= size) {
             throw new IllegalArgumentException("The kth Value must be within "
                     + "the size of the BST");
