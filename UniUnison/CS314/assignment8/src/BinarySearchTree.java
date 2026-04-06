@@ -166,7 +166,14 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
             throw new IllegalStateException("The Size Must Be Greater than 0.");
         }
 
-        return null;
+        return maxHelper(root);
+    }
+
+    private E maxHelper(BSTNode<E> node) {
+        if (node.right == null) {
+            return node.data;
+        }
+        return maxHelper(node.right);
     }
 
     /**
@@ -183,7 +190,14 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
             throw new IllegalStateException("The Size Must Be Greater than 0.");
         }
 
-        return null;
+        return minHelper(root);
+    }
+
+    private E minHelper(BSTNode<E> node) {
+        if (node.right == null) {
+            return node.data;
+        }
+        return maxHelper(node.right);
     }
 
     /**
