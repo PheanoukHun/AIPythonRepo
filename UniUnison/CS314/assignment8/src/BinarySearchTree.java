@@ -16,8 +16,8 @@ import java.util.ArrayList;
  * Shell for a binary search tree class.
  * 
  * @author scottm
- * @param <E> The data type of the elements of this BinarySearchTree.
- *            Must implement Comparable or inherit from a class that implements
+ * @param <E> The data type of the elements of this BinarySearchTree. Must
+ *            implement Comparable or inherit from a class that implements
  *            Comparable.
  *
  */
@@ -28,14 +28,14 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
     /**
      * Add the specified item to this Binary Search Tree if it is not already
-     * present. pre: value != null post: Add value to this tree if not already
-     * present. Return true if this tree changed as a result of this method call,
-     * false otherwise.
+     * present.
+     * pre: value != null
+     * post: Add value to this tree if not already present. Return true if this tree
+     * changed as a result of this method call, false otherwise.
      * 
      * @param value the value to add to the tree
-     * @return false if an item equivalent to value is already present
-     *         in the tree, return true if value is added to the tree and size() =
-     *         old size() + 1
+     * @return false if an item equivalent to value is already present in the tree,
+     *         return true if value is added to the tree and size() = old size() + 1
      */
     public boolean add(E value) {
 
@@ -55,7 +55,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * already found inside the BST yet.
      * 
      * @param currNode - The current Node the method is checking
-     * @param val - The value that will be added
+     * @param val      - The value that will be added
      * @return - Returns the newly modified Node.
      */
     private BSTNode<E> addHelper(BSTNode<E> currNode, E val) {
@@ -68,9 +68,10 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
         // Recursive Case
         int cmp = currNode.data.compareTo(val);
-        if (cmp > 1) {
+
+        if (cmp > 0) {
             currNode.left = addHelper(currNode.left, val);
-        } else if (cmp < 1) {
+        } else if (cmp < 0) {
             currNode.right = addHelper(currNode.right, val);
         }
 
@@ -78,16 +79,46 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     }
 
     /**
-     * Remove a specified item from this Binary Search Tree if it is present. pre:
-     * value != null post: Remove value from the tree if present, return true if
-     * this tree changed as a result of this method call, false otherwise.
+     * Remove a specified item from this Binary Search Tree if it is present.
+     * pre: value != null
+     * post: Remove value from the tree if present, return true if this tree changed
+     * as a result of this method call, false otherwise.
      * 
      * @param value the value to remove from the tree if present
      * @return false if value was not present
      *         returns true if value was present and size() = old size() - 1
      */
     public boolean remove(E value) {
-        return true;
+        
+        // Precondition
+        if (value == null) {
+            throw new IllegalArgumentException("Value Cannot be Null.");
+        }
+
+        // Removing Value
+        int oldSize = size;
+        root = removeHelper(root, value);
+        return size != oldSize;
+    }
+
+    private BSTNode<E> removeHelper(BSTNode<E> currNode, E val) {
+
+        // Base Case 1: Did Not Find Data Value
+        if (currNode == null) {
+            return null;
+        }
+
+        int cmp = currNode.data.compareTo(val);
+
+        // Recursive Cases
+        if (cmp > 0) {
+            currNode.left = removeHelper(currNode.left, val);
+        } else if (cmp < 0) {
+            currNode.right = removeHelper(currNode.right, val);
+        }
+
+        // Base Case
+        
     }
 
     /**
