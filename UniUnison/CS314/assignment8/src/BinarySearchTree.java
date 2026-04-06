@@ -146,7 +146,8 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
                 // Removing a Parent Node with Only a Left Child Node
                 return currNode.left;
             } else {
-                // Replace the Value of the Node Value and Delete the old Node of the same value.
+                // Replace the Value of the Node Value
+                // and Delete the old Node of the same value.
                 currNode.data = maxHelper(currNode);
                 currNode.left = removeHelper(currNode, currNode.data);
             }
@@ -217,11 +218,30 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      */
     public int height() {
 
+        // Height of Zero
         if (size == 0) {
             return -1;
         }
 
-        return -2;
+        // Gets the Height of Tree
+        return heightHelper(root);
+    }
+
+    /**
+     * A Helper method to get the height of the BST
+     * 
+     * @param currNode - The Node it has to recurse through
+     * @return - An Integer value repesenting the height of the tree.
+     */
+    private int heightHelper(BSTNode<E> currNode) {
+        
+        // Base Case
+        if (currNode == null) {
+            return -1;
+        }
+
+        // Recursive Case
+        return 1 + Math.max(heightHelper(currNode.left), heightHelper(currNode.right));
     }
 
     /**
@@ -235,7 +255,14 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      */
     public List<E> getAll() {
 
+        List<E> result = new ArrayList<>();
+        
         return null;
+    }
+
+
+    private void getAllHelper(BSTNode<E> node, List<E> nodes) {
+
     }
 
     /**
