@@ -424,6 +424,12 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         return null;
     }
 
+    private E getHelper(BSTNode<E> currNode, int kth) {
+        if (kth == 0) {
+            return currNode.data;
+        }
+    }
+
     /**
      * Return a List with all values in this Binary Search Tree
      * that are less than the parameter <tt>value</tt>.
