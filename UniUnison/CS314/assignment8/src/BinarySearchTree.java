@@ -67,7 +67,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         // Base Case
         if (currNode == null) {
             size++;
-            return new BSTNode<E>(val);
+            return new BSTNode<>(val);
         }
 
         // Recursive Case
@@ -149,7 +149,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
                 // Replace the Value of the Node Value
                 // and Delete the old Node of the same value.
                 currNode.data = maxHelper(currNode);
-                currNode.left = removeHelper(currNode, currNode.data);
+                currNode.left = removeHelper(currNode.left, currNode.data);
             }
         }
 
@@ -194,10 +194,10 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         // Recursive Case
         int cmp = currNode.data.compareTo(val);
 
-        if (cmp > 1) {
+        if (cmp > 0) {
             // Recurse Left Side
             return isPresentHelper(currNode.left, val);
-        } else if (cmp < 1) {
+        } else if (cmp < 0) {
             // Recurse Right Side
             return isPresentHelper(currNode.right, val);
         } else {
@@ -245,7 +245,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     private int heightHelper(BSTNode<E> currNode) {
 
         if (currNode == null) {
-            return 0;
+            return -1;
         }
 
         return 1 + Math.max(heightHelper(currNode.left), heightHelper(currNode.right));
