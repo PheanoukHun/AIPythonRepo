@@ -463,6 +463,12 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         return results;
     }
 
+    /**
+     * 
+     * @param lessVals
+     * @param currNode
+     * @param val
+     */
     private void getAllGreaterThanHelper(List<E> lessVals, BSTNode<E> currNode, E val) {
         if (currNode != null && currNode.data.compareTo(val) < 1) {
             getAllLessThanHelper(lessVals, currNode.right, val);
