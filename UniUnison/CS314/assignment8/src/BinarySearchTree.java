@@ -368,11 +368,17 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      */
     public boolean iterativeAdd(E data) {
 
+        if (root == null) {
+            root = new BSTNode<>(data);
+            size++;
+            return true;
+        }
+
         BSTNode<E> trail = root;
         BSTNode<E> search = root.data.compareTo(data) > 1 ? root.left : root.right;
 
         // Search through the Tree
-        while (search != null && search != null) {
+        while (search != null) {
 
             int cmp = search.data.compareTo(data);
             trail = search;
@@ -421,13 +427,28 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
             return max();
         }
 
-        return null;
+        return getHelper(root, new int[]{kth});
     }
 
-    private E getHelper(BSTNode<E> currNode, int kth) {
-        if (kth == 0) {
+    private E getHelper(BSTNode<E> currNode, int[] kth) {
+        
+        // Base Case: Went Passed Leaf Nodes
+        if (currNode == null) {
+            return null;
+        }
+
+        E left = getHelper(currNode.left, kth);
+        if (left != null) {
+            return left;
+        }
+
+        if (kth[0] == 0) {
             return currNode.data;
         }
+
+        kth[0]--;
+
+        return getHelper(currNode.right, kth);
     }
 
     /**
