@@ -243,6 +243,11 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * @return - An Integer value repesenting the height of the tree.
      */
     private int heightHelper(BSTNode<E> currNode) {
+
+        if (currNode == null) {
+            return 0;
+        }
+
         return 1 + Math.max(heightHelper(currNode.left), heightHelper(currNode.right));
     }
 
