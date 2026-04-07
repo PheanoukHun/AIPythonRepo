@@ -368,38 +368,44 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      */
     public boolean iterativeAdd(E data) {
 
+        // Tree is Empty
         if (root == null) {
             root = new BSTNode<>(data);
             size++;
             return true;
         }
 
-        BSTNode<E> trail = root;
-        BSTNode<E> search = root.data.compareTo(data) > 1 ? root.left : root.right;
+        BSTNode<E> node = root;
+        
+        while (node != null) {
+            
+            int cmp = node.data.compareTo(data);
+            
+            if (cmp > 0) {
+                
+                if (node.left == null) {
+                    node.left = new BSTNode<>(data);
+                    size++;
+                    return true;
+                }
+                
+                node = node.left;
 
-        // Search through the Tree
-        while (search != null) {
+            } else if (cmp < 0) {
+                
+                if (node.right == null) {
+                    node.right = new BSTNode<>(data);
+                    size++;
+                    return true;
+                }
 
-            int cmp = search.data.compareTo(data);
-            trail = search;
+                node = node.right;
 
-            if (cmp > 1) {
-                search = search.left;
-            } else if (cmp < 1) {
-                search = search.right;
             } else {
                 return false;
             }
         }
 
-        // Add to the End of the
-        if (trail.data.compareTo(data) > 0) {
-            trail.left = new BSTNode<>(data);
-        } else {
-            trail.right = new BSTNode<>(data);
-        }
-
-        size++;
         return true;
     }
 
