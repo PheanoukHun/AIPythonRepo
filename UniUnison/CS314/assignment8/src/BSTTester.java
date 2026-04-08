@@ -34,7 +34,7 @@ public class BSTTester {
 
     private static void addTests(BinarySearchTree<String> t) {
         int testNum = 1;
-
+        ArrayList<String>
     }
 
     private static void printResults(int testNum, boolean results, String detail,
@@ -50,12 +50,6 @@ public class BSTTester {
             System.out.println("Test " + testNum + " passed.");
         } else {
             System.out.println("TEST " + testNum + " FAILED.");
-        }
-    }
-
-    private static void addValuesToTrees(BinarySearchTree<String> t, String[] strs) {
-        for (String str : strs) {
-            t.add(str);
         }
     }
 }
