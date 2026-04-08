@@ -241,7 +241,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     /**
      * A Helper method to get the height of the BST
      * 
-     * @param currNode -
+     * @param currNode - The current Node at which the Method is Recursing
      * @return - An Integer value repesenting the height of the tree.
      */
     private int heightHelper(BSTNode<E> currNode) {
@@ -400,7 +400,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
                 node = node.left;
 
-                // If Data is Greater than the Current Node
+                // Add Node when Data is Greater than the Current Node
             } else if (cmp < 0) {
 
                 if (node.right == null) {
