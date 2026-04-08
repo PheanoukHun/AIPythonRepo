@@ -25,7 +25,7 @@ public class BSTTester {
 
     /**
      * The main method runs the tests.
-     * 
+     *
      * @param args Not used
      */
     public static void main(String[] args) {
@@ -35,15 +35,18 @@ public class BSTTester {
         testStructureMethods();
         testFilteringMethods();
     }
-
+    
     private static void testAddMethods() {
         System.out.println("\n--- Testing Addition Logic ---");
+        
+        ArrayList<String> 
         BinarySearchTree<String> t = new BinarySearchTree<>();
 
         // Test 1: Recursive Add and Size
-        t.add("M");
-        t.add("A");
-        t.add("Z");
+        
+        Random r = new Random();
+        
+        
         showTestResults(t.size() == 3, testNum++);
 
         // Test 2: Duplicate add (should return false)
@@ -64,8 +67,7 @@ public class BSTTester {
         System.out.println("\n--- Testing Search, Min, and Max ---");
         BinarySearchTree<Integer> t = new BinarySearchTree<>();
         int[] vals = { 50, 10, 90, 5, 20 };
-        for (int v : vals)
-            t.add(v);
+        for (int v : vals) t.add(v);
 
         // Test 5: min()
         showTestResults(t.min() == 5, testNum++);
@@ -78,7 +80,9 @@ public class BSTTester {
     }
 
     private static void testRemovalLogic() {
-        System.out.println("\n--- Testing Removal Logic (Fix Verification) ---");
+        System.out.println(
+            "\n--- Testing Removal Logic (Fix Verification) ---"
+        );
         BinarySearchTree<Integer> t = new BinarySearchTree<>();
         // Structure: 50 is root, 25 left child, 75 right child
         t.add(50);
@@ -113,8 +117,7 @@ public class BSTTester {
 
         // Test 13: Height of non-trivial tree
         int[] vals = { 50, 25, 75, 10, 30, 60, 80 };
-        for (int v : vals)
-            t.add(v);
+        for (int v : vals) t.add(v);
         showTestResults(t.height() == 2, testNum++);
 
         // Test 14: numNodesAtDepth
@@ -128,10 +131,11 @@ public class BSTTester {
     }
 
     private static void testFilteringMethods() {
-        System.out.println("\n--- Testing getAll, LessThan, and GreaterThan ---");
+        System.out.println(
+            "\n--- Testing getAll, LessThan, and GreaterThan ---"
+        );
         BinarySearchTree<Integer> t = new BinarySearchTree<>();
-        for (int i = 1; i <= 10; i++)
-            t.add(i * 10); // 10, 20, 30... 100
+        for (int i = 1; i <= 10; i++) t.add(i * 10); // 10, 20, 30... 100
 
         // Test 17: getAll
         List<Integer> all = t.getAll();
@@ -140,17 +144,23 @@ public class BSTTester {
         // Test 18: getAllLessThan
         List<Integer> lessThan = t.getAllLessThan(35);
         // Should be 10, 20, 30
-        showTestResults(lessThan.size() == 3 && lessThan.get(2) == 30, testNum++);
+        showTestResults(
+            lessThan.size() == 3 && lessThan.get(2) == 30,
+            testNum++
+        );
 
         // Test 19: getAllGreaterThan
         List<Integer> greaterThan = t.getAllGreaterThan(85);
         // Should be 90, 100
-        showTestResults(greaterThan.size() == 2 && greaterThan.get(0) == 90, testNum++);
+        showTestResults(
+            greaterThan.size() == 2 && greaterThan.get(0) == 90,
+            testNum++
+        );
 
         // Test 20: getAllGreaterThan (None found)
         showTestResults(t.getAllGreaterThan(200).isEmpty(), testNum++);
     }
-    
+
     private static void showTestResults(boolean passed, int testNum) {
         System.out.println("\nTest " + testNum + ":");
         String passedString = passed ? "PASSED" : "FAILED";
