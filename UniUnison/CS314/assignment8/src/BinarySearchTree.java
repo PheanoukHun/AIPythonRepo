@@ -134,16 +134,18 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
             // Base Case
         } else {
-            size--;
 
             // Removing a Leaf Node
             if (currNode.left == null && currNode.right == null) {
+                size--;
                 return null;
             } else if (currNode.left == null) {
                 // Removing a Parent Node with only a Right Chold Node
+                size--;
                 return currNode.right;
             } else if (currNode.right == null) {
                 // Removing a Parent Node with Only a Left Child Node
+                size--;
                 return currNode.left;
             } else {
                 // Replace the Value of the Node Value
@@ -381,23 +383,26 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         }
 
         BSTNode<E> node = root;
-        
+
+        // Look Through the Tree
         while (node != null) {
-            
+
             int cmp = node.data.compareTo(data);
-            
+
+            // Add Node when Data is Less than the Current Node
             if (cmp > 0) {
-                
+
                 if (node.left == null) {
                     node.left = new BSTNode<>(data);
                     size++;
                     return true;
                 }
-                
+
                 node = node.left;
 
+                // If Data is Greater than the Current Node
             } else if (cmp < 0) {
-                
+
                 if (node.right == null) {
                     node.right = new BSTNode<>(data);
                     size++;
@@ -406,6 +411,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
                 node = node.right;
 
+                // Found Node with the Value
             } else {
                 return false;
             }
@@ -432,33 +438,45 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
                     + "the size of the BST");
         }
 
+        // Special Cases for Efficiency
         if (kth == 0) {
             return min();
         } else if (kth == size - 1) {
             return max();
         }
 
-        return getHelper(root, new int[]{kth});
+        // Normal
+        return getHelper(root, new int[] { kth });
     }
 
+    /**
+     * Returns the kth element in the BST. (HELPER METHOD)
+     * 
+     * @param currNode - The curremt Node at which the tree is being searched.
+     * @param kth - A native Array containing he current Index of the 
+     * @return - The value of the kth term.
+     */
     private E getHelper(BSTNode<E> currNode, int[] kth) {
-        
+
         // Base Case: Went Passed Leaf Nodes
         if (currNode == null) {
             return null;
         }
 
+        // Recursive Case: Search Left Subtree
         E left = getHelper(currNode.left, kth);
         if (left != null) {
             return left;
         }
 
+        // Base Case: Look at Current Node
         if (kth[0] == 0) {
             return currNode.data;
         }
 
         kth[0]--;
 
+        // Recursive Case: Search Right Subtree
         return getHelper(currNode.right, kth);
     }
 
@@ -479,9 +497,21 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
         return results;
     }
 
+    /**
+     * Return a List with all Values less than val found inside the BST (HELPER
+     * METHOD)
+     * 
+     * @param lessVals - A list of values less than val.
+     * @param currNode - The current node at which is being recursed through
+     * @param val      - The cutoff value
+     */
     private void getAllLessThanHelper(List<E> lessVals, BSTNode<E> currNode, E val) {
+
+        // Value is Greater than Cutoff
         if (currNode != null && currNode.data.compareTo(val) >= 0) {
             getAllLessThanHelper(lessVals, currNode.left, val);
+
+            // Recursive Case: Add Value in In Order Method
         } else if (currNode != null) {
             getAllLessThanHelper(lessVals, currNode.left, val);
             lessVals.add(currNode.data);
@@ -507,14 +537,20 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     }
 
     /**
+     * Return a List with all Values greater than val found inside the BST (HELPER
+     * METHOD)
      * 
-     * @param greaterVals
-     * @param currNode
-     * @param val
+     * @param greaterVals - A list of values greather than val.
+     * @param currNode    - The current node at which is being recursed through
+     * @param val         - The cutoff value
      */
     private void getAllGreaterThanHelper(List<E> greaterVals, BSTNode<E> currNode, E val) {
+        
+        // Value less than Cutoff
         if (currNode != null && currNode.data.compareTo(val) <= 0) {
             getAllGreaterThanHelper(greaterVals, currNode.right, val);
+
+            // Recursive Case: Add Value in In Order Method
         } else if (currNode != null) {
             getAllGreaterThanHelper(greaterVals, currNode.left, val);
             greaterVals.add(currNode.data);
@@ -531,29 +567,23 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      *         the parameter d.
      */
     public int numNodesAtDepth(int d) {
-
-        if (d < 0) {
-            throw new IllegalArgumentException("");
-        }
-
         return nodesAtDepthHelper(root, d);
     }
 
     private int nodesAtDepthHelper(BSTNode<E> node, int d) {
-        
+
         // Base Case
-        
+
         // Found Leaf Nodes
         if (node == null) {
             return 0;
         }
 
         // Found Node at the Right Depth
-        if (d == 0) {
+        if (d <= 0) {
             return 1;
 
-        } 
-        
+        }
 
         // Recursive Cases
         return nodesAtDepthHelper(node.left, d - 1) + nodesAtDepthHelper(node.right, d - 1);
