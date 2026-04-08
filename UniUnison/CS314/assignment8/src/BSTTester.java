@@ -9,7 +9,6 @@
  * UTEID:
  */
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,10 +24,25 @@ public class BSTTester {
 
     /**
      * The main method runs the tests.
+     * 
      * @param args Not used
      */
     public static void main(String[] args) {
         BinarySearchTree<String> t = new BinarySearchTree<>();
+        addTests(t);
+    }
+
+    private static void addTests(BinarySearchTree<String> t) {
+        int testNum = 1;
+
+    }
+
+    private static void printResults(int testNum, boolean results, String detail,
+            BinarySearchTree<String> t, ArrayList<String> l) {
+        System.out.println("\nTest " + testNum + ":");
+        System.out.println(" * Description: " + detail);
+        String passedString = results ? "PASSED" : "FAILED";
+        System.out.println(" * Results: " + passedString);
     }
 
     private static void showTestResults(boolean passed, int testNum) {
@@ -41,7 +55,7 @@ public class BSTTester {
 
     private static void addValuesToTrees(BinarySearchTree<String> t, String[] strs) {
         for (String str : strs) {
-                t.add(str);
+            t.add(str);
         }
     }
 }
