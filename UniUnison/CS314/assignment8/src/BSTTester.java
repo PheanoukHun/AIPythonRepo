@@ -337,9 +337,9 @@ public class BSTTester {
         Collections.reverse(expectedList);
         actual = t2.getAllGreaterThan(cutoff);
         showTestResults(actual.equals(expectedList), 57);
-        //System.out.println(expectedList);
-        //System.out.println(t2.getAll());
-        //t2.printTree();
+        // System.out.println(expectedList);
+        // System.out.println(t2.getAll());
+        // t2.printTree();
 
         // Test 58: getAllGreaterThan
         System.out.println("get all greater than 25");

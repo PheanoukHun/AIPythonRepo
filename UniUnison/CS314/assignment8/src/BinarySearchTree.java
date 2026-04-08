@@ -475,7 +475,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     }
 
     private void getAllLessThanHelper(List<E> lessVals, BSTNode<E> currNode, E val) {
-        if (currNode != null && currNode.data.compareTo(val) > 1) {
+        if (currNode != null && currNode.data.compareTo(val) >= 0) {
             getAllLessThanHelper(lessVals, currNode.left, val);
         } else if (currNode != null) {
             getAllLessThanHelper(lessVals, currNode.left, val);
@@ -503,23 +503,22 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
     /**
      * 
-     * @param lessVals
+     * @param greaterVals
      * @param currNode
      * @param val
      */
-    private void getAllGreaterThanHelper(List<E> lessVals, BSTNode<E> currNode, E val) {
-        if (currNode != null && currNode.data.compareTo(val) < 1) {
-            getAllLessThanHelper(lessVals, currNode.right, val);
+    private void getAllGreaterThanHelper(List<E> greaterVals, BSTNode<E> currNode, E val) {
+        if (currNode != null && currNode.data.compareTo(val) <= 0) {
+            getAllGreaterThanHelper(greaterVals, currNode.right, val);
         } else if (currNode != null) {
-            getAllLessThanHelper(lessVals, currNode.left, val);
-            lessVals.add(currNode.data);
-            getAllLessThanHelper(lessVals, currNode.right, val);
+            getAllGreaterThanHelper(greaterVals, currNode.left, val);
+            greaterVals.add(currNode.data);
+            getAllGreaterThanHelper(greaterVals, currNode.right, val);
         }
     }
 
     /**
      * Find the number of nodes in this tree at the specified depth.
-     * <br>
      * pre: none
      * 
      * @param d The target depth.
@@ -527,7 +526,20 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      *         the parameter d.
      */
     public int numNodesAtDepth(int d) {
-        return -1;
+        return numNodesAtDepthHelper(root, d);
+    }
+
+    private int numNodesAtDepthHelper(BSTNode<E> node, int d) {
+        
+        // Base Case
+        if (d == 0) {
+            return 1;
+        }
+
+        // Recursive Case 1
+        if (node.left != null && node.right != null) {
+            return 1 + numNodesAtDepthHelper(node.left, d - 1);
+        }
     }
 
     /**
