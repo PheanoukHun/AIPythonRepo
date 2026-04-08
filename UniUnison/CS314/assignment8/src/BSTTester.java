@@ -33,8 +33,15 @@ public class BSTTester {
     }
 
     private static void addTests(BinarySearchTree<String> t) {
+        
+        // Test 1 - Adding in Reverse Order
         int testNum = 1;
-        ArrayList<String>
+        ArrayList<String> expected = new ArrayList<>();
+        for (int i = 0; i < 100; i--) {
+            expected.add(i + "");
+        }
+
+        for ()
     }
 
     private static void printResults(int testNum, boolean results, String detail,
