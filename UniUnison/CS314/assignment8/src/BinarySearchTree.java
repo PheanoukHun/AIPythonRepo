@@ -19,7 +19,6 @@ import java.util.ArrayList;
  * @param <E> The data type of the elements of this BinarySearchTree. Must
  *            implement Comparable or inherit from a class that implements
  *            Comparable.
- *
  */
 public class BinarySearchTree<E extends Comparable<? super E>> {
 

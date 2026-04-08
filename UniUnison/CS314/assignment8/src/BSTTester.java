@@ -28,20 +28,29 @@ public class BSTTester {
      * @param args Not used
      */
     public static void main(String[] args) {
-        BinarySearchTree<String> t = new BinarySearchTree<>();
-        addTests(t);
+        addTests();
+    }
+    
+    private static void basicTests() {
+        System.out.println("\nBasic Tests for Size and Height:");
     }
 
-    private static void addTests(BinarySearchTree<String> t) {
+    private static void addTests() {
+        
+        BinarySearchTree<String> t = new BinarySearchTree<>();
         
         // Test 1 - Adding in Reverse Order
         int testNum = 1;
         ArrayList<String> expected = new ArrayList<>();
-        for (int i = 0; i < 100; i--) {
+        for (int i = 0; i < 100; i++) {
             expected.add(i + "");
         }
 
-        for ()
+        for (int i = 99; i >= 0; i--) {
+            t.add(i + "");
+        }
+
+        
     }
 
     private static void printResults(int testNum, boolean results, String detail,
