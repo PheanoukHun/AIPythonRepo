@@ -148,9 +148,8 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
             } else {
                 // Replace the Value of the Node Value
                 // and Delete the old Node of the same value.
-                E newVal = maxHelper(currNode);
-                currNode.data = newVal;
-                currNode.left = removeHelper(currNode.left, newVal);
+                currNode.data = maxHelper(currNode.left);
+                currNode.left = removeHelper(currNode.left, currNode.data);
             }
         }
 
@@ -369,6 +368,11 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      */
     public boolean iterativeAdd(E data) {
 
+        // Preconditions
+        if (data == null) {
+            throw new IllegalArgumentException("Data cannot be Null");
+        }
+
         // Tree is Empty
         if (root == null) {
             root = new BSTNode<>(data);
@@ -527,20 +531,29 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      *         the parameter d.
      */
     public int numNodesAtDepth(int d) {
+
+        if (d < 0) {
+            throw new IllegalArgumentException("");
+        }
+
         return nodesAtDepthHelper(root, d);
     }
 
     private int nodesAtDepthHelper(BSTNode<E> node, int d) {
         
         // Base Case
-        if (d == 0) {
-            // Found Node at the Right Depth
-            return 1;
-
-            // Found Leaf Nodes
-        } else if (node == null) {
+        
+        // Found Leaf Nodes
+        if (node == null) {
             return 0;
         }
+
+        // Found Node at the Right Depth
+        if (d == 0) {
+            return 1;
+
+        } 
+        
 
         // Recursive Cases
         return nodesAtDepthHelper(node.left, d - 1) + nodesAtDepthHelper(node.right, d - 1);

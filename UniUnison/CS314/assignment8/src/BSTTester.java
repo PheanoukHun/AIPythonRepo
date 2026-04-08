@@ -227,8 +227,8 @@ public class BSTTester {
         expectedValues.remove(Integer.valueOf(-2));
         System.out.println("Test 32: Height of tree");
         showTestResults(actualTree.height() == 0, 32);
-        System.out.println(actualTree.getAll());
-        actualTree.printTree();
+        // System.out.println(actualTree.getAll());
+        // actualTree.printTree();
 
         // Test 33 - Max of tree
         System.out.println("Test 33: Max of tree");
