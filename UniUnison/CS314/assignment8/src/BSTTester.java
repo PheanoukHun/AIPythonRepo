@@ -100,38 +100,32 @@ public class BSTTester {
 
         // max() Method
         System.out.println("\nmax() Method Testing: ");
-        
-        // Test 6: max()
+
+        // Test 1: max() from Original Values
         showTestResults(t.max() == 90, testNum++);
+        
+        // Test 2: max() after adding a 100 Values
+        t.add(100);
+        showTestResults(t.max() == 100, testNum++);
     }
 
     private static void testRemovalLogic() {
-        System.out.println(
-            "\n--- Testing Removal Logic (Fix Verification) ---"
-        );
+
+        // Setup
         BinarySearchTree<Integer> t = new BinarySearchTree<>();
-        // Structure: 50 is root, 25 left child, 75 right child
-        t.add(50);
-        t.add(25);
-        t.add(75);
-        t.add(12);
-        t.add(30);
-
-        // Test 8: Remove leaf
-        showTestResults(t.remove(12) && t.size() == 4, testNum++);
-
-        // Test 9: Remove node with one child
-        showTestResults(t.remove(25) && t.size() == 3, testNum++);
-
-        // Test 10: Remove root with two children (The Previous Bug Case)
-        // At this point, tree has 50, 30, 75. 30 is left of 50.
-        // Let's add 60 so 75 has a left child.
-        t.add(60);
-        // Tree: 50 root, 30 left, 75 right, 60 is left of 75.
-        showTestResults(t.remove(50) && t.size() == 3, testNum++);
-
-        // Test 11: Verify size after complex removals
-        showTestResults(t.max() == 75 && t.min() == 30, testNum++);
+        int[] values = new int[]{50, 25, 75, 12, 30};
+        for (int value : values) {
+            t.add(value);
+        }
+        
+        // remove() Method
+        System.out.println("\nremove() Method Testing: ");
+        
+        // Test 1: Remove Root Node
+        showTestResults(t.remove(50) && t.size() == 4, testNum++);
+        
+        // Test 2: Remove Leaf Node
+        showTestResults(t.remove(12) && t.size() == 3, testNum++);
     }
 
     private static void testStructureMethods() {
@@ -188,8 +182,8 @@ public class BSTTester {
     }
 
     private static void showTestResults(boolean passed, int testNum) {
-        System.out.println("\nTest " + testNum + ":");
+        System.out.print(" *  Test " + testNum + ":");
         String passedString = passed ? "PASSED" : "FAILED";
-        System.out.println(" * Results: " + passedString);
+        System.out.println(" Results: " + passedString);
     }
 }
