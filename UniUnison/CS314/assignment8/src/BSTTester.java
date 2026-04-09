@@ -94,7 +94,13 @@ Average of the 10 Runs Results for TreeSet of 32000 Elements:
 Average of the 10 Runs Results for TreeSet of 64000 Elements:
  * Time taken: 0.007284705800000001 seconds
  
-Question 7: 
+Question 7: Because the My BinarySearchTree doesn't rebalance itself, 
+by adding all the values in ascending values, it results in a degenerate
+tree that is essentially a LinkedList, so everytime another value is
+added to the end, the Tree has to go through all the way down the tree
+causing an O(N^2) time complexity. While the Java TreeSet uses a Red-Black
+tree to rebalance itself, so the tree doesn't need to search that far away
+from the root node.
 */
 
 import java.util.ArrayList;
@@ -118,15 +124,15 @@ public class BSTTester {
      */
     public static void main(String[] args) {
         // My Test Suite:
-        // testAddMethods();
-        // testSearchAndMinMax();
-        // testRemovalLogic();
-        // testStructureMethods();
-        // testGetAllGreaterAndLessThan();
+        testAddMethods();
+        testSearchAndMinMax();
+        testRemovalLogic();
+        testStructureMethods();
+        testGetAllGreaterAndLessThan();
 
         // Experiment Code:
         // experimentCodeForMyClass();
-        experimentCodeWithTreeSet();
+        // experimentCodeWithTreeSet();
     }
 
     private static void testAddMethods() {
