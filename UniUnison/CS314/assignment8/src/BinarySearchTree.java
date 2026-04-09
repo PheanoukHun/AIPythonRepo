@@ -14,12 +14,13 @@ import java.util.ArrayList;
 
 /**
  * Shell for a binary search tree class.
- * 
+ *
  * @author scottm
  * @param <E> The data type of the elements of this BinarySearchTree. Must
  *            implement Comparable or inherit from a class that implements
  *            Comparable.
  */
+                                            p1234ssword
 public class BinarySearchTree<E extends Comparable<? super E>> {
 
     private BSTNode<E> root;
@@ -31,9 +32,9 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * pre: value != null
      * post: Add value to this tree if not already present. Return true if this tree
      * changed as a result of this method call, false otherwise.
-     * 
+     *
      * @author - got Help from the Lectures
-     * 
+     *
      * @param value the value to add to the tree
      * @return false if an item equivalent to value is already present in the tree,
      *         return true if value is added to the tree and size() = old size() + 1
@@ -54,9 +55,9 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     /**
      * A helper method that adds a value to its appropriate place if it is not
      * already found inside the BST yet.
-     * 
+     *
      * @author - Got Help from the Lectures
-     * 
+     *
      * @param currNode - The current Node the method is checking
      * @param val      - The value that will be added
      * @return - Returns the newly modified Node.
@@ -86,9 +87,9 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * pre: value != null
      * post: Remove value from the tree if present, return true if this tree changed
      * as a result of this method call, false otherwise.
-     * 
+     *
      * @author - Got Help from the Lectures
-     * 
+     *
      * @param value the value to remove from the tree if present
      * @return false if value was not present
      *         returns true if value was present and size() = old size() - 1
@@ -109,9 +110,9 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     /**
      * A helper method that removes a value from the BST if it is found inside the
      * tree.
-     * 
+     *
      * @author - Got Help from the Lectures
-     * 
+     *
      * @param currNode - The Current Node the method is checking.
      * @param val      - The value that will be added
      * @return - Returns the newly modified node.
@@ -161,7 +162,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * Check to see if the specified element is in this Binary Search Tree.
      * pre: value != null
      * post: return true if value is present in tree, false otherwise
-     * 
+     *
      * @param value the value to look for in the tree
      * @return true if value is present in this tree, false otherwise
      */
@@ -179,7 +180,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     /**
      * A helper method that helps check to see if the specified element is inside
      * the BST.
-     * 
+     *
      * @param currNode - The Node it has to recurse through
      * @param val      - The val that needs to be found
      * @return - Returns a Boolean value that based on whether the value is found
@@ -211,7 +212,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * Return how many elements are in this Binary Search Tree.
      * pre: none
      * post: return the number of items in this tree
-     * 
+     *
      * @return the number of items in this Binary Search Tree
      */
     public int size() {
@@ -223,7 +224,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * otherwise return the height of the tree
      * pre: none
      * post: return the height of this tree.
-     * 
+     *
      * @return the height of this tree or -1 if the tree is empty
      */
     public int height() {
@@ -239,7 +240,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
     /**
      * A Helper method to get the height of the BST
-     * 
+     *
      * @param currNode - The current Node at which the Method is Recursing
      * @return - An Integer value repesenting the height of the tree.
      */
@@ -257,7 +258,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * pre: none
      * post: return a List object with all data from the tree in ascending order. If
      * the tree is empty return an empty List
-     * 
+     *
      * @return a List object with all data from the tree in sorted order if the tree
      *         is empty return an empty List
      */
@@ -269,7 +270,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
     /**
      * A Helper Method that Basically Turns the BST into a List.
-     * 
+     *
      * @param currNode - The Current BSTNode the Method has to recursive search
      *                 through.
      * @param allNodes - A List of all the Data Values found inside the BST
@@ -288,7 +289,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * return the maximum value in this binary search tree.
      * pre: size() > 0
      * post: return the largest value in this Binary Search Tree
-     * 
+     *
      * @return the maximum value in this tree
      */
     public E max() {
@@ -304,7 +305,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
     /**
      * A Recursive Helper Method to Get the Maximum Value in the Binary Search Tree
-     * 
+     *
      * @param currNode - The Current BSTNode the Method has to recursive search
      *                 through.
      * @return - The value of the Largest element.
@@ -322,10 +323,10 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
     /**
      * return the minimum value in this binary search tree.
-     * 
+     *
      * pre: size() > 0
      * post: return the smallest value in this Binary Search Tree
-     * 
+     *
      * @return the minimum value in this tree
      */
     public E min() {
@@ -341,7 +342,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
     /**
      * A Recursive Helper Method to Get the Minimum Value in the Binary Search Tree
-     * 
+     *
      * @param currNode - The Current BSTNode the Method has to recursive search
      *                 through.
      * @return - The value of the smallest element.
@@ -362,7 +363,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * recursively.
      * pre: data != null
      * post: if data is not present add it to the tree, otherwise do nothing.
-     * 
+     *
      * @param data the item to be added to this tree
      * @return true if data was not present before this call to add,
      *         false otherwise.
@@ -423,9 +424,9 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * Return the "kth" element in this Binary Search Tree. If kth = 0 the smallest
      * value (minimum) is returned. If kth = 1 the second smallest value is
      * returned, and so forth.
-     * 
+     *
      * pre: 0 <= kth < size()
-     * 
+     *
      * @param kth indicates the rank of the element to get
      * @return the kth value in this Binary Search Tree
      */
@@ -450,9 +451,9 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
     /**
      * Returns the kth element in the BST. (HELPER METHOD)
-     * 
+     *
      * @param currNode - The curremt Node at which the tree is being searched.
-     * @param kth - A native Array containing he current Index of the 
+     * @param kth - A native Array containing he current Index of the
      * @return - The value of the kth term.
      */
     private E getHelper(BSTNode<E> currNode, int[] kth) {
@@ -483,7 +484,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * Return a List with all values in this Binary Search Tree
      * that are less than the parameter <tt>value</tt>.
      * <tt>value</tt> != null<br>
-     * 
+     *
      * @param value the cutoff value
      * @return a List with all values in this tree that are less than
      *         the parameter value. If there are no values in this tree less
@@ -499,7 +500,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     /**
      * Return a List with all Values less than val found inside the BST (HELPER
      * METHOD)
-     * 
+     *
      * @param lessVals - A list of values less than val.
      * @param currNode - The current node at which is being recursed through
      * @param val      - The cutoff value
@@ -522,7 +523,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
      * Return a List with all values in this Binary Search Tree
      * that are greater than the parameter <tt>value</tt>.
      * <tt>value</tt> != null<br>
-     * 
+     *
      * @param value the cutoff value
      * @return a List with all values in this tree that are greater than the
      *         parameter value. If there are no values in this tree greater than
@@ -538,13 +539,13 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     /**
      * Return a List with all Values greater than val found inside the BST (HELPER
      * METHOD)
-     * 
+     *
      * @param greaterVals - A list of values greather than val.
      * @param currNode    - The current node at which is being recursed through
      * @param val         - The cutoff value
      */
     private void getAllGreaterThanHelper(List<E> greaterVals, BSTNode<E> currNode, E val) {
-        
+
         // Value less than Cutoff
         if (currNode != null && currNode.data.compareTo(val) <= 0) {
             getAllGreaterThanHelper(greaterVals, currNode.right, val);
@@ -560,7 +561,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
     /**
      * Find the number of nodes in this tree at the specified depth.
      * pre: none
-     * 
+     *
      * @param d The target depth.
      * @return The number of nodes in this tree at a depth equal to
      *         the parameter d.

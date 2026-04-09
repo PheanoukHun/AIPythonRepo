@@ -37,7 +37,8 @@ public class BSTTester {
     }
     
     private static void testAddMethods() {
-        System.out.println("\n--- Testing Addition Logic ---");
+        
+        System.out.println("\nAdd Method Testing: ");
         
         ArrayList<String> 
         BinarySearchTree<String> t = new BinarySearchTree<>();
