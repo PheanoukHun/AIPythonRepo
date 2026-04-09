@@ -233,7 +233,7 @@ public class BSTTester {
             t1.add(j);
         }
         sw.stop();
-        System.out.println("\nResults for Tree of 1000:");
+        System.out.println("\n1 Run for Tree of 1000:");
         System.out.println(" * Time taken: " + sw.time() + " seconds");
         System.out.println(" * Height of Tree: " + t1.height());
         System.out.println(" * Number of Nodes: " + t1.size());
@@ -255,9 +255,29 @@ public class BSTTester {
             totalTime += sw.time();
             totalHeight += t2.height();
         }
-        System.out.println("\n10 Runs Results: ");
+        System.out.println("\n10 Runs Results for Tree of 1000 Nodes: ");
         System.out.println(" * Time taken: " + totalTime / 10 + " seconds");
         System.out.println(" * Height of Tree: " + totalHeight / 10);
         System.out.println(" * Number of Nodes: " + 1000);
+        
+        // Part 3: Repeat 10 Times for 2000, 4000, 8000, 16000, 32000, 64000
+        for (int i = 2000; i <= 64000; i *= 2) {
+            totalTime = 0;
+            totalHeight = 0;
+            for (int j = 0; j < 10; j++) {
+                BinarySearchTree<Integer> t3 = new BinarySearchTree<>();
+                sw.start();
+                for (int k = 0; k < i; k++) {
+                    t3.add(k);
+                }
+                sw.stop();
+                totalTime += sw.time();
+                totalHeight += t3.height();
+            }
+            System.out.println("\n10 Runs Results for Tree of " + i + "Nodes:");
+            System.out.println(" * Time taken: " + totalTime / 10 + " seconds");
+            System.out.println(" * Height of Tree: " + totalHeight / 10);
+            System.out.println(" * Number of Nodes: " + i);
+        }
     }
 }
