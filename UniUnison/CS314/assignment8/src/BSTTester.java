@@ -9,6 +9,54 @@
  * UTEID: ph23434
  */
 
+/**
+Question 1 - 2:
+1 Run for Tree of 1000:
+ * Time taken: 0.006534759 seconds
+ * Height of Tree: 999
+ * Number of Nodes: 1000
+
+Question 3:
+10 Runs Results:
+ * Time taken: 0.0021600871 seconds
+ * Height of Tree: 999
+ * Number of Nodes: 1000
+
+Question 4:
+10 Runs Results for Tree of 2000:
+ * Time taken: 0.008569375399999999 seconds
+ * Height of Tree: 1999
+ * Number of Nodes: 2000
+
+10 Runs Results for Tree of 4000:
+ * Time taken: 0.0334673702 seconds
+ * Height of Tree: 3999
+ * Number of Nodes: 4000
+
+10 Runs Results for Tree of 8000:
+ * Time taken: 0.1336590114 seconds
+ * Height of Tree: 7999
+ * Number of Nodes: 8000
+
+10 Runs Results for Tree of 16000:
+ * Time taken: 0.5391714908 seconds
+ * Height of Tree: 15999
+ * Number of Nodes: 16000
+
+10 Runs Results for Tree of 32000:
+ * Time taken: 2.2370041185000002 seconds
+ * Height of Tree: 31999
+ * Number of Nodes: 32000
+
+10 Runs Results for Tree of 64000:
+ * Time taken: 9.342193508200001 seconds
+ * Height of Tree: 63999
+ * Number of Nodes: 64000
+
+Question 5:
+
+*/
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -29,12 +77,16 @@ public class BSTTester {
      * @param args Not used
      */
     public static void main(String[] args) {
+        // My Test Suite:
         // testAddMethods();
         // testSearchAndMinMax();
         // testRemovalLogic();
         // testStructureMethods();
         // testGetAllGreaterAndLessThan();
-        experimentCode();
+
+        // Experiment Code:
+        // experimentCodeForMyClass();
+        experimentCodeWithTreeSet();
     }
 
     private static void testAddMethods() {
@@ -223,10 +275,10 @@ public class BSTTester {
         System.out.println(" Results: " + passedString);
     }
 
-    private static void experimentCode() {
+    private static void experimentCodeForMyClass() {
         Stopwatch sw = new Stopwatch();
 
-        // Part 1:
+        // Part 1: Adding Values 1000 values once;
         BinarySearchTree<Integer> t1 = new BinarySearchTree<>();
         sw.start();
         for (int j = 0; j < 1000; j++) {
@@ -251,7 +303,7 @@ public class BSTTester {
                 t2.add(j);
             }
             sw.stop();
-            
+
             totalTime += sw.time();
             totalHeight += t2.height();
         }
@@ -259,7 +311,7 @@ public class BSTTester {
         System.out.println(" * Time taken: " + totalTime / 10 + " seconds");
         System.out.println(" * Height of Tree: " + totalHeight / 10);
         System.out.println(" * Number of Nodes: " + 1000);
-        
+
         // Part 3: Repeat 10 Times for 2000, 4000, 8000, 16000, 32000, 64000
         for (int i = 2000; i <= 64000; i *= 2) {
             totalTime = 0;
@@ -278,6 +330,42 @@ public class BSTTester {
             System.out.println(" * Time taken: " + totalTime / 10 + " seconds");
             System.out.println(" * Height of Tree: " + totalHeight / 10);
             System.out.println(" * Number of Nodes: " + i);
+        }
+    }
+
+    private static void experimentCodeWithTreeSet() {
+        Stopwatch sw = new Stopwatch();
+        
+        // Part 4: Part 1-3 for Java TreeSet Instead
+        
+        // Part 1:
+        TreeSet<Integer> t1 = new TreeSet<>();
+        sw.start();
+        for (int k = 0; k < 1000; k++) {
+            t1.add(k);
+        }
+        sw.stop();
+        
+        System.out.println("1 Run for TreeSet of 1000 Elements:");
+        System.out.println(" * Time taken: " + sw.time() + " seconds");
+        
+        // Part 2:
+        double totalTime = 0;
+        for (int i = 0; i < 10; i++) {
+            TreeSet<Integer> t2 = new TreeSet<>();
+            sw.start();
+            for (int j = 0; j < 1000; j++) {
+                t2.add(j);
+            }
+            sw.stop();
+            totalTime += sw.time();
+        }
+        System.out.println("10 Runs Results for TreeSet of 1000 Elements:");
+        System.out.println(" * Time taken: " + totalTime / 10 + " seconds");
+
+        // Part 3: 
+        for (int i = 2000; i <= 64000; i *= 2000) {
+            
         }
     }
 }
