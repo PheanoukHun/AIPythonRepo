@@ -34,49 +34,75 @@ public class BSTTester {
         testStructureMethods();
         testFilteringMethods();
     }
-    
+
     private static void testAddMethods() {
-        
-        System.out.println("\nAdd Method Testing: ");
-        BinarySearchTree<String> t = new BinarySearchTree<>();
+        // Setup
+        ArrayList<Integer> expected = new ArrayList<>();
+        BinarySearchTree<Integer> t = new BinarySearchTree<>();
 
         // Test 1: Recursive Add a lot of elements
-        
-        
-        Collections.sort(expectedList);
-        
+        System.out.println("\nAdd Method Testing: ");
+
+        Random r = new Random();
+        for (int i = 0; i < 1000; i++) {
+            int value = r.nextInt() * 1000;
+            if (t.add(value)) {
+                expected.add(value);
+            }
+        }
+
+        showTestResults(t.size() == expected.size(), testNum++);
 
         // Test 2: Duplicate add (should return false)
-        showTestResults(t.add("M") == false, testNum++);
+        showTestResults(t.add(expected.get(0)) == false, testNum++);
 
-        System.out.println("\nIterative Add Method Testing:");
+        System.out.println("\nIterative Add Testing:");
 
         // Test 1: Iterative Add
-        
+
         BinarySearchTree<Integer> tInt = new BinarySearchTree<>();
         tInt.iterativeAdd(50);
         tInt.iterativeAdd(25);
         tInt.iterativeAdd(75);
-        showTestResults(tInt.size() == 3 && tInt.isPresent(25), testNum++);
+        showTestResults(tInt.size() == 3, testNum++);
 
-        // Test 4: Iterative Add Duplicate
+        // Test 2: Iterative Add Duplicate
         showTestResults(tInt.iterativeAdd(50) == false, testNum++);
     }
 
     private static void testSearchAndMinMax() {
-        System.out.println("\n--- Testing Search, Min, and Max ---");
+        
+        // Setup
         BinarySearchTree<Integer> t = new BinarySearchTree<>();
         int[] vals = { 50, 10, 90, 5, 20 };
-        for (int v : vals) t.add(v);
+        for (int v : vals) {
+            t.add(v);
+        }
 
-        // Test 5: min()
+        // isPresent() Method
+        System.out.println("\nisPresent() Method Testing: ");
+
+        // Test 1: Element Not Present
+        showTestResults(!t.isPresent(100), testNum++);
+        
+        // Test 2: Element Present
+        showTestResults(t.isPresent(20), testNum++);
+
+        // min() Method
+        System.out.println("\nmin() Method Testing: ");
+        
+        // Test 1: min() from Original Values
         showTestResults(t.min() == 5, testNum++);
+        
+        // Test 2: min() after adding a -5 Values
+        t.add(-5);
+        showTestResults(t.min() == -5, testNum++);
 
+        // max() Method
+        System.out.println("\nmax() Method Testing: ");
+        
         // Test 6: max()
         showTestResults(t.max() == 90, testNum++);
-
-        // Test 7: isPresent()
-        showTestResults(t.isPresent(20) && !t.isPresent(100), testNum++);
     }
 
     private static void testRemovalLogic() {
