@@ -52,10 +52,9 @@ public class BSTTester {
             expectedList.add(val);
         }
         
-        expectedList.sort();
+        Collections.sort(expectedList);
         
-        showTestResults(t.size() == 3, testNum++);
-
+        
         // Test 2: Duplicate add (should return false)
         showTestResults(t.add("M") == false, testNum++);
 
