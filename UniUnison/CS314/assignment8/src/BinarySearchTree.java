@@ -20,7 +20,6 @@ import java.util.ArrayList;
  *            implement Comparable or inherit from a class that implements
  *            Comparable.
  */
-                                            p1234ssword
 public class BinarySearchTree<E extends Comparable<? super E>> {
 
     private BSTNode<E> root;
