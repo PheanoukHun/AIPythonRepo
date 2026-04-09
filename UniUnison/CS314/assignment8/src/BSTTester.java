@@ -160,12 +160,12 @@ public class BSTTester {
 
         // Test 2: get(kth) - Middle
         showTestResults(t.get(3) == 50, testNum++);
-        
+
         // size() Test
         // Test 1: size() on empty tree
         t = new BinarySearchTree<>();
         showTestResults(t.size() == 0, testNum++);
-        
+
         // Test 2: size() on non-empty tree
         for (int i = 1; i <= 5; i++) {
             t.add(i * 10);
@@ -194,22 +194,22 @@ public class BSTTester {
 
         // getAllGreaterAndLessThan Tests
         System.out.println("\ngetAllGreaterThan() Tests: ");
-        
+
         // Test 1: getAllGreaterThan with value greater than max value of tree.
         List<Integer> greaterThanMax = t.getAllGreaterThan(110);
         showTestResults(greaterThanMax.isEmpty(), testNum++);
-        
+
         // Test 2: getAllGreaterThan with value less than min value of tree.
         List<Integer> lessThanMin = t.getAllGreaterThan(5);
         showTestResults(lessThanMin.size() == 10, testNum++);
 
         // getAllLessThan Tests
         System.out.println("\ngetAllLessThan() Tests: ");
-        
+
         // Test 1: getAllLessThan with value greater than max value of tree.
         List<Integer> lessThanMax = t.getAllLessThan(110);
         showTestResults(lessThanMax.size() == 10, testNum++);
-        
+
         // Test 2: getAllLessThan with value less than min value of tree.
         List<Integer> greaterThanMin = t.getAllLessThan(5);
         showTestResults(greaterThanMin.isEmpty(), testNum++);
@@ -219,5 +219,26 @@ public class BSTTester {
         System.out.print(" *  Test " + testNum + ":");
         String passedString = passed ? "PASSED" : "FAILED";
         System.out.println(" Results: " + passedString);
+    }
+
+    private static void experimentCode() {
+        Stopwatch sw = new Stopwatch();
+
+        for (int i = 0; i < 10; i++) {
+            BinarySearchTree<Integer> t = new BinarySearchTree<>();
+
+            sw.start();
+            for (int i = 0; i < 1000; i++) {
+                t.add(i);
+            }
+            sw.stop();
+
+            System.out.println("\nExperiment Results: ");
+            System.out.println(
+                " * Time taken: " + (sw.time() / 1000) + " seconds"
+            );
+            System.out.println(" * Height of Tree: " + t.height());
+            System.out.println(" * Number of Nodes: " + t.size());
+        }
     }
 }
