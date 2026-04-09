@@ -12,6 +12,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.TreeSet;
 import java.util.List;
 import java.util.Random;
 
@@ -28,11 +29,12 @@ public class BSTTester {
      * @param args Not used
      */
     public static void main(String[] args) {
-        testAddMethods();
-        testSearchAndMinMax();
-        testRemovalLogic();
-        testStructureMethods();
-        testGetAllGreaterAndLessThan();
+        // testAddMethods();
+        // testSearchAndMinMax();
+        // testRemovalLogic();
+        // testStructureMethods();
+        // testGetAllGreaterAndLessThan();
+        experimentCode();
     }
 
     private static void testAddMethods() {
@@ -225,20 +227,21 @@ public class BSTTester {
         Stopwatch sw = new Stopwatch();
 
         for (int i = 0; i < 10; i++) {
+            
             BinarySearchTree<Integer> t = new BinarySearchTree<>();
 
+            // Timing the Add Method
             sw.start();
-            for (int i = 0; i < 1000; i++) {
-                t.add(i);
+            for (int j = 0; j < 1000; j++) {
+                t.add(j);
             }
             sw.stop();
 
-            System.out.println("\nExperiment Results: ");
-            System.out.println(
-                " * Time taken: " + (sw.time() / 1000) + " seconds"
-            );
+            System.out.println("\nRun " + (i + 1) + " Results: ");
+            System.out.println(" * Time taken: " + sw.time() + " seconds");
             System.out.println(" * Height of Tree: " + t.height());
             System.out.println(" * Number of Nodes: " + t.size());
+            
         }
     }
 }
