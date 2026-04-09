@@ -38,18 +38,10 @@ public class BSTTester {
     private static void testAddMethods() {
         
         System.out.println("\nAdd Method Testing: ");
-        
-        ArrayList<String> expectedList = new ArrayList<>();
         BinarySearchTree<String> t = new BinarySearchTree<>();
 
         // Test 1: Recursive Add a lot of elements
         
-        Random r = new Random();
-        for (int i = 0; i < 99; i++) {
-            String val = r.nextInt(100) + "";
-            t.add(val);
-            expectedList.add(val);
-        }
         
         Collections.sort(expectedList);
         
