@@ -11,50 +11,90 @@
 
 /**
 Question 1 - 2:
-1 Run for Tree of 1000:
+Run for Tree of 1000:
  * Time taken: 0.006534759 seconds
  * Height of Tree: 999
  * Number of Nodes: 1000
 
 Question 3:
-10 Runs Results:
+Average of the 10 Runs Results for Tree of 1000:
  * Time taken: 0.0021600871 seconds
  * Height of Tree: 999
  * Number of Nodes: 1000
 
 Question 4:
-10 Runs Results for Tree of 2000:
+Average of the 10 Runs Results for Tree of 2000:
  * Time taken: 0.008569375399999999 seconds
  * Height of Tree: 1999
  * Number of Nodes: 2000
 
-10 Runs Results for Tree of 4000:
+Average of the 10 Runs Results for Tree of 4000:
  * Time taken: 0.0334673702 seconds
  * Height of Tree: 3999
  * Number of Nodes: 4000
 
-10 Runs Results for Tree of 8000:
+Average of the 10 Runs Results for Tree of 8000:
  * Time taken: 0.1336590114 seconds
  * Height of Tree: 7999
  * Number of Nodes: 8000
 
-10 Runs Results for Tree of 16000:
+Average of the 10 Runs Results for Tree of 16000:
  * Time taken: 0.5391714908 seconds
  * Height of Tree: 15999
  * Number of Nodes: 16000
 
-10 Runs Results for Tree of 32000:
+Average of the 10 Runs Results for Tree of 32000:
  * Time taken: 2.2370041185000002 seconds
  * Height of Tree: 31999
  * Number of Nodes: 32000
 
-10 Runs Results for Tree of 64000:
+Average of the 10 Runs Results for Tree of 64000:
  * Time taken: 9.342193508200001 seconds
  * Height of Tree: 63999
  * Number of Nodes: 64000
 
-Question 5:
+Question 5: (Predicted Results)
+Average of the 10 Runs Results for Tree of 128000:
+ * Time taken: 37.368774033 seconds
+ * Height of Tree: 127999
+ * Number of Nodes: 128000
 
+Average of the 10 Runs Results for Tree of 256000:
+ * Time taken: 149.4753096131 seconds
+ * Height of Tree: 255999
+ * Number of Nodes: 256000
+
+Average of the 10 Runs Results for Tree of 512000:
+ * Time taken: 597.901238452 seconds
+ * Height of Tree: 511999
+ * Number of Nodes: 512000
+ 
+Question 6:
+1 Run for TreeSet of 1000 Elements:
+ * Time taken: 0.002628803 seconds
+
+Average of the 10 Runs Results for TreeSet of 1000 Elements:
+ * Time taken: 3.7402310000000005E-4 seconds
+
+Average of the 10 Runs Results for TreeSet of 2000 Elements:
+ * Time taken: 4.793184000000001E-4 seconds
+
+Average of the 10 Runs Results for TreeSet of 4000 Elements:
+ * Time taken: 5.859439E-4 seconds
+
+Average of the 10 Runs Results for TreeSet of 8000 Elements:
+ * Time taken: 8.678467000000003E-4 seconds
+
+Average of the 10 Runs Results for TreeSet of 16000 Elements:
+ * Time taken: 0.0016239432000000002 seconds
+
+Average of the 10 Runs Results for TreeSet of 32000 Elements:
+ * Time taken: 0.0033143756999999994 seconds
+
+Average of the 10 Runs Results for TreeSet of 64000 Elements:
+ * Time taken: 0.007284705800000001 seconds
+ 
+Question 7: 
 */
 
 import java.util.ArrayList;
@@ -307,7 +347,7 @@ public class BSTTester {
             totalTime += sw.time();
             totalHeight += t2.height();
         }
-        System.out.println("\n10 Runs Results for Tree of 1000 Nodes: ");
+        System.out.println("\nAverage of the 10 Runs Results for Tree of 1000 Nodes: ");
         System.out.println(" * Time taken: " + totalTime / 10 + " seconds");
         System.out.println(" * Height of Tree: " + totalHeight / 10);
         System.out.println(" * Number of Nodes: " + 1000);
@@ -326,7 +366,7 @@ public class BSTTester {
                 totalTime += sw.time();
                 totalHeight += t3.height();
             }
-            System.out.println("\n10 Runs Results for Tree of " + i + "Nodes:");
+            System.out.println("\nAverage of the 10 Runs Results for Tree of " + i + "Nodes:");
             System.out.println(" * Time taken: " + totalTime / 10 + " seconds");
             System.out.println(" * Height of Tree: " + totalHeight / 10);
             System.out.println(" * Number of Nodes: " + i);
@@ -335,9 +375,9 @@ public class BSTTester {
 
     private static void experimentCodeWithTreeSet() {
         Stopwatch sw = new Stopwatch();
-        
+
         // Part 4: Part 1-3 for Java TreeSet Instead
-        
+
         // Part 1:
         TreeSet<Integer> t1 = new TreeSet<>();
         sw.start();
@@ -345,10 +385,10 @@ public class BSTTester {
             t1.add(k);
         }
         sw.stop();
-        
-        System.out.println("1 Run for TreeSet of 1000 Elements:");
+
+        System.out.println("\n1 Run for TreeSet of 1000 Elements:");
         System.out.println(" * Time taken: " + sw.time() + " seconds");
-        
+
         // Part 2:
         double totalTime = 0;
         for (int i = 0; i < 10; i++) {
@@ -360,12 +400,25 @@ public class BSTTester {
             sw.stop();
             totalTime += sw.time();
         }
-        System.out.println("10 Runs Results for TreeSet of 1000 Elements:");
+        System.out.println("\nAverage of the 10 Runs Results for TreeSet of 1000 Elements:");
         System.out.println(" * Time taken: " + totalTime / 10 + " seconds");
 
-        // Part 3: 
-        for (int i = 2000; i <= 64000; i *= 2000) {
-            
+        // Part 3:
+        for (int i = 2000; i <= 64000; i *= 2) {
+            totalTime = 0.0;
+            for (int j = 0; j < 10; j++) {
+                TreeSet<Integer> t3 = new TreeSet<>();
+                sw.start();
+                for (int k = 0; k < i; k++) {
+                    t3.add(k);
+                }
+                sw.stop();
+                totalTime += sw.time();
+            }
+            System.out.println(
+                "\nAverage of the 10 Runs  Results for TreeSet of " + i + " Elements:"
+            );
+            System.out.println(" * Time taken: " + totalTime / 10 + " seconds");
         }
     }
 }
