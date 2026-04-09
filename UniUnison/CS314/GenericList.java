@@ -22,7 +22,7 @@ public class GenericList<E> {
         }
         size -= n;
     }
-    
+
     private boolean isValidPartition(int start, int n) {
         for (int i = start + 1; i < start + n; i++) {
             if (con[i - 1].compareTo(con[i]) >= 0) {
@@ -33,7 +33,18 @@ public class GenericList<E> {
     }
 
     public int booksAvailable(Map<String, Set<Integer>> dueDates, ArrayList<String> books) {
-        
+        int available = Integer.MIN_VALUE;
+        for (String book : books) {
+            Set<Integer> dueDateSet = dueDates.get(book);
+            if (dueDateSet == null) { return -1; }
+            
+            int currMin = Integer.MAX_VALUE;
+            for (Integer dueDate : dueDateSet) {
+                currMin = Math.min(currMin, dueDate);
+            }
+            
+            available = Math.max(available, currMin);
+        }
+        return available;
     }
 }
-
