@@ -201,14 +201,14 @@ public class BSTTester {
         
         // Test 2: getAllGreaterThan with value less than min value of tree.
         List<Integer> lessThanMin = t.getAllGreaterThan(5);
-        showTestResults(lessThanMin.isEmpty(), testNum++);
+        showTestResults(lessThanMin.size() == 10, testNum++);
 
         // getAllLessThan Tests
         System.out.println("\ngetAllLessThan() Tests: ");
         
         // Test 1: getAllLessThan with value greater than max value of tree.
         List<Integer> lessThanMax = t.getAllLessThan(110);
-        showTestResults(lessThanMax.isEmpty(), testNum++);
+        showTestResults(lessThanMax.size() == 10, testNum++);
         
         // Test 2: getAllLessThan with value less than min value of tree.
         List<Integer> greaterThanMin = t.getAllLessThan(5);
