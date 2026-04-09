@@ -32,7 +32,7 @@ public class BSTTester {
         testSearchAndMinMax();
         testRemovalLogic();
         testStructureMethods();
-        testFilteringMethods();
+        testGetAllGreaterAndLessThan();
     }
 
     private static void testAddMethods() {
@@ -129,28 +129,43 @@ public class BSTTester {
     }
 
     private static void testStructureMethods() {
-        System.out.println("\n--- Testing Height, Depth, and Kth ---");
+        
+        // Setup
         BinarySearchTree<Integer> t = new BinarySearchTree<>();
 
-        // Test 12: Height of empty tree
+        // Height Tests
+        System.out.println("\nheight() Tests: ");
+        
+        // Test 1: Height of empty tree
         showTestResults(t.height() == -1, testNum++);
 
-        // Test 13: Height of non-trivial tree
-        int[] vals = { 50, 25, 75, 10, 30, 60, 80 };
-        for (int v : vals) t.add(v);
+        // Test 2: Height of non-trivial tree
+        int[] values = new int[]{50, 25, 75, 12, 30};
+        for (int value : values) {
+            t.add(value);
+        }
         showTestResults(t.height() == 2, testNum++);
 
-        // Test 14: numNodesAtDepth
-        showTestResults(t.numNodesAtDepth(2) == 4, testNum++);
+        // numNodesAtDepth Tests
+        System.out.println("\nnumNodesAtDepth() Tests: ");
+        
+        // Test 1: Node at Largest Depth
+        showTestResults(t.numNodesAtDepth(2) == 2, testNum++);
 
-        // Test 15: get(kth) - Smallest
-        showTestResults(t.get(0) == 10, testNum++);
+        // Test 2: Node at Smallest Depth
+        showTestResults(t.numNodesAtDepth(0) == 1, testNum++);
 
-        // Test 16: get(kth) - Middle/Root
+        // get() Tests
+        System.out.println("\nget() Tests: ");
+        
+        // Test 1: get(kth) - Smallest
+        showTestResults(t.get(0) == 12, testNum++);
+
+        // Test 2: get(kth) - Middle
         showTestResults(t.get(3) == 50, testNum++);
     }
 
-    private static void testFilteringMethods() {
+    private static void getAllGreaterAndLessThan() {
         System.out.println(
             "\n--- Testing getAll, LessThan, and GreaterThan ---"
         );
