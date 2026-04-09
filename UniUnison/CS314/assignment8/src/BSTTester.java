@@ -166,10 +166,14 @@ public class BSTTester {
     }
 
     private static void getAllGreaterAndLessThan() {
-        System.out.println(
-            "\n--- Testing getAll, LessThan, and GreaterThan ---"
-        );
+        
+        // Setup
         BinarySearchTree<Integer> t = new BinarySearchTree<>();
+        
+        
+        // Get all 
+        
+        
         for (int i = 1; i <= 10; i++) t.add(i * 10); // 10, 20, 30... 100
 
         // Test 17: getAll
