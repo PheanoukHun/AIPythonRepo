@@ -12,9 +12,9 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.TreeSet;
 import java.util.List;
 import java.util.Random;
+import java.util.TreeSet;
 
 /**
  * Some test cases for CS314 Binary Search Tree assignment.
@@ -226,22 +226,38 @@ public class BSTTester {
     private static void experimentCode() {
         Stopwatch sw = new Stopwatch();
 
+        // Part 1:
+        BinarySearchTree<Integer> t1 = new BinarySearchTree<>();
+        sw.start();
+        for (int j = 0; j < 1000; j++) {
+            t1.add(j);
+        }
+        sw.stop();
+        System.out.println("\nResults for Tree of 1000:");
+        System.out.println(" * Time taken: " + sw.time() + " seconds");
+        System.out.println(" * Height of Tree: " + t1.height());
+        System.out.println(" * Number of Nodes: " + t1.size());
+
+        // Part 2: Repeat Tree of 1000, 10 times
+        double totalTime = 0;
+        int totalHeight = 0;
+
         for (int i = 0; i < 10; i++) {
-            
-            BinarySearchTree<Integer> t = new BinarySearchTree<>();
+            BinarySearchTree<Integer> t2 = new BinarySearchTree<>();
 
             // Timing the Add Method
             sw.start();
             for (int j = 0; j < 1000; j++) {
-                t.add(j);
+                t2.add(j);
             }
             sw.stop();
-
-            System.out.println("\nRun " + (i + 1) + " Results: ");
-            System.out.println(" * Time taken: " + sw.time() + " seconds");
-            System.out.println(" * Height of Tree: " + t.height());
-            System.out.println(" * Number of Nodes: " + t.size());
             
+            totalTime += sw.time();
+            totalHeight += t2.height();
         }
+        System.out.println("\n10 Runs Results: ");
+        System.out.println(" * Time taken: " + totalTime / 10 + " seconds");
+        System.out.println(" * Height of Tree: " + totalHeight / 10);
+        System.out.println(" * Number of Nodes: " + 1000);
     }
 }
