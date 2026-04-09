@@ -10,7 +10,6 @@
  */
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -43,7 +42,7 @@ public class BSTTester {
         ArrayList<String> expectedList = new ArrayList<>();
         BinarySearchTree<String> t = new BinarySearchTree<>();
 
-        // Test 1: Recursive Add and Size
+        // Test 1: Recursive Add a lot of elements
         
         Random r = new Random();
         for (int i = 0; i < 99; i++) {
