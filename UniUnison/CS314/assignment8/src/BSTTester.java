@@ -54,11 +54,14 @@ public class BSTTester {
         
         Collections.sort(expectedList);
         
-        
+
         // Test 2: Duplicate add (should return false)
         showTestResults(t.add("M") == false, testNum++);
 
-        // Test 3: Iterative Add
+        System.out.println("\nIterative Add Method Testing:");
+
+        // Test 1: Iterative Add
+        
         BinarySearchTree<Integer> tInt = new BinarySearchTree<>();
         tInt.iterativeAdd(50);
         tInt.iterativeAdd(25);
