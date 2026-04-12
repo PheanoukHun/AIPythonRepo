@@ -10,7 +10,7 @@
  *  UTEID: ph23434
  *  email address: ph23434@eid.utexas.edu
  *
- *  Grader name: 
+ *  Grader name:
  *  Section number:
  */
 
@@ -21,6 +21,10 @@ import java.io.OutputStream;
 public class SimpleHuffProcessor implements IHuffProcessor {
 
     private IHuffViewer myViewer;
+    private int[] freqs;
+    private Map<Integer, String> huffCodes;
+    private HuffManCodeTree huffTree;
+    private int headerFormat;
 
     /**
      * Preprocess data so that compression is possible ---
@@ -40,8 +44,15 @@ public class SimpleHuffProcessor implements IHuffProcessor {
      * @throws IOException if an error occurs while reading from the input file.
      */
     public int preprocessCompress(InputStream in, int headerFormat) throws IOException {
+        this.headerFormat = headerFormat;
+        freqs = new int[ALPH_SIZE];
+        BitInputStream bitIn = new BitInputStream(in);
         
-        
+        int symbol = bitIn.readBits(8);
+        while (symbol != -1) {
+            freqs[symbol]++;
+            symbol = bitIn.readBits(8);
+        }
     }
 
     /**
