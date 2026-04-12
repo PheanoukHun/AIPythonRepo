@@ -17,6 +17,8 @@
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SimpleHuffProcessor implements IHuffProcessor {
 
@@ -130,7 +132,13 @@ public class SimpleHuffProcessor implements IHuffProcessor {
                 queue.add(new TreeNode(i, freqs[i]));
             }
         }
+        
+        public Map<Integer, String> getCodes() {
+            Map<Integer, String> codes = new HashMap<>();
+        }
 
-        private class CustomPriorityQueue<E> {}
+        private class CustomPriorityQueue<TreeNode> {
+            
+        }
     }
 }
