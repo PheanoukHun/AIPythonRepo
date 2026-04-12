@@ -48,11 +48,17 @@ public class SimpleHuffProcessor implements IHuffProcessor {
         freqs = new int[ALPH_SIZE];
         BitInputStream bitIn = new BitInputStream(in);
         
-        int symbol = bitIn.readBits(8);
+        int symbol = bitIn.readBits(BITS_PER_WORD);
+        int count = symbol != -1 ? 1 : 0;
+        
         while (symbol != -1) {
             freqs[symbol]++;
-            symbol = bitIn.readBits(8);
+            symbol = bitIn.readBits(BITS_PER_WORD);
+            count++;
         }
+        
+        bitIn.close();
+        return count;
     }
 
     /**
