@@ -66,7 +66,7 @@ public class SimpleHuffProcessor implements IHuffProcessor {
         huffTree = new HuffmanCodeTree(freqs);
         huffCodes = huffTree.getCodes();
 
-        return originalSize;
+        return compressedBits - originalSize;
     }
 
     /**
