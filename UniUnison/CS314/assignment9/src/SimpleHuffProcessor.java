@@ -109,4 +109,35 @@ public class SimpleHuffProcessor implements IHuffProcessor {
             myViewer.update(s);
         }
     }
+    
+    private class HuffManCodeTree {
+        TreeNode root;
+
+        public HuffManCodeTree() {
+            root = null;
+        }
+        
+        public HuffManCodeTree(TreeNode root) {
+            this.root = root;
+        }
+        
+        public HuffManCodeTree(int[] freqs) {
+            root = buildTree(freqs);
+        }
+
+        public TreeNode getRoot() {
+            return root;
+        }
+        
+        private TreeNode buildTree(int[] freqs) {
+            CustomPriorityQueue queue = new CustomPriorityQueue();
+            for (int i : freqs) {
+                queue.add(i);
+            }
+        }
+        
+        private class CustomPriorityQueue<E> {
+            
+        }
+    }
 }
