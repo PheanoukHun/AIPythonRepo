@@ -6,11 +6,7 @@
  *
  *  Number of slip days used:
  *
- *  Student 1:
- *  UTEID:
- *  email address:
- *
- *  Student 2:
+ *  Student 1: Pheanouk Hun
  *  UTEID:
  *  email address:
  *
