@@ -64,7 +64,7 @@ public class SimpleHuffProcessor implements IHuffProcessor {
 
         // Create the Huffman Code Tree and getting the Huffman Codes
         int compressedBits = 2 * BITS_PER_INT;
-        
+
         huffTree = new HuffmanCodeTree(freqs);
         huffCodes = huffTree.getCodes();
 
@@ -132,13 +132,23 @@ public class SimpleHuffProcessor implements IHuffProcessor {
                 queue.add(new TreeNode(i, freqs[i]));
             }
         }
-        
+
         public Map<Integer, String> getCodes() {
             Map<Integer, String> codes = new HashMap<>();
+            getCodeHelper(codes, root, "");
+            return codes;
         }
 
-        private class CustomPriorityQueue<TreeNode> {
-            
-        }
+        private void getCodesHelper(Map<Integer, String> codes, TreeNode currNode,
+            String currVal) {
+                if(!currNode.isLeaf()) {
+                    getCodesHelper(codes, currNode.getLeft(), currVal + "0");
+                    getCodesHelper(codes, currNode.getRight(), currVal + "1");
+                } else {
+                    codes.put(currNode.getValue(), currVal);
+                }
+            }
+
+        private class CustomPriorityQueue<TreeNode> {}
     }
 }
