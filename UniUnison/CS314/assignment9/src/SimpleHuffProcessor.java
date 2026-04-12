@@ -61,6 +61,8 @@ public class SimpleHuffProcessor implements IHuffProcessor {
         freqs[PSEUDO_EOF] = 1;
 
         // Create the Huffman Code Tree and getting the Huffman Codes
+        int compressedBits = 2 * BITS_PER_INT;
+        
         huffTree = new HuffmanCodeTree(freqs);
         huffCodes = huffTree.getCodes();
 
@@ -125,14 +127,10 @@ public class SimpleHuffProcessor implements IHuffProcessor {
         private TreeNode buildTree(int[] freqs) {
             CustomPriorityQueue queue = new CustomPriorityQueue();
             for (int i = 0; i < freqs.length; i++) {
-                if (freqs[i] > 0) {
-                    queue.add(new TreeNode(i, freqs[i]));
-                }
+                queue.add(new TreeNode(i, freqs[i]));
             }
         }
 
-        private class CustomPriorityQueue<E> {
-            
-        }
+        private class CustomPriorityQueue<E> {}
     }
 }
