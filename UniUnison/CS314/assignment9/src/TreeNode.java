@@ -1,5 +1,3 @@
-
-
 /**
  * Utility binary-tree (Huffman tree) node for Huffman coding.
  * This is a simple, standard binary-tree node implementing
@@ -71,7 +69,6 @@ public class TreeNode implements Comparable<TreeNode> {
      */
 
     public int compareTo(TreeNode rhs) {
-
         return frequency - rhs.frequency;
     }
 

@@ -75,14 +75,13 @@ public class SimpleHuffProcessor implements IHuffProcessor {
      * @param in is the stream being compressed (NOT a BitInputStream)
      * @param out is bound to a file/stream to which bits are written
      * for the compressed file (not a BitOutputStream)
-     * @param force if this is true create the output file even if it is larger than the input file.
-     * If this is false do not create the output file if it is larger than the input file.
+     * @param force if this is true create the output file even if it is larger than the input
+     * file. If this is false do not create the output file if it is larger than the input file.
      * @return the number of bits written.
      * @throws IOException if an error occurs while reading from the input file or
      * writing to the output file.
      */
-    public int compress(InputStream in, OutputStream out, boolean force)
-        throws IOException {
+    public int compress(InputStream in, OutputStream out, boolean force) throws IOException {
         throw new IOException("compress is not implemented");
         //return 0;
     }

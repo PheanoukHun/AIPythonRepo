@@ -88,9 +88,7 @@ public class BitInputStream extends InputStream {
         try {
             reset();
         } catch (IOException e) {
-            throw new RuntimeException(
-                "could not open file for reading bits " + e
-            );
+            throw new RuntimeException("could not open file for reading bits " + e);
         }
     }
 
