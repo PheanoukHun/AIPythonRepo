@@ -124,8 +124,10 @@ public class SimpleHuffProcessor implements IHuffProcessor {
 
         private TreeNode buildTree(int[] freqs) {
             CustomPriorityQueue queue = new CustomPriorityQueue();
-            for (int i : freqs) {
-                queue.add(i);
+            for (int i = 0; i < freqs.length; i++) {
+                if (freqs[i] > 0) {
+                    queue.add(new TreeNode(i, freqs[i]));
+                }
             }
         }
 
