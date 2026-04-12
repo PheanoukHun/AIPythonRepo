@@ -1,16 +1,16 @@
 /*  Student information for assignment:
  *
- *  On <MY|OUR> honor, <NAME1> (and <NAME2),
- *  this programming assignment is <MY|OUR> own work
- *  and <I|WE> have not provided this code to any other student.
+ *  On MY honor, Pheanouk Hun,
+ *  this programming assignment is MY own work
+ *  and I have not provided this code to any other student.
  *
  *  Number of slip days used:
  *
  *  Student 1: Pheanouk Hun
- *  UTEID:
- *  email address:
+ *  UTEID: ph23434
+ *  email address: ph23434@eid.utexas.edu
  *
- *  Grader name:
+ *  Grader name: 
  *  Section number:
  */
 
