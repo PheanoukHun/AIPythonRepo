@@ -1,8 +1,6 @@
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ProgressMonitorInputStream;
@@ -14,18 +12,22 @@ import javax.swing.UIManager;
  *
  */
 public class Diff {
- 
+
     protected static JFileChooser ourChooser = new JFileChooser(".");
-    
+
     /**
      * Show a popup with the diff output.
      * @param message The message to show,
      */
     public static void showMessage(String message) {
-        JOptionPane.showMessageDialog(null, message,"Diff Output",
-                JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(
+            null,
+            message,
+            "Diff Output",
+            JOptionPane.INFORMATION_MESSAGE
+        );
     }
-    
+
     /**
      * Check for the give files for differences.
      * @param files The files to check. We expect files.length = 2.
@@ -34,12 +36,16 @@ public class Diff {
     public static void doDiffer(File[] files, DiffStats diffStats) {
         final int BITS_PER_BYTE = 8;
         try {
-            ProgressMonitorInputStream stream1 = 
-                new ProgressMonitorInputStream(null, "reading " + files[0].getName(),
-                        new FileInputStream(files[0]));
-            ProgressMonitorInputStream stream2 = 
-                new ProgressMonitorInputStream(null, "reading " + files[1].getName(),
-                        new FileInputStream(files[1]));
+            ProgressMonitorInputStream stream1 = new ProgressMonitorInputStream(
+                null,
+                "reading " + files[0].getName(),
+                new FileInputStream(files[0])
+            );
+            ProgressMonitorInputStream stream2 = new ProgressMonitorInputStream(
+                null,
+                "reading " + files[1].getName(),
+                new FileInputStream(files[1])
+            );
             BitInputStream b1 = new BitInputStream(stream1);
             BitInputStream b2 = new BitInputStream(stream2);
             diffStats.file1Size = files[0].length();
@@ -50,8 +56,8 @@ public class Diff {
             while (x != -1 && y != -1) {
                 if (x != y) {
                     diffStats.totalDifferences++;
-                    if (diffStats.firstDiff == -1)
-                        diffStats.firstDiff = bytesRead;
+                    if (diffStats.firstDiff == -1) diffStats.firstDiff =
+                        bytesRead;
                 }
                 x = b1.readBits(BITS_PER_BYTE);
                 y = b2.readBits(BITS_PER_BYTE);
@@ -62,64 +68,80 @@ public class Diff {
             b2.close();
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null,"trouble reading","Diff Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                null,
+                "trouble reading",
+                "Diff Error",
+                JOptionPane.ERROR_MESSAGE
+            );
         }
-      
     }
-    
+
     /**
-     * Check two files for differences. 
+     * Check two files for differences.
      * @param args None expected.
      */
-    public static void main(String[] args){
+    public static void main(String[] args) {
         setLookAndFeel();
         ourChooser.setMultiSelectionEnabled(true);
         ourChooser.setDialogTitle("Diff: choose two files");
         int retval = ourChooser.showOpenDialog(null);
-        if (retval == JFileChooser.APPROVE_OPTION){
-                File[] files = ourChooser.getSelectedFiles();
-                if (files.length != 2){
-                    JOptionPane.showMessageDialog(null,"Choose Two Files", 
-                            "Diff Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    DiffStats ds = new DiffStats();
-                    doDiffer(files, ds); 
-                    System.out.println("Results of comparing files: ");
-                    System.out.println(ds);
-                }
-        }           
+        if (retval == JFileChooser.APPROVE_OPTION) {
+            File[] files = ourChooser.getSelectedFiles();
+            if (files.length != 2) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Choose Two Files",
+                    "Diff Error",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            } else {
+                DiffStats ds = new DiffStats();
+                doDiffer(files, ds);
+                System.out.println("Results of comparing files: ");
+                System.out.println(ds);
+            }
+        }
     }
 
     private static void setLookAndFeel() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch(Exception e) {
-            System.out.println("Unable to set look at feel to local settings. " +
-                    "Continuing with default Java look and feel.");
+        } catch (Exception e) {
+            System.out.println(
+                "Unable to set look at feel to local settings. " +
+                    "Continuing with default Java look and feel."
+            );
         }
     }
-    
+
     // Used to store differences between files, if any.
     private static class DiffStats {
+
         private long file1Size;
         private long file2Size;
         private int firstDiff;
         private int totalDifferences;
-        
+
         private DiffStats() {
             firstDiff = -1;
         }
-        
+
         public String toString() {
-            String result =  "file 1 size in bytes: " + file1Size + "\n"
-                   + "file 2 size in bytes: " + file2Size + "\n";
+            String result =
+                "file 1 size in bytes: " +
+                file1Size +
+                "\n" +
+                "file 2 size in bytes: " +
+                file2Size +
+                "\n";
             if (firstDiff == -1) {
                 result += "All bytes in files the same\n";
             } else {
-                result += "number of bytes different: " + totalDifferences + "\n";
-                result += "first difference occured after " + firstDiff + " bytes.\n";
+                result +=
+                    "number of bytes different: " + totalDifferences + "\n";
+                result +=
+                    "first difference occured after " + firstDiff + " bytes.\n";
             }
             return result;
         }

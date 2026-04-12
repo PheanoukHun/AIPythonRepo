@@ -1,8 +1,6 @@
-
 public interface IHuffViewer {
-
     /**
-     * Associates this view with the given model. The GUI (or other View) will 
+     * Associates this view with the given model. The GUI (or other View) will
      * attach itself to the model so that communication between the view
      * and the model as well as <em>vice versa</em> is supported.
      * @param model is the model for this view
@@ -24,9 +22,8 @@ public interface IHuffViewer {
     public void showMessage(String s);
 
     /**
-     * Show a message indicating an error; 
+     * Show a message indicating an error;
      * @param s is the error-message displayed
      */
     public void showError(String s);
-    
 }

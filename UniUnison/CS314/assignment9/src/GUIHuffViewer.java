@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -43,7 +42,7 @@ import javax.swing.ProgressMonitorInputStream;
 public class GUIHuffViewer extends JFrame implements IHuffViewer {
 
     private static String HUFF_SUFFIX = ".hf";
-    private static String UNHUFF_SUFFIX = ".unhf";   
+    private static String UNHUFF_SUFFIX = ".unhf";
 
     private JTextArea myOutput;
     private IHuffProcessor myModel;
@@ -54,10 +53,11 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
     private Thread myFirstFileThread;
     private boolean myFirstReadingDone;
 
-    private static JFileChooser ourChooser = 
-            new JFileChooser(System.getProperties().getProperty("user.dir"));
+    private static JFileChooser ourChooser = new JFileChooser(
+        System.getProperties().getProperty("user.dir")
+    );
 
-    /** 
+    /**
      * Create a new graphical user interface to perform Huffman
      * encoding operations.
      * @param title The title to display in the window of the Viewer.
@@ -81,7 +81,7 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
     }
 
     /**
-     * Associates this view with the given model. The GUI/View will 
+     * Associates this view with the given model. The GUI/View will
      * attach itself to the model so that communication between the view
      * and the model as well as <em>vice versa</em> is supported.
      * @param model is the model for this view
@@ -112,16 +112,15 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
         final int NUM_COLS = 40;
         final int FONT_POINT = 18;
         JPanel p = new JPanel(new BorderLayout());
-        myOutput = new JTextArea(NUM_ROWS, NUM_COLS );
+        myOutput = new JTextArea(NUM_ROWS, NUM_COLS);
         myOutput.setFont(new Font(Font.MONOSPACED, Font.BOLD, FONT_POINT));
         p.setBorder(BorderFactory.createTitledBorder("output"));
         p.add(new JScrollPane(myOutput), BorderLayout.CENTER);
         return p;
-
     }
 
     /**
-     * Read a file. Choice is via a pop up window. 
+     * Read a file. Choice is via a pop up window.
      * @return The file opened.
      */
     protected File doRead() {
@@ -132,18 +131,23 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
         }
         showMessage("reading/initializing");
         myFile = ourChooser.getSelectedFile();
-        
+
         // Create an input stream for the file and a progress monitor.
-        final ProgressMonitorInputStream pmis 
-            = getMonitorableStream(getFastByteReader(myFile), "counting/reading bits ...");
+        final ProgressMonitorInputStream pmis = getMonitorableStream(
+            getFastByteReader(myFile),
+            "counting/reading bits ..."
+        );
         final ProgressMonitor progress = pmis.getProgressMonitor();
         try {
             myFirstFileThread = new Thread() {
                 public void run() {
                     try {
                         myFirstReadingDone = false;
-                        int saved = myModel.preprocessCompress(pmis, myHeaderFormat);
-                        showMessage("saved: "+ saved +" bits");
+                        int saved = myModel.preprocessCompress(
+                            pmis,
+                            myHeaderFormat
+                        );
+                        showMessage("saved: " + saved + " bits");
                         myFirstReadingDone = true;
                     } catch (IOException e) {
                         showError("reading exception\n " + e);
@@ -169,47 +173,44 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
      */
     protected JMenu makeOptionsMenu() {
         JMenu menu = new JMenu("Options");
-        JCheckBoxMenuItem force = new JCheckBoxMenuItem(new AbstractAction(
-                "Force Compression") {
-            
-            public void actionPerformed(ActionEvent ev) {
-                myForce = !myForce;
+        JCheckBoxMenuItem force = new JCheckBoxMenuItem(
+            new AbstractAction("Force Compression") {
+                public void actionPerformed(ActionEvent ev) {
+                    myForce = !myForce;
+                }
             }
-            
-        });
+        );
         menu.add(force);
         return menu;
     }
 
-    
-    
     protected JMenu makeHeaderMenu() {
-
-
         JMenu headerMenu = new JMenu("Header Format");
         ButtonGroup group = new ButtonGroup();
 
         // create the radio button for standard count format
-        JRadioButtonMenuItem countHeaderButton 
-        = new JRadioButtonMenuItem();
+        JRadioButtonMenuItem countHeaderButton = new JRadioButtonMenuItem();
         countHeaderButton.setSelected(true);
-        countHeaderButton.setAction(new AbstractAction("Use Count Format Header(SCF)") {
-            public void actionPerformed(ActionEvent ev) {
-                myHeaderFormat = IHuffConstants.STORE_COUNTS;
+        countHeaderButton.setAction(
+            new AbstractAction("Use Count Format Header(SCF)") {
+                public void actionPerformed(ActionEvent ev) {
+                    myHeaderFormat = IHuffConstants.STORE_COUNTS;
+                }
             }
-        });
+        );
         group.add(countHeaderButton);
         headerMenu.add(countHeaderButton);
 
         // create the radio button for standard tree format
-        JRadioButtonMenuItem treeHeaderButton 
-        = new JRadioButtonMenuItem();
+        JRadioButtonMenuItem treeHeaderButton = new JRadioButtonMenuItem();
         treeHeaderButton.setSelected(false);
-        treeHeaderButton.setAction(new AbstractAction("Use Tree Format Header(STF)") {
-            public void actionPerformed(ActionEvent ev) {
-                myHeaderFormat = IHuffConstants.STORE_TREE;
+        treeHeaderButton.setAction(
+            new AbstractAction("Use Tree Format Header(STF)") {
+                public void actionPerformed(ActionEvent ev) {
+                    myHeaderFormat = IHuffConstants.STORE_TREE;
+                }
             }
-        });
+        );
 
         group.add(treeHeaderButton);
         headerMenu.add(treeHeaderButton);
@@ -219,30 +220,42 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
     protected JMenu makeFileMenu() {
         JMenu fileMenu = new JMenu("File");
 
-        fileMenu.add(new AbstractAction("Open/Count - Precompress only. Does not create output file.") {
-            public void actionPerformed(ActionEvent ev) {
-                doRead();
+        fileMenu.add(
+            new AbstractAction(
+                "Open/Count - Precompress only. Does not create output file."
+            ) {
+                public void actionPerformed(ActionEvent ev) {
+                    doRead();
+                }
             }
-        });
+        );
 
-        fileMenu.add(new AbstractAction("Compress - Results in call to preprocessCompress and"
-                + " and then compress.") {
-            public void actionPerformed(ActionEvent ev) {
-                doSave();
+        fileMenu.add(
+            new AbstractAction(
+                "Compress - Results in call to preprocessCompress and" +
+                    " and then compress."
+            ) {
+                public void actionPerformed(ActionEvent ev) {
+                    doSave();
+                }
             }
-        });
+        );
 
-        fileMenu.add(new AbstractAction("Uncompress") {
-            public void actionPerformed(ActionEvent ev) {
-                doDecode();
+        fileMenu.add(
+            new AbstractAction("Uncompress") {
+                public void actionPerformed(ActionEvent ev) {
+                    doDecode();
+                }
             }
-        });
+        );
 
-        fileMenu.add(new AbstractAction("Quit") {
-            public void actionPerformed(ActionEvent ev) {
-                System.exit(0);
+        fileMenu.add(
+            new AbstractAction("Quit") {
+                public void actionPerformed(ActionEvent ev) {
+                    System.exit(0);
+                }
             }
-        });
+        );
         return fileMenu;
     }
 
@@ -266,13 +279,17 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
             String name = file.getName();
             String uname = name;
             if (name.endsWith(HUFF_SUFFIX)) {
-                uname = name.substring(0,name.length() - HUFF_SUFFIX.length()) + UNHUFF_SUFFIX;
-            }
-            else {
+                uname =
+                    name.substring(0, name.length() - HUFF_SUFFIX.length()) +
+                    UNHUFF_SUFFIX;
+            } else {
                 uname = name + UNHUFF_SUFFIX;
             }
-            String newName = JOptionPane.showInputDialog(this,
-                    "Name of uncompressed file", uname);
+            String newName = JOptionPane.showInputDialog(
+                this,
+                "Name of uncompressed file",
+                uname
+            );
             if (newName == null) {
                 return;
             }
@@ -282,7 +299,10 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
             newName = path.substring(0, pos) + newName;
             final File newFile = new File(newName);
             ProgressMonitorInputStream temp = null;
-            temp = getMonitorableStream(getFastByteReader(file),"uncompressing bits ...");
+            temp = getMonitorableStream(
+                getFastByteReader(file),
+                "uncompressing bits ..."
+            );
             final ProgressMonitorInputStream stream = temp;
 
             final ProgressMonitor progress = stream.getProgressMonitor();
@@ -292,9 +312,8 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
                     try {
                         myModel.uncompress(stream, out);
                     } catch (IOException e) {
-
                         cleanUp(newFile);
-                        showError("could not uncompress\n "+e);
+                        showError("could not uncompress\n " + e);
                         //e.printStackTrace();
                     }
                     if (progress.isCanceled()) {
@@ -315,14 +334,17 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
 
     private void doSave() {
         myFile = doRead();
-        if (myFile == null){
+        if (myFile == null) {
             return;
         }
 
         String name = myFile.getName();
         showMessage("compressing " + name);
-        String newName = JOptionPane.showInputDialog(this,
-                "Name of compressed file", name + HUFF_SUFFIX);
+        String newName = JOptionPane.showInputDialog(
+            this,
+            "Name of compressed file",
+            name + HUFF_SUFFIX
+        );
         if (newName == null) {
             return;
         }
@@ -338,15 +360,18 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
         final File outputFile = new File(newName);
         try {
             final FileOutputStream out = new FileOutputStream(outputFile);
-            ProgressMonitorInputStream  temp = null;
-            temp = getMonitorableStream(getFastByteReader(myFile), "compressing bits...");
-  
-            final ProgressMonitorInputStream pmis = temp; 
+            ProgressMonitorInputStream temp = null;
+            temp = getMonitorableStream(
+                getFastByteReader(myFile),
+                "compressing bits..."
+            );
+
+            final ProgressMonitorInputStream pmis = temp;
             final ProgressMonitor progress = pmis.getProgressMonitor();
             Thread fileWriterThread = new Thread() {
                 public void run() {
                     try {
-                        while (! myFirstReadingDone){
+                        while (!myFirstReadingDone) {
                             try {
                                 sleep(100);
                             } catch (InterruptedException e) {
@@ -382,11 +407,15 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
         }
     }
 
-    private ProgressMonitorInputStream getMonitorableStream(InputStream stream, String message) {
-
-
+    private ProgressMonitorInputStream getMonitorableStream(
+        InputStream stream,
+        String message
+    ) {
         final ProgressMonitorInputStream pmis = new ProgressMonitorInputStream(
-                this, message, stream);
+            this,
+            message,
+            stream
+        );
 
         ProgressMonitor progress = pmis.getProgressMonitor();
         progress.setMillisToDecideToPopup(1);
@@ -395,17 +424,17 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
         return pmis;
     }
 
-
-
-    private ProgressMonitorInputStream getMonitorableStream(File file,
-            String message) {
+    private ProgressMonitorInputStream getMonitorableStream(
+        File file,
+        String message
+    ) {
         try {
             FileInputStream stream = new FileInputStream(file);
-            if (stream == null){
-                System.out.println("null on "+file.getCanonicalPath());
+            if (stream == null) {
+                System.out.println("null on " + file.getCanonicalPath());
             }
-            final ProgressMonitorInputStream pmis = new ProgressMonitorInputStream(
-                    this, message, stream);
+            final ProgressMonitorInputStream pmis =
+                new ProgressMonitorInputStream(this, message, stream);
 
             ProgressMonitor progress = pmis.getProgressMonitor();
             progress.setMillisToDecideToPopup(1);
@@ -422,7 +451,7 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
     /**
      * Clear the text area, e.g., for a new message.
      */
-    public void clear(){
+    public void clear() {
         showMessage("");
         myOutput.setText("");
     }
@@ -433,7 +462,7 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
      * @param s is string to be displayed
      */
     public void update(String s) {
-        myOutput.append(s+"\n");
+        myOutput.append(s + "\n");
     }
 
     /**
@@ -451,19 +480,34 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
      * @param s is the error-message displayed
      */
     public void showError(String s) {
-        JOptionPane.showMessageDialog(this, s, "Huff info",
-                JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(
+            this,
+            s,
+            "Huff info",
+            JOptionPane.INFORMATION_MESSAGE
+        );
     }
 
-    private ByteArrayInputStream getFastByteReader(File f){
+    private ByteArrayInputStream getFastByteReader(File f) {
         ByteBuffer buffer = null;
         try {
             FileChannel channel = new FileInputStream(f).getChannel();
-            buffer = channel.map(FileChannel.MapMode.READ_ONLY, 0, channel.size());
+            buffer = channel.map(
+                FileChannel.MapMode.READ_ONLY,
+                0,
+                channel.size()
+            );
             byte[] barray = new byte[buffer.limit()];
 
-            if (barray.length != channel.size()){               
-                showError(String.format("Reading %s error: lengths differ %d %ld\n",f.getName(),barray.length,channel.size()));
+            if (barray.length != channel.size()) {
+                showError(
+                    String.format(
+                        "Reading %s error: lengths differ %d %ld\n",
+                        f.getName(),
+                        barray.length,
+                        channel.size()
+                    )
+                );
             }
             buffer.get(barray);
             return new ByteArrayInputStream(barray);
@@ -472,5 +516,4 @@ public class GUIHuffViewer extends JFrame implements IHuffViewer {
         }
         return null;
     }
-
 }

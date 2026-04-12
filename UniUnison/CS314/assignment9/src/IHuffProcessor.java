@@ -12,8 +12,7 @@ import java.io.OutputStream;
  * @author Owen Astrachan
  *
  */
-public interface IHuffProcessor extends IHuffConstants {  
-
+public interface IHuffProcessor extends IHuffConstants {
     /**
      * Make sure this model communicates with some view.
      * @param viewer is the view for communicating.
@@ -30,15 +29,15 @@ public interface IHuffProcessor extends IHuffConstants {
      * header to use, standard count format, standard tree format, or
      * possibly some format added in the future.
      * @return number of bits saved by compression or some other measure
-     * Note, to determine the number of 
-     * bits saved, the number of bits written includes 
-     * ALL bits that will be written including the 
-     * magic number, the header format number, the header to 
+     * Note, to determine the number of
+     * bits saved, the number of bits written includes
+     * ALL bits that will be written including the
+     * magic number, the header format number, the header to
      * reproduce the tree, AND the actual data.
      * @throws IOException if an error occurs while reading from the input file.
      */
-    public int preprocessCompress(InputStream in, int headerFormat) throws IOException;
-
+    public int preprocessCompress(InputStream in, int headerFormat)
+        throws IOException;
 
     /**
      * Compresses input to output, where the same InputStream has
@@ -50,22 +49,21 @@ public interface IHuffProcessor extends IHuffConstants {
      * for the compressed file (not a BitOutputStream)
      * @param force if this is true create the output file even if it is larger than the input file.
      * If this is false do not create the output file if it is larger than the input file.
-     * @return the number of bits written. 
+     * @return the number of bits written.
      * @throws IOException if an error occurs while reading from the input file or
      * writing to the output file.
      */
-    public int compress(InputStream in, OutputStream out, boolean force) throws IOException;
-
+    public int compress(InputStream in, OutputStream out, boolean force)
+        throws IOException;
 
     /**
      * Uncompress a previously compressed stream in, writing the
      * uncompressed bits/data to out.
-     * @param in is the previously compressed data (not a BitInputStream) 
+     * @param in is the previously compressed data (not a BitInputStream)
      * @param out is the uncompressed file/stream
      * @return the number of bits written to the uncompressed file/stream
      * @throws IOException if an error occurs while reading from the input file or
      * writing to the output file.
      */
     public int uncompress(InputStream in, OutputStream out) throws IOException;
-
 }

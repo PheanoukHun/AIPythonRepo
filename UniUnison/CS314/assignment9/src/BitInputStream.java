@@ -25,45 +25,75 @@ import java.io.InputStream;
 
 public class BitInputStream extends InputStream {
 
-    private InputStream     myInput;
-    private int             myBitCount;
-    private int             myBuffer;
-    private File            myFile;
-    
+    private InputStream myInput;
+    private int myBitCount;
+    private int myBuffer;
+    private File myFile;
+
     private static final int bmask[] = {
-        0x00, 0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff,
-        0x1ff,0x3ff,0x7ff,0xfff,0x1fff,0x3fff,0x7fff,0xffff,
-        0x1ffff,0x3ffff,0x7ffff,0xfffff,0x1fffff,0x3fffff,
-        0x7fffff,0xffffff,0x1ffffff,0x3ffffff,0x7ffffff,
-        0xfffffff,0x1fffffff,0x3fffffff,0x7fffffff,0xffffffff
+        0x00,
+        0x01,
+        0x03,
+        0x07,
+        0x0f,
+        0x1f,
+        0x3f,
+        0x7f,
+        0xff,
+        0x1ff,
+        0x3ff,
+        0x7ff,
+        0xfff,
+        0x1fff,
+        0x3fff,
+        0x7fff,
+        0xffff,
+        0x1ffff,
+        0x3ffff,
+        0x7ffff,
+        0xfffff,
+        0x1fffff,
+        0x3fffff,
+        0x7fffff,
+        0xffffff,
+        0x1ffffff,
+        0x3ffffff,
+        0x7ffffff,
+        0xfffffff,
+        0x1fffffff,
+        0x3fffffff,
+        0x7fffffff,
+        0xffffffff,
     };
 
     private static final int BITS_PER_BYTE = 8;
-    
+
     /**
      * Construct a bit-at-a-time input stream from a file whose
-     * name is supplied. 
+     * name is supplied.
      * @param filename is the name of the file that will be read.
      * @throws RuntimeException if filename cannot be opened.
      */
     public BitInputStream(String filename) {
         this(new File(filename));
     }
-    
+
     /**
      * Construct a bit-at-a-time input stream from <code>file</code>.
      * @param file is the File that is the source of the input
      * @throws RuntimeExceptoin if file cannot be opened.
      */
     public BitInputStream(File file) {
-        myFile = file;  
+        myFile = file;
         try {
             reset();
         } catch (IOException e) {
-            throw new RuntimeException("could not open file for reading bits "+e);
+            throw new RuntimeException(
+                "could not open file for reading bits " + e
+            );
         }
     }
-    
+
     /**
      * Open a bit-at-a-time stream that reads from supplied InputStream. If this
      * constructor is used the BitInputStream is not reset-able.
@@ -73,7 +103,7 @@ public class BitInputStream extends InputStream {
         myInput = in;
         myFile = null;
     }
-    
+
     /**
      * Return true if the stream has been initialized from a File and
      * is thus reset-able. If constructed from an InputStream it is not reset-able.
@@ -87,18 +117,19 @@ public class BitInputStream extends InputStream {
      * Reset stream to beginning. The implementation creates a new
      * stream.
      * @throws IOException if not reset-able (e.g., constructed from InputStream).
-     */   
+     */
     public void reset() throws IOException {
-        if (!markSupported()){
+        if (!markSupported()) {
             throw new IOException("not resettable");
-        } try {
+        }
+        try {
             close();
             myInput = new BufferedInputStream(new FileInputStream(myFile));
-        } catch (FileNotFoundException fnf){
+        } catch (FileNotFoundException fnf) {
             System.err.println("error opening " + myFile.getName() + " " + fnf);
         }
         myBuffer = myBitCount = 0;
-    } 
+    }
 
     /**
      * Closes the input stream.
@@ -109,8 +140,8 @@ public class BitInputStream extends InputStream {
             if (myInput != null) {
                 myInput.close();
             }
-        } catch (java.io.IOException ioe){
-           throw new RuntimeException("error closing bit stream " + ioe);
+        } catch (java.io.IOException ioe) {
+            throw new RuntimeException("error closing bit stream " + ioe);
         }
     }
 
@@ -126,19 +157,19 @@ public class BitInputStream extends InputStream {
 
     public int readBits(int howManyBits) throws IOException {
         int retval = 0;
-        if (myInput == null){
+        if (myInput == null) {
             return -1;
         }
-        
-        while (howManyBits > myBitCount){
-            retval |= ( myBuffer << (howManyBits - myBitCount) );
+
+        while (howManyBits > myBitCount) {
+            retval |= (myBuffer << (howManyBits - myBitCount));
             howManyBits -= myBitCount;
             try {
-                if ( (myBuffer = myInput.read()) == -1) {
+                if ((myBuffer = myInput.read()) == -1) {
                     return -1;
                 }
             } catch (IOException ioe) {
-                throw new IOException("bitreading trouble "+ioe);
+                throw new IOException("bitreading trouble " + ioe);
             }
             myBitCount = BITS_PER_BYTE;
         }
@@ -160,6 +191,3 @@ public class BitInputStream extends InputStream {
         return readBits(BITS_PER_BYTE);
     }
 }
-
-
-

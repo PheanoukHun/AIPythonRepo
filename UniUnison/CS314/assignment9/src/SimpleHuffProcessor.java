@@ -43,7 +43,8 @@ public class SimpleHuffProcessor implements IHuffProcessor {
      * reproduce the tree, AND the actual data.
      * @throws IOException if an error occurs while reading from the input file.
      */
-    public int preprocessCompress(InputStream in, int headerFormat) throws IOException {
+    public int preprocessCompress(InputStream in, int headerFormat)
+        throws IOException {
         showString("Not working yet");
         myViewer.update("Still not working");
         throw new IOException("preprocess not implemented");
@@ -51,7 +52,7 @@ public class SimpleHuffProcessor implements IHuffProcessor {
     }
 
     /**
-	 * Compresses input to output, where the same InputStream has
+     * Compresses input to output, where the same InputStream has
      * previously been pre-processed via <code>preprocessCompress</code>
      * storing state used by this call.
      * <br> pre: <code>preprocessCompress</code> must be called before this method
@@ -64,7 +65,8 @@ public class SimpleHuffProcessor implements IHuffProcessor {
      * @throws IOException if an error occurs while reading from the input file or
      * writing to the output file.
      */
-    public int compress(InputStream in, OutputStream out, boolean force) throws IOException {
+    public int compress(InputStream in, OutputStream out, boolean force)
+        throws IOException {
         throw new IOException("compress is not implemented");
         //return 0;
     }
@@ -79,15 +81,15 @@ public class SimpleHuffProcessor implements IHuffProcessor {
      * writing to the output file.
      */
     public int uncompress(InputStream in, OutputStream out) throws IOException {
-	        throw new IOException("uncompress not implemented");
-	        //return 0;
+        throw new IOException("uncompress not implemented");
+        //return 0;
     }
 
     public void setViewer(IHuffViewer viewer) {
         myViewer = viewer;
     }
 
-    private void showString(String s){
+    private void showString(String s) {
         if (myViewer != null) {
             myViewer.update(s);
         }
