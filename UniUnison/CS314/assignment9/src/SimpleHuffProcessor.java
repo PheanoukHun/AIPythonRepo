@@ -61,8 +61,8 @@ public class SimpleHuffProcessor implements IHuffProcessor {
         freqs[PSEUDO_EOF] = 1;
 
         // Create the Huffman Code Tree and getting the Huffman Codes
-        HuffmanCodeTree = new HuffmanCodeTree(freqs);
-        huffCodes = HuffmanCodeTree.getCodes();
+        huffTree = new HuffmanCodeTree(freqs);
+        huffCodes = huffTree.getCodes();
 
         return originalSize;
     }
@@ -109,18 +109,11 @@ public class SimpleHuffProcessor implements IHuffProcessor {
             myViewer.update(s);
         }
     }
-    
-    private class HuffManCodeTree {
-        TreeNode root;
 
-        public HuffManCodeTree() {
-            root = null;
-        }
-        
-        public HuffManCodeTree(TreeNode root) {
-            this.root = root;
-        }
-        
+    private class HuffManCodeTree {
+
+        private TreeNode root;
+
         public HuffManCodeTree(int[] freqs) {
             root = buildTree(freqs);
         }
@@ -128,16 +121,14 @@ public class SimpleHuffProcessor implements IHuffProcessor {
         public TreeNode getRoot() {
             return root;
         }
-        
+
         private TreeNode buildTree(int[] freqs) {
             CustomPriorityQueue queue = new CustomPriorityQueue();
             for (int i : freqs) {
                 queue.add(i);
             }
         }
-        
-        private class CustomPriorityQueue<E> {
-            
-        }
+
+        private class CustomPriorityQueue<E> {}
     }
 }
