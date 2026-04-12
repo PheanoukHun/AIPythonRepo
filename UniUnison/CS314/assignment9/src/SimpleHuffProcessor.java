@@ -44,21 +44,27 @@ public class SimpleHuffProcessor implements IHuffProcessor {
      * @throws IOException if an error occurs while reading from the input file.
      */
     public int preprocessCompress(InputStream in, int headerFormat) throws IOException {
+        // Initialize all Necessary Variables
         this.headerFormat = headerFormat;
         freqs = new int[ALPH_SIZE];
         BitInputStream bitIn = new BitInputStream(in);
-        
-        int symbol = bitIn.readBits(BITS_PER_WORD);
-        int count = symbol != -1 ? 1 : 0;
-        
+
+        // Create the Frequency Table
+        int symbol = bitIn.read();
+        int originalSize = 0;
         while (symbol != -1) {
             freqs[symbol]++;
-            symbol = bitIn.readBits(BITS_PER_WORD);
-            count++;
+            symbol = bitIn.read();
+            originalSize += BITS_PER_WORD;
         }
-        
         bitIn.close();
-        return count;
+        freqs[PSEUDO_EOF] = 1;
+
+        // Create the Huffman Code Tree and getting the Huffman Codes
+        HuffmanCodeTree = new HuffmanCodeTree(freqs);
+        huffCodes = HuffmanCodeTree.getCodes();
+
+        return originalSize;
     }
 
     /**
