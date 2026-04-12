@@ -39,12 +39,9 @@ public class SimpleHuffProcessor implements IHuffProcessor {
      * reproduce the tree, AND the actual data.
      * @throws IOException if an error occurs while reading from the input file.
      */
-    public int preprocessCompress(InputStream in, int headerFormat)
-        throws IOException {
-        showString("Not working yet");
-        myViewer.update("Still not working");
-        throw new IOException("preprocess not implemented");
-        //return 0;
+    public int preprocessCompress(InputStream in, int headerFormat) throws IOException {
+        
+        
     }
 
     /**
