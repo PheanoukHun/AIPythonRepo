@@ -54,8 +54,8 @@ public class SimpleHuffProcessor implements IHuffProcessor {
         int originalSize = 0;
         while (symbol != -1) {
             freqs[symbol]++;
-            symbol = bitIn.read();
             originalSize += BITS_PER_WORD;
+            symbol = bitIn.read();
         }
         bitIn.close();
         freqs[PSEUDO_EOF] = 1;
@@ -129,6 +129,8 @@ public class SimpleHuffProcessor implements IHuffProcessor {
             }
         }
 
-        private class CustomPriorityQueue<E> {}
+        private class CustomPriorityQueue<E> {
+            
+        }
     }
 }
