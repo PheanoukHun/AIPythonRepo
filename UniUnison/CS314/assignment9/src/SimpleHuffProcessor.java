@@ -29,21 +29,17 @@ public class SimpleHuffProcessor implements IHuffProcessor {
     private int headerFormat;
 
     /**
-     * Preprocess data so that compression is possible ---
-     * count characters/create tree/store state so that
-     * a subsequent call to compress will work. The InputStream
-     * is not a BitInputStream, so wrap it int one as needed.
-     * 
+     * Preprocess data so that compression is possible --- count characters/create tree/store
+     * state so that a subsequent call to compress will work. The InputStream is not a
+     * BitInputStream, so wrap it int one as needed. Note, to determine the number of bits saved,
+     * the number of bits written includes ALL bits that will be written including the magic 
+     * number, the header format number, the header to reproduce the tree, AND the actual data.
+     *
      * @param in - is the stream which could be subsequently compressed
-     * @param headerFormat -    a constant from IHuffProcessor that determines what kind of
-     * header to use, standard count format, standard tree format, or
-     * possibly some format added in the future.
-     * @return number of bits saved by compression or some other measure
-     * Note, to determine the number of
-     * bits saved, the number of bits written includes
-     * ALL bits that will be written including the
-     * magic number, the header format number, the header to
-     * reproduce the tree, AND the actual data.
+     * @param headerFormat - a constant from IHuffProcessor that determines what kind of
+     *                       header to use, standard count format, standard tree format, or
+     *                       possibly some format added in the future.
+     * @return - number of bits saved by compression or some other measure
      * @throws IOException if an error occurs while reading from the input file.
      */
     public int preprocessCompress(InputStream in, int headerFormat) throws IOException {
@@ -73,10 +69,10 @@ public class SimpleHuffProcessor implements IHuffProcessor {
     }
 
     /**
-     * Compresses input to output, where the same InputStream has previously 
+     * Compresses input to output, where the same InputStream has previously
      * been pre-processed via preprocessCompress storing state used by this call.
      * pre: preprocessCompress must be called before this method
-     * 
+     *
      * @param in - is the stream being compressed (NOT a BitInputStream)
      * @param out - is bound to a file/stream to which bits are written
      *              for the compressed file (not a BitOutputStream)
@@ -198,6 +194,15 @@ public class SimpleHuffProcessor implements IHuffProcessor {
                 // Base Case: Leaf Node
                 codes.put(currNode.getValue(), currVal);
             }
+        }
+        
+        /**
+         * Returns the number of bits used to store the tree in the header.
+         *
+         * @return - number of bits used to store the tree in the header
+         */
+        public int getTreeBitSize() {
+            return ;
         }
     }
 
