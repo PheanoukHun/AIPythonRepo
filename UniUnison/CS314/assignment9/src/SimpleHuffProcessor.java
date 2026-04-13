@@ -127,7 +127,7 @@ public class SimpleHuffProcessor implements IHuffProcessor {
         }
 
         private TreeNode buildTree(int[] freqs) {
-            CustomPriorityQueue queue = new CustomPriorityQueue();
+            PriorityQueue queue = new PriorityQueue();
             for (int i = 0; i < freqs.length; i++) {
                 queue.add(new TreeNode(i, freqs[i]));
             }
@@ -139,16 +139,49 @@ public class SimpleHuffProcessor implements IHuffProcessor {
             return codes;
         }
 
-        private void getCodesHelper(Map<Integer, String> codes, TreeNode currNode,
-            String currVal) {
-                if(!currNode.isLeaf()) {
-                    getCodesHelper(codes, currNode.getLeft(), currVal + "0");
-                    getCodesHelper(codes, currNode.getRight(), currVal + "1");
+        private void getCodesHelper(
+            Map<Integer, String> codes,
+            TreeNode currNode,
+            String currVal
+        ) {
+            if (!currNode.isLeaf()) {
+                getCodesHelper(codes, currNode.getLeft(), currVal + "0");
+                getCodesHelper(codes, currNode.getRight(), currVal + "1");
+            } else {
+                codes.put(currNode.getValue(), currVal);
+            }
+        }
+
+        private class PriorityQueue<E extends Comparable<E>> {
+            private ArrayList<E> queue;
+
+            public PriorityQueue() {
+                queue = new ArrayList<>();
+            }
+
+            public void add(E node) {
+                if (queue.isEmpty()) {
+                    queue.add(node);
                 } else {
-                    codes.put(currNode.getValue(), currVal);
+                    int i = 0;
+                    while (i < queue.size() && node.compareTo(queue.get(i)) > 0) {
+                        i++;
+                    }
+                    queue.add(i, node);
                 }
             }
 
-        private class CustomPriorityQueue<TreeNode> {}
+            public E pop() {
+                return queue.remove(0);
+            }
+
+            public boolean isEmpty() {
+                return queue.isEmpty();
+            }
+            
+            public int size() {
+                return queue.size();
+            }
+        }
     }
 }
