@@ -149,7 +149,7 @@ public class SimpleHuffProcessor implements IHuffProcessor {
          */
         private TreeNode buildTree(int[] freqs) {
             // Create the Priority Queue and add all the nodes
-            PriorityQueue queue = new PriorityQueue();
+            MyQueue<TreeNode<String>> queue = new MyQueue();
             for (int i = 0; i < freqs.length; i++) {
                 queue.add(new TreeNode(i, freqs[i]));
             }
@@ -212,7 +212,7 @@ public class SimpleHuffProcessor implements IHuffProcessor {
      * A priority queue that stores elements of type E and orders them based on their
      * Priority value with lower being higher priority.
      */
-    private class PriorityQueue<E extends Comparable<E>> {
+    private class MyQueue<E extends Comparable<E>> {
 
         private ArrayList<E> queue;
 
