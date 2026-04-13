@@ -17,8 +17,10 @@
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class SimpleHuffProcessor implements IHuffProcessor {
 
