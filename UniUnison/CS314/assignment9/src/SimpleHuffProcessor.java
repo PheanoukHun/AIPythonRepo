@@ -117,6 +117,7 @@ public class SimpleHuffProcessor implements IHuffProcessor {
     private class HuffManCodeTree {
 
         private TreeNode root;
+        private int frequency;
 
         public HuffManCodeTree(int[] freqs) {
             root = buildTree(freqs);
@@ -127,17 +128,22 @@ public class SimpleHuffProcessor implements IHuffProcessor {
         }
 
         private TreeNode buildTree(int[] freqs) {
-            
             // Create the Priority Queue and add all the nodes
             PriorityQueue queue = new PriorityQueue();
             for (int i = 0; i < freqs.length; i++) {
                 queue.add(new TreeNode(i, freqs[i]));
             }
-            
+
             // Build the Tree with the Queue
             while (queue.size() > 1) {
-                
+                TreeNode left = queue.pop();
+                TreeNode right = queue.pop();
+                TreeNode parent = new TreeNode(null, left.getFrequency() + right.getFrequency());
+                parent.setLeft(left);
+                parent.setRight(right);
+                queue.add(parent);
             }
+            return queue.pop();
         }
 
         public Map<Integer, String> getCodes() {
@@ -158,38 +164,38 @@ public class SimpleHuffProcessor implements IHuffProcessor {
                 codes.put(currNode.getValue(), currVal);
             }
         }
+    }
 
-        private class PriorityQueue<E extends Comparable<E>> {
+    private class PriorityQueue<E extends Comparable<E>> {
 
-            private ArrayList<E> queue;
+        private ArrayList<E> queue;
 
-            public PriorityQueue() {
-                queue = new ArrayList<>();
-            }
+        public PriorityQueue() {
+            queue = new ArrayList<>();
+        }
 
-            public void add(E node) {
-                if (queue.isEmpty()) {
-                    queue.add(node);
-                } else {
-                    int i = 0;
-                    while (i < queue.size() && node.compareTo(queue.get(i)) > 0) {
-                        i++;
-                    }
-                    queue.add(i, node);
+        public void add(E node) {
+            if (queue.isEmpty()) {
+                queue.add(node);
+            } else {
+                int i = 0;
+                while (i < queue.size() && node.compareTo(queue.get(i)) > 0) {
+                    i++;
                 }
+                queue.add(i, node);
             }
+        }
 
-            public E pop() {
-                return queue.remove(0);
-            }
+        public E pop() {
+            return queue.remove(0);
+        }
 
-            public boolean isEmpty() {
-                return queue.isEmpty();
-            }
+        public boolean isEmpty() {
+            return queue.isEmpty();
+        }
 
-            public int size() {
-                return queue.size();
-            }
+        public int size() {
+            return queue.size();
         }
     }
 }
