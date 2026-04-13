@@ -17,10 +17,9 @@
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ArrayList;
 
 public class SimpleHuffProcessor implements IHuffProcessor {
 
@@ -34,7 +33,7 @@ public class SimpleHuffProcessor implements IHuffProcessor {
      * Preprocess data so that compression is possible --- count characters/create tree/store
      * state so that a subsequent call to compress will work. The InputStream is not a
      * BitInputStream, so wrap it int one as needed. Note, to determine the number of bits saved,
-     * the number of bits written includes ALL bits that will be written including the magic 
+     * the number of bits written includes ALL bits that will be written including the magic
      * number, the header format number, the header to reproduce the tree, AND the actual data.
      *
      * @param in - is the stream which could be subsequently compressed
@@ -197,14 +196,14 @@ public class SimpleHuffProcessor implements IHuffProcessor {
                 codes.put(currNode.getValue(), currVal);
             }
         }
-        
+
         /**
          * Returns the number of bits used to store the tree in the header.
          *
          * @return - number of bits used to store the tree in the header
          */
         public int getTreeBitSize() {
-            return ;
+            return;
         }
     }
 
@@ -212,16 +211,9 @@ public class SimpleHuffProcessor implements IHuffProcessor {
      * A priority queue that stores elements of type E and orders them based on their
      * Priority value with lower being higher priority.
      */
-    private class MyQueue<E extends Comparable<E>> {
+    private class MyQueue<E extends Comparable<? super E>> {
 
-        private ArrayList<E> queue;
-
-        /**
-         * Creates an empty priority queue.
-         */
-        public PriorityQueue() {
-            queue = new ArrayList<>();
-        }
+        private ArrayList<E> queue = new ArrayList<>();
 
         /**
          * Adds a node to the priority queue based on the Priority.
