@@ -153,6 +153,7 @@ public class SimpleHuffProcessor implements IHuffProcessor {
         }
 
         private class PriorityQueue<E extends Comparable<E>> {
+
             private ArrayList<E> queue;
 
             public PriorityQueue() {
@@ -178,7 +179,7 @@ public class SimpleHuffProcessor implements IHuffProcessor {
             public boolean isEmpty() {
                 return queue.isEmpty();
             }
-            
+
             public int size() {
                 return queue.size();
             }
