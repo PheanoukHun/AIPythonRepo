@@ -32,9 +32,10 @@ public class SimpleHuffProcessor implements IHuffProcessor {
      * Preprocess data so that compression is possible ---
      * count characters/create tree/store state so that
      * a subsequent call to compress will work. The InputStream
-     * is <em>not</em> a BitInputStream, so wrap it int one as needed.
-     * @param in is the stream which could be subsequently compressed
-     * @param headerFormat a constant from IHuffProcessor that determines what kind of
+     * is not a BitInputStream, so wrap it int one as needed.
+     * 
+     * @param in - is the stream which could be subsequently compressed
+     * @param headerFormat -    a constant from IHuffProcessor that determines what kind of
      * header to use, standard count format, standard tree format, or
      * possibly some format added in the future.
      * @return number of bits saved by compression or some other measure
@@ -72,17 +73,18 @@ public class SimpleHuffProcessor implements IHuffProcessor {
     }
 
     /**
-     * Compresses input to output, where the same InputStream has
-     * previously been pre-processed via <code>preprocessCompress</code>
-     * storing state used by this call.
-     * <br> pre: <code>preprocessCompress</code> must be called before this method
-     * @param in is the stream being compressed (NOT a BitInputStream)
-     * @param out is bound to a file/stream to which bits are written
-     * for the compressed file (not a BitOutputStream)
-     * @param force if this is true create the output file even if it is larger than the input
-     * file. If this is false do not create the output file if it is larger than the input file.
-     * @return the number of bits written.
-     * @throws IOException if an error occurs while reading from the input file or
+     * Compresses input to output, where the same InputStream has previously 
+     * been pre-processed via preprocessCompress storing state used by this call.
+     * pre: preprocessCompress must be called before this method
+     * 
+     * @param in - is the stream being compressed (NOT a BitInputStream)
+     * @param out - is bound to a file/stream to which bits are written
+     *              for the compressed file (not a BitOutputStream)
+     * @param force - if this is true create the output file even if it is larger than the
+     *                input file. If this is false do not create the output file if it is larger
+     *                than the input file.
+     * @return - the number of bits written.
+     * @throws - IOException if an error occurs while reading from the input file or
      * writing to the output file.
      */
     public int compress(InputStream in, OutputStream out, boolean force) throws IOException {
@@ -93,9 +95,10 @@ public class SimpleHuffProcessor implements IHuffProcessor {
     /**
      * Uncompress a previously compressed stream in, writing the
      * uncompressed bits/data to out.
-     * @param in is the previously compressed data (not a BitInputStream)
-     * @param out is the uncompressed file/stream
-     * @return the number of bits written to the uncompressed file/stream
+     *
+     * @param in - is the previously compressed data (not a BitInputStream)
+     * @param out - is the uncompressed file/stream
+     * @return - the number of bits written to the uncompressed file/stream
      * @throws IOException if an error occurs while reading from the input file or
      * writing to the output file.
      */
@@ -114,19 +117,38 @@ public class SimpleHuffProcessor implements IHuffProcessor {
         }
     }
 
+    /**
+     * A Huffman code tree that stores the characters and their corresponding codes.
+     */
     private class HuffManCodeTree {
 
         private TreeNode root;
         private int frequency;
 
+        /**
+         * Based on the frequency array, create a Huffman code tree.
+         *
+         * @param freqs - the Frequency Array of Each Character
+         */
         public HuffManCodeTree(int[] freqs) {
             root = buildTree(freqs);
         }
 
+        /**
+         * Returns the root node of the Huffman code tree.
+         *
+         * @return - the root node of the tree
+         */
         public TreeNode getRoot() {
             return root;
         }
 
+        /**
+         * Builds the Huffman code tree from the given array of frequencies.
+         *
+         * @param freqs - the Frequency Array of Each Character
+         * @return - the root node of the tree
+         */
         private TreeNode buildTree(int[] freqs) {
             // Create the Priority Queue and add all the nodes
             PriorityQueue queue = new PriorityQueue();
@@ -143,41 +165,68 @@ public class SimpleHuffProcessor implements IHuffProcessor {
                 parent.setRight(right);
                 queue.add(parent);
             }
-            return queue.pop();
+
+            // Return the root of the tree
+            root = queue.pop();
+            return root;
         }
 
+        /**
+         * Create and return a map of the characters codes based on the Huffman code tree.
+         *
+         * @return - a map of character codes
+         */
         public Map<Integer, String> getCodes() {
             Map<Integer, String> codes = new HashMap<>();
             getCodeHelper(codes, root, "");
             return codes;
         }
 
-        private void getCodesHelper(
-            Map<Integer, String> codes,
-            TreeNode currNode,
-            String currVal
-        ) {
+        /**
+         * (HELPER) method to that recurse through the character codes map.
+         *
+         * @param codes - the map that stores character codes
+         * @param currNode - the current node being processed
+         * @param currVal - the current code value being added
+         */
+        private void getCodeHelper(Map<Integer, String> codes, TreeNode currNode, String currVal) {
+            // Recursive Case: Not a Leaf Node
             if (!currNode.isLeaf()) {
-                getCodesHelper(codes, currNode.getLeft(), currVal + "0");
-                getCodesHelper(codes, currNode.getRight(), currVal + "1");
+                getCodeHelper(codes, currNode.getLeft(), currVal + "0");
+                getCodeHelper(codes, currNode.getRight(), currVal + "1");
             } else {
+                // Base Case: Leaf Node
                 codes.put(currNode.getValue(), currVal);
             }
         }
     }
 
+    /**
+     * A priority queue that stores elements of type E and orders them based on their
+     * Priority value with lower being higher priority.
+     */
     private class PriorityQueue<E extends Comparable<E>> {
 
         private ArrayList<E> queue;
 
+        /**
+         * Creates an empty priority queue.
+         */
         public PriorityQueue() {
             queue = new ArrayList<>();
         }
 
+        /**
+         * Adds a node to the priority queue based on the Priority.
+         *
+         * @param node - the node to add
+         */
         public void add(E node) {
+            // Add to empty queue
             if (queue.isEmpty()) {
                 queue.add(node);
             } else {
+                // Add to Fair Priority Position
                 int i = 0;
                 while (i < queue.size() && node.compareTo(queue.get(i)) > 0) {
                     i++;
@@ -186,14 +235,22 @@ public class SimpleHuffProcessor implements IHuffProcessor {
             }
         }
 
+        /**
+         * Removes and returns the node with the lowest number equals higher.
+         *
+         * @return - the node with the highest priority
+         */
         public E pop() {
-            return queue.remove(0);
+            E val = queue.get(0);
+            queue.remove(0);
+            return val;
         }
 
-        public boolean isEmpty() {
-            return queue.isEmpty();
-        }
-
+        /**
+         * Returns the number of nodes in the queue.
+         *
+         * @return - the number of nodes in the queue
+         */
         public int size() {
             return queue.size();
         }
