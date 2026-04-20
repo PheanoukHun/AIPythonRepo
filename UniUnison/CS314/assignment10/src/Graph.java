@@ -70,12 +70,14 @@ public class Graph {
      */
     public boolean addEdge(String source, String dest, double cost) {
         if (source == null || dest == null) {
-            throw new IllegalArgumentException("Violation of precondition. " +
-                    "Vertex names may not be null.");
+            throw new IllegalArgumentException(
+                "Violation of precondition. " + "Vertex names may not be null."
+            );
         }
         if (cost <= 0) {
-            throw new IllegalArgumentException("Violation of precondition. " +
-                    "edge costs must be > 0." + cost);
+            throw new IllegalArgumentException(
+                "Violation of precondition. " + "edge costs must be > 0." + cost
+            );
         }
         Vertex s = getVertex(source);
         Vertex d = getVertex(dest);
@@ -107,8 +109,9 @@ public class Graph {
      */
     public void addVertex(String name) {
         if (name == null) {
-            throw new IllegalArgumentException("Violation of precondition. " +
-                    "Vertex name may not be null.");
+            throw new IllegalArgumentException(
+                "Violation of precondition. " + "Vertex name may not be null."
+            );
         }
         getVertex(name);
     }
@@ -141,7 +144,8 @@ public class Graph {
                     // In an unweighted graph we treat
                     // the weighted cost and number of edges from start
                     // as the same.
-                    neighberNode.weightedCostFromStartVertex = current.weightedCostFromStartVertex + 1;
+                    neighberNode.weightedCostFromStartVertex =
+                        current.weightedCostFromStartVertex + 1;
                     neighberNode.numEdgesFromStartVertex = current.numEdgesFromStartVertex + 1;
                     neighberNode.prev = current;
                     q.add(neighberNode);
@@ -149,7 +153,6 @@ public class Graph {
             }
         }
     }
-
 
     // Set up queue and instance variables to find
     // unweighted shortest path algorithm from startName vertex
@@ -160,22 +163,23 @@ public class Graph {
         Vertex start = vertices.get(startName);
         start.weightedCostFromStartVertex = 0;
         start.numEdgesFromStartVertex = 0;
-        Queue<Vertex> result= new LinkedList<>();
+        Queue<Vertex> result = new LinkedList<>();
         result.add(start);
         return result;
-
     }
 
     // check preconditions for findUnweightedShortestPath
     private void handleFUWSPPrecons(String startName) {
         if (startName == null) {
-            throw new IllegalArgumentException("Violation of precondition. " +
-                    "Vertex name may not be null.");
+            throw new IllegalArgumentException(
+                "Violation of precondition. " + "Vertex name may not be null."
+            );
         }
         if (!containsVertex(startName)) {
-            throw new NoSuchElementException("No Verex named " + startName + " exists in this Graph");
+            throw new NoSuchElementException(
+                "No Verex named " + startName + " exists in this Graph"
+            );
         }
-
     }
 
     /**
@@ -193,49 +197,45 @@ public class Graph {
      */
     public void dijkstra(String startName) {
         if (startName == null) {
-            throw new IllegalArgumentException("Violation of precondition. " +
-                    "Vertex name may not be null.");
+            throw new IllegalArgumentException(
+                "Violation of precondition. " + "Vertex name may not be null."
+            );
         }
         if (!containsVertex(startName)) {
-            throw new NoSuchElementException("No Vertex named " + startName + " exists in this Graph");
+            throw new NoSuchElementException(
+                "No Vertex named " + startName + " exists in this Graph"
+            );
         }
 
         // TODO: complete this method
     }
 
-
     /**
-     * Find all shortest paths between all pairs of vertices in this Graph.
-     * This method is called to collect statistics about each Vertex
-     * with the goal of ranking nodes based on centrality.
-     *
-     * <br><br>After this method is done, each vertex shall store:
-     * <br>1. The total number of vertices (not including itself)
+     * Find all shortest paths between all pairs of vertices in this Graph. This method
+     * is called to collect statistics about each Vertex with the goal of ranking nodes
+     * based on centrality. After this method is done, each vertex shall store:
+     * 1. The total number of vertices (not including itself)
      * it is connected to. In other words, for a given vertex,
      * the number of other vertices for which a path exists.
-     * <br>2. The sum of the number of edges in the all
+     * 2. The sum of the number of edges in the all
      * the shortest paths from the vertex to the vertices it
      * connects to. (Unweighted path lengths.)
-     * <br>3. The sum of the weighted path lengths in the all
+     * 3. The sum of the weighted path lengths in the all
      * the shortest paths from the vertex to the vertices it
      * connects to.
-     * <br><br>Note, if the parameter weighted is false, 2 and 3 shall
+     *
+     * Note, if the parameter weighted is false, 2 and 3 shall
      * equal each other.
      *
-     * <br><br>This method also determines the shortest path with the
-     * greatest distance.
-     * The two most distant vertices in the Graph are those with the
-     * Longest shortest path between them. The longest path is based on
-     * the number of edges in the path if weighted == false and the unweighted
-     * shortest path algorithm is being used. The longest path is based on the
-     * highest cost shortest path if weighted == true and Dijkstra is used.
-     *
-     * <br><br>if weighted == true, use dijkstra, otherwise, use unwieghted
-     * shortest path
-     *
-     * <br><br>
-     * After this method is called the getAllPaths, getDiamter, and
-     * get longest path methods may be called.
+     * This method also determines the shortest path with the
+     * greatest distance. The two most distant vertices in the Graph are
+     * those with the Longest shortest path between them. The longest path is
+     * based on the number of edges in the path if weighted == false and the
+     * unweighted shortest path algorithm is being used. The longest path is
+     * based on the highest cost shortest path if weighted == true
+     * and Dijkstra is used. If weighted == true, use dijkstra, otherwise, 
+     * use unwieghted shortest path. After this method is called the getAllPaths,
+     * getDiamter, and get longest path methods may be called.
      *
      * @param weighted If weighted == true use dijkstra's algorithm
      * otherwise use the unweighted shortest path algorithm. (Ignore any
@@ -244,8 +244,6 @@ public class Graph {
     public void findAllPaths(boolean weighted) {
         // TODO: complete this method
     }
-
-
 
     /*
      *  Helper to get path from current start vertex to dest vertex.
@@ -257,19 +255,26 @@ public class Graph {
      */
     private Path getPath(String dest) {
         if (dest == null) {
-            throw new IllegalArgumentException("getPath(String)"
-                    + " the parameter dest may not be null");
+            throw new IllegalArgumentException(
+                "getPath(String)" + " the parameter dest may not be null"
+            );
         }
         Vertex end = vertices.get(dest);
         if (end == null) {
-            throw new IllegalArgumentException("getPath(String)"
-                    + " dest must refer to a Vertex in this Graph.");
+            throw new IllegalArgumentException(
+                "getPath(String)" + " dest must refer to a Vertex in this Graph."
+            );
         }
         if (end.prev == null) {
             // No path from current start vertex to destination.
-            throw new IllegalStateException("getPath(String)"
-                    + " a path must exist from "
-                    + this.currentStartVertexName + " to " + dest + ".");
+            throw new IllegalStateException(
+                "getPath(String)" +
+                    " a path must exist from " +
+                    this.currentStartVertexName +
+                    " to " +
+                    dest +
+                    "."
+            );
         }
         Path result = new Path();
         result.weightedCostOfPath = end.weightedCostFromStartVertex;
@@ -301,12 +306,15 @@ public class Graph {
      */
     public int getNumEdgesFromStart(String dest) {
         if (currentStartVertexName == null) {
-            throw new IllegalStateException("method " +
+            throw new IllegalStateException(
+                "method " +
                     "findUnweigthedShortesPath or dijkstra must be " +
-                    "called before calling this method.");
-        } else if(!containsVertex(dest)) {
-            throw new NoSuchElementException("No Vertex named "
-                    + dest + " exists in this Graph");
+                    "called before calling this method."
+            );
+        } else if (!containsVertex(dest)) {
+            throw new NoSuchElementException(
+                "No Vertex named " + dest + " exists in this Graph"
+            );
         }
 
         int result = vertices.get(dest).numEdgesFromStartVertex;
@@ -330,12 +338,15 @@ public class Graph {
      */
     public double getWeightedCostFromStart(String dest) {
         if (currentStartVertexName == null) {
-            throw new IllegalStateException("method " +
+            throw new IllegalStateException(
+                "method " +
                     "findUnweigthedShortesPath or dijkstra must be " +
-                    "called before calling this method.");
-        } else if(!containsVertex(dest)) {
-            throw new NoSuchElementException("No Vertex named "
-                    + dest + " exists in this Graph");
+                    "called before calling this method."
+            );
+        } else if (!containsVertex(dest)) {
+            throw new NoSuchElementException(
+                "No Vertex named " + dest + " exists in this Graph"
+            );
         }
 
         double result = vertices.get(dest).weightedCostFromStartVertex;
@@ -344,7 +355,6 @@ public class Graph {
         }
         return result;
     }
-
 
     /**
      * Get all path statistics for all vertices in this graph that are
@@ -361,23 +371,25 @@ public class Graph {
      */
     public TreeSet<AllPathsInfo> getAllPaths() {
         if (!allPathsFound) {
-            throw new IllegalStateException("The method findAllPaths "
-                    + "must be called before calling this method. ");
+            throw new IllegalStateException(
+                "The method findAllPaths " + "must be called before calling this method. "
+            );
         }
 
         TreeSet<AllPathsInfo> result = new TreeSet<>();
         for (Vertex v : vertices.values()) {
             if (v.numVertexConnected > 0) {
-                AllPathsInfo temp = new AllPathsInfo(v.name,
-                        v.numVertexConnected,
-                        v.totalWeightedPathLength );
+                AllPathsInfo temp = new AllPathsInfo(
+                    v.name,
+                    v.numVertexConnected,
+                    v.totalWeightedPathLength
+                );
                 boolean added = result.add(temp);
-                assert added : "Did not add path info for " + v +". Why not?";
+                assert added : "Did not add path info for " + v + ". Why not?";
             }
         }
         return result;
     }
-
 
     /**
      * Check if a vertex with the given name is present in this graph.
@@ -390,7 +402,6 @@ public class Graph {
         return vertices.containsKey(name);
     }
 
-
     /**
      * Return the name of the current start vertex.
      * <br><br>
@@ -399,12 +410,13 @@ public class Graph {
      */
     public String getCurrentStartVertex() {
         if (currentStartVertexName == null) {
-            throw new IllegalStateException("method findUnweigthedShortesPath "
-                    + "or dijkstra must be called before calling this method.");
+            throw new IllegalStateException(
+                "method findUnweigthedShortesPath " +
+                    "or dijkstra must be called before calling this method."
+            );
         }
         return this.currentStartVertexName;
     }
-
 
     /**
      * Alternative to printPath that returns an List containing the path
@@ -422,13 +434,18 @@ public class Graph {
      */
     public List<String> findPath(String destName) {
         if (currentStartVertexName == null) {
-            throw new IllegalStateException("method findUnweigthedShortesPath or dijkstra must be " +
-                    "called before calling this method.");
+            throw new IllegalStateException(
+                "method findUnweigthedShortesPath or dijkstra must be " +
+                    "called before calling this method."
+            );
         } else if (destName == null) {
-            throw new IllegalArgumentException("Violation of precondition. " +
-                    "Vertex name may not be null.");
+            throw new IllegalArgumentException(
+                "Violation of precondition. " + "Vertex name may not be null."
+            );
         } else if (!containsVertex(destName)) {
-            throw new NoSuchElementException("No Vertex named " + destName + " exists in this Graph");
+            throw new NoSuchElementException(
+                "No Vertex named " + destName + " exists in this Graph"
+            );
         }
 
         List<String> result = new LinkedList<>();
@@ -439,7 +456,6 @@ public class Graph {
         }
         return result;
     }
-
 
     // helper method to find path.
     private void findPath(List<String> result, Vertex end) {
@@ -458,8 +474,10 @@ public class Graph {
     public void printPath(String destName) {
         Vertex end = vertices.get(destName);
         if (end == null) {
-            throw new NoSuchElementException("No Node named " + destName + " exists in this Graph");
-        } else if(end.weightedCostFromStartVertex == INFINITY) {
+            throw new NoSuchElementException(
+                "No Node named " + destName + " exists in this Graph"
+            );
+        } else if (end.weightedCostFromStartVertex == INFINITY) {
             System.out.println("no path to " + destName);
         } else {
             System.out.println("Cost is " + end.weightedCostFromStartVertex);
@@ -484,8 +502,9 @@ public class Graph {
      */
     public int getDiameter() {
         if (!allPathsFound) {
-            throw new IllegalStateException("The method findAllPaths must "
-                    + "be called before calling this method. ");
+            throw new IllegalStateException(
+                "The method findAllPaths must " + "be called before calling this method. "
+            );
         }
         return longest.getNumEdgesInPath();
     }
@@ -499,8 +518,9 @@ public class Graph {
      */
     public double costOfLongestShortestPath() {
         if (!allPathsFound) {
-            throw new IllegalStateException("The method findAllPaths must be "
-                    + "called before calling this method. ");
+            throw new IllegalStateException(
+                "The method findAllPaths must be " + "called before calling this method. "
+            );
         }
         return longest.weightedCostOfPath;
     }
@@ -515,7 +535,6 @@ public class Graph {
         return longest.toString();
     }
 
-
     // helper. If name not present create new vertex.
     // return vertex with given name
     private Vertex getVertex(String name) {
@@ -526,7 +545,6 @@ public class Graph {
         }
         return v;
     }
-
 
     // reset all vertices to set new start vertex and find all paths
     // from new start
@@ -546,7 +564,6 @@ public class Graph {
         }
     }
 
-
     /**
      * Get the name of all vertices the Vertex with name
      * is connected to.
@@ -559,7 +576,7 @@ public class Graph {
         List<String> result = new ArrayList<>();
         Vertex v = vertices.get(name);
         if (v != null) {
-            for(Edge e : v.adjacent) {
+            for (Edge e : v.adjacent) {
                 result.add(e.dest.name);
             }
         }
@@ -568,6 +585,7 @@ public class Graph {
 
     // models edge between two vertices
     private static class Edge {
+
         private Vertex dest;
         private double cost;
 
@@ -638,8 +656,16 @@ public class Graph {
         }
 
         public String toString() {
-            return "{" + name + ", " + ", connected to: "
-                    + numVertexConnected + "adjacent: " + adjacent + "}";
+            return (
+                "{" +
+                name +
+                ", " +
+                ", connected to: " +
+                numVertexConnected +
+                "adjacent: " +
+                adjacent +
+                "}"
+            );
         }
 
         // Add an edge from this vertex to dest.
@@ -659,7 +685,7 @@ public class Graph {
 
         public boolean equals(Object other) {
             boolean result = other instanceof Vertex;
-            if (result){
+            if (result) {
                 result = name.equals(((Vertex) other).name);
             }
             return result;
@@ -681,7 +707,6 @@ public class Graph {
             return null;
         }
     } // end of the Vertex class
-
 
     // Models a path between vertices.
     // Best not to try and store all paths for any but small graphs.
@@ -746,7 +771,10 @@ public class Graph {
 
         public int compareTo(Path other) {
             return (weightedCostOfPath < other.weightedCostOfPath)
-                    ? -1 : (weightedCostOfPath > other.weightedCostOfPath) ? 1 :0;
+                ? -1
+                : (weightedCostOfPath > other.weightedCostOfPath)
+                    ? 1
+                    : 0;
         }
     }
 }
