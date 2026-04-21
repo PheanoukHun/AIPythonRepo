@@ -206,6 +206,9 @@ public class Graph {
         // Starting Path
         PriorityQueue<Path> paths = new PriorityQueue<>();
         Vertex start = vertices.get(startName);
+        start.weightedCostFromStartVertex = 0;
+        start.numEdgesFromStartVertex = 0;
+        paths.add(new Path(start, 0));
     }
 
     /**
