@@ -136,7 +136,7 @@ public class Graph {
 
         Queue<Vertex> q = prepForFindingUnweightedShortestPaths(startName);
 
-        while (!q.isEmpty()) {
+        while (!q.isEmpty())  {
             Vertex current = q.remove();
             for (Edge e : current.adjacent) {
                 Vertex neighberNode = e.dest;
