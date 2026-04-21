@@ -211,11 +211,10 @@ public class Graph {
         while (!paths.isEmpty()) {
             Path closestPath = paths.remove();
             Vertex currentVert = closestPath.dest;
-
-            // Search through all Paths
-            for (Edge edge : currentVert.adjacent) {
-                Vertex adjacent = edge.dest;
+            if (currentVert.scratch != 1) {
+                greedyDijkstra(currentVert, paths);
             }
+            
         }
     }
 
@@ -240,12 +239,32 @@ public class Graph {
         }
     }
 
+    /**
+    * 
+    * @param paths
+    * @param startName
+    * @return
+ */
     private Vertex prepDijkstraMethod(PriorityQueue<Path> paths, String startName) {
         Vertex start = vertices.get(startName);
         start.weightedCostFromStartVertex = 0;
         start.numEdgesFromStartVertex = 0;
         paths.add(new Path(start, 0));
         return start;
+    }
+    
+    private void greedyDijkstra(Vertex currentVert, PriorityQueue<Path> paths) {
+        // Search through all Paths
+        for (Edge edge : currentVert.adjacent) {
+            double newCost = currentVert.weightedCostFromStartVertex + edge.cost;
+            Vertex adjacent = edge.dest;
+            if (newCost < adjacent.weightedCostFromStartVertex) {
+                adjacent.weightedCostFromStartVertex = newCost;
+                adjacent.numEdgesFromStartVertex = currentVert.numEdgesFromStartVertex + 1;
+                adjacent.prev = currentVert;
+                paths.add(new Path(adjacent, newCost));
+            }
+        }
     }
 
     /**
