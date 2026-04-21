@@ -205,7 +205,7 @@ public class Graph {
 
         // Starting Path
         PriorityQueue<Path> paths = new PriorityQueue<>();
-        Vertex start = prepDijkstraMethod(paths, startName);
+        prepDijkstraMethod(paths, startName);
 
         // Find Closest Between Start and All other Paths
         while (!paths.isEmpty()) {
@@ -214,7 +214,6 @@ public class Graph {
             if (currentVert.scratch != 1) {
                 greedyDijkstra(currentVert, paths);
             }
-            
         }
     }
 
@@ -240,28 +239,37 @@ public class Graph {
     }
 
     /**
-    * 
-    * @param paths
-    * @param startName
-    * @return
- */
-    private Vertex prepDijkstraMethod(PriorityQueue<Path> paths, String startName) {
+     *
+     * @param paths
+     * @param startName
+     * @return
+     */
+    private void prepDijkstraMethod(PriorityQueue<Path> paths, String startName) {
         Vertex start = vertices.get(startName);
         start.weightedCostFromStartVertex = 0;
         start.numEdgesFromStartVertex = 0;
         paths.add(new Path(start, 0));
-        return start;
     }
-    
+
+    /**
+     *
+     * @param currentVert
+     * @param paths
+     */
     private void greedyDijkstra(Vertex currentVert, PriorityQueue<Path> paths) {
         // Search through all Paths
         for (Edge edge : currentVert.adjacent) {
             double newCost = currentVert.weightedCostFromStartVertex + edge.cost;
             Vertex adjacent = edge.dest;
+
+            // Find Shorter Path
             if (newCost < adjacent.weightedCostFromStartVertex) {
+                // Update Vertex Values
                 adjacent.weightedCostFromStartVertex = newCost;
                 adjacent.numEdgesFromStartVertex = currentVert.numEdgesFromStartVertex + 1;
                 adjacent.prev = currentVert;
+
+                // Add Path Back into the PriorityQueue
                 paths.add(new Path(adjacent, newCost));
             }
         }
@@ -299,7 +307,13 @@ public class Graph {
      * weights for edges. All edge weights considered to be 1.)
      */
     public void findAllPaths(boolean weighted) {
-        // TODO: complete this method
+        if (weighted) {
+            for () {
+                
+            }
+        } else {
+            
+        }
     }
 
     /*
