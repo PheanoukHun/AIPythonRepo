@@ -202,13 +202,21 @@ public class Graph {
         // Prep Value
         currentStartVertexName = startName;
         clearAll();
-        
+
         // Starting Path
         PriorityQueue<Path> paths = new PriorityQueue<>();
-        Vertex start = vertices.get(startName);
-        start.weightedCostFromStartVertex = 0;
-        start.numEdgesFromStartVertex = 0;
-        paths.add(new Path(start, 0));
+        Vertex start = prepDijkstraMethod(paths, startName);
+
+        // Find Closest Between Start and All other Paths
+        while (!paths.isEmpty()) {
+            Path closestPath = paths.remove();
+            Vertex currentVert = closestPath.dest;
+            
+            // Search through all Paths
+            for (Edge edge : currentVert.adjacent) {
+                Vertex adjacent = edge.dest;
+            }
+        }
     }
 
     /**
@@ -230,6 +238,14 @@ public class Graph {
                 "No Vertex named " + startName + " exists in this Graph"
             );
         }
+    }
+
+    private Vertex prepDijkstraMethod(PriorityQueue<Path> paths, String startName) {
+        Vertex start = vertices.get(startName);
+        start.weightedCostFromStartVertex = 0;
+        start.numEdgesFromStartVertex = 0;
+        paths.add(new Path(start, 0));
+        return start;
     }
 
     /**
