@@ -18,6 +18,7 @@ import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.TreeSet;
+import java.util.Vector;
 
 /**
  * Models a directed graph. Edges can be weighted.
@@ -185,17 +186,37 @@ public class Graph {
     /**
      * Find all weighted shortest paths from the Vertex startName
      * to all other vertices in this Graph using Dijkstra's algorithm.
+     * After this method is called, call the printPath(String) method
+     * to get the path from startNode to any other vertex in this Graph.
      *
-     * After this method is called, call
-     * the printPath(String) method to get the path from startNode
-     * to any other vertex in this Graph.
+     * pre: startName != null, containsVertex(startName) == true
      *
-     * <br>pre: startName != null, containsVertex(startName) == true
-     * @param startName The starting vertex. This method will find all the
+     * @param startName - The starting vertex. This method will find all the
      * weighted shortest paths from the given vertex to all other vertices
      * in the graph.
      */
     public void dijkstra(String startName) {
+        // Preconditions
+        dijkstraPreCond(startName);
+
+        // Prep Value
+        currentStartVertexName = startName;
+        clearAll();
+        
+        // Starting Path
+        PriorityQueue<Path> paths = new PriorityQueue<>();
+        Vertex start = vertices.get(startName);
+    }
+
+    /**
+     * Check the precondition for dijkstra to see if the name is null or the vertex
+     * does not exists in the grah.
+     *
+     * @param startName - The starting vertex. This method will find all the
+     * weighted shortest paths from the given vertex to all other vertices
+     * in the graph.
+     */
+    private void dijkstraPreCond(String startName) {
         if (startName == null) {
             throw new IllegalArgumentException(
                 "Violation of precondition. " + "Vertex name may not be null."
@@ -206,8 +227,6 @@ public class Graph {
                 "No Vertex named " + startName + " exists in this Graph"
             );
         }
-
-        // TODO: complete this method
     }
 
     /**
@@ -233,7 +252,7 @@ public class Graph {
      * based on the number of edges in the path if weighted == false and the
      * unweighted shortest path algorithm is being used. The longest path is
      * based on the highest cost shortest path if weighted == true
-     * and Dijkstra is used. If weighted == true, use dijkstra, otherwise, 
+     * and Dijkstra is used. If weighted == true, use dijkstra, otherwise,
      * use unwieghted shortest path. After this method is called the getAllPaths,
      * getDiamter, and get longest path methods may be called.
      *
