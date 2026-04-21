@@ -211,7 +211,7 @@ public class Graph {
         while (!paths.isEmpty()) {
             Path closestPath = paths.remove();
             Vertex currentVert = closestPath.dest;
-            
+
             // Search through all Paths
             for (Edge edge : currentVert.adjacent) {
                 Vertex adjacent = edge.dest;
