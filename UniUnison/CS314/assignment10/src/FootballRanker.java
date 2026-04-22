@@ -170,29 +170,30 @@ public class FootballRanker {
         double squaredSum = 0;
         int size = humanRanks.size();
         int notPredicted = paths.size() + 1;
-        int predictedRank = notPredicted;
 
         // Create a Map for Use Later
-        Map<String, Integer> predictedRanks = new HashMap<>();
         int rank = 1;
+        Map<String, Integer> predictedRanks = new HashMap<>();
+        Map<String, AllPathsInfo> pathsByName = new HashMap<>();
         for (AllPathsInfo team : paths) {
+            pathsByName.put(team.getName(), team);
             predictedRanks.put(team.getName(), rank);
             rank++;
         }
 
         // Find the Squared Differences
         for (int i = 1; i <= size; i++) {
-            // Get Predicted Values
             String team = humanRanks.get(i - 1);
+            
+            // Get Predicted Values
+            int predictedRank = notPredicted;
             if (predictedRanks.get(team) != null) {
                 predictedRank = predictedRanks.get(team);
-            } else {
-                predictedRank = notPredicted;
             }
 
             // Print Results
             if (showResults) {
-                System.out.println(getActualRankString(team, i));
+                System.out.println(getActualRankString(pathsByName.get(team), i));
             }
 
             // Calc Diff
@@ -200,27 +201,28 @@ public class FootballRanker {
             squaredSum += diff * diff;
         }
         
-        double 
-        return Math.round(Math.sqrt(squaredSum / size) * 10.0) / 10.0;
+        double rmse = Math.round(Math.sqrt(squaredSum / size) * 10.0) / 10.0;
+        return rmse;
     }
 
-    private String getActualRankString(AllPathsInfo team) {
-        StringBuilder sb = new StringBuilder();
+    private String getActualRankString(AllPathsInfo team, int actualRank) {
 
         // First Column: Actual Rank and Name
-        sb.append("actual rank: ");
-        sb.append(actualRank);
-        sb.append(", Name: ");
-        sb.append(name);
+        String result = "actual rank: " + actualRank + ", Name: ";
 
         // Create a Space between the two columns
+        StringBuilder sb = new StringBuilder();
+        sb.append(team.getName());
         while (sb.length() < PADDING) {
             sb.append(" ");
         }
 
         // Second Column: Cost per Path and Num of Paths
-
-        return sb.toString();
+        double costPerPath = Math.round(team.getAveCost() * 10_000) / 10_000.0;
+        sb.append("cost per path: " + costPerPath);
+        sb.append(", num paths: " + team.getNumPaths());
+        
+        return result + sb.toString();
     }
 
     public void processRequests() {
