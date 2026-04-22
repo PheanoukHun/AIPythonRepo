@@ -198,10 +198,10 @@ public class FootballRanker {
             squaredSum += (predictedRank - i) * (predictedRank - i);
         }
 
-        double rmse = (Math.round(Math.sqrt(squaredSum / size) * 10_000.0) / 10_000.0);
+        double rmse = Math.sqrt(squaredSum / size);
         
         if (showResults) {
-            System.out.println("Root Mean Square Error: " + rmse);
+            System.out.println("Root Mean Square Error: " + ourFormatter.format(rmse));
         }
 
         return Math.round(rmse * 10.0) / 10.0;
