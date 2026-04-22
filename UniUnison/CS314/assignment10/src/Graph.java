@@ -307,16 +307,39 @@ public class Graph {
      * weights for edges. All edge weights considered to be 1.)
      */
     public void findAllPaths(boolean weighted) {
-        
+        // Set Path Values
         allPathsFound = true;
         longest = new Path();
-        for 
-        
+
+        // Reset all Path Information
+        for (Vertex vert : vertices.values()) {
+            vert.clearPathInfo();
+        }
+
         for (Vertex start : vertices.values()) {
             if (weighted) {
                 dijkstra(start.name);
             } else {
                 findUnweightedShortestPath(start.name);
+            }
+
+            addAllPathsHelper(start, weighted);
+        }
+    }
+
+    private void addAllPathsHelper(Vertex start, boolean weighted) {
+        for (Vertex other : vertices.values()) {
+            double weightedLength = other.weightedCostFromStartVertex;
+            if (!other.name.equals(start.name) && !(weightedLength != INFINITY)) {
+                    start.numVertexConnected++;
+                    start.totalUnweightedPathLength += other.numEdgesFromStartVertex;
+                    start.totalWeightedPathLength += weightedLength;
+
+                    double pathCost = weighted ? weightedLength : other.numEdgesFromStartVertex;
+                    if (pathCost > longest.weightedCostOfPath) {
+                        longest = getPath(other.name);
+                    }
+                }
             }
         }
     }
