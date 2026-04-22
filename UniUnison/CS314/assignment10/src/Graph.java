@@ -307,10 +307,16 @@ public class Graph {
      * weights for edges. All edge weights considered to be 1.)
      */
     public void findAllPaths(boolean weighted) {
+        
+        allPathsFound = true;
+        longest = new Path();
+        for 
+        
         for (Vertex start : vertices.values()) {
             if (weighted) {
                 dijkstra(start.name);
             } else {
+                findUnweightedShortestPath(start.name);
             }
         }
     }
