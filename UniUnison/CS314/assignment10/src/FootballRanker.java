@@ -174,9 +174,7 @@ public class FootballRanker {
         // Create a Map for Use Later
         int rank = 1;
         Map<String, Integer> predictedRanks = new HashMap<>();
-        Map<String, AllPathsInfo> pathsByName = new HashMap<>();
         for (AllPathsInfo team : paths) {
-            pathsByName.put(team.getName(), team);
             predictedRanks.put(team.getName(), rank);
             rank++;
         }
@@ -193,36 +191,33 @@ public class FootballRanker {
 
             // Print Results
             if (showResults) {
-                System.out.println(getActualRankString(pathsByName.get(team), i));
+                System.out.println(getStringForRMSE(team, i, predictedRank));
             }
 
             // Calc Diff
-            double diff = predictedRank - i;
-            squaredSum += diff * diff;
+            squaredSum += (predictedRank - i) * (predictedRank - i);
         }
         
         double rmse = Math.round(Math.sqrt(squaredSum / size) * 10.0) / 10.0;
+        System.out.println("Root Mean Square Error: " + rmse);
         return rmse;
     }
 
-    private String getActualRankString(AllPathsInfo team, int actualRank) {
-
-        // First Column: Actual Rank and Name
-        String result = "actual rank: " + actualRank + ", Name: ";
-
-        // Create a Space between the two columns
-        StringBuilder sb = new StringBuilder();
-        sb.append(team.getName());
+    private String getStringForRMSE(String name, int actual, int predicted) {
+        
+        // Name
+        StringBuilder sb = new StringBuilder(name);
+        
+        // Create Padding
         while (sb.length() < PADDING) {
             sb.append(" ");
         }
-
-        // Second Column: Cost per Path and Num of Paths
-        double costPerPath = Math.round(team.getAveCost() * 10_000) / 10_000.0;
-        sb.append("cost per path: " + costPerPath);
-        sb.append(", num paths: " + team.getNumPaths());
         
-        return result + sb.toString();
+        // Actual and Predicted
+        sb.append("- actual rank: " + actual);
+        sb.append(" predicted rank: " + predicted);
+        
+        return sb.toString();
     }
 
     public void processRequests() {
