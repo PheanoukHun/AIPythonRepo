@@ -136,7 +136,7 @@ public class Graph {
 
         Queue<Vertex> q = prepForFindingUnweightedShortestPaths(startName);
 
-        while (!q.isEmpty())  {
+        while (!q.isEmpty()) {
             Vertex current = q.remove();
             for (Edge e : current.adjacent) {
                 Vertex neighberNode = e.dest;
@@ -307,12 +307,11 @@ public class Graph {
      * weights for edges. All edge weights considered to be 1.)
      */
     public void findAllPaths(boolean weighted) {
-        if (weighted) {
-            for () {
-                
+        for (Vertex start : vertices.values()) {
+            if (weighted) {
+                dijkstra(start.name);
+            } else {
             }
-        } else {
-            
         }
     }
 
