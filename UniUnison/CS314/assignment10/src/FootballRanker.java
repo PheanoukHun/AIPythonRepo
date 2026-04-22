@@ -169,6 +169,8 @@ public class FootballRanker {
         // Variable Creations
         double squaredSum = 0;
         int size = humanRanks.size();
+        int notPredicted = paths.size() + 1;
+        int predictedRank = notPredicted;
 
         // Create a Map for Use Later
         Map<String, Integer> predictedRanks = new HashMap<>();
@@ -178,23 +180,31 @@ public class FootballRanker {
             rank++;
         }
 
-        int actualRank = 0;
-        for (String team : humanRanks) {
-            actualRank++;
-            int predictedRank = predictedRanks.get(team);
-
-            if (showResults) {
-                System.out.println(getActualRankString(team, actualRank));
+        // Find the Squared Differences
+        for (int i = 1; i <= size; i++) {
+            // Get Predicted Values
+            String team = humanRanks.get(i - 1);
+            if (predictedRanks.get(team) != null) {
+                predictedRank = predictedRanks.get(team);
+            } else {
+                predictedRank = notPredicted;
             }
 
-            double diff = predictedRank - actualRank;
+            // Print Results
+            if (showResults) {
+                System.out.println(getActualRankString(team, i));
+            }
+
+            // Calc Diff
+            double diff = predictedRank - i;
             squaredSum += diff * diff;
         }
-
-        return 0;
+        
+        double 
+        return Math.round(Math.sqrt(squaredSum / size) * 10.0) / 10.0;
     }
 
-    private String getActualRankString(String name, int actualRank) {
+    private String getActualRankString(AllPathsInfo team) {
         StringBuilder sb = new StringBuilder();
 
         // First Column: Actual Rank and Name
@@ -209,6 +219,8 @@ public class FootballRanker {
         }
 
         // Second Column: Cost per Path and Num of Paths
+
+        return sb.toString();
     }
 
     public void processRequests() {
