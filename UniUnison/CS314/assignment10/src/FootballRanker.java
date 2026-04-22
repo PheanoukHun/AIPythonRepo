@@ -169,7 +169,15 @@ public class FootballRanker {
             System.out.println("\n\n ***** PREDICTED VS. ACTUAL RESULTS *****");
         }
 
-        // 
+        // Variable Developement
+        
+        // Create a Map for Use Later
+        Map<String, Integer> ranks = new HashMap<>();
+        int rank = 1;
+        for (AllPathsInfo team : paths) {
+            ranks.put(team.getName(), rank);
+            rank++;
+        }
 
         return 0;
     }
