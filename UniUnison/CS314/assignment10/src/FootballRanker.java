@@ -182,7 +182,7 @@ public class FootballRanker {
         // Find the Squared Differences
         for (int i = 1; i <= size; i++) {
             String team = humanRanks.get(i - 1);
-            
+
             // Get Predicted Values
             int predictedRank = notPredicted;
             if (predictedRanks.get(team) != null) {
@@ -197,26 +197,29 @@ public class FootballRanker {
             // Calc Diff
             squaredSum += (predictedRank - i) * (predictedRank - i);
         }
+
+        double rmse = (Math.round(Math.sqrt(squaredSum / size) * 10_000.0) / 10_000.0);
         
-        double rmse = Math.round(Math.sqrt(squaredSum / size) * 10.0) / 10.0;
-        System.out.println("Root Mean Square Error: " + rmse);
-        return rmse;
+        if (showResults) {
+            System.out.println("Root Mean Square Error: " + rmse);
+        }
+
+        return Math.round(rmse * 10.0) / 10.0;
     }
 
     private String getStringForRMSE(String name, int actual, int predicted) {
-        
         // Name
         StringBuilder sb = new StringBuilder(name);
-        
+
         // Create Padding
-        while (sb.length() < PADDING) {
+        while (sb.length() <= PADDING) {
             sb.append(" ");
         }
-        
+
         // Actual and Predicted
         sb.append("- actual rank: " + actual);
         sb.append(" predicted rank: " + predicted);
-        
+
         return sb.toString();
     }
 
