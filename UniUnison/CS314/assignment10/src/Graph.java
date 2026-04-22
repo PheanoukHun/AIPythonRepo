@@ -257,6 +257,9 @@ public class Graph {
      * @param paths
      */
     private void greedyDijkstra(Vertex currentVert, PriorityQueue<Path> paths) {
+        // Marked as Visited
+        currentVert.scratch = 1;
+
         // Search through all Paths
         for (Edge edge : currentVert.adjacent) {
             double newCost = currentVert.weightedCostFromStartVertex + edge.cost;
@@ -316,6 +319,7 @@ public class Graph {
             vert.clearPathInfo();
         }
 
+        // Get all Paths
         for (Vertex start : vertices.values()) {
             if (weighted) {
                 dijkstra(start.name);
@@ -327,18 +331,27 @@ public class Graph {
         }
     }
 
+    /**
+     *
+     * @param start
+     * @param weighted
+     */
     private void addAllPathsHelper(Vertex start, boolean weighted) {
         for (Vertex other : vertices.values()) {
+            // Define Variable to Shorten Line Lengths
             double weightedLength = other.weightedCostFromStartVertex;
-            if (!other.name.equals(start.name) && !(weightedLength != INFINITY)) {
-                    start.numVertexConnected++;
-                    start.totalUnweightedPathLength += other.numEdgesFromStartVertex;
-                    start.totalWeightedPathLength += weightedLength;
+            int numEdges = other.numEdgesFromStartVertex;
 
-                    double pathCost = weighted ? weightedLength : other.numEdgesFromStartVertex;
-                    if (pathCost > longest.weightedCostOfPath) {
-                        longest = getPath(other.name);
-                    }
+            if (!other.name.equals(start.name) && weightedLength != INFINITY) {
+                // Tally Values
+                start.numVertexConnected++;
+                start.totalUnweightedPathLength += numEdges;
+                start.totalWeightedPathLength += weightedLength;
+
+                // Check to see Longest Pathing
+                double pathCost = weighted ? weightedLength : numEdges;
+                if (pathCost > longest.weightedCostOfPath) {
+                    longest = getPath(other.name);
                 }
             }
         }
