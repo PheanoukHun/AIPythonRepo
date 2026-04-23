@@ -38,12 +38,8 @@ public class GraphAndRankTester {
     }
 
     private static void studentTests() {
-            System.out.println("\n--- START OF STUDENT TESTS ---");
-            
-            // Create a simple directed graph for testing
-            // A -> B (cost 2.0)
-            // B -> C (cost 1.0)
-            // A -> C (cost 5.0) -> Weighted shortest path should be A-B-C (cost 3.0)
+        
+            // Test Cases for Dijkstra
             String[][] studentEdges = {
                     {"A", "B", "2.0"},
                     {"B", "C", "1.0"},
@@ -51,7 +47,7 @@ public class GraphAndRankTester {
             };
             Graph g = getGraph(studentEdges, true);
     
-            // --- DIJKSTRA TESTS (2 cases) ---
+            // Dijkstra Test 1: 
             System.out.println("Testing Dijkstra:");
             
             // Test 1: Shortest weighted path from A to C
