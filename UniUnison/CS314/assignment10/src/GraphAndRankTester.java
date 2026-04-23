@@ -33,98 +33,129 @@ public class GraphAndRankTester {
      * human rankings of the teams.
      * @param args None expected.
      */
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         studentTests();
     }
 
-    private static void studentTests() {
+    private static void printResults(String actual, String expected, String desc, int testNum) {
+        System.out.println("Test Number " + testNum + ":");
         
-            // Test Cases for Dijkstra
-            String[][] studentEdges = {
-                    {"A", "B", "2.0"},
-                    {"B", "C", "1.0"},
-                    {"A", "C", "5.0"}
-            };
-            Graph g = getGraph(studentEdges, true);
+    }
     
-            // Dijkstra Test 1: 
-            System.out.println("Testing Dijkstra:");
-            
-            // Test 1: Shortest weighted path from A to C
-            g.dijkstra("A");
-            String actualPathAC = g.findPath("C").toString();
-            String expectedPathAC = "[A, B, C]";
-            if (actualPathAC.equals(expectedPathAC)) {
-                System.out.println("Test 1 Passed: Dijkstra path A to C is correct.");
-            } else {
-                System.out.println("Test 1 FAILED: Dijkstra path A to C. Expected " + expectedPathAC + " but got " + actualPathAC);
-            }
-    
-            // Test 2: Shortest weighted path from B to C
-            g.dijkstra("B");
-            String actualPathBC = g.findPath("C").toString();
-            String expectedPathBC = "[B, C]";
-            if (actualPathBC.equals(expectedPathBC)) {
-                System.out.println("Test 2 Passed: Dijkstra path B to C is correct.");
-            } else {
-                System.out.println("Test 2 FAILED: Dijkstra path B to C. Expected " + expectedPathBC + " but got " + actualPathBC);
-            }
-    
-            // --- FIND ALL PATHS UNWEIGHTED (2 cases) ---
-            System.out.println("\nTesting findAllPaths (weighted = false):");
-            g.findAllPaths(false);
-            
-            // Test 3: Unweighted Diameter (Longest shortest path in edges)
-            // A->B (1), A->C (1 via direct edge), B->C (1). Max edges = 1.
-            int unweightedDiam = g.getDiameter();
-            if (unweightedDiam == 1) {
-                System.out.println("Test 3 Passed: Unweighted diameter is 1.");
-            } else {
-                System.out.println("Test 3 FAILED: Unweighted diameter. Expected 1, got " + unweightedDiam);
-            }
-    
-            // Test 4: Unweighted AllPathsInfo for Vertex A
-            // A is connected to B and C. Both are 1 edge away. Total edges = 2. Avg = 1.0.
-            boolean foundA = false;
-            for (AllPathsInfo info : g.getAllPaths()) {
-                if (info.getName().equals("A")) {
-                    if (info.getAveCost() == 1.0 && info.getNumPaths() == 2) {
-                        System.out.println("Test 4 Passed: Vertex A unweighted stats are correct.");
-                        foundA = true;
-                    }
-                }
-            }
-            if (!foundA) System.out.println("Test 4 FAILED: Vertex A stats incorrect or not found.");
-    
-            // --- FIND ALL PATHS WEIGHTED (2 cases) ---
-            System.out.println("\nTesting findAllPaths (weighted = true):");
-            g.findAllPaths(true);
-    
-            // Test 5: Weighted Cost of Longest Shortest Path
-            // A->B (2), B->C (1), A->C (3). Max cost is A to C (3.0).
-            double weightedMaxCost = g.costOfLongestShortestPath();
-            if (weightedMaxCost == 3.0) {
-                System.out.println("Test 5 Passed: Weighted max shortest path cost is 3.0.");
-            } else {
-                System.out.println("Test 5 FAILED: Weighted max cost. Expected 3.0, got " + weightedMaxCost);
-            }
-    
-            // Test 6: Weighted AllPathsInfo for Vertex A
-            // A to B (2.0), A to C (3.0). Total cost = 5.0. Num paths = 2. Avg = 2.5.
-            boolean foundAWeighted = false;
-            for (AllPathsInfo info : g.getAllPaths()) {
-                if (info.getName().equals("A")) {
-                    if (info.getAveCost() == 2.5 && info.getTotalCost() == 5.0) {
-                        System.out.println("Test 6 Passed: Vertex A weighted stats are correct.");
-                        foundAWeighted = true;
-                    }
-                }
-            }
-            if (!foundAWeighted) System.out.println("Test 6 FAILED: Vertex A weighted stats incorrect.");
-    
-            System.out.println("--- END OF STUDENT TESTS ---\n");
+    private static void studentTests() {
+        // Test Cases for Dijkstra
+        String[][] edges = {
+            { "A", "B", "2.0" },
+            { "B", "C", "1.0" },
+            { "A", "C", "5.0" },
+            { "C", "D", "3.0" },
+            { "D", "E", "1.0" },
+            { "E", "A", "2.0" },
+            { "B", "D", "4.0" },
+            { "F", "G", "1.0" },
+            { "G", "H", "1.0" },
+            { "F", "H", "3.0" },
+        };
+        Graph g = getGraph(edges, true);
+
+        // Dijkstra Test 1:
+        System.out.println("Testing Dijkstra:");
+
+        // Test 1: Shortest weighted path from A to C
+        g.dijkstra("A");
+        String actualPathAC = g.findPath("C").toString();
+        String expectedPathAC = "[A, B, C]";
+        if (actualPathAC.equals(expectedPathAC)) {
+            System.out.println("Test 1 Passed: Dijkstra path A to C is correct.");
+        } else {
+            System.out.println(
+                "Test 1 FAILED: Dijkstra path A to C. Expected " +
+                    expectedPathAC +
+                    " but got " +
+                    actualPathAC
+            );
         }
-    
+
+        // Test 2: Shortest weighted path from B to C
+        g.dijkstra("B");
+        String actualPathBC = g.findPath("C").toString();
+        String expectedPathBC = "[B, C]";
+        if (actualPathBC.equals(expectedPathBC)) {
+            System.out.println("Test 2 Passed: Dijkstra path B to C is correct.");
+        } else {
+            System.out.println(
+                "Test 2 FAILED: Dijkstra path B to C. Expected " +
+                    expectedPathBC +
+                    " but got " +
+                    actualPathBC
+            );
+        }
+
+        // --- FIND ALL PATHS UNWEIGHTED (2 cases) ---
+        System.out.println("\nTesting findAllPaths (weighted = false):");
+        g.findAllPaths(false);
+
+        // Test 3: Unweighted Diameter (Longest shortest path in edges)
+        // A->B (1), A->C (1 via direct edge), B->C (1). Max edges = 1.
+        int unweightedDiam = g.getDiameter();
+        if (unweightedDiam == 1) {
+            System.out.println("Test 3 Passed: Unweighted diameter is 1.");
+        } else {
+            System.out.println(
+                "Test 3 FAILED: Unweighted diameter. Expected 1, got " + unweightedDiam
+            );
+        }
+
+        // Test 4: Unweighted AllPathsInfo for Vertex A
+        // A is connected to B and C. Both are 1 edge away. Total edges = 2. Avg = 1.0.
+        boolean foundA = false;
+        for (AllPathsInfo info : g.getAllPaths()) {
+            if (info.getName().equals("A")) {
+                if (info.getAveCost() == 1.0 && info.getNumPaths() == 2) {
+                    System.out.println(
+                        "Test 4 Passed: Vertex A unweighted stats are correct."
+                    );
+                    foundA = true;
+                }
+            }
+        }
+        if (!foundA) System.out.println(
+            "Test 4 FAILED: Vertex A stats incorrect or not found."
+        );
+
+        // --- FIND ALL PATHS WEIGHTED (2 cases) ---
+        System.out.println("\nTesting findAllPaths (weighted = true):");
+        g.findAllPaths(true);
+
+        // Test 5: Weighted Cost of Longest Shortest Path
+        // A->B (2), B->C (1), A->C (3). Max cost is A to C (3.0).
+        double weightedMaxCost = g.costOfLongestShortestPath();
+        if (weightedMaxCost == 3.0) {
+            System.out.println("Test 5 Passed: Weighted max shortest path cost is 3.0.");
+        } else {
+            System.out.println(
+                "Test 5 FAILED: Weighted max cost. Expected 3.0, got " + weightedMaxCost
+            );
+        }
+
+        // Test 6: Weighted AllPathsInfo for Vertex A
+        // A to B (2.0), A to C (3.0). Total cost = 5.0. Num paths = 2. Avg = 2.5.
+        boolean foundAWeighted = false;
+        for (AllPathsInfo info : g.getAllPaths()) {
+            if (info.getName().equals("A")) {
+                if (info.getAveCost() == 2.5 && info.getTotalCost() == 5.0) {
+                    System.out.println("Test 6 Passed: Vertex A weighted stats are correct.");
+                    foundAWeighted = true;
+                }
+            }
+        }
+        if (!foundAWeighted) System.out.println(
+            "Test 6 FAILED: Vertex A weighted stats incorrect."
+        );
+
+        System.out.println("--- END OF STUDENT TESTS ---\n");
+    }
+
     // return a Graph based on the given edges
     private static Graph getGraph(String[][] edges, boolean directed) {
         Graph result = new Graph();
