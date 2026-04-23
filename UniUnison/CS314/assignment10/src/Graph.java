@@ -240,8 +240,10 @@ public class Graph {
 
     /**
      *
-     * @param paths
-     * @param startName
+     * @param paths - 
+     * @param startName - The starting vertex. This method will find all the
+     * weighted shortest paths from the given vertex to all other vertices
+     * in the graph.
      * @return
      */
     private void prepDijkstraMethod(PriorityQueue<Path> paths, String startName) {
