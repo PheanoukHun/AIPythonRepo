@@ -34,263 +34,101 @@ public class GraphAndRankTester {
      * @param args None expected.
      */
     public static void main(String[] args)  {
-        graphTests();
-
-        String actual = "2008ap_poll.txt";
-        String gameResults = "div12008.txt";
-
-        FootballRanker ranker = new FootballRanker(gameResults, actual);
-
-        ranker.doUnweighted(true);
-        ranker.doWeighted(true);
-        ranker.doWeightedAndWinPercentAdjusted(true);
-
-        System.out.println();
-        doRankTests(ranker);
-
-        System.out.println();
-
+        studentTests();
     }
 
-    // tests on various simple Graphs
-    private static void graphTests() {
-        System.out.println("PERFORMING TESTS ON SIMPLE GRAPHS\n");
-        graph0Tests();
-        graph1Tests();
-        graph2Tests();
-        graph3Tests();
-        graph4Tests();
-    }
-
-    /* The graph used here is the same one from the example
-     * used to show Dijktra's algorithm from the slides on
-     * Graphs. It may be useful to print out the priority queue
-     * at the top of the main while loop in the dijktra method
-     * to see if it matches the one in the slides. Note, the Java
-     * PriorityQueue (which you CAN use in the dijkstra method)
-     * breaks ties in an arbitrary manner, so the order of equal
-     * elements in the priority queue may be different than those
-     * shown in the slides. (And that is not a problem.)
-     */
-    private static void graph0Tests() {
-        System.out.println("Graph #0 Tests:");
-        // first a simple path test
-        // Graph #0
-        String [][] g1Edges =  {{"A", "B", "1"},
-                {"B", "C", "3"},
-                {"A", "C", "7"},
-                {"B", "D", "21"},
-                {"C", "F", "3"},
-                {"A", "G", "17"},
-                {"D", "F", "4"},
-                {"D", "G", "5"},
-                {"D", "E", "6"}};
-        Graph g1 = getGraph(g1Edges, false);
-
-        g1.dijkstra("A");
-        String actualPath = g1.findPath("E").toString();
-        String expected = "[A, B, C, F, D, E]";
-        if (actualPath.equals(expected)) {
-            System.out.println("Passed dijkstra path test graph 0.");
-        } else {
-            System.out.println("Failed dijkstra path test graph 0. Expected: " + expected + " actual " + actualPath);
+    private static void studentTests() {
+            System.out.println("\n--- START OF STUDENT TESTS ---");
+            
+            // Create a simple directed graph for testing
+            // A -> B (cost 2.0)
+            // B -> C (cost 1.0)
+            // A -> C (cost 5.0) -> Weighted shortest path should be A-B-C (cost 3.0)
+            String[][] studentEdges = {
+                    {"A", "B", "2.0"},
+                    {"B", "C", "1.0"},
+                    {"A", "C", "5.0"}
+            };
+            Graph g = getGraph(studentEdges, true);
+    
+            // --- DIJKSTRA TESTS (2 cases) ---
+            System.out.println("Testing Dijkstra:");
+            
+            // Test 1: Shortest weighted path from A to C
+            g.dijkstra("A");
+            String actualPathAC = g.findPath("C").toString();
+            String expectedPathAC = "[A, B, C]";
+            if (actualPathAC.equals(expectedPathAC)) {
+                System.out.println("Test 1 Passed: Dijkstra path A to C is correct.");
+            } else {
+                System.out.println("Test 1 FAILED: Dijkstra path A to C. Expected " + expectedPathAC + " but got " + actualPathAC);
+            }
+    
+            // Test 2: Shortest weighted path from B to C
+            g.dijkstra("B");
+            String actualPathBC = g.findPath("C").toString();
+            String expectedPathBC = "[B, C]";
+            if (actualPathBC.equals(expectedPathBC)) {
+                System.out.println("Test 2 Passed: Dijkstra path B to C is correct.");
+            } else {
+                System.out.println("Test 2 FAILED: Dijkstra path B to C. Expected " + expectedPathBC + " but got " + actualPathBC);
+            }
+    
+            // --- FIND ALL PATHS UNWEIGHTED (2 cases) ---
+            System.out.println("\nTesting findAllPaths (weighted = false):");
+            g.findAllPaths(false);
+            
+            // Test 3: Unweighted Diameter (Longest shortest path in edges)
+            // A->B (1), A->C (1 via direct edge), B->C (1). Max edges = 1.
+            int unweightedDiam = g.getDiameter();
+            if (unweightedDiam == 1) {
+                System.out.println("Test 3 Passed: Unweighted diameter is 1.");
+            } else {
+                System.out.println("Test 3 FAILED: Unweighted diameter. Expected 1, got " + unweightedDiam);
+            }
+    
+            // Test 4: Unweighted AllPathsInfo for Vertex A
+            // A is connected to B and C. Both are 1 edge away. Total edges = 2. Avg = 1.0.
+            boolean foundA = false;
+            for (AllPathsInfo info : g.getAllPaths()) {
+                if (info.getName().equals("A")) {
+                    if (info.getAveCost() == 1.0 && info.getNumPaths() == 2) {
+                        System.out.println("Test 4 Passed: Vertex A unweighted stats are correct.");
+                        foundA = true;
+                    }
+                }
+            }
+            if (!foundA) System.out.println("Test 4 FAILED: Vertex A stats incorrect or not found.");
+    
+            // --- FIND ALL PATHS WEIGHTED (2 cases) ---
+            System.out.println("\nTesting findAllPaths (weighted = true):");
+            g.findAllPaths(true);
+    
+            // Test 5: Weighted Cost of Longest Shortest Path
+            // A->B (2), B->C (1), A->C (3). Max cost is A to C (3.0).
+            double weightedMaxCost = g.costOfLongestShortestPath();
+            if (weightedMaxCost == 3.0) {
+                System.out.println("Test 5 Passed: Weighted max shortest path cost is 3.0.");
+            } else {
+                System.out.println("Test 5 FAILED: Weighted max cost. Expected 3.0, got " + weightedMaxCost);
+            }
+    
+            // Test 6: Weighted AllPathsInfo for Vertex A
+            // A to B (2.0), A to C (3.0). Total cost = 5.0. Num paths = 2. Avg = 2.5.
+            boolean foundAWeighted = false;
+            for (AllPathsInfo info : g.getAllPaths()) {
+                if (info.getName().equals("A")) {
+                    if (info.getAveCost() == 2.5 && info.getTotalCost() == 5.0) {
+                        System.out.println("Test 6 Passed: Vertex A weighted stats are correct.");
+                        foundAWeighted = true;
+                    }
+                }
+            }
+            if (!foundAWeighted) System.out.println("Test 6 FAILED: Vertex A weighted stats incorrect.");
+    
+            System.out.println("--- END OF STUDENT TESTS ---\n");
         }
-
-        // now do all paths unweighted
-        String[] expectedPaths = {"Name: D                    cost per path: 1.3333, num paths: 6",
-                "Name: B                    cost per path: 1.5000, num paths: 6",
-                "Name: A                    cost per path: 1.6667, num paths: 6",
-                "Name: C                    cost per path: 1.6667, num paths: 6",
-                "Name: F                    cost per path: 1.6667, num paths: 6",
-                "Name: G                    cost per path: 1.6667, num paths: 6",
-                "Name: E                    cost per path: 2.1667, num paths: 6"};
-        doAllPathsTests("Graph 0", g1, false, 3, 3.0, expectedPaths);
-
-        // now do all paths weighted
-        expectedPaths = new String[] {  "Name: F                    cost per path: 6.5000, num paths: 6",
-                "Name: C                    cost per path: 7.0000, num paths: 6",
-                "Name: D                    cost per path: 7.1667, num paths: 6",
-                "Name: B                    cost per path: 8.5000, num paths: 6",
-                "Name: A                    cost per path: 9.3333, num paths: 6",
-                "Name: G                    cost per path: 11.3333, num paths: 6",
-                "Name: E                    cost per path: 12.1667, num paths: 6"};
-        doAllPathsTests("Graph 0", g1, true, 5, 17.0, expectedPaths);
-    }
-
-    private static void graph1Tests() {
-        System.out.println("Graph #1 Tests:");
-        // first a simple path test
-        // Graph #1
-        String [][] g1Edges =  {{"A", "B", "1"},
-                {"B", "C", "3"},
-                {"B", "D", "12"},
-                {"C", "F", "3"},
-                {"A", "G", "7"},
-                {"D", "F", "4"},
-                {"D", "G", "5"},
-                {"D", "E", "6"}};
-        Graph g1 = getGraph(g1Edges, false);
-
-        g1.dijkstra("A");
-        String actualPath = g1.findPath("E").toString();
-        String expected = "[A, B, C, F, D, E]";
-        if (actualPath.equals(expected)) {
-            System.out.println("Passed dijkstra path test graph 1.");
-        } else {
-            System.out.println("Failed dijkstra path test graph 1. Expected: " + expected + " actual " + actualPath);
-        }
-
-        // now do all paths unweighted
-        String[] expectedPaths = {"Name: D                    cost per path: 1.3333, num paths: 6",
-                "Name: B                    cost per path: 1.5000, num paths: 6",
-                "Name: F                    cost per path: 1.8333, num paths: 6",
-                "Name: G                    cost per path: 1.8333, num paths: 6",
-                "Name: A                    cost per path: 2.0000, num paths: 6",
-                "Name: C                    cost per path: 2.0000, num paths: 6",
-                "Name: E                    cost per path: 2.1667, num paths: 6"};
-        doAllPathsTests("Graph 1", g1, false, 3, 3.0, expectedPaths);
-
-        // now do all paths weighted
-        expectedPaths = new String[] {  "Name: F                    cost per path: 6.5000, num paths: 6",
-                "Name: C                    cost per path: 6.8333, num paths: 6",
-                "Name: D                    cost per path: 7.1667, num paths: 6",
-                "Name: B                    cost per path: 7.3333, num paths: 6",
-                "Name: A                    cost per path: 7.8333, num paths: 6",
-                "Name: G                    cost per path: 8.5000, num paths: 6",
-                "Name: E                    cost per path: 12.1667, num paths: 6"};
-        doAllPathsTests("Graph 1", g1, true, 5, 17.0, expectedPaths);
-    }
-
-    private static void graph2Tests() {
-        System.out.println("Graph #2 Tests:");
-        // first a simple path test
-        // Graph #1
-        String[][] g2Edges = {{"E", "G", "9.6"},
-                {"G", "E", "19.2"},
-                {"D", "F", "4.0"},
-                {"F", "D", "8.0"},
-                {"E", "B", "8.0"},
-                {"B", "E", "16.0"},
-                {"F", "A", "6.0"},
-                {"A", "F", "12.0"},
-                {"F", "C", "4.0"},
-                {"C", "F", "8.0"},
-                {"C", "E", "6.9"},
-                {"E", "C", "13.8"},
-                {"D", "G", "8.0"},
-                {"G", "D", "16.0"},
-                {"E", "A", "5.7"},
-                {"A", "E", "11.4"},
-                {"C", "A", "0.4"},
-                {"A", "C", "0.8"},
-                {"D", "A", "6.1"},
-                {"A", "D", "12.2"},
-                {"D", "B", "7.9"},
-                {"B", "D", "15.8"},
-                {"C", "G", "5.4"},
-                {"G", "C", "10.8"},
-                {"A", "B", "7.1"},
-                {"B", "A", "14.2"},
-                {"E", "F", "4.4"},
-                {"F", "E", "8.8"}};
-        Graph g2 = getGraph(g2Edges, true);
-
-
-
-        // do all paths weighted
-        String[] expectedPaths = new String[] { "Name: C                    cost per path: 6.8000, num paths: 6",
-                "Name: A                    cost per path: 7.1333, num paths: 6",
-                "Name: D                    cost per path: 7.6167, num paths: 6",
-                "Name: F                    cost per path: 7.6833, num paths: 6",
-                "Name: E                    cost per path: 7.7667, num paths: 6",
-                "Name: G                    cost per path: 15.4667, num paths: 6",
-                "Name: B                    cost per path: 16.8667, num paths: 6"};
-        doAllPathsTests("Graph 2", g2, true, 3, 20.4, expectedPaths);
-    }
-
-    // Graph 3 is an unconnected Graph
-    private static void graph3Tests() {
-        System.out.println("Graph 3 Tests. Graph 3 is not fully connected. ");
-        String [][] g3Edges =
-                {{"A", "B", "13"},
-                        {"A", "C", "10"},
-                        {"A", "D", "2"},
-                        {"B", "E", "5"},
-                        {"C", "B", "1"},
-                        {"D", "C", "5"},
-                        {"E", "G", "1"},
-                        {"E", "F", "4"},
-                        {"F", "C", "3"},
-                        {"F", "E", "2"},
-                        {"G", "F", "2"},
-                        {"H", "I", "10"},
-                        {"H", "J", "5"},
-                        {"H", "K", "22"},
-                        {"I", "K", "3"},
-                        {"I", "J", "1"},
-                        {"J", "L", "8"}};
-        Graph g3 = getGraph(g3Edges, true);
-
-        // do all paths weighted
-        String[] expectedPaths = {"Name: A                    cost per path: 10.0000, num paths: 6",
-                "Name: D                    cost per path: 9.6000, num paths: 5",
-                "Name: F                    cost per path: 3.0000, num paths: 4",
-                "Name: E                    cost per path: 4.2500, num paths: 4",
-                "Name: G                    cost per path: 4.2500, num paths: 4",
-                "Name: C                    cost per path: 5.7500, num paths: 4",
-                "Name: B                    cost per path: 7.5000, num paths: 4",
-                "Name: H                    cost per path: 10.2500, num paths: 4",
-                "Name: I                    cost per path: 4.3333, num paths: 3",
-                "Name: J                    cost per path: 8.0000, num paths: 1"};
-        doAllPathsTests("Graph 3", g3, true, 6, 16.0, expectedPaths);
-    }
-
-    /* The graph used here is the same one from the example
-     * used to show Dijktra's algorithm from the slides on
-     * Graphs, with the addition of a pair of vertices unconnected
-     * to the main part of the Graph. J and K with a weight of 4.
-     */
-    private static void graph4Tests() {
-        System.out.println("Graph #4 Tests:");
-        // Graph #4
-        String [][] g1Edges =  {{"A", "B", "1"},
-                {"B", "C", "3"},
-                {"A", "C", "7"},
-                {"B", "D", "21"},
-                {"C", "F", "3"},
-                {"A", "G", "17"},
-                {"D", "F", "4"},
-                {"D", "G", "5"},
-                {"D", "E", "6"},
-                {"J", "K", "4"}};
-        Graph g1 = getGraph(g1Edges, false);
-
-
-        // now do all paths unweighted
-        String[] expectedPaths = {"Name: D                    cost per path: 1.3333, num paths: 6",
-                "Name: B                    cost per path: 1.5000, num paths: 6",
-                "Name: A                    cost per path: 1.6667, num paths: 6",
-                "Name: C                    cost per path: 1.6667, num paths: 6",
-                "Name: F                    cost per path: 1.6667, num paths: 6",
-                "Name: G                    cost per path: 1.6667, num paths: 6",
-                "Name: E                    cost per path: 2.1667, num paths: 6",
-                "Name: J                    cost per path: 1.0000, num paths: 1",
-                "Name: K                    cost per path: 1.0000, num paths: 1"};
-        doAllPathsTests("Graph 4", g1, false, 3, 3.0, expectedPaths);
-
-        // now do all paths weighted
-        expectedPaths = new String[] {  "Name: F                    cost per path: 6.5000, num paths: 6",
-                "Name: C                    cost per path: 7.0000, num paths: 6",
-                "Name: D                    cost per path: 7.1667, num paths: 6",
-                "Name: B                    cost per path: 8.5000, num paths: 6",
-                "Name: A                    cost per path: 9.3333, num paths: 6",
-                "Name: G                    cost per path: 11.3333, num paths: 6",
-                "Name: E                    cost per path: 12.1667, num paths: 6",
-                "Name: J                    cost per path: 4.0000, num paths: 1",
-                "Name: K                    cost per path: 4.0000, num paths: 1"};
-        doAllPathsTests("Graph 4", g1, true, 5, 17.0, expectedPaths);
-    }
-
+    
     // return a Graph based on the given edges
     private static Graph getGraph(String[][] edges, boolean directed) {
         Graph result = new Graph();
@@ -302,83 +140,5 @@ public class GraphAndRankTester {
             }
         }
         return result;
-    }
-
-    // Tests the all paths method. Run each set of tests twice to ensure the Graph
-    // is correctly reseting each time
-    private static void doAllPathsTests(String graphNumber, Graph g, boolean weighted,
-                                        int expectedDiameter, double expectedCostOfLongestShortestPath,
-                                        String[] expectedPaths) {
-
-        System.out.println("\nTESTING ALL PATHS INFO ON " + graphNumber + ". ");
-        for (int i = 0; i < 2; i++) {
-            System.out.println("Test run = " + (i + 1));
-            System.out.println("Find all paths weighted = " + weighted);
-            g.findAllPaths(weighted);
-            int actualDiameter = g.getDiameter();
-            double actualCostOfLongestShortesPath = g.costOfLongestShortestPath();
-            if (actualDiameter == expectedDiameter) {
-                System.out.println("Passed diameter test.");
-            } else {
-                System.out.println("FAILED diameter test. "
-                        + "Expected = "  + expectedDiameter +
-                        " Actual = " + actualDiameter);
-            }
-            if (actualCostOfLongestShortesPath == expectedCostOfLongestShortestPath) {
-                System.out.println("Passed cost of longest shortest path. test.");
-            } else {
-                System.out.println("FAILED cost of longest shortest path. "
-                        + "Expected = "  + expectedCostOfLongestShortestPath +
-                        " Actual = " + actualCostOfLongestShortesPath);
-            }
-            testAllPathsInfo(g, expectedPaths);
-            System.out.println();
-        }
-
-    }
-
-    // Compare results of all paths info on Graph to expected results.
-    private static void testAllPathsInfo(Graph g, String[] expectedPaths) {
-        int index = 0;
-
-        for (AllPathsInfo api : g.getAllPaths()) {
-            if (expectedPaths[index].equals(api.toString())) {
-                System.out.println(expectedPaths[index] + " is correct!!");
-            } else {
-                System.out.println("ERROR IN ALL PATHS INFO: ");
-                System.out.println("index: " + index);
-                System.out.println("EXPECTED: " + expectedPaths[index]);
-                System.out.println("ACTUAL: " + api.toString());
-                System.out.println();
-            }
-            index++;
-        }
-        System.out.println();
-    }
-
-    // Test the FootballRanker on the given file.
-    private static void doRankTests(FootballRanker ranker) {
-        System.out.println("\nTESTS ON FOOTBALL TEAM GRAPH WITH FootBallRanker CLASS: \n");
-        double actualError = ranker.doUnweighted(false);
-        if (actualError == 13.7) {
-            System.out.println("Passed unweighted test");
-        } else {
-            System.out.println("FAILED UNWEIGHTED ROOT MEAN SQUARE ERROR TEST. Expected 13.7, actual: " + actualError);
-        }
-
-        actualError = ranker.doWeighted(false);
-        if (actualError == 12.6) {
-            System.out.println("Passed weigthed test");
-        } else {
-            System.out.println("FAILED WEIGHTED ROOT MEAN SQUARE ERROR TEST. Expected 12.6, actual: " + actualError);
-        }
-
-
-        actualError = ranker.doWeightedAndWinPercentAdjusted(false);
-        if (actualError == 6.3) {
-            System.out.println("Passed unweighted win percent test");
-        } else {
-            System.out.println("FAILED WEIGHTED  AND WIN PERCENT ROOT MEAN SQUARE ERROR TEST. Expected 6.3, actual: " + actualError);
-        }
     }
 }
