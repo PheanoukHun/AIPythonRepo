@@ -331,19 +331,20 @@ public class Graph {
                 findUnweightedShortestPath(start.name);
             }
 
-            addAllPathsHelper(start, weighted);
+            updateVertexVars(start, weighted);
         }
     }
 
     /**
-     * A Helper Method for the findAllPaths method to add all 
+     * A Helper Method for the findAllPaths method to find the 
+     * longest path of the map for the graph's diameter.
      *
      * @param start - The starting vertex to explore from.
      * @param weighted - If weighted == true use dijkstra's algorithm
      * otherwise use the unweighted shortest path algorithm. (Ignore any
      * weights for edges. All edge weights considered to be 1.)
      */
-    private void addAllPathsHelper(Vertex start, boolean weighted) {
+    private void updateVertexVars(Vertex start, boolean weighted) {
         for (Vertex other : vertices.values()) {
             // Define Variable to Shorten Line Lengths
             double weightedLength = other.weightedCostFromStartVertex;
