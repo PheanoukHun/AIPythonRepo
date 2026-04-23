@@ -239,12 +239,12 @@ public class Graph {
     }
 
     /**
+     * Prep all the Values for Dijkstra Method.
      *
-     * @param paths - 
+     * @param paths - The priority queue storing paths, ordered by their total cost.
      * @param startName - The starting vertex. This method will find all the
      * weighted shortest paths from the given vertex to all other vertices
      * in the graph.
-     * @return
      */
     private void prepDijkstraMethod(PriorityQueue<Path> paths, String startName) {
         Vertex start = vertices.get(startName);
@@ -254,9 +254,11 @@ public class Graph {
     }
 
     /**
+     * This method implements the greedy part of the Dijkstra algorithm.
+     * Explores all neighbors of the currentVert vertex to update the shorted path.
      *
-     * @param currentVert
-     * @param paths
+     * @param currentVert - The vertex currently being processed by Dijkstra's Algorithm.
+     * @param paths - The priority queue storing paths, ordered by their total cost.
      */
     private void greedyDijkstra(Vertex currentVert, PriorityQueue<Path> paths) {
         // Marked as Visited
@@ -307,7 +309,7 @@ public class Graph {
      * use unwieghted shortest path. After this method is called the getAllPaths,
      * getDiamter, and get longest path methods may be called.
      *
-     * @param weighted If weighted == true use dijkstra's algorithm
+     * @param weighted - If weighted == true use dijkstra's algorithm
      * otherwise use the unweighted shortest path algorithm. (Ignore any
      * weights for edges. All edge weights considered to be 1.)
      */
@@ -334,9 +336,12 @@ public class Graph {
     }
 
     /**
+     * A Helper Method for the findAllPaths method to add all 
      *
-     * @param start
-     * @param weighted
+     * @param start - The starting vertex to explore from.
+     * @param weighted - If weighted == true use dijkstra's algorithm
+     * otherwise use the unweighted shortest path algorithm. (Ignore any
+     * weights for edges. All edge weights considered to be 1.)
      */
     private void addAllPathsHelper(Vertex start, boolean weighted) {
         for (Vertex other : vertices.values()) {
