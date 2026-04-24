@@ -10,18 +10,20 @@
  */
 
 /*
- * Question.
- *
- * 1. The assignment presents three ways to rank teams using graphs.
+ * Question 1: The assignment presents three ways to rank teams using graphs.
  * The results, especially for the last two methods are reasonable.
  * However if all results from all college football teams are included
- * some unexpected results occur.
- *
- * Explain the unexpected results. You may
- * have to do some research on the various college football divisions to
- * make an informed answer. (What are the divisions within college
- * football? Who do teams play? How would this affect the
- * structure of the graph?)
+ * some unexpected results occur. Explain the unexpected results.
+ * You may have to do some research on the various college football divisions
+ * to make an informed answer. (What are the divisions within college football?
+ * Who do teams play? How would this affect the structure of the graph?)
+ * 
+ * 
+ * 
+ * Question 2: Suggest another way/method of ranking teams using the 
+ * results from the graph. Thoroughly explain your method. The method
+ * can build on one of the three existing algorithms.
+ * 
  */
 
 public class GraphAndRankTester {
@@ -116,7 +118,8 @@ public class GraphAndRankTester {
             }
         }
 
-        printResults(testName, !foundF && actual.equals(expected), "Info for Node F", testNum);
+        printResults(testName, !foundF && actual.equals(expected),
+                "Unweighted Info for Node F", testNum);
         testNum++;
 
         // Weighted Find All Paths
@@ -135,11 +138,12 @@ public class GraphAndRankTester {
         for (AllPathsInfo info : g.getAllPaths()) {
             if (info.getName().equals("F")) {
                 actual = info.getNumPaths() + " paths, avg edge " + info.getAveCost();
-                expected = "2 paths, avg edge 1.0";
+                expected = "2 paths, avg edge 1.5";
             }
         }
 
-        printResults(testName, !foundF && actual.equals(expected), "Info for Node F", testNum);
+        printResults(testName, !foundF && actual.equals(expected),
+                "Weighted Info for Node F", testNum);
     }
 
     // return a Graph based on the given edges
