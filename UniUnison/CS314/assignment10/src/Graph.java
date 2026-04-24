@@ -890,11 +890,7 @@ public class Graph {
         }
 
         public int compareTo(Path other) {
-            return (weightedCostOfPath < other.weightedCostOfPath)
-                ? -1
-                : (weightedCostOfPath > other.weightedCostOfPath)
-                    ? 1
-                    : 0;
+            return (weightedCostOfPath < other.weightedCostOfPath) ? -1 : (weightedCostOfPath > other.weightedCostOfPath) ? 1 : 0;
         }
     }
 }

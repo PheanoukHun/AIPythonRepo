@@ -50,6 +50,8 @@ public class GraphAndRankTester {
             System.out.println(" * TEST PASSED");
         } else {
             System.out.println(" * TEST FAILED");
+            System.out.println(" * Actual: " + actual);
+            System.out.println(" * Expected: " + expected);
         }
     }
 
@@ -66,8 +68,9 @@ public class GraphAndRankTester {
             { "F", "G", "1.0" },
             { "G", "H", "1.0" },
             { "F", "H", "3.0" },
+            { "E", "F", "2.0" },
         };
-        
+
         Graph g = getGraph(edges, true);
         int testNum = 1;
 
@@ -76,24 +79,15 @@ public class GraphAndRankTester {
 
         // Test 1: Shortest weighted path from A to C
         g.dijkstra("A");
-        String actualPathAC = g.findPath("C").toString();
-        String expectedPathAC = "[A, B, C]";
-        printResults("Dijkstra Test", actualPathAC, expectedPathAC, "Dijkstra", testNum);
+        String actual = g.findPath("C").toString();
+        String expected = "[A, E, F]";
+        printResults("Dijkstra Test", actual, expected, "Dijkstra's Path from A to F", testNum);
 
         // Test 2: Shortest weighted path from B to C
-        g.dijkstra("B");
-        String actualPathBC = g.findPath("C").toString();
-        String expectedPathBC = "[B, C]";
-        if (actualPathBC.equals(expectedPathBC)) {
-            System.out.println("Test 2 Passed: Dijkstra path B to C is correct.");
-        } else {
-            System.out.println(
-                "Test 2 FAILED: Dijkstra path B to C. Expected " +
-                    expectedPathBC +
-                    " but got " +
-                    actualPathBC
-            );
-        }
+        g.dijkstra("H");
+        actual = g.findPath("C").toString();
+        expected = "[H, F, E, A, B, D, C]";
+        printResults("Dijkstra Test", actual, expected, "Dijkstra's Path from H to C", testNum);
 
         // --- FIND ALL PATHS UNWEIGHTED (2 cases) ---
         System.out.println("\nTesting findAllPaths (weighted = false):");
