@@ -17,15 +17,29 @@
  * You may have to do some research on the various college football divisions
  * to make an informed answer. (What are the divisions within college football?
  * Who do teams play? How would this affect the structure of the graph?)
- * 
- * I believe that there is such a large discrepancy between the actual results 
- * and the three ways that we predicted the ranking because We run the file games08.txt file that contains all games in during the 2008 session that contains games between D1, D2, and D3 schools. So, a win from a Powerhouse D3 team against a lower-level D3 team will be ranked the same as a win from UT against California. Additionally, since college footballs is divided into D1, D2, and D3 clusters then 1 team from all of the division will be the center of all the clusters such that they connect to all the teams they won against, like how UT would be the center with it connecting to 
- * 
- * Question 2: Suggest another way/method of ranking teams using the 
+ *
+ * I believe that there is such a large discrepancy between the actual results
+ * and the three ways that we predicted the ranking because We run the file
+ * games08.txt file that contains all games in during the 2008 session that
+ * contains games between D1, D2, and D3 schools. So, a win from a Powerhouse
+ * D3 team against a lower-level D3 team will be ranked the same as a win from
+ * UT against California. Additionally, since college footballs is divided into
+ * D1, D2, and D3 clusters then 1 team from all of the division will be the
+ * center of all the clusters such that they connect to all the teams they won
+ * against, like how UT would be the center with it connecting to 12 other teams
+ * that it won against. Finally, in the lower divisions, games are generally won
+ * with higher score margins compared to that of the the higher level divisions.
+ *
+ * Question 2: Suggest another way/method of ranking teams using the
  * results from the graph. Thoroughly explain your method. The method
  * can build on one of the three existing algorithms.
- * 
- * 
+ *
+ * We could apply a multiplier based on the division of the game with the
+ * multiplier being higher based for the higher divisions, since it is
+ * harder to score points in the higher divisions, adding on the multiplier
+ * would be used to equalize the scores differences. In addition, scores
+ * against higher ranked teams in the division should count for more value
+ * and scores against lower ranked teams should be valued less.
  */
 
 public class GraphAndRankTester {

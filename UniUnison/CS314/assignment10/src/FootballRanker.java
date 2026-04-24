@@ -212,9 +212,9 @@ public class FootballRanker {
      * A HELPER METHOD to build the string to compare the Actual and Predicted
      * ranking of the RMSE Method.
      *
-     * @param name - The Name of the Team
-     * @param actual - The actual Rank of the Team
-     * @param predicted - The predicted Rank of the Team 
+     * @param name      - The Name of the Team
+     * @param actual    - The actual Rank of the Team
+     * @param predicted - The predicted Rank of the Team
      * @return - A string that can be used print the Format for RMSE Method.
      */
     private String getStringForRMSE(String name, int actual, int predicted) {
