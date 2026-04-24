@@ -19,11 +19,7 @@
  * Who do teams play? How would this affect the structure of the graph?)
  * 
  * I believe that there is such a large discrepancy between the actual results 
- * and the three ways that we predicted the ranking because:
- *  1. We run the file games08.txt file that contains all games in during the
- * 2008 session that contains games between D1, D2, and D3 schools. This probably
- * skewed the results of our findings because a game between a D1 School like UT
- * and a D2
+ * and the three ways that we predicted the ranking because We run the file games08.txt file that contains all games in during the 2008 session that contains games between D1, D2, and D3 schools. So, a win from a Powerhouse D3 team against a lower-level D3 team will be ranked the same as a win from UT against California. Additionally, since college footballs is divided into D1, D2, and D3 clusters then 1 team from all of the division will be the center of all the clusters such that they connect to all the teams they won against, like how UT would be the center with it connecting to 
  * 
  * Question 2: Suggest another way/method of ranking teams using the 
  * results from the graph. Thoroughly explain your method. The method
