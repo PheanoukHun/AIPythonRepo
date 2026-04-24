@@ -210,7 +210,7 @@ public class FootballRanker {
 
     /**
      * A HELPER METHOD to build the string to compare the Actual and Predicted
-     * ranking of the RMSE.
+     * ranking of the RMSE Method.
      *
      * @param name - The Name of the Team
      * @param actual - The actual Rank of the Team

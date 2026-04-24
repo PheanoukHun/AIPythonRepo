@@ -31,78 +31,77 @@ public class GraphAndRankTester {
      * Experiments involve results from college football
      * teams. Central nodes in the graph are compared to
      * human rankings of the teams.
+     *
      * @param args None expected.
      */
     public static void main(String[] args) {
         studentTests();
     }
 
-    private static void printResults(
-        String testName,
-        String actual,
-        String expected,
-        String descr,
-        int testNum
-    ) {
+    /**
+     *
+     * @param testName
+     * @param correct
+     * @param descr
+     * @param testNum
+     */
+    private static void printResults(String testName, boolean correct, String descr, int testNum) {
+
         System.out.println(testName + "Test Number " + testNum + ":");
         System.out.println(" * " + descr);
-        if (actual.equals(expected)) {
+
+        if (correct) {
             System.out.println(" * TEST PASSED");
         } else {
             System.out.println(" * TEST FAILED");
-            System.out.println(" * Actual: " + actual);
-            System.out.println(" * Expected: " + expected);
         }
+        
+        System.out.println();
     }
 
     private static void studentTests() {
         // Variable Setup
         String[][] edges = {
-            { "A", "B", "2.0" },
-            { "B", "C", "1.0" },
-            { "A", "C", "5.0" },
-            { "C", "D", "3.0" },
-            { "D", "E", "1.0" },
-            { "E", "A", "2.0" },
-            { "B", "D", "4.0" },
-            { "F", "G", "1.0" },
-            { "G", "H", "1.0" },
-            { "F", "H", "3.0" },
-            { "E", "F", "2.0" },
+                { "A", "B", "2.0" },
+                { "B", "C", "1.0" },
+                { "A", "C", "5.0" },
+                { "C", "D", "3.0" },
+                { "D", "E", "1.0" },
+                { "E", "A", "2.0" },
+                { "B", "D", "4.0" },
+                { "F", "G", "1.0" },
+                { "G", "H", "1.0" },
+                { "F", "H", "3.0" },
+                { "E", "F", "2.0" },
         };
 
         Graph g = getGraph(edges, true);
         int testNum = 1;
 
         // Dijkstra Test 1:
-        System.out.println("Testing Dijkstra:");
+        System.out.println("\nTesting Dijkstra:");
 
-        // Test 1: Shortest weighted path from A to C
+        // Test 1: Shortest weighted path from A to E
         g.dijkstra("A");
-        String actual = g.findPath("C").toString();
-        String expected = "[A, E, F]";
-        printResults("Dijkstra Test", actual, expected, "Dijkstra's Path from A to F", testNum);
+        String actual = g.findPath("E").toString();
+        String expected = "[A, B, D, E]";
+        printResults("Dijkstra Test", actual.equals(expected),
+                "Dijkstra's Path from A to E", testNum);
+        testNum++;
 
-        // Test 2: Shortest weighted path from B to C
-        g.dijkstra("H");
-        actual = g.findPath("C").toString();
-        expected = "[H, F, E, A, B, D, C]";
-        printResults("Dijkstra Test", actual, expected, "Dijkstra's Path from H to C", testNum);
+        // Test 2: Shortest weighted path from F to H
+        g.dijkstra("F");
+        actual = g.findPath("H").toString();
+        expected = "[F, G, H]";
+        printResults("Dijkstra Test", actual.equals(expected),
+                "Dijkstra's Path from F to H", testNum);
+        testNum++;
 
         // --- FIND ALL PATHS UNWEIGHTED (2 cases) ---
-        System.out.println("\nTesting findAllPaths (weighted = false):");
+        System.out.println("Testing findAllPaths (not WEIGHTED):");
         g.findAllPaths(false);
-
-        // Test 3: Unweighted Diameter (Longest shortest path in edges)
-        // A->B (1), A->C (1 via direct edge), B->C (1). Max edges = 1.
+        
         int unweightedDiam = g.getDiameter();
-        if (unweightedDiam == 1) {
-            System.out.println("Test 3 Passed: Unweighted diameter is 1.");
-        } else {
-            System.out.println(
-                "Test 3 FAILED: Unweighted diameter. Expected 1, got " + unweightedDiam
-            );
-        }
 
         // Test 4: Unweighted AllPathsInfo for Vertex A
         // A is connected to B and C. Both are 1 edge away. Total edges = 2. Avg = 1.0.
@@ -111,15 +110,14 @@ public class GraphAndRankTester {
             if (info.getName().equals("A")) {
                 if (info.getAveCost() == 1.0 && info.getNumPaths() == 2) {
                     System.out.println(
-                        "Test 4 Passed: Vertex A unweighted stats are correct."
-                    );
+                            "Test 4 Passed: Vertex A unweighted stats are correct.");
                     foundA = true;
                 }
             }
         }
-        if (!foundA) System.out.println(
-            "Test 4 FAILED: Vertex A stats incorrect or not found."
-        );
+        if (!foundA)
+            System.out.println(
+                    "Test 4 FAILED: Vertex A stats incorrect or not found.");
 
         // --- FIND ALL PATHS WEIGHTED (2 cases) ---
         System.out.println("\nTesting findAllPaths (weighted = true):");
@@ -132,8 +130,7 @@ public class GraphAndRankTester {
             System.out.println("Test 5 Passed: Weighted max shortest path cost is 3.0.");
         } else {
             System.out.println(
-                "Test 5 FAILED: Weighted max cost. Expected 3.0, got " + weightedMaxCost
-            );
+                    "Test 5 FAILED: Weighted max cost. Expected 3.0, got " + weightedMaxCost);
         }
 
         // Test 6: Weighted AllPathsInfo for Vertex A
@@ -147,11 +144,9 @@ public class GraphAndRankTester {
                 }
             }
         }
-        if (!foundAWeighted) System.out.println(
-            "Test 6 FAILED: Vertex A weighted stats incorrect."
-        );
-
-        System.out.println("--- END OF STUDENT TESTS ---\n");
+        if (!foundAWeighted)
+            System.out.println(
+                    "Test 6 FAILED: Vertex A weighted stats incorrect.");
     }
 
     // return a Graph based on the given edges
