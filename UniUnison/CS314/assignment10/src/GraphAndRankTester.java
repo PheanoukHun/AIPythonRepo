@@ -35,15 +35,17 @@ public class GraphAndRankTester {
      * @param args None expected.
      */
     public static void main(String[] args) {
-        studentTests();
+        myTestCases();
     }
 
     /**
+     * A HELPER METHOD created to print the test cases.
      *
-     * @param testName
-     * @param correct
-     * @param descr
-     * @param testNum
+     * @param testName - The Name of the Test cases
+     * @param correct  - A boolean value that directs the method to whether the
+     *                 tests passed or not.
+     * @param descr    - A description of the method.
+     * @param testNum  - The number of the test.
      */
     private static void printResults(String testName, boolean correct, String descr, int testNum) {
 
@@ -59,7 +61,7 @@ public class GraphAndRankTester {
         System.out.println();
     }
 
-    private static void studentTests() {
+    private static void myTestCases() {
         // Variable Setup
         String[][] edges = {
                 { "A", "B", "2.0" },
@@ -105,36 +107,39 @@ public class GraphAndRankTester {
         printResults(testName, unweightedDiam == 4, "Diameter Check of Graph", testNum);
         testNum++;
 
-        // Test 4: Check to see if there is a path from 
+        // Test 4: Check to see info for F.
+        boolean foundF = false;
+        for (AllPathsInfo info : g.getAllPaths()) {
+            if (info.getName().equals("F")) {
+                actual = info.getNumPaths() + " paths, avg edge " + info.getAveCost();
+                expected = "2 paths, avg edge 1.0";
+            }
+        }
 
-        // --- FIND ALL PATHS WEIGHTED (2 cases) ---
-        System.out.println("\nTesting findAllPaths (weighted = true):");
+        printResults(testName, !foundF && actual.equals(expected), "Info for Node F", testNum);
+        testNum++;
+
+        // Weighted Find All Paths
+        testName = "Testing FindAllPaths (weighted)";
+        System.out.println(testName + ":\n");
         g.findAllPaths(true);
 
         // Test 5: Weighted Cost of Longest Shortest Path
-        // A->B (2), B->C (1), A->C (3). Max cost is A to C (3.0).
         double weightedMaxCost = g.costOfLongestShortestPath();
-        if (weightedMaxCost == 3.0) {
-            System.out.println("Test 5 Passed: Weighted max shortest path cost is 3.0.");
-        } else {
-            System.out.println(
-                    "Test 5 FAILED: Weighted max cost. Expected 3.0, got " + weightedMaxCost);
-        }
+        printResults(testName, weightedMaxCost == 8.0,
+                "Weighted Cost of Longest Shortest Path", testNum);
+        testNum++;
 
         // Test 6: Weighted AllPathsInfo for Vertex A
-        // A to B (2.0), A to C (3.0). Total cost = 5.0. Num paths = 2. Avg = 2.5.
-        boolean foundAWeighted = false;
+        foundF = false;
         for (AllPathsInfo info : g.getAllPaths()) {
-            if (info.getName().equals("A")) {
-                if (info.getAveCost() == 2.5 && info.getTotalCost() == 5.0) {
-                    System.out.println("Test 6 Passed: Vertex A weighted stats are correct.");
-                    foundAWeighted = true;
-                }
+            if (info.getName().equals("F")) {
+                actual = info.getNumPaths() + " paths, avg edge " + info.getAveCost();
+                expected = "2 paths, avg edge 1.0";
             }
         }
-        if (!foundAWeighted)
-            System.out.println(
-                    "Test 6 FAILED: Vertex A weighted stats incorrect.");
+
+        printResults(testName, !foundF && actual.equals(expected), "Info for Node F", testNum);
     }
 
     // return a Graph based on the given edges
