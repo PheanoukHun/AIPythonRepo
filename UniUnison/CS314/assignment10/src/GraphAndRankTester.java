@@ -55,7 +55,7 @@ public class GraphAndRankTester {
         } else {
             System.out.println(" * TEST FAILED");
         }
-        
+
         System.out.println();
     }
 
@@ -71,53 +71,41 @@ public class GraphAndRankTester {
                 { "B", "D", "4.0" },
                 { "F", "G", "1.0" },
                 { "G", "H", "1.0" },
-                { "F", "H", "3.0" },
-                { "E", "F", "2.0" },
+                { "F", "H", "3.0" }
         };
 
         Graph g = getGraph(edges, true);
         int testNum = 1;
 
-        // Dijkstra Test 1:
-        System.out.println("\nTesting Dijkstra:");
+        // Dijkstra Algorithm Test:
+        String testName = "Testing Dijkstra";
+        System.out.println("\n" + testName + ":\n");
 
         // Test 1: Shortest weighted path from A to E
         g.dijkstra("A");
         String actual = g.findPath("E").toString();
         String expected = "[A, B, D, E]";
-        printResults("Dijkstra Test", actual.equals(expected),
-                "Dijkstra's Path from A to E", testNum);
+        printResults(testName, actual.equals(expected), "Dijkstra's Path from A to E", testNum);
         testNum++;
 
         // Test 2: Shortest weighted path from F to H
         g.dijkstra("F");
         actual = g.findPath("H").toString();
         expected = "[F, G, H]";
-        printResults("Dijkstra Test", actual.equals(expected),
-                "Dijkstra's Path from F to H", testNum);
+        printResults(testName, actual.equals(expected), "Dijkstra's Path from F to H", testNum);
         testNum++;
 
-        // --- FIND ALL PATHS UNWEIGHTED (2 cases) ---
-        System.out.println("Testing findAllPaths (not WEIGHTED):");
+        // Unweighted Find All Paths
+        testName = "Testing FindAllPaths (Unweighted)";
+        System.out.println(testName + ":\n");
         g.findAllPaths(false);
-        
-        int unweightedDiam = g.getDiameter();
 
-        // Test 4: Unweighted AllPathsInfo for Vertex A
-        // A is connected to B and C. Both are 1 edge away. Total edges = 2. Avg = 1.0.
-        boolean foundA = false;
-        for (AllPathsInfo info : g.getAllPaths()) {
-            if (info.getName().equals("A")) {
-                if (info.getAveCost() == 1.0 && info.getNumPaths() == 2) {
-                    System.out.println(
-                            "Test 4 Passed: Vertex A unweighted stats are correct.");
-                    foundA = true;
-                }
-            }
-        }
-        if (!foundA)
-            System.out.println(
-                    "Test 4 FAILED: Vertex A stats incorrect or not found.");
+        // Test 3: Unweighted Diameter
+        int unweightedDiam = g.getDiameter();
+        printResults(testName, unweightedDiam == 4, "Diameter Check of Graph", testNum);
+        testNum++;
+
+        // Test 4: Check to see if there is a path from 
 
         // --- FIND ALL PATHS WEIGHTED (2 cases) ---
         System.out.println("\nTesting findAllPaths (weighted = true):");
