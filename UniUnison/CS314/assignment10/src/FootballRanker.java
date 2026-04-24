@@ -62,19 +62,19 @@ public class FootballRanker {
 
     /**
      * Create a new FootballRanker based on the given files.
-     * Format of file is:
-     * <br>Date,Home Team Name,Home Team Points,Away Team Name,Away Team Points,Location if neutral.
-     * <br> results that are ties are ignored
-     * <br>pre: gameResults != null, actualRanks != null, files with the given names
+     * Format of file is: Date,Home Team Name,Home Team Points,Away Team Name,Away
+     * Team Points,Location if neutral. results that are ties are ignored
+     * pre: gameResults != null, actualRanks != null, files with the given names
      * are in the local directory.
+     *
      * @param gameResults The name of the file with the results from games.
-     * @param actualRanks The name of the file with the final end of season rankings.
+     * @param actualRanks The name of the file with the final end of season
+     *                    rankings.
      */
     public FootballRanker(String gameResults, String actualRanks) {
         if (gameResults == null || actualRanks == null) {
-            throw new IllegalArgumentException(
-                "Violation of precondition. " + "File names may not be null."
-            );
+            throw new IllegalArgumentException("Violation of precondition. "
+                    + "File names may not be null.");
         }
         records = new HashMap<>();
         teamsAndResults = buildGraph(gameResults);
@@ -82,10 +82,12 @@ public class FootballRanker {
     }
 
     /**
-     * Calculate top teams based solely on average path length of unweighted shortest paths.
+     * Calculate top teams based solely on average path length of unweighted
+     * shortest paths.
+     *
      * @param showResults if this is true output results to standard output
-     * @return the root mean square error of the top 25 teams based on this calculation
-     * rounded to 1 decimal place.
+     * @return the root mean square error of the top 25 teams based on this
+     *         calculation rounded to 1 decimal place.
      */
     public double doUnweighted(boolean showResults) {
         if (showResults) {
@@ -103,9 +105,10 @@ public class FootballRanker {
     /**
      * Calculate top teams based on average path length of weighted shortest paths.
      * This takes into account how easily teams won their games.
+     *
      * @param showResults if this is true output results to standard output
-     * @return the root mean square error of the top 25 teams based on this calculation
-     * rounded to 1 decimal place.
+     * @return the root mean square error of the top 25 teams based on this
+     *         calculation rounded to 1 decimal place.
      */
     public double doWeighted(boolean showResults) {
         if (showResults) {
@@ -123,15 +126,15 @@ public class FootballRanker {
     /**
      * Calculate top teams based on average path length of weighted shortest paths
      * with an adjustment for the teams winning percentage.
+     *
      * @param showResults if this is true output results to standard output
-     * @return the root mean square error of the top 25 teams based on this calculation
-     * rounded to 1 decimal place.
+     * @return the root mean square error of the top 25 teams based on this
+     *         calculation rounded to 1 decimal place.
      */
     public double doWeightedAndWinPercentAdjusted(boolean showResults) {
         if (showResults) {
             System.out.print(
-                "\n\n ***** RESULTS BASED ON WEIGHTED WINS ADJUSTED BY WIN PERCENTAGE *****"
-            );
+                    "\n\n ***** RESULTS BASED ON WEIGHTED WINS ADJUSTED BY WIN PERCENTAGE *****");
         }
         teamsAndResults.findAllPaths(true);
         TreeSet<AllPathsInfo> paths = teamsAndResults.getAllPaths();
@@ -152,16 +155,14 @@ public class FootballRanker {
     }
 
     /*
-     * Calculate difference between predicted results based on graph and actual results of
-     * poll data. return the root mean square error of difference between acutal poll results and
-     * predicted results from graph.
-     * If showResults is true print results to standard output.
+     * Calculate difference between predicted results based on graph and actual
+     * results of poll data. return the root mean square error of difference between
+     * acutal poll results and predicted results from graph. If showResults is true
+     * print results to standard output.
      */
-    private double printRootMeanSquareError(
-        List<String> humanRanks,
-        TreeSet<AllPathsInfo> paths,
-        boolean showResults
-    ) {
+    private double printRootMeanSquareError(List<String> humanRanks,
+            TreeSet<AllPathsInfo> paths, boolean showResults) {
+
         if (showResults) {
             System.out.println("\n\n ***** PREDICTED VS. ACTUAL RESULTS *****");
         }
@@ -199,7 +200,7 @@ public class FootballRanker {
         }
 
         double rmse = Math.sqrt(squaredSum / size);
-        
+
         if (showResults) {
             System.out.println("Root Mean Square Error: " + ourFormatter.format(rmse));
         }
@@ -207,7 +208,17 @@ public class FootballRanker {
         return Math.round(rmse * 10.0) / 10.0;
     }
 
+    /**
+     * A HELPER METHOD to build the string to compare the Actual and Predicted
+     * ranking of the RMSE.
+     *
+     * @param name - The Name of the Team
+     * @param actual - The actual Rank of the Team
+     * @param predicted - The predicted Rank of the Team 
+     * @return - A string that can be used print the Format for RMSE Method.
+     */
     private String getStringForRMSE(String name, int actual, int predicted) {
+
         // Name
         StringBuilder sb = new StringBuilder(name);
 
@@ -224,7 +235,9 @@ public class FootballRanker {
     }
 
     public void processRequests() {
+
         Scanner in = new Scanner(System.in);
+
         do {
             System.out.print("\nEnter starting team: ");
             String start = in.nextLine().trim();
@@ -313,15 +326,14 @@ public class FootballRanker {
             while (sc.hasNext()) {
                 String temp = sc.nextLine();
                 String[] line = temp.trim().split(",");
-                int scoreDiff =
-                    Integer.parseInt(line[HOME_SCORE]) - Integer.parseInt(line[AWAY_SCORE]);
+                int scoreDiff = Integer.parseInt(line[HOME_SCORE]) - Integer.parseInt(line[AWAY_SCORE]);
                 if (scoreDiff != 0) {
                     addTeam(records, line[1]);
                     addTeam(records, line[3]);
                     addEdge(g, line, records, scoreDiff);
                 } else {
-                    //prints out ties
-                    //System.out.println(Arrays.toString(line));
+                    // prints out ties
+                    // System.out.println(Arrays.toString(line));
                 }
             }
             sc.close();
@@ -333,12 +345,8 @@ public class FootballRanker {
         return g;
     }
 
-    private void addEdge(
-        Graph g,
-        String[] data,
-        Map<String, FootballRecord> recordsMap,
-        int scoreDiff
-    ) {
+    private void addEdge(Graph g, String[] data,
+            Map<String, FootballRecord> recordsMap, int scoreDiff) {
         int scoresWonBy = (scoreDiff / TD_PLUS);
         if (scoresWonBy == 0) {
             scoresWonBy = 1;
@@ -366,10 +374,10 @@ public class FootballRanker {
 
         public int compare(AllPathsInfo a, AllPathsInfo b) {
             int result = (a.getAveCost() < b.getAveCost())
-                ? -1
-                : (a.getAveCost() == b.getAveCost())
-                    ? 0
-                    : 1;
+                    ? -1
+                    : (a.getAveCost() == b.getAveCost())
+                            ? 0
+                            : 1;
             if (result == 0) {
                 result = a.getName().compareTo(b.getName());
             }

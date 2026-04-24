@@ -107,15 +107,14 @@ public class Graph {
     /**
      * Add a vertex with the given name to this Graph.
      * The new vertex has no edges initially.
-     * <br>
      * pre: name != null
      *
      * @param name The name of the new vertex.
      */
     public void addVertex(String name) {
         if (name == null) {
-            throw new IllegalArgumentException(
-                    "Violation of precondition. " + "Vertex name may not be null.");
+            throw new IllegalArgumentException("Violation of precondition. "
+                    + "Vertex name may not be null.");
         }
         getVertex(name);
     }
@@ -123,12 +122,8 @@ public class Graph {
     /**
      * Find all unweighted shortest paths from the Vertex with startName
      * to all other vertices in this Graph.
-     * <br>
-     * After this method is called,
-     * call the printPath(String) method to get the path from startName
-     * to any other vertex in this Graph.
-     *
-     * <br>
+     * After this method is called, call the printPath(String) method to get the
+     * path from startName to any other vertex in this Graph.
      * pre: startName != null, containsVertex(startName) == true
      *
      * @param startName The starting vertex. This method will find all the
@@ -163,11 +158,14 @@ public class Graph {
     // unweighted shortest path algorithm from startName vertex
     // to every other Vertex we can reach.
     private Queue<Vertex> prepForFindingUnweightedShortestPaths(String startName) {
+
         currentStartVertexName = startName;
         clearAll();
+
         Vertex start = vertices.get(startName);
         start.weightedCostFromStartVertex = 0;
         start.numEdgesFromStartVertex = 0;
+
         Queue<Vertex> result = new LinkedList<>();
         result.add(start);
         return result;
@@ -176,12 +174,12 @@ public class Graph {
     // check preconditions for findUnweightedShortestPath
     private void handleFUWSPPrecons(String startName) {
         if (startName == null) {
-            throw new IllegalArgumentException(
-                    "Violation of precondition. " + "Vertex name may not be null.");
+            throw new IllegalArgumentException("Violation of precondition. "
+                    + "Vertex name may not be null.");
         }
         if (!containsVertex(startName)) {
-            throw new NoSuchElementException(
-                    "No Verex named " + startName + " exists in this Graph");
+            throw new NoSuchElementException("No Verex named " + startName
+                    + " exists in this Graph");
         }
     }
 
@@ -195,8 +193,7 @@ public class Graph {
      *
      * @param startName - The starting vertex. This method will find all the
      *                  weighted shortest paths from the given vertex to all other
-     *                  vertices
-     *                  in the graph.
+     *                  vertices in the graph.
      */
     public void dijkstra(String startName) {
         // Preconditions
@@ -226,17 +223,16 @@ public class Graph {
      *
      * @param startName - The starting vertex. This method will find all the
      *                  weighted shortest paths from the given vertex to all other
-     *                  vertices
-     *                  in the graph.
+     *                  vertices in the graph.
      */
     private void dijkstraPreCond(String startName) {
         if (startName == null) {
-            throw new IllegalArgumentException(
-                    "Violation of precondition. " + "Vertex name may not be null.");
+            throw new IllegalArgumentException("Violation of precondition. "
+                    + "Vertex name may not be null.");
         }
         if (!containsVertex(startName)) {
-            throw new NoSuchElementException(
-                    "No Vertex named " + startName + " exists in this Graph");
+            throw new NoSuchElementException("No Vertex named " + startName +
+                    " exists in this Graph");
         }
     }
 
@@ -247,8 +243,7 @@ public class Graph {
      *                  cost.
      * @param startName - The starting vertex. This method will find all the
      *                  weighted shortest paths from the given vertex to all other
-     *                  vertices
-     *                  in the graph.
+     *                  vertices in the graph.
      */
     private void prepDijkstraMethod(PriorityQueue<Path> paths, String startName) {
         Vertex start = vertices.get(startName);
@@ -277,6 +272,7 @@ public class Graph {
 
             // Find Shorter Path
             if (newCost < adjacent.weightedCostFromStartVertex) {
+
                 // Update Vertex Values
                 adjacent.weightedCostFromStartVertex = newCost;
                 adjacent.numEdgesFromStartVertex = currentVert.numEdgesFromStartVertex + 1;
@@ -319,8 +315,7 @@ public class Graph {
      *
      * @param weighted - If weighted == true use dijkstra's algorithm
      *                 otherwise use the unweighted shortest path algorithm. (Ignore
-     *                 any
-     *                 weights for edges. All edge weights considered to be 1.)
+     *                 any weights for edges. All edge weights considered to be 1.)
      */
     public void findAllPaths(boolean weighted) {
         // Set Path Values
@@ -350,9 +345,9 @@ public class Graph {
      *
      * @param start    - The starting vertex to explore from.
      * @param weighted - If weighted == true use dijkstra's algorithm
-     *                 otherwise use the unweighted shortest path algorithm. (Ignore
-     *                 any
-     *                 weights for edges. All edge weights considered to be 1.)
+     *                 otherwise use the unweighted shortest path algorithm.
+     *                 (Ignore any weights for edges. All edge weights considered to
+     *                 be 1.)
      */
     private void updateVertexVars(Vertex start, boolean weighted) {
         for (Vertex other : vertices.values()) {
@@ -384,22 +379,24 @@ public class Graph {
      * current start vertex to the Vertex specified by dest.
      */
     private Path getPath(String dest) {
+
         if (dest == null) {
-            throw new IllegalArgumentException(
-                    "getPath(String)" + " the parameter dest may not be null");
+            throw new IllegalArgumentException("getPath(String) the parameter dest may "
+                    + "not be null");
         }
-        
+
         Vertex end = vertices.get(dest);
         if (end == null) {
             throw new IllegalArgumentException("getPath(String) dest must refer to a Vertex "
                     + " in this Graph.");
         }
+
         if (end.prev == null) {
             // No path from current start vertex to destination.
             throw new IllegalStateException("getPath(String) a path must exist from " +
                     this.currentStartVertexName + " to " + dest + ".");
         }
-        
+
         Path result = new Path();
         result.weightedCostOfPath = end.weightedCostFromStartVertex;
         getPath(result, end);
