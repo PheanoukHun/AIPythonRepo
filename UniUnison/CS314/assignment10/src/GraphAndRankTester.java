@@ -18,11 +18,12 @@
  * to make an informed answer. (What are the divisions within college football?
  * Who do teams play? How would this affect the structure of the graph?)
  * 
- * 
+ * I believe that there is such a large discrepancy between the actual results and the three ways that we predicted the ranking because 
  * 
  * Question 2: Suggest another way/method of ranking teams using the 
  * results from the graph. Thoroughly explain your method. The method
  * can build on one of the three existing algorithms.
+ * 
  * 
  */
 
