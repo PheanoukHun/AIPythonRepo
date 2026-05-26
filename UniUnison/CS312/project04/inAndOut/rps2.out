@@ -1,0 +1,35 @@
+Welcome to ROCK PAPER SCISSORS. I, Computer, will be your opponent.
+Please type in your name and press return: Isabelle
+
+Welcome Isabelle.
+
+All right Isabelle. How many rounds would you like to play?
+Enter the number of rounds you want to play and press return: 3
+
+Round 1.
+Isabelle, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 2
+Computer picked ROCK, Isabelle picked PAPER.
+
+PAPER covers ROCK. You win.
+
+Round 2.
+Isabelle, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 3
+Computer picked PAPER, Isabelle picked SCISSORS.
+
+SCISSORS cut PAPER. You win.
+
+Round 3.
+Isabelle, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 1
+Computer picked SCISSORS, Isabelle picked ROCK.
+
+ROCK breaks SCISSORS. You win.
+
+
+Number of games of ROCK PAPER SCISSORS: 3
+Number of times Computer won: 0
+Number of times Isabelle won: 3
+Number of draws: 0
+You, Isabelle, are a master at ROCK, PAPER, SCISSORS.

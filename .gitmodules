@@ -1,0 +1,3 @@
+[submodule "UniUnison/CS314/assignment9/Huffman-Coding"]
+	path = UniUnison/CS314/assignment9/Huffman-Coding
+	url = git@github.com:PheanoukHun/Huffman-Coding.git

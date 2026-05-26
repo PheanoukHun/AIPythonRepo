@@ -1,0 +1,35 @@
+Welcome to ROCK PAPER SCISSORS. I, Computer, will be your opponent.
+Please type in your name and press return: Olivia
+
+Welcome Olivia.
+
+All right Olivia. How many rounds would you like to play?
+Enter the number of rounds you want to play and press return: 3
+
+Round 1.
+Olivia, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 1
+Computer picked ROCK, Olivia picked ROCK.
+
+We picked the same thing! This round is a draw.
+
+Round 2.
+Olivia, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 2
+Computer picked PAPER, Olivia picked PAPER.
+
+We picked the same thing! This round is a draw.
+
+Round 3.
+Olivia, please enter your choice for this round.
+1 for ROCK, 2 for PAPER, and 3 for SCISSORS: 3
+Computer picked SCISSORS, Olivia picked SCISSORS.
+
+We picked the same thing! This round is a draw.
+
+
+Number of games of ROCK PAPER SCISSORS: 3
+Number of times Computer won: 0
+Number of times Olivia won: 0
+Number of draws: 3
+We are evenly matched.
