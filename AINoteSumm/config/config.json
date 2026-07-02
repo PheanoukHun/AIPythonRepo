@@ -1,0 +1,13 @@
+{
+  "URL": {
+    "baseURL": "http://127.0.0.1",
+    "port": 8080,
+    "trailingURL": "/v1/chat/completions"
+  },
+
+  "SYSTEM_PROMPT_FILE": "/home/procastoh/Git-Repos/launch-llama/optional/prompts/obisidian-summary.md",
+
+  "encoding": "utf-8",
+
+  "model" : {}
+}
