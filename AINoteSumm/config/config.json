@@ -7,7 +7,8 @@
     "api_key": "NULL"
   },
   "server_start_command": {
-    "SYSTEM_PROMPT_FILE": "/home/procastoh/Git-Repos/launch-llama/optional/prompts/obisidian-summary.md",
+    "SYSTEM_PROMPT_DIR": "/home/procastoh/Git-Repos/AIPython/AINoteSumm/config",
+    "SYSTEM_PROMPT_FILE": "system-prompt.md",
     "model_dir": "/home/procastoh/Git-Repos/launch-llama/optional/LLM-Models/LLM/",
     "context_size": 100000,
     "gpu_layers": 99,
