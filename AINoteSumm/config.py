@@ -1,5 +1,5 @@
+from ctypes import FormatError
 import json
-from logging import raiseExceptions
 import os
 import pathlib
 
@@ -18,4 +18,4 @@ except FileNotFoundError:
         file.write(data)
         
 except json.JSONDecodeError:
-    raise json.JSONDecodeError("Incorrect Config File, Please Change it.")
+    
