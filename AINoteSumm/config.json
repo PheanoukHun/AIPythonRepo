@@ -1,19 +1,24 @@
 {
-  "encoding_format": "utf-8",
   "URL": {
     "baseURL": "http://127.0.0.1",
     "port": 8080,
     "trailingURL": "/v1/chat/completions",
+    "healthTrailing": "/health",
+    "expectedHealthyStatusCode": 200,
     "api_key": "NULL"
   },
+
+  "SYSTEM_PROMPT_FILE_PATH": "/home/procastoh/Git-Repos/AIPythonRepo/AINoteSumm/prompt/system-prompt.md",
+
   "server_start_command": {
-    "SYSTEM_PROMPT_DIR": "/home/procastoh/Git-Repos/AIPython/AINoteSumm/config",
-    "SYSTEM_PROMPT_FILE": "system-prompt.md",
     "model_dir": "/home/procastoh/Git-Repos/launch-llama/optional/LLM-Models/LLM/",
-    "context_size": 100000,
+    "model": "LFM2.5-230M-Q4_0.gguf",
+    "temperature": 0.9,
+    "max_tokens": 7200,
     "gpu_layers": 99,
     "key_quant": "q4_0",
     "value_quant": "q4_0",
-    "agent_mode": true
+    "agent_mode": true,
+    "stream": false
   }
 }
