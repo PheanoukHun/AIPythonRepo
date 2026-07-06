@@ -2,7 +2,7 @@ import json
 import os
 import pathlib
 from url import URL
-from message_chat_server import Message
+from message_chat_server import MessageBlock
 
 class Config:
     def __init__(self):
@@ -114,7 +114,7 @@ class Config:
         self.__health_url = URL(temp_url['baseURL'], temp_url['port'], temp_url['healthTrailing'])
 
         temp_msg = self.__data["server_start_command"]
-        self.__message_packet = Message(temp_msg["model"], temp_msg["max_tokens"], temp_msg["temperature"], temp_msg["stream"])
+        self.__message_packet = MessageBlock(temp_msg["model"], temp_msg["max_tokens"], temp_msg["temperature"], temp_msg["stream"])
 
     @property
     def message_package(self):
@@ -124,13 +124,18 @@ class Config:
     def message_url(self) -> str:
         return str(self.__msg_url)
 
-    @def 
+    @property
+    def health_url(self):
+        return str(self.__msg_url)
 
     @property
     def system_prompt(self) -> str:
         return self.__sys_prompt
 
     def __str__(self) -> str:
+
+        temp_serv_start = self.__data['server_start_command']
+        
         return f"""
         Configs:
 
@@ -140,11 +145,11 @@ class Config:
         System Prompt: {self.system_prompt}
 
         Llama-Server Settings if no Server Started:
-            Model Dir: {self.__data['server_start_command']['model_dir']}
-            Numer of GPU Layers: {self.__data['server_start_command']['gpu_layers']}
-            Key Quant: {self.__data['server_start_command']['key_quant']}
-            Value Quant: {self.__data['server_start_command']['value_quant']}
-            Agent Mode: {self.__data['server_start_command']['agent_mode']}
+            Model Dir: {temp_serv_start['model_dir']}
+            Numer of GPU Layers: {temp_serv_start['gpu_layers']}
+            Key Quant: {temp_serv_start['key_quant']}
+            Value Quant: {temp_serv_start['value_quant']}
+            Agent Mode: {temp_serv_start['agent_mode']}
         
         """
 

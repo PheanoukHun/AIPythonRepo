@@ -1,7 +1,7 @@
 import requests
 
 
-class Message:
+class MessageBlock:
     def __init__(
         self,
         model: str,
