@@ -1,4 +1,5 @@
 import os
+import shutil
 from server_message import MessageServer
 from valid_path import PATH_RESPONSE_TYPE, is_valid_path, interpret_results
 import time
@@ -6,12 +7,17 @@ import time
 class Runner:
     def __init__(self, server:MessageServer):
         self.__server = server
+        self.__term_height: int = shutil.get_terminal_size().lines
 
     def main_loop(self):
         try:
             while True:
                 usr_in = input("\n> ")
                 proc_in = self.__parse_option(usr_in)
+
+                if (proc_in == "$$CLEAR$$"):
+                    continue
+                
                 result = self.__server.message_server(proc_in)
                 self.__type_writer_print(result)
         except KeyboardInterrupt:
@@ -32,7 +38,12 @@ class Runner:
             self.__server.quit()
             os._exit(0)
 
-        word_list:list[str] = " ".split(text)
+        if text == "/clear":
+            for _ in range(int(self.__term_height * 1.5)):
+                print()
+            return "$$CLEAR$$"
+
+        word_list:list[str] = text.split(" ")
         if ("/read" in word_list):
             file_path_index = word_list.index("/read") + 1
             word_list[file_path_index] = self.__read_text_file(word_list[file_path_index])
