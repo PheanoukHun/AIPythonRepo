@@ -1,6 +1,7 @@
 import os
 from server_message import MessageServer
 from valid_path import PATH_RESPONSE_TYPE, is_valid_path, interpret_results
+import time
 
 class Runner:
     def __init__(self, server:MessageServer):
@@ -9,9 +10,10 @@ class Runner:
     def main_loop(self):
         try:
             while True:
-                usr_in = input("> ")
+                usr_in = input("\n> ")
                 proc_in = self.__parse_option(usr_in)
-                self.__server.message_server(proc_in)
+                result = self.__server.message_server(proc_in)
+                self.__type_writer_print(result)
         except KeyboardInterrupt:
             self.__server.quit()
 
@@ -36,3 +38,13 @@ class Runner:
             word_list[file_path_index] = self.__read_text_file(word_list[file_path_index])
             word_list.remove("/read")
         return " ".join(word_list)
+
+    def __type_writer_print(self, text:str):
+
+        print()
+
+        for char in text:
+            print(char, end = "", flush=True)
+            time.sleep(0.00625)
+
+        print("\n")

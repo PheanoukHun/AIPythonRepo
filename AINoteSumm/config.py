@@ -454,7 +454,7 @@ class Config:
 
     @property
     def server_options(self):
-        return self.__data['options']
+        return self.__data['server_cmd']['options']
 
     def __str__(self) -> str:
 

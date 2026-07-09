@@ -18,18 +18,13 @@ class MessageServer:
         try:
             _ = requests.get(str(self.__health_url))
         except requests.exceptions.ConnectionError:
-            results = subprocess.Popen(self.__build_srvr_cmd(configs))
+            results = subprocess.Popen(self.__build_srvr_cmd(configs), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
         return results
 
-    def __build_srvr_cmd(self, configs:Config) -> str:
+    def __build_srvr_cmd(self, configs:Config) -> list[str]:
 
-        cmd = ""
-        
-        for option in configs.server_options:
-            cmd += option + " "
-
-        return cmd
+        return configs.server_options
 
     def message_server(self, message:str) -> str:
         self.__message_block.message = message
@@ -44,6 +39,6 @@ class MessageServer:
 
     def quit(self):
         if (self.__server):
-            print("Stopping the Server Binary")
+            print("\nStopping the Server Binary\n")
             self.__server.kill()
         
