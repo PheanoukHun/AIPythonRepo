@@ -1,5 +1,4 @@
 import os
-import shutil
 from server_message import MessageServer
 from valid_path import PATH_RESPONSE_TYPE, is_valid_path, interpret_results
 import time
@@ -7,7 +6,7 @@ import time
 class Runner:
     def __init__(self, server:MessageServer):
         self.__server = server
-        self.__term_height: int = shutil.get_terminal_size().lines
+        self.__term_height: int = os.get_terminal_size().lines
 
     def main_loop(self):
         try:
