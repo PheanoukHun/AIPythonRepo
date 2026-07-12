@@ -8,7 +8,7 @@ class Config:
     def __init__(self):
 
         # Check to see if Directories is readable and writable
-        self.__curr_dir:str = str(pathlib.Path(__file__).resolve().parent)
+        self.__curr_dir:str = str(pathlib.Path(__file__).resolve().parent.parent)
         curr_dir_valid:PATH_RESPONSE_TYPE = is_valid_path(self.__curr_dir)
         interpret_results(self.__curr_dir, curr_dir_valid)
         

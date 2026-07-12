@@ -22,6 +22,8 @@ class Runner:
         except KeyboardInterrupt:
             self.__server.quit()
 
+    def 
+    
     def __read_text_file(self, path:str) -> str:
         path_validity_results:PATH_RESPONSE_TYPE = is_valid_path(path)
         interpret_results(path, path_validity_results)
