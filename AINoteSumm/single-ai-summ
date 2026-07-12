@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+clear
+exec python3 "$(dirname "$0")"/AISummerizer/single-run.py | bat

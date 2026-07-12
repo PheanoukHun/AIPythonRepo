@@ -8,21 +8,22 @@ class Runner:
         self.__server = server
         self.__term_height: int = os.get_terminal_size().lines
 
-    def main_loop(self):
+    def main_loop(self) -> None:
         try:
             while True:
-                usr_in = input("\n> ")
-                proc_in = self.__parse_option(usr_in)
-
-                if (proc_in == "$$CLEAR$$"):
-                    continue
-                
-                result = self.__server.message_server(proc_in)
-                self.__type_writer_print(result)
+                self.__type_writer_print(self.single_run())
         except KeyboardInterrupt:
             self.__server.quit()
 
-    def 
+    def single_run(self) -> str:
+        user_in = input("\n> ")
+        proc_in = self.__parse_option(user_in)
+
+        if (proc_in == "$$CLEAR$$"):
+            return ""
+
+        result = self.__server.message_server(proc_in)
+        return result
     
     def __read_text_file(self, path:str) -> str:
         path_validity_results:PATH_RESPONSE_TYPE = is_valid_path(path)
@@ -51,12 +52,9 @@ class Runner:
             word_list.remove("/read")
         return " ".join(word_list)
 
-    def __type_writer_print(self, text:str):
-
+    def __type_writer_print(self, text:str) -> None:
         print()
-
         for char in text:
             print(char, end = "", flush=True)
             time.sleep(0.00625)
-
-        print("\n")
+        print()
