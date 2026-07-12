@@ -42,20 +42,36 @@ class Config:
                 "URL": {
                     "baseURL": "http://127.0.0.1",
                     "port": 8080,
-                    "trailingURL": "/v1/chat/completions/",
-                    "api_key": "NULL",
+                    "trailingURL": "/v1/chat/completions",
+                    "healthTrailing": "/health",
+                    "expectedHealthyStatusCode": 200,
                 },
-                "SYSTEM_PROMPT_FILE_PATH": "/home/procastoh/Git-Repos/AIPythonRepo/AINoteSumm/prompt/system-prompt.md",
-                "server_start_command": {
-                    "model_dir": "/home/procastoh/llama-cpp/models/llms",
-                    "model": "LFM2.5-230M-Q4_0.gguf",
+                "message_pkg": {
+                    "model": "LFM2.5-230M-Q4_0",
                     "temperature": 0.9,
                     "max_tokens": 7200,
-                    "gpu_layers": 99,
-                    "key_quant": "q4_0",
-                    "value_quant": "q4_0",
-                    "agent_mode": True,
                     "stream": False,
+                },
+                "server_cmd": {
+                    "SYSTEM_PROMPT_FILE_PATH": "/home/procastoh/Git-Repos/AIPythonRepo/AINoteSumm/prompt/system-prompt.md",
+                    "options": [
+                        "/home/procastoh/llama-cpp/build/bin/llama-server",
+                        "-m",
+                        "/home/procastoh/llama-cpp/models/llms/LFM2.5-230M-Q4_0.gguf",
+                        "-c",
+                        "100000",
+                        "-ngl",
+                        "99",
+                        "-ctk",
+                        "q4_0",
+                        "-ctv",
+                        "q4_0",
+                        "--agent",
+                        "--port",
+                        "8080",
+                        "-rea",
+                        "off"
+                    ],
                 },
             }
 
@@ -434,7 +450,7 @@ class Config:
         self.__health_url = URL(temp_url['baseURL'], temp_url['port'], temp_url['healthTrailing'])
 
         temp_msg = self.__data['message_pkg']
-        self.__message_packet = MessageBlock(temp_msg["model"], temp_msg["max_tokens"], temp_msg["temperature"], temp_msg["stream"], self.__get_sys_prompt())
+        self.__message_packet = MessageBlock(temp_msg["model"], temp_msg["max_tokens"], temp_msg["temperature"], temp_msg["stream"], sys_prompt=self.__get_sys_prompt())
 
     @property
     def message_package(self) -> MessageBlock:

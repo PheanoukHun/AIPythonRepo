@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 clear
-exec python3 "$(dirname "$0")"/AISummerizer/single-run.py | bat
+output=$(python3 "$(dirname "$0")"/AISummerizer/single-run.py)
+echo "$output" | bat -l markdown

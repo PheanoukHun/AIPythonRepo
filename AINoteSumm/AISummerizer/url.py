@@ -21,7 +21,7 @@ class URL:
 
     @port.setter
     def port(self, port_num:int) -> None:
-        if (1 < port_num < 65536):
+        if (0 < port_num < 65536):
             self.__port = port_num
 
     @property

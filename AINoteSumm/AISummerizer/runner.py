@@ -6,7 +6,7 @@ import time
 class Runner:
     def __init__(self, server:MessageServer):
         self.__server = server
-        self.__term_height: int = os.get_terminal_size().lines
+        self.__term_height: int = 100
 
     def main_loop(self) -> None:
         try:
