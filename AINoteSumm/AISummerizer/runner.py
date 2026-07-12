@@ -9,21 +9,22 @@ class Runner:
         self.__term_height: int = 100
 
     def main_loop(self) -> None:
+        while True:
+            self.__type_writer_print(self.single_run())
+        
+    def single_run(self) -> str:
         try:
-            while True:
-                self.__type_writer_print(self.single_run())
+            user_in = input("\n> ")
+            proc_in = self.__parse_option(user_in)
+    
+            if (proc_in == "$$CLEAR$$"):
+                return ""
+    
+            result = self.__server.message_server(proc_in)
+            return result
         except KeyboardInterrupt:
             self.__server.quit()
-
-    def single_run(self) -> str:
-        user_in = input("\n> ")
-        proc_in = self.__parse_option(user_in)
-
-        if (proc_in == "$$CLEAR$$"):
             return ""
-
-        result = self.__server.message_server(proc_in)
-        return result
     
     def __read_text_file(self, path:str) -> str:
         path_validity_results:PATH_RESPONSE_TYPE = is_valid_path(path)

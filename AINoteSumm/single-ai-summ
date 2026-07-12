@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 clear
 output=$(python3 "$(dirname "$0")"/AISummerizer/single-run.py)
-echo "$output" | bat -l markdown
+clear
+echo "$output" | glow
