@@ -1,5 +1,22 @@
 #!/usr/bin/env bash
+
 clear
+
 output=$(python3 "$(dirname "$0")"/AISummerizer/single-run.py)
+
 clear
+
+while getopts "o:" opt; do
+    case $opt in
+        o)
+            echo "$output" > "$OPTARG"
+            ;;
+        *)
+            echo "Usage: $0 [-o output_file]"
+            exit 1
+            ;;
+    esac
+done
+
 echo "$output" | glow
+exit 0
