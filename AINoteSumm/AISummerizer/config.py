@@ -45,6 +45,9 @@ class Config:
                 "PROGAM_DESCRIPTION": {
                     "prog_name": "AISummerizer",
                     "description": "A Simple AI Summerizer that takes in text and uses a System Prompt to summerize the text based on your preferences.",
+                    "arguments": {
+                        "-in" :"Allows for the Direct Input of Text without the need of users adding to it."
+                    }
                 },
                 "URL": {
                     "baseURL": "http://127.0.0.1",
