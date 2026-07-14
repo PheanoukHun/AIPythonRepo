@@ -503,7 +503,7 @@ class Config:
 
     @property
     def program_description(self) -> dict[str, str]:
-        return self.__data["PROGRAM_DESCRIPTION"]
+        return self.__data["PROGAM_DESCRIPTION"]
 
     @property
     def program_arguments(self) -> dict[str, dict[str, str]]:
