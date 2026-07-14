@@ -16,6 +16,7 @@ class RUN_TYPE(Enum):
 
 
 class Runner:
+    
     def __init__(self, server: MessageServer):
         self.__server = server
         self.__term_height: int = 100
@@ -25,7 +26,7 @@ class Runner:
         outputs = []
 
         while True:
-            result:str = self.__single_run(True)
+            result:str = self.__single_run()
 
             if result == "$$QUIT$$":
                 break
@@ -35,12 +36,12 @@ class Runner:
 
         return "\n".join(outputs)
 
-    def __single_run(self, multi_run=False) -> str:
+    def __single_run(self) -> str:
         try:
             user_in = input("\n> ")
             proc_in = self.__parse_option(user_in)
 
-            if proc_in == "$$CLEAR$$" and multi_run:
+            if proc_in == "$$CLEAR$$":
                 return ""
             elif proc_in == "$$QUIT$$":
                 return proc_in
@@ -49,7 +50,7 @@ class Runner:
             return result
         except KeyboardInterrupt:
             self.__server.quit()
-            return ""
+            exit(0)
 
     def run(self, run_type: RUN_TYPE = RUN_TYPE.REPEATED) -> str:
 
