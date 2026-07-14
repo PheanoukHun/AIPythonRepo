@@ -23,14 +23,14 @@ class Runner:
 
     def __continuous_loop(self) -> None:
         while True:
-            self.__type_writer_print(self.__single_run())
+            self.__type_writer_print(self.__single_run(True))
 
-    def __single_run(self) -> str:
+    def __single_run(self, multi_run=False) -> str:
         try:
             user_in = input("\n> ")
             proc_in = self.__parse_option(user_in)
 
-            if proc_in == "$$CLEAR$$":
+            if proc_in == "$$CLEAR$$" and multi_run:
                 return ""
 
             result = self.__server.message_server(proc_in)
@@ -45,6 +45,7 @@ class Runner:
         elif run_type is RUN_TYPE.REPEATED:
             self.__continuous_loop()
         elif run_type is RUN_TYPE.INPUT_FILE:
+            text = self.__read_text_file("")
             
 
     def __read_text_file(self, path: str) -> str:
