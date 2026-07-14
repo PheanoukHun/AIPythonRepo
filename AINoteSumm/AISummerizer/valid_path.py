@@ -37,10 +37,10 @@ def interpret_results(path:str, error_result: PATH_RESPONSE_TYPE) -> None:
     raise FileExistsError(reason)
 
 def get_project_path() -> str:
-    curr_dir:str = str(Path(__file__).resolve().parent.parent)
-    is_curr_dir_valid:PATH_RESPONSE_TYPE = is_valid_path(curr_dir)
-    interpret_results(curr_dir, is_curr_dir_valid)
-    return curr_dir
+    proj_dir:str = str(Path(__file__).resolve().parent.parent)
+    project_dir_validity:PATH_RESPONSE_TYPE = is_valid_path(proj_dir)
+    interpret_results(proj_dir, project_dir_validity)
+    return proj_dir
 
 if __name__ == "__main__":
     curr_file_path:str = str(Path(__file__))
