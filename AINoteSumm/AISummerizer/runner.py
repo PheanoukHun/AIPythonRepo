@@ -13,6 +13,7 @@ from valid_path import (
 class RUN_TYPE(Enum):
     SINGLE = 0
     REPEATED = 1
+    INPUT_FILE = 2
 
 
 class Runner:
@@ -43,6 +44,8 @@ class Runner:
             self.__single_run()
         elif run_type is RUN_TYPE.REPEATED:
             self.__continuous_loop()
+        elif run_type is RUN_TYPE.INPUT_FILE:
+            
 
     def __read_text_file(self, path: str) -> str:
         path_validity_results: PATH_RESPONSE_TYPE = is_valid_path(path)
