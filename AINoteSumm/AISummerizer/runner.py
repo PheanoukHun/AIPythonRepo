@@ -1,4 +1,3 @@
-import os
 import time
 from enum import Enum
 
@@ -23,12 +22,18 @@ class Runner:
 
     def __continuous_loop(self) -> str:
 
-        texts = []
+        outputs = []
 
         while True:
-            self.__type_writer_print(self.__single_run(True))
+            result:str = self.__single_run(True)
 
-        return "\n\n".join
+            if result == "$$QUIT$$":
+                break
+            
+            self.__type_writer_print(result)
+            outputs.append(result)
+
+        return "\n".join(outputs)
 
     def __single_run(self, multi_run=False) -> str:
         try:
@@ -37,6 +42,8 @@ class Runner:
 
             if proc_in == "$$CLEAR$$" and multi_run:
                 return ""
+            elif proc_in == "$$QUIT$$":
+                return proc_in
 
             result = self.__server.message_server(proc_in)
             return result
@@ -46,12 +53,14 @@ class Runner:
 
     def run(self, run_type: RUN_TYPE = RUN_TYPE.REPEATED) -> str:
 
+        text:str = ""
+
         if run_type is RUN_TYPE.SINGLE:
-            text:str = self.__single_run()
+            text = self.__single_run()
         elif run_type is RUN_TYPE.REPEATED:
-            text:str = self.__continuous_loop()
+            text = self.__continuous_loop()
         elif run_type is RUN_TYPE.INPUT_FILE:
-            text:str = self.__read_text_file("")
+            text = self.__read_text_file("")
 
         return text
 
@@ -68,10 +77,10 @@ class Runner:
 
         if text == "/quit" or text == "/exit":
             self.__server.quit()
-            os._exit(0)
+            return "$$QUIT$$"
 
         if text == "/clear":
-            for _ in range(int(self.__term_height * 1.5)):
+            for _ in range(int(self.__term_height * 2)):
                 print()
             return "$$CLEAR$$"
 
