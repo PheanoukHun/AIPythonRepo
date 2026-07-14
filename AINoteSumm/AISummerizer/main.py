@@ -6,4 +6,4 @@ if __name__ == "__main__":
     configs = Config()
     msg_srvr = MessageServer(configs)
     runner = Runner(msg_srvr)
-    runner.main_loop()
+    runner.run()

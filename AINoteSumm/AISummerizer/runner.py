@@ -6,18 +6,18 @@ from enum import Enum
 
 class RUN_TYPE(Enum):
     SINGLE = 0
-    CONTI
+    REPEATED = 1
 
 class Runner:
     def __init__(self, server:MessageServer):
         self.__server = server
         self.__term_height: int = 100
 
-    def main_loop(self) -> None:
+    def __continuous_loop(self) -> None:
         while True:
-            self.__type_writer_print(self.single_run())
+            self.__type_writer_print(self.__single_run())
         
-    def single_run(self) -> str:
+    def __single_run(self) -> str:
         try:
             user_in = input("\n> ")
             proc_in = self.__parse_option(user_in)
@@ -31,9 +31,12 @@ class Runner:
             self.__server.quit()
             return ""
 
-    def run(run_type):
-        pass
-    
+    def run(self, run_type: RUN_TYPE = RUN_TYPE.REPEATED) -> None:
+        if run_type is RUN_TYPE.SINGLE:
+            self.__single_run()
+        elif run_type is RUN_TYPE.REPEATED:
+            self.__continuous_loop()
+        
     def __read_text_file(self, path:str) -> str:
         path_validity_results:PATH_RESPONSE_TYPE = is_valid_path(path)
         interpret_results(path, path_validity_results)
