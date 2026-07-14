@@ -49,14 +49,20 @@ class Config:
                 "PROGRAM_ARGS": {
                     "--input-file": {
                         "Description": "Allows for the Direct Input of Text without the need of users adding to it.",
-                        "alt_name": ["-in"]
+                        "alt_name": "-in"
                     },
                     "--no-reasoning": {
                         "Description": "Prevents the Model from Reasoing",
-                        "alt_name": []
+                        "alt_name": "--no-rea"
                     },
-                    "--rea": "Allows the Model to Reason (Default)",
-                    "--multi-line-text": "Allow the user to type in multi-line results, must end wit '/*-' to end the response",
+                    "--reasoning": {
+                        "Description": "Allows the Model to Reason (Default)",
+                        "alt_name": "--rea"
+                    },
+                    "--multi-line-text": {
+                        "Description": "Allow the user to type in multi-line results, must end wit '/*-' to end the response",
+                        "alt_name": "-mlt"
+                    }
                 },
                 "URL": {
                     "baseURL": "http://127.0.0.1",
