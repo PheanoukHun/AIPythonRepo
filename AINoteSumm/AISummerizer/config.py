@@ -1,4 +1,5 @@
 import json
+import os
 
 from message_block import MessageBlock
 from url import URL
@@ -15,7 +16,7 @@ class Config:
 
         # Check to see if Directories is readable and writable
         self.__curr_dir: str = get_project_path()
-        self.__config_file_path: str = self.__curr_dir + "config.json"
+        self.__config_file_path: str = os.path.join(self.__curr_dir, "config.json")
 
         self.__data = {}
         self.__health_url = None
@@ -78,7 +79,7 @@ class Config:
                     "stream": False,
                 },
                 "server_cmd": {
-                    "SYSTEM_PROMPT_FILE_PATH": "/project-path/system-prompt.md",
+                    "SYSTEM_PROMPT_FILE_PATH": self.__config_file_path,
                     "options": [
                         "llama-server",
                         "-m",

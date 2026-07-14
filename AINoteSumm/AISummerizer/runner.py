@@ -81,8 +81,7 @@ class Runner:
             return "$$QUIT$$"
 
         if text == "/clear":
-            for _ in range(int(self.__term_height * 2)):
-                print()
+            print("\033[2J\033[H", end="")
             return "$$CLEAR$$"
 
         word_list: list[str] = text.split(" ")
