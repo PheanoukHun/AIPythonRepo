@@ -45,9 +45,18 @@ class Config:
                 "PROGAM_DESCRIPTION": {
                     "prog_name": "AISummerizer",
                     "description": "A Simple AI Summerizer that takes in text and uses a System Prompt to summerize the text based on your preferences.",
-                    "arguments": {
-                        "-in" :"Allows for the Direct Input of Text without the need of users adding to it."
-                    }
+                },
+                "PROGRAM_ARGS": {
+                    "--input-file": {
+                        "Description": "Allows for the Direct Input of Text without the need of users adding to it.",
+                        "alt_name": ["-in"]
+                    },
+                    "--no-reasoning": {
+                        "Description": "Prevents the Model from Reasoing",
+                        "alt_name": []
+                    },
+                    "--rea": "Allows the Model to Reason (Default)",
+                    "--multi-line-text": "Allow the user to type in multi-line results, must end wit '/*-' to end the response",
                 },
                 "URL": {
                     "baseURL": "http://127.0.0.1",
