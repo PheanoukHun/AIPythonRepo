@@ -480,6 +480,9 @@ class Config:
             sys_prompt=self.__get_sys_prompt(),
         )
 
+        
+        self.__cli()
+
     @property
     def message_package(self) -> MessageBlock:
         return self.__message_packet
