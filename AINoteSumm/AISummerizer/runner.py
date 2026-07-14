@@ -2,6 +2,11 @@ import os
 from server_message import MessageServer
 from valid_path import PATH_RESPONSE_TYPE, is_valid_path, interpret_results
 import time
+from enum import Enum
+
+class RUN_TYPE(Enum):
+    SINGLE = 0
+    CONTI
 
 class Runner:
     def __init__(self, server:MessageServer):
@@ -25,6 +30,9 @@ class Runner:
         except KeyboardInterrupt:
             self.__server.quit()
             return ""
+
+    def run(run_type):
+        pass
     
     def __read_text_file(self, path:str) -> str:
         path_validity_results:PATH_RESPONSE_TYPE = is_valid_path(path)

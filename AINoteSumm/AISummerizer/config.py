@@ -2,15 +2,13 @@ import json
 import pathlib
 from url import URL
 from message_block import MessageBlock
-from valid_path import is_valid_path, PATH_RESPONSE_TYPE, interpret_results
+from valid_path import is_valid_path, interpret_results, get_project_path, PATH_RESPONSE_TYPE
 
 class Config:
     def __init__(self):
 
         # Check to see if Directories is readable and writable
-        self.__curr_dir:str = str(pathlib.Path(__file__).resolve().parent.parent)
-        curr_dir_valid:PATH_RESPONSE_TYPE = is_valid_path(self.__curr_dir)
-        interpret_results(self.__curr_dir, curr_dir_valid)
+        self.__curr_dir:str = get_project_path()
         
         self.__config_file_path:str = str(pathlib.Path(self.__curr_dir, "config.json"))
 
