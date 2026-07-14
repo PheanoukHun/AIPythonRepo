@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-clear
-output=$(python3 "$(dirname "$0")"/AISummerizer/single-run.py)
-clear
-echo "$output"
