@@ -49,20 +49,20 @@ class Config:
                 "PROGRAM_ARGS": {
                     "--input-file": {
                         "Description": "Allows for the Direct Input of Text without the need of users adding to it.",
-                        "alt_name": "-in"
+                        "alt_name": "-in",
                     },
                     "--no-reasoning": {
                         "Description": "Prevents the Model from Reasoing",
-                        "alt_name": "--no-rea"
+                        "alt_name": "--no-rea",
                     },
                     "--reasoning": {
                         "Description": "Allows the Model to Reason (Default)",
-                        "alt_name": "--rea"
+                        "alt_name": "--rea",
                     },
                     "--multi-line-text": {
                         "Description": "Allow the user to type in multi-line results, must end wit '/*-' to end the response",
-                        "alt_name": "-mlt"
-                    }
+                        "alt_name": "-mlt",
+                    },
                 },
                 "URL": {
                     "baseURL": "http://127.0.0.1",
@@ -480,9 +480,6 @@ class Config:
             sys_prompt=self.__get_sys_prompt(),
         )
 
-        
-        self.__cli()
-
     @property
     def message_package(self) -> MessageBlock:
         return self.__message_packet
@@ -502,6 +499,14 @@ class Config:
     @property
     def server_options(self):
         return self.__data["server_cmd"]["options"]
+
+    @property
+    def program_description(self) -> dict[str, str]:
+        return self.__data["PROGRAM_DESCRIPTION"]
+
+    @property
+    def program_arguments(self) -> dict[str, dict[str, str]]:
+        return self.__data["PROGRAM_ARGS"]
 
     def __str__(self) -> str:
 
