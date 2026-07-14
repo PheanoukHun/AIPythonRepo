@@ -21,9 +21,14 @@ class Runner:
         self.__server = server
         self.__term_height: int = 100
 
-    def __continuous_loop(self) -> None:
+    def __continuous_loop(self) -> str:
+
+        texts = []
+
         while True:
             self.__type_writer_print(self.__single_run(True))
+
+        return "\n\n".join
 
     def __single_run(self, multi_run=False) -> str:
         try:
@@ -39,14 +44,16 @@ class Runner:
             self.__server.quit()
             return ""
 
-    def run(self, run_type: RUN_TYPE = RUN_TYPE.REPEATED) -> None:
+    def run(self, run_type: RUN_TYPE = RUN_TYPE.REPEATED) -> str:
+
         if run_type is RUN_TYPE.SINGLE:
-            self.__single_run()
+            text:str = self.__single_run()
         elif run_type is RUN_TYPE.REPEATED:
-            self.__continuous_loop()
+            text:str = self.__continuous_loop()
         elif run_type is RUN_TYPE.INPUT_FILE:
-            text = self.__read_text_file("")
-            
+            text:str = self.__read_text_file("")
+
+        return text
 
     def __read_text_file(self, path: str) -> str:
         path_validity_results: PATH_RESPONSE_TYPE = is_valid_path(path)
