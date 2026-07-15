@@ -1,6 +1,12 @@
-from argparse import ArgumentParser, Namespace
+from argparse import ArgumentParser
+from enum import Enum
 
 from config import Config
+
+
+class ARG_OPTIONS(Enum):
+    ARG_CHOSEN = 0
+    ARG_NOT_CHOSEN = 1
 
 
 class ParseOptions:
@@ -18,10 +24,9 @@ class ParseOptions:
         parser: ArgumentParser = ArgumentParser(prog=prog_name, description=prog_desc)
 
         for arg_name, arg_info in prog_args.items():
+            action: str = arg_info.get("action", "store_true")
+            alt_name: str = arg_info.get("alt_name", "")
 
-            action:str = arg_info.get("action", "store_true")
-            alt_name:str = arg_info.get("alt_name", "")
-            
             name_or_flags = [arg_name]
             if alt_name != "":
                 name_or_flags.append(alt_name)
@@ -33,3 +38,11 @@ class ParseOptions:
             )
 
         return parser
+
+    def __parse_args(parser: ArgumentParser):
+        parsed = parser.parse_args(args)
+
+
+class CliOptions:
+    def __init__(self, options: ParseOptions):
+        self.__version = None
