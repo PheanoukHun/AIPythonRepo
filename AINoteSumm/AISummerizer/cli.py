@@ -1,21 +1,19 @@
-from argparse import ArgumentParser
-from enum import Enum
+from argparse import ArgumentParser, Namespace
+from tokenize import Name
 
 from config import Config
 
 
-class ARG_OPTIONS(Enum):
-    ARG_CHOSEN = 0
-    ARG_NOT_CHOSEN = 1
-
-
 class ParseOptions:
     def __init__(self, configs: Config) -> None:
-        __prog_desc: dict[str, str] = configs.program_description
-        __prog_args: dict[str, dict[str, str]] = configs.program_arguments
-        __parser: ArgumentParser = self.__create_parser(
-            __prog_desc["prog_name"], __prog_desc["description"], __prog_args
+        self.__prog_desc: dict[str, str] = configs.program_description
+        self.__prog_args: dict[str, dict[str, str]] = configs.program_arguments
+        self.__parser: ArgumentParser = self.__create_parser(
+            self.__prog_desc["prog_name"],
+            self.__prog_desc["description"],
+            self.__prog_args,
         )
+        self.__parsed_args: Namespace = self.__parse_args(self.__parser)
 
     def __create_parser(
         self, prog_name: str, prog_desc: str, prog_args: dict[str, dict[str, str]]
@@ -39,10 +37,23 @@ class ParseOptions:
 
         return parser
 
-    def __parse_args(parser: ArgumentParser):
-        parsed = parser.parse_args(args)
+    def __parse_args(self, parser: ArgumentParser) -> Namespace:
+        return parser.parse_args()
+
+    @property
+    def parsed_args(self) -> Namespace:
+        return self.__parsed_args
 
 
 class CliOptions:
     def __init__(self, options: ParseOptions):
-        self.__version = None
+        __parsed_args: Namespace = options.parsed_args
+        self.__options: dict[str, bool | str] = self.__get_dict_options(__parsed_args)
+
+    def __get_dict_options(self, parsed_args:Namespace) -> dict[str, bool|str]:
+        result = {}
+        
+        for arg_name, arg_val in vars(parsed_args).items():
+            if (arg_name is not None) and (arg_val != False): 
+
+        return result
