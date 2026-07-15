@@ -16,9 +16,10 @@ class RUN_TYPE(Enum):
 
 
 class Runner:
-    
-    def __init__(self, server: MessageServer):
+
+    def __init__(self, server: MessageServer, options: dict[str, bool | str] | None = None):
         self.__server = server
+        self.__options = options or {}
         self.__term_height: int = 100
 
     def __continuous_loop(self) -> str:
@@ -38,7 +39,11 @@ class Runner:
 
     def __single_run(self) -> str:
         try:
-            user_in = input("\n> ")
+            if "multi_line_text" in self.__options:
+                user_in = self.__multi_line_input()
+            else:
+                user_in = input("\n> ")
+
             proc_in = self.__parse_option(user_in)
 
             if proc_in == "$$CLEAR$$":
@@ -52,9 +57,25 @@ class Runner:
             self.__server.quit()
             exit(0)
 
+    def __multi_line_input(self) -> str:
+        lines = []
+        print("\nEnter text (end with '/*-' on its own line):")
+        while True:
+            line = input()
+            if line.strip() == "/*-":
+                break
+            lines.append(line)
+        return "\n".join(lines)
+
     def run(self, run_type: RUN_TYPE = RUN_TYPE.REPEATED) -> str:
 
-        text:str = ""
+        text: str = ""
+
+        if "input_file" in self.__options:
+            text = self.__read_text_file(str(self.__options["input_file"]))
+            text = self.__server.message_server(text)
+            self.__type_writer_print(text)
+            return text
 
         if run_type is RUN_TYPE.SINGLE:
             text = self.__single_run()
