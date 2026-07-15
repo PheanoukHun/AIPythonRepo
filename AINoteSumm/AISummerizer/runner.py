@@ -20,7 +20,6 @@ class Runner:
     def __init__(self, server: MessageServer, options: dict[str, bool | str] | None = None):
         self.__server = server
         self.__options = options or {}
-        self.__term_height: int = 100
 
     def __continuous_loop(self) -> str:
 
