@@ -1,5 +1,4 @@
 from argparse import ArgumentParser, Namespace
-from tokenize import Name
 
 from config import Config
 
@@ -47,13 +46,21 @@ class ParseOptions:
 
 class CliOptions:
     def __init__(self, options: ParseOptions):
-        __parsed_args: Namespace = options.parsed_args
-        self.__options: dict[str, bool | str] = self.__get_dict_options(__parsed_args)
+        self.__parsed_args: Namespace = options.parsed_args
+        self.__options: dict[str, bool | str] = self.__get_dict_options(self.__parsed_args)
 
-    def __get_dict_options(self, parsed_args:Namespace) -> dict[str, bool|str]:
+    def __get_dict_options(self, parsed_args: Namespace) -> dict[str, bool | str]:
         result = {}
-        
+
         for arg_name, arg_val in vars(parsed_args).items():
-            if (arg_name is not None) and (arg_val != False): 
+            if isinstance(arg_val, bool):
+                if arg_val:
+                    result[arg_name] = arg_val
+            elif arg_val is not None:
+                result[arg_name] = arg_val
 
         return result
+
+    @property
+    def options(self):
+        return self.__options
