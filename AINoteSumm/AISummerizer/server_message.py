@@ -41,4 +41,4 @@ class MessageServer:
         if (self.__server):
             print("\nStopping the Server Binary\n")
             self.__server.kill()
-        
+        print("\033[2J\033[H", end="")
