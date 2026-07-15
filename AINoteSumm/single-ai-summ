@@ -2,7 +2,7 @@
 
 clear
 
-output=$(python3 "$(dirname "$0")"/AISummerizer/single-run.py)
+output=$(python3 "$(dirname "$0")"/AISummerizer/main.py)
 
 clear
 
