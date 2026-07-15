@@ -1,6 +1,6 @@
 from argparse import ArgumentParser, Namespace
 
-from config import Config
+from .config import Config
 
 
 class ParseOptions:
@@ -45,9 +45,12 @@ class ParseOptions:
 
 
 class CliOptions:
-    def __init__(self, options: ParseOptions):
+    def __init__(self, configs: Config):
+        options = ParseOptions(configs)
         self.__parsed_args: Namespace = options.parsed_args
-        self.__options: dict[str, bool | str] = self.__get_dict_options(self.__parsed_args)
+        self.__options: dict[str, bool | str] = self.__get_dict_options(
+            self.__parsed_args
+        )
 
     def __get_dict_options(self, parsed_args: Namespace) -> dict[str, bool | str]:
         result = {}

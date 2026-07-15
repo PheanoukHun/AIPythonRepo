@@ -1,9 +1,9 @@
 import json
 import os
 
-from utils.message_block import MessageBlock
-from utils.url import URL
-from utils.valid_path import (
+from server_interacting.message_block import MessageBlock
+from server_interacting.url import URL
+from .valid_path import (
     PATH_VALIDITY,
     get_project_path,
     interpret_results,
@@ -83,7 +83,7 @@ class Config:
                     "stream": False,
                 },
                 "server_cmd": {
-                    "SYSTEM_PROMPT_FILE_PATH": self.__config_file_path,
+                    "SYSTEM_PROMPT_FILE_PATH": "/home/procastoh/Git-Repos/AIPythonRepo/AINoteSumm/prompt/system-prompt.md",
                     "options": [
                         "llama-server",
                         "-m",
@@ -444,6 +444,7 @@ class Config:
         Structure the notes as a professional study guide that emphasizes understanding, review, and long-term retention rather than simply summarizing the source material.
         """
 
+        os.makedirs(os.path.dirname(path), exist_ok=True)
         with open(path, "w") as file:
             _ = file.write(text)
 

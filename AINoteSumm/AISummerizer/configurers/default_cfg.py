@@ -2,7 +2,7 @@ import json
 
 from typing import Any
 
-from utils.valid_path import PATH_VALIDITY, is_valid_path, interpret_results
+from valid_path import PATH_VALIDITY, is_valid_path, interpret_results
 
 
 def write_to_file(cfg_path:str, cfg: dict[Any, Any]):
@@ -79,11 +79,23 @@ def default_server_cfg(cfg_path:str) -> dict[str, str|dict[str, str|int]]:
       "SYSTEM_PROMPT_FILE_PATH": "/home/procastoh/Git-Repos/AIPythonRepo/AINoteSumm/prompt/system-prompt.md",
       "options": [
         "/home/procastoh/llama-cpp/build/bin/llama-server",
-        "-m /home/procastoh/llama-cpp/models/llms/LFM2.5-230M-Q4_0.gguf",
-        "-c 100000 -ngl 99",
-        "-ctk q4_0 -ctv q4_0 -fa on",
-        "--agent -rea off",
-        "--port 8080"
+        "-m",
+        "/home/procastoh/llama-cpp/models/llms/LFM2.5-230M-Q4_0.gguf",
+        "-c",
+        "100000",
+        "-ngl",
+        "99",
+        "-ctk",
+        "q4_0",
+        "-ctv",
+        "q4_0",
+        "-fa",
+        "on",
+        "--agent",
+        "-rea",
+        "off",
+        "--port",
+        "8080"
       ]
     }
 

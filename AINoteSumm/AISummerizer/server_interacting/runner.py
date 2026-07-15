@@ -1,8 +1,8 @@
 import time
 from enum import Enum
 
-from server_message import MessageServer
-from valid_path import (
+from .server_message import MessageServer
+from configurers.valid_path import (
     PATH_VALIDITY,
     interpret_results,
     is_valid_path,
@@ -87,7 +87,7 @@ class Runner:
 
     def __read_text_file(self, path: str) -> str:
         path_validity_results: PATH_VALIDITY = is_valid_path(path)
-        interpret_results(path, path_validity_results)
+        interpret_results(path_validity_results)
 
         with open(path, "r") as file:
             data = file.read()

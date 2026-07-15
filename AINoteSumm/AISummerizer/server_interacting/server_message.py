@@ -1,5 +1,5 @@
-from utils.message_block import MessageBlock
-from config import Config
+from .message_block import MessageBlock
+from configurers.config import Config
 import requests
 import subprocess
 
