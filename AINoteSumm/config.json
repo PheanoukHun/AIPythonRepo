@@ -2,7 +2,10 @@
   "PROGRAM_NAME": "AISummerizer",
   "VERSION": "v1.0",
   "PROGRAM_DESCRIPTION": "A Simple AI Summerizer that takes in text and uses a System Prompt to summerize the text based on your preferences.",
-  "ARGS_CFG_PATH": "configs/args.json",
-  "SRV_CFG_PATH": "configs/server_cfg.json",
-  "SRV_CMD_PATH": "configs/server_cmd.json"
+  "CFG_FILES": {
+    "CFG_DIR": "/home/procastoh/Git-Repos/AIPythonRepo/AINoteSumm/configs",
+    "ARGS_CFG_PATH": "args.json",
+    "SRV_CFG_PATH": "server_cfg.json",
+    "SRV_CMD_PATH": "server_cmd.json"
+  }
 }

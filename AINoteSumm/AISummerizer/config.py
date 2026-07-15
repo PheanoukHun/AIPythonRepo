@@ -4,7 +4,7 @@ import os
 from message_block import MessageBlock
 from url import URL
 from valid_path import (
-    PATH_RESPONSE_TYPE,
+    PATH_VALIDITY,
     get_project_path,
     interpret_results,
     is_valid_path,
@@ -30,7 +30,7 @@ class Config:
 
         config_path_validity = is_valid_path(self.__config_file_path)
 
-        if config_path_validity == PATH_RESPONSE_TYPE.VALID:
+        if config_path_validity == PATH_VALIDITY.VALID:
             with open(self.__config_file_path) as file:
                 try:
                     self.__data = json.load(file)
@@ -39,9 +39,9 @@ class Config:
         else:
             self.__create_default_config_file(config_path_validity)
 
-    def __create_default_config_file(self, path_validity: PATH_RESPONSE_TYPE) -> None:
+    def __create_default_config_file(self, path_validity: PATH_VALIDITY) -> None:
 
-        if path_validity is PATH_RESPONSE_TYPE.PATH_DOES_NOT_EXIST:
+        if path_validity is PATH_VALIDITY.DNE:
             self.__data = {
                 "PROGAM_DESCRIPTION": {
                     "prog_name": "AISummerizer",
@@ -454,12 +454,12 @@ class Config:
         prompt_path: str = self.__data["server_cmd"]["SYSTEM_PROMPT_FILE_PATH"]
         prompt: str = ""
 
-        path_valid_result: PATH_RESPONSE_TYPE = is_valid_path(prompt_path)
+        path_valid_result: PATH_VALIDITY = is_valid_path(prompt_path)
 
-        if path_valid_result == PATH_RESPONSE_TYPE.VALID:
+        if path_valid_result == PATH_VALIDITY.VALID:
             with open(prompt_path, "r") as file:
                 prompt = file.read()
-        elif path_valid_result == PATH_RESPONSE_TYPE.PATH_DOES_NOT_EXIST:
+        elif path_valid_result == PATH_VALIDITY.DNE:
             prompt = self.__generate_default_sys_prompt_file(prompt_path)
         else:
             interpret_results(prompt_path, path_valid_result)

@@ -3,7 +3,7 @@ from enum import Enum
 
 from server_message import MessageServer
 from valid_path import (
-    PATH_RESPONSE_TYPE,
+    PATH_VALIDITY,
     interpret_results,
     is_valid_path,
 )
@@ -86,7 +86,7 @@ class Runner:
         return text
 
     def __read_text_file(self, path: str) -> str:
-        path_validity_results: PATH_RESPONSE_TYPE = is_valid_path(path)
+        path_validity_results: PATH_VALIDITY = is_valid_path(path)
         interpret_results(path, path_validity_results)
 
         with open(path, "r") as file:
