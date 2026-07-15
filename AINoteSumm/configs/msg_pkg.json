@@ -1,0 +1,6 @@
+{
+  "model": "LFM2.5-230M-Q4_0",
+  "temperature": 0.9,
+  "max_tokens": 7200,
+  "stream": false
+}

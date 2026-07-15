@@ -1,0 +1,27 @@
+{
+  "--input-file": {
+    "Description": "Allows for the Direct Input of Text without the need of users adding to it.",
+    "alt_name": "-in",
+    "action": "store"
+  },
+  "--no-reasoning": {
+    "Description": "Prevents the Model from Reasoing",
+    "alt_name": "--no-rea",
+    "action": "store_true"
+  },
+  "--reasoning": {
+    "Description": "Allows the Model to Reason (Default)",
+    "alt_name": "--rea",
+    "action": "store_true"
+  },
+  "--multi-line-text": {
+    "Description": "Allow the user to type in multi-line results, must end wit '/*-' to end the response",
+    "alt_name": "-mlt",
+    "action": "store_true"
+  },
+  "--single-response": {
+    "Description": "Allow the user to specify to only run the program once and stops",
+    "alt_name": "-sr",
+    "action": "store_true"
+  }
+}

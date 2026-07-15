@@ -1,0 +1,18 @@
+{
+  "urls": {
+    "baseURL": "http://127.0.0.1",
+    "port": 8080,
+    "trailingURL": "/v1/chat/completions",
+    "healthTrailing": "/health",
+    "expectedHealthyStatusCode": 200
+  },
+  "SYSTEM_PROMPT_FILE_PATH": "/home/procastoh/Git-Repos/AIPythonRepo/AINoteSumm/prompt/system-prompt.md",
+  "options": [
+    "/home/procastoh/llama-cpp/build/bin/llama-server",
+    "-m /home/procastoh/llama-cpp/models/llms/LFM2.5-230M-Q4_0.gguf",
+    "-c 100000 -ngl 99",
+    "-ctk q4_0 -ctv q4_0 -fa on",
+    "--agent -rea off",
+    "--port 8080"
+  ]
+}
