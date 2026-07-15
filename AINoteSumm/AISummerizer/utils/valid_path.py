@@ -33,7 +33,7 @@ def interpret_results(error_result: PATH_VALIDITY) -> None:
 
 
 def get_project_path() -> str:
-    proj_dir: str = str(Path(__file__).resolve().parent.parent)
+    proj_dir: str = str(Path(__file__).resolve().parent.parent.parent)
     interpret_results(is_valid_path(proj_dir))
     return proj_dir
 

@@ -1,9 +1,9 @@
 import json
 import os
 
-from message_block import MessageBlock
-from url import URL
-from valid_path import (
+from utils.message_block import MessageBlock
+from utils.url import URL
+from utils.valid_path import (
     PATH_VALIDITY,
     get_project_path,
     interpret_results,
@@ -101,7 +101,7 @@ class Config:
             with open(self.__config_file_path, "w") as file:
                 json.dump(self.__data, file, indent=4)
         else:
-            interpret_results(self.__config_file_path, path_validity)
+            interpret_results(path_validity)
 
     def __generate_default_sys_prompt_file(self, path: str) -> str:
 
@@ -462,7 +462,7 @@ class Config:
         elif path_valid_result == PATH_VALIDITY.DNE:
             prompt = self.__generate_default_sys_prompt_file(prompt_path)
         else:
-            interpret_results(prompt_path, path_valid_result)
+            interpret_results(path_valid_result)
 
         return prompt
 

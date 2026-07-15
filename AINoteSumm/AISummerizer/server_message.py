@@ -1,4 +1,4 @@
-from message_block import MessageBlock
+from utils.message_block import MessageBlock
 from config import Config
 import requests
 import subprocess
