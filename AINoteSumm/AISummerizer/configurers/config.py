@@ -1,5 +1,6 @@
 import json
 import os
+from unittest.main import main
 
 import default_cfg
 from server_interacting.message_block import MessageBlock
@@ -20,16 +21,12 @@ class Config:
         self.__curr_dir: str = get_project_path()
         self.__config_file_path: str = os.path.join(self.__curr_dir, "config.json")
 
-        self.__main_cfg = self.__get_main_cfg()
-        self.__health_url = None
-        self.__msg_url = None
-        self.__message_packet = MessageBlock()
-        self.__build_msg_packets()
-        self.__sys_prompt: str = self.__get_sys_prompt()
+        # Getting Configurations
+        self.__main_cfg = self.__get_cfg_file_paths()
 
-    def __get_main_cfg(self) -> dict[str, str | dict[str, str]] | None:
+    def __get_cfg_file_paths(self) -> dict[str, str]:
 
-        main_cfg: dict[str, str | dict[str, str]] | None = None
+        main_cfg: dict[str, str | dict[str, str]] = {}
 
         config_path_validity = is_valid_path(self.__config_file_path)
         if config_path_validity == PATH_VALIDITY.VALID:
@@ -41,29 +38,24 @@ class Config:
         else:
             main_cfg = default_cfg.default_main_cfg(self.__config_file_path)
 
-        return main_cfg
+        self.__prog_name = main_cfg.get("PROGRAM_NAME")
+        self.__VERSION = main_cfg.get("VERSION")
+        self.__prog_desc = main_cfg.get("PROGRAM_DESCRIPTION")
 
-    def __generate_default_sys_prompt_file(self, path: str) -> str:
+        cfg_file_paths: dict[str, str] = main_cfg.get("CFG_FILES")
 
-       
-        os.makedirs(os.path.dirname(path), exist_ok=True)
-        with open(path, "w") as file:
-            _ = file.write(text)
+        return cfg_file_paths
 
-        return path
+    def __get_sys_prompt(self, prompt_path: str) -> str:
 
-    def __get_sys_prompt(self) -> str:
-
-        prompt_path: str = self.__data["server_cmd"]["SYSTEM_PROMPT_FILE_PATH"]
         prompt: str = ""
 
         path_valid_result: PATH_VALIDITY = is_valid_path(prompt_path)
-
         if path_valid_result == PATH_VALIDITY.VALID:
             with open(prompt_path, "r") as file:
                 prompt = file.read()
         elif path_valid_result == PATH_VALIDITY.DNE:
-            prompt = self.__generate_default_sys_prompt_file(prompt_path)
+            prompt = default_cfg.default_sys_prompt(prompt_path)
         else:
             interpret_results(path_valid_result)
 

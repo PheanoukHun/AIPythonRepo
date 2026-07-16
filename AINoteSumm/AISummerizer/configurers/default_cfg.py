@@ -5,12 +5,18 @@ from typing import Any
 from valid_path import PATH_VALIDITY, is_valid_path, interpret_results
 
 
-def write_to_file(cfg_path:str, cfg: dict[Any, Any]):
+def write_to_cfg_file(cfg_path:str, cfg: dict[Any, Any]):
 
+    # Make Dir if does not exist
     dir_path:str = os.path.dirname(cfg_path)
-    if is_valid_path(dir_path)
-    os.makedirs(os.path.dirname(cfg_path), exist_ok=True)
+    dir_validity_res:PATH_VALIDITY = is_valid_path(dir_path)
+    
+    if dir_validity_res is PATH_VALIDITY.DNE:
+        os.makedirs(os.path.dirname(cfg_path), exist_ok=True)
+    else:
+        interpret_results(dir_validity_res)
 
+    # Make file if does not exist
     is_valid: PATH_VALIDITY = is_valid_path(cfg_path)
     if is_valid is PATH_VALIDITY.DNE:
         with open(cfg_path, "w") as f:
@@ -32,7 +38,7 @@ def default_main_cfg(cfg_path: str) -> dict[str, dict[str, str] | str]:
         },
     }
 
-    write_to_file(cfg_path, cfg)
+    write_to_cfg_file(cfg_path, cfg)
 
     return cfg
 
@@ -66,7 +72,7 @@ def default_args_cfg(cfg_path:str) -> dict[str, dict[str, str]]:
       }
     }
 
-    write_to_file(cfg_path, cfg)
+    write_to_cfg_file(cfg_path, cfg)
     
     return cfg
 
@@ -79,11 +85,11 @@ def default_server_cfg(cfg_path:str) -> dict[str, str|dict[str, str|int]]:
         "healthTrailing": "/health",
         "expectedHealthyStatusCode": 200
       },
-      "SYSTEM_PROMPT_FILE_PATH": "/home/procastoh/Git-Repos/AIPythonRepo/AINoteSumm/prompt/system-prompt.md",
+      "SYSTEM_PROMPT_FILE_PATH": "/path/to/system-prompt.md",
       "options": [
-        "/home/procastoh/llama-cpp/build/bin/llama-server",
+        "llama-server",
         "-m",
-        "/home/procastoh/llama-cpp/models/llms/LFM2.5-230M-Q4_0.gguf",
+        "/path/to/llm.gguf",
         "-c",
         "100000",
         "-ngl",
@@ -102,23 +108,23 @@ def default_server_cfg(cfg_path:str) -> dict[str, str|dict[str, str|int]]:
       ]
     }
 
-    write_to_file(cfg_path, cfg)
+    write_to_cfg_file(cfg_path, cfg)
 
     return cfg
 
 def default_msg_pkg(cfg_path:str) -> dict[str, str|float|bool|int]:
     cfg = {
-      "model": "LFM2.5-230M-Q4_0",
+      "model": "RANDOM_LLM",
       "temperature": 0.9,
       "max_tokens": 7200,
       "stream": False
     }
 
-    write_to_file(cfg_path, cfg)
+    write_to_cfg_file(cfg_path, cfg)
 
     return cfg
 
-def default_sys_prompt(sys_path:str) -> str:
+def default_sys_prompt(sys_prompt_path:str) -> str:
 
     text = """# System Prompt: Computer Science Markdown Study Note Generator
 
@@ -459,9 +465,17 @@ def default_sys_prompt(sys_path:str) -> str:
     Structure the notes as a professional study guide that emphasizes understanding, review, and long-term retention rather than simply summarizing the source material.
     """
 
-    is_valid: PATH_VALIDITY = is_valid_path(sys_path)
+    dir_path:str = os.path.dirname(sys_prompt_path)
+    dir_validity_res:PATH_VALIDITY = is_valid_path(dir_path)
+    
+    if dir_validity_res is PATH_VALIDITY.DNE:
+        os.makedirs(os.path.dirname(sys_prompt_path), exist_ok=True)
+    else:
+        interpret_results(dir_validity_res)
+
+    is_valid: PATH_VALIDITY = is_valid_path(sys_prompt_path)
     if is_valid is PATH_VALIDITY.DNE:
-        with open(sys_path, "w") as f:
+        with open(sys_prompt_path, "w") as f:
             f.write(text)
     else:
         interpret_results(is_valid)
