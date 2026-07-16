@@ -11,7 +11,6 @@ from .server_message import MessageServer
 
 
 class Options:
-    
     READ_IN:str = "/read"
     EXIT_IN:list[str] = ["/exit", "/quit"]
     CLEAR_IN:list[str] = ["/clear", "/cls"]
@@ -109,16 +108,18 @@ class Runner:
 
     def __parse_option(self, text: str) -> str:
 
-        if text == "/quit" or text == "/exit":
+        text = text.lower()
+
+        if text in Options.EXIT_IN:
             self.__server.quit()
             return Options.EXIT_OUT
 
-        if text.to:
+        if text in Options.CLEAR_IN:
             print("\033[2J\033[H", end="")
             return Options.CLEAR_OUT
 
         word_list: list[str] = text.split(" ")
-        if "/read" in word_list:
+        if text == Options.READ_IN:
             file_path_index = word_list.index("/read") + 1
             word_list[file_path_index] = self.__read_text_file(
                 word_list[file_path_index]
