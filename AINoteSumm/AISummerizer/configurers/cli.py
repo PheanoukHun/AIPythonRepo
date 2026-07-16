@@ -1,18 +1,15 @@
 from argparse import ArgumentParser, Namespace
-
 from .config import Config
 
-
-class ParseOptions:
-    def __init__(self, configs: Config) -> None:
-        self.__prog_desc: dict[str, str] = configs.program_description
-        self.__prog_args: dict[str, dict[str, str]] = configs.program_arguments
-        self.__parser: ArgumentParser = self.__create_parser(
-            self.__prog_desc["prog_name"],
-            self.__prog_desc["description"],
-            self.__prog_args,
+class CLI_Options:
+    def __init__(self, configs: Config):
+        self.__parser = self.__create_parser(
+            configs.program_name, configs.program_description, configs.program_arguments
         )
-        self.__parsed_args: Namespace = self.__parse_args(self.__parser)
+        self.__parsed_args: Namespace = self.__parser.parse_args()
+        self.__options: dict[str, bool | str] = self.__get_dict_options(
+            self.__parsed_args
+        )
 
     def __create_parser(
         self, prog_name: str, prog_desc: str, prog_args: dict[str, dict[str, str]]
@@ -36,33 +33,14 @@ class ParseOptions:
 
         return parser
 
-    def __parse_args(self, parser: ArgumentParser) -> Namespace:
-        return parser.parse_args()
-
-    @property
-    def parsed_args(self) -> Namespace:
-        return self.__parsed_args
-
-
-class CliOptions:
-    def __init__(self, configs: Config):
-        options = ParseOptions(configs)
-        self.__parsed_args: Namespace = options.parsed_args
-        self.__options: dict[str, bool | str] = self.__get_dict_options(
-            self.__parsed_args
-        )
-
-    def __get_dict_options(self, parsed_args: Namespace) -> dict[str, bool | str]:
-        result = {}
-
-        for arg_name, arg_val in vars(parsed_args).items():
-            if isinstance(arg_val, bool):
-                if arg_val:
-                    result[arg_name] = arg_val
-            elif arg_val is not None:
-                result[arg_name] = arg_val
-
-        return result
+    def __get_dict_options(
+        self, parsed_args: Namespace
+    ) -> dict[str, bool | str]:
+        return {
+            key: value
+            for key, value in vars(parsed_args).items()
+            if value not in (None, False)
+        }
 
     @property
     def options(self):

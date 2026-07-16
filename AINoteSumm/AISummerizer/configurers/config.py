@@ -8,6 +8,8 @@ import default_cfg
 from server_interacting.message_block import MessageBlock
 from server_interacting.url import URL
 
+from cli import CLI_Options
+
 from .valid_path import (
     PATH_VALIDITY,
     get_project_path,
@@ -108,6 +110,10 @@ class Config:
 
     def __setup_args_cfg(self, args_cfg_path:str) -> None:
         self.__cli_args = self.__get_cfg(args_cfg_path, default_cfg.default_args_cfg)
+
+    def cli_opt_update(self, cli:CLI_Options):
+        options: dict[str, str|bool] = cli.options
+        print(options)
  
     @property
     def message_package(self) -> MessageBlock:
