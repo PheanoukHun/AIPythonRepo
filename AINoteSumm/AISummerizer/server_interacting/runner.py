@@ -11,8 +11,12 @@ from .server_message import MessageServer
 
 
 class Options:
-    EXIT: str = "$$EXIT$$"
-    CLEAR: str = "$$CLEAR$$"
+    
+    READ_IN:str = "/read"
+    EXIT_IN:list[str] = ["/exit", "/quit"]
+    CLEAR_IN:list[str] = ["/clear", "/cls"]
+    EXIT_OUT: str = "$$EXIT$$"
+    CLEAR_OUT: str = "$$CLEAR$$"
 
 
 class MULTILINE_INPUT(Enum):
@@ -37,7 +41,7 @@ class Runner:
         outputs = []
         while True:
             result: str = self.__single_run(allow_multiline)
-            if result == Options.EXIT:
+            if result == Options.EXIT_OUT:
                 break
             self.__type_writer_print(result)
             outputs.append(result)
@@ -54,9 +58,9 @@ class Runner:
             user_in = self.__input(allow_multiline)
             proc_in = self.__parse_option(user_in)
 
-            if proc_in == "$$CLEAR$$":
-                return ""
-            elif proc_in == "$$QUIT$$":
+            if proc_in == Options.CLEAR_OUT:
+                return Options.CLEAR_OUT
+            elif proc_in == Options.EXIT_OUT:
                 return proc_in
 
             result = self.__server.message_server(proc_in)
@@ -107,11 +111,11 @@ class Runner:
 
         if text == "/quit" or text == "/exit":
             self.__server.quit()
-            return "$$QUIT$$"
+            return Options.EXIT_OUT
 
-        if text == "/clear":
+        if text.to:
             print("\033[2J\033[H", end="")
-            return "$$CLEAR$$"
+            return Options.CLEAR_OUT
 
         word_list: list[str] = text.split(" ")
         if "/read" in word_list:
