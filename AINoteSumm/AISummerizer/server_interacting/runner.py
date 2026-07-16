@@ -1,12 +1,21 @@
 import time
 from enum import Enum
 
-from .server_message import MessageServer
 from configurers.valid_path import (
     PATH_VALIDITY,
     interpret_results,
     is_valid_path,
 )
+
+from .server_message import MessageServer
+
+
+class 
+
+
+class MULTILINE_INPUT(Enum):
+    ALLOW = 0
+    DISABLE = 1
 
 
 class RUN_TYPE(Enum):
@@ -16,39 +25,31 @@ class RUN_TYPE(Enum):
 
 
 class Runner:
-
-    def __init__(self, server: MessageServer, options: dict[str, bool | str] | None = None):
+    def __init__(
+        self, server: MessageServer, options: dict[str, bool | str] | None = None
+    ):
         self.__server = server
         self.__options = options or {}
 
-    def __continuous_loop(self) -> str:
-
+    def __continuous_loop(self, allow_multiline: MULTILINE_INPUT) -> str:
         outputs = []
-
         while True:
-            result:str = self.__single_run()
-
+            result: str = self.__single_run(allow_multiline)
             if result == "$$QUIT$$":
                 break
-            
             self.__type_writer_print(result)
             outputs.append(result)
-
         return "\n".join(outputs)
 
-    def __input(self, allow_multiline_input:bool = False) -> str:
-
-        res:str = input("\n> ")
-        
-        while ("/*-" in res and allow_multiline_input):
+    def __input(self, allow_multiline: MULTILINE_INPUT) -> str:
+        res: str = input("\n> ")
+        while "/*-" in res and allow_multiline is MULTILINE_INPUT.ALLOW:
             res = res + input("\n>")
-
         return res
 
-    def __single_run(self) -> str:
+    def __single_run(self, allow_multiline: MULTILINE_INPUT) -> str:
         try:
-            user_in = self.__input()
-
+            user_in = self.__input(allow_multiline)
             proc_in = self.__parse_option(user_in)
 
             if proc_in == "$$CLEAR$$":

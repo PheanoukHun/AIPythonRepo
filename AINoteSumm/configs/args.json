@@ -9,9 +9,9 @@
     "alt_name": "--no-rea",
     "action": "store_true"
   },
-  "--multi-line-text": {
+  "--multi-line-input": {
     "Description": "Allow the user to type in multi-line results, must end wit '/*-' to end the response",
-    "alt_name": "-mlt",
+    "alt_name": "-mli",
     "action": "store_true"
   },
   "--single-response": {
