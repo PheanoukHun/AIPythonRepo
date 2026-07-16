@@ -1,6 +1,6 @@
 import json
 import os
-from unittest.main import main
+from typing import cast
 
 import default_cfg
 from server_interacting.message_block import MessageBlock
@@ -22,7 +22,7 @@ class Config:
         self.__config_file_path: str = os.path.join(self.__curr_dir, "config.json")
 
         # Getting Configurations
-        self.__main_cfg = self.__get_cfg_file_paths()
+        self.__cfg_file_paths: dict[str, str] = self.__get_cfg_file_paths()
 
     def __get_cfg_file_paths(self) -> dict[str, str]:
 
@@ -42,9 +42,16 @@ class Config:
         self.__VERSION = main_cfg.get("VERSION")
         self.__prog_desc = main_cfg.get("PROGRAM_DESCRIPTION")
 
-        cfg_file_paths: dict[str, str] = main_cfg.get("CFG_FILES")
+        cfg_file_paths: dict[str, str] = cast(dict[str, str], main_cfg.get("CFG_FILES"))
 
         return cfg_file_paths
+
+    def __cfg_urls(self, url_info: dict[str, str|int]) -> None:
+        self.__msg_url = URL(
+            str(url_info.get("baseURL")), int(url_info.get("port")), str(url_info.get("trailingURL"))
+        )
+
+        URL(base_URL=url_info.get("baseURL"))
 
     def __get_sys_prompt(self, prompt_path: str) -> str:
 
