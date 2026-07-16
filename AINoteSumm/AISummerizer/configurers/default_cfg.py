@@ -2,7 +2,7 @@ import json
 import os
 from typing import Any
 
-from valid_path import PATH_VALIDITY, is_valid_path, interpret_results
+from .valid_path import PATH_VALIDITY, is_valid_path, interpret_results
 
 
 def write_to_cfg_file(cfg_path:str, cfg: dict[Any, Any]):

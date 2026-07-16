@@ -4,11 +4,15 @@ from typing import cast
 
 from typing_extensions import Any, Callable
 
-import default_cfg
+from .default_cfg import (
+    default_args_cfg,
+    default_main_cfg,
+    default_msg_pkg,
+    default_srv_cfg,
+    default_sys_prompt
+)
 from server_interacting.message_block import MessageBlock
 from server_interacting.url import URL
-
-from cli import CLI_Options
 
 from .valid_path import (
     PATH_VALIDITY,
@@ -39,28 +43,6 @@ class Config:
         args_cfg_path = os.path.join(config_dir, self.__cfg_file_paths["ARGS_CFG_PATH"])
         self.__setup_args_cfg(args_cfg_path)
 
-    def __get_cfg_file_paths(self) -> dict[str, str]:
-
-        main_cfg: dict[str, str | dict[str, str]] = {}
-
-        config_path_validity = is_valid_path(self.__config_file_path)
-        if config_path_validity == PATH_VALIDITY.VALID:
-            with open(self.__config_file_path) as file:
-                try:
-                    main_cfg = json.load(file)
-                except json.JSONDecodeError:
-                    print("Incorrect Config Json Format")
-        else:
-            main_cfg = default_cfg.default_main_cfg(self.__config_file_path)
-
-        self.__prog_name:str = str(main_cfg.get("PROGRAM_NAME"))
-        self.__version:str = str(main_cfg.get("VERSION"))
-        self.__prog_desc:str = str(main_cfg.get("PROGRAM_DESCRIPTION"))
-
-        cfg_file_paths: dict[str, str] = cast(dict[str, str], main_cfg.get("CFG_FILES"))
-
-        return cfg_file_paths
-
     def __cfg_urls(self, url_info: dict[str, str | int]) -> None:
         self.__msg_url = URL(
             base_URL=cast(str, url_info.get("baseURL")),
@@ -71,11 +53,11 @@ class Config:
         self.__health_url = URL(
             base_URL=cast(str, url_info["baseURL"]),
             port_num=cast(int, url_info["port"]),
-            trailing_URL=cast(str, url_info["healthTraling"]),
+            trailing_URL=cast(str, url_info["healthTrailing"]),
         )
 
     def __get_sys_prompt(self, prompt_path: str) -> str:
-        prompt:str = self.__get_cfg(prompt_path, default_cfg.default_sys_prompt)
+        prompt:str = self.__get_cfg(prompt_path, default_sys_prompt)
         return prompt
 
     def __get_cfg(self, cfg_path:str, default_prog: Callable[[str], Any]) -> Any:
@@ -93,27 +75,35 @@ class Config:
             exit(0)
         return data
 
+    def __get_cfg_file_paths(self) -> dict[str, str]:
+
+        main_cfg = self.__get_cfg(self.__config_file_path, default_main_cfg)
+
+        self.__prog_name:str = str(main_cfg.get("PROGRAM_NAME"))
+        self.__version:str = str(main_cfg.get("VERSION"))
+        self.__prog_desc:str = str(main_cfg.get("PROGRAM_DESCRIPTION"))
+
+        cfg_file_paths: dict[str, str] = cast(dict[str, str], main_cfg.get("CFG_FILES"))
+
+        return cfg_file_paths
+
     def __setup_srv_cfg(self, srv_cfg_path:str) -> None:
-        data = self.__get_cfg(srv_cfg_path, default_cfg.default_srv_cfg)
+        data = self.__get_cfg(srv_cfg_path, default_srv_cfg)
         self.__cfg_urls(cast(dict[str, str|int], data.get("urls")))
         self.__sys_prompt:str = self.__get_sys_prompt(cast(str, data.get("SYSTEM_PROMPT_FILE_PATH")))
         self.__server_cmd_components:list[str] = cast(list[str], data.get("options"))
 
     def __cfg_msg_pkg(self, msg_pkg_cfg_path:str) -> None:
-        data = self.__get_cfg(msg_pkg_cfg_path, default_cfg.default_msg_pkg)
+        data = self.__get_cfg(msg_pkg_cfg_path, default_msg_pkg)
         self.__message_packet:MessageBlock = MessageBlock(
             model=str(data["model"]),
-            temperature=float(data["model"]),
+            temperature=float(data["temperature"]),
             max_tokens=int(data["max_tokens"]),
             stream=bool(data["stream"])
         )
 
     def __setup_args_cfg(self, args_cfg_path:str) -> None:
-        self.__cli_args = self.__get_cfg(args_cfg_path, default_cfg.default_args_cfg)
-
-    def cli_opt_update(self, cli:CLI_Options):
-        options: dict[str, str|bool] = cli.options
-        print(options)
+        self.__cli_args = self.__get_cfg(args_cfg_path, default_args_cfg)
  
     @property
     def message_package(self) -> MessageBlock:

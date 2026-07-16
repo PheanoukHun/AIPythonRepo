@@ -6,8 +6,10 @@ from server_interacting.runner import Runner
 from server_interacting.server_message import MessageServer
 
 if __name__ == "__main__":
+
     configs = Config()
     cli_opts = CLI_Options(configs)
-    msg_srvr = MessageServer(configs)
-    runner = Runner(msg_srvr, options=cli_opts.options)
-    runner.run()
+    print(cli_opts.parsed_args)
+    # msg_srvr = MessageServer(configs)
+    # runner = Runner(msg_srvr, options=cli_opts.options)
+    # runner.run()
