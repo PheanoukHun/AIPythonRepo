@@ -52,7 +52,11 @@ class Config:
         return cfg_file_paths
 
     def __build_srv_cfg(self, srv_cfg_path:str):
-        pass
+        path_validity_res:PATH_VALIDITY = is_valid_path(srv_cfg_path)
+        if path_validity_res is PATH_VALIDITY.VALID:
+            with open(srv_cfg_path, "r") as file:
+                data = file.read()
+        
 
     def __cfg_urls(self, url_info: dict[str, str | int]) -> None:
         self.__msg_url = URL(
