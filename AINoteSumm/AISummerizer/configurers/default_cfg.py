@@ -76,7 +76,7 @@ def default_args_cfg(cfg_path:str) -> dict[str, dict[str, str]]:
     
     return cfg
 
-def default_server_cfg(cfg_path:str) -> dict[str, str|dict[str, str|int]]:
+def default_srv_cfg(cfg_path:str) -> dict[str, str|dict[str, str|int]]:
     cfg = {
       "urls": {
         "baseURL": "http://127.0.0.1",

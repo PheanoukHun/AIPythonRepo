@@ -29,6 +29,8 @@ class Config:
         srv_cfg_path = os.path.join(config_dir, self.__cfg_file_paths["SRV_CFG_PATH"])
         self.__build_srv_cfg(srv_cfg_path)
 
+        msg_pkg_cfg_path = os.path.
+
     def __get_cfg_file_paths(self) -> dict[str, str]:
 
         main_cfg: dict[str, str | dict[str, str]] = {}
@@ -50,13 +52,6 @@ class Config:
         cfg_file_paths: dict[str, str] = cast(dict[str, str], main_cfg.get("CFG_FILES"))
 
         return cfg_file_paths
-
-    def __build_srv_cfg(self, srv_cfg_path:str):
-        path_validity_res:PATH_VALIDITY = is_valid_path(srv_cfg_path)
-        if path_validity_res is PATH_VALIDITY.VALID:
-            with open(srv_cfg_path, "r") as file:
-                data = file.read()
-        
 
     def __cfg_urls(self, url_info: dict[str, str | int]) -> None:
         self.__msg_url = URL(
@@ -86,25 +81,24 @@ class Config:
 
         return prompt
 
-    def __build_msg_packets(self) -> None:
+    def __build_srv_cfg(self, srv_cfg_path:str) -> None:
+        path_validity_res:PATH_VALIDITY = is_valid_path(srv_cfg_path)
+        if path_validity_res is PATH_VALIDITY.VALID:
+            with open(srv_cfg_path, "r") as file:
+                data = json.load(file)
+        elif path_validity_res is PATH_VALIDITY.DNE:
+            data = default_cfg.default_srv_cfg(srv_cfg_path)
+        else:
+            interpret_results(path_validity_res)
+            exit(0)
+        
+        self.__cfg_urls(cast(dict[str, str|int], data.get("urls")))
+        self.__sys_prompt:str = self.__get_sys_prompt(cast(str, data.get("SYSTEM_PROMPT_FILE_PATH")))
+        self.__server_cmd_components:list[str] = cast(list[str], data.get("options"))
 
-        temp_url = self.__data["URL"]
-        self.__msg_url = URL(
-            temp_url["baseURL"], temp_url["port"], temp_url["trailingURL"]
-        )
-        self.__health_url = URL(
-            temp_url["baseURL"], temp_url["port"], temp_url["healthTrailing"]
-        )
-
-        temp_msg = self.__data["message_pkg"]
-        self.__message_packet = MessageBlock(
-            temp_msg["model"],
-            temp_msg["max_tokens"],
-            temp_msg["temperature"],
-            temp_msg["stream"],
-            sys_prompt=self.__get_sys_prompt(),
-        )
-
+    def __cfg_msg_pkg(self, msg_pkg_cfg_path:str):
+        pass
+ 
     @property
     def message_package(self) -> MessageBlock:
         return self.__message_packet
@@ -122,8 +116,8 @@ class Config:
         return self.__sys_prompt
 
     @property
-    def server_options(self):
-        return self.__data["server_cmd"]["options"]
+    def server_options(self) -> list[str]:
+        return self.__server_cmd_components
 
     @property
     def program_description(self) -> dict[str, str]:
@@ -134,21 +128,7 @@ class Config:
         return self.__data["PROGRAM_ARGS"]
 
     def __str__(self) -> str:
-
-        results = f"""
-        Configs:
-
-        Server Health Check URL: {str(self.__health_url)}
-        Server Message URL: {str(self.__msg_url)}
-        {str(self.message_package)}
-
-        Server Start Commands Options Given:
-        """
-
-        counter = 1
-        for option in self.__data["server_cmd"]["options"]:
-            results = f"{results}\n\t{counter}. `{option}`"
-            counter += 1
+        results = ""
         return results
 
 
