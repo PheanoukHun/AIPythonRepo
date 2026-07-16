@@ -2,6 +2,8 @@ import json
 import os
 from typing import cast
 
+from typing_extensions import Any, Callable
+
 import default_cfg
 from server_interacting.message_block import MessageBlock
 from server_interacting.url import URL
@@ -31,6 +33,9 @@ class Config:
 
         msg_pkg_cfg_path = os.path.join(config_dir, self.__cfg_file_paths["MSG_PKG_PATH"])
         self.__cfg_msg_pkg(msg_pkg_cfg_path)
+
+        args_cfg_path = os.path.join(config_dir, self.__cfg_file_paths["ARGS_CFG_PATH"])
+        self.__setup_args_cfg(args_cfg_path)
 
     def __get_cfg_file_paths(self) -> dict[str, str]:
 
@@ -68,57 +73,41 @@ class Config:
         )
 
     def __get_sys_prompt(self, prompt_path: str) -> str:
-
-        prompt: str = ""
-
-        path_valid_result: PATH_VALIDITY = is_valid_path(prompt_path)
-        if path_valid_result == PATH_VALIDITY.VALID:
-            with open(prompt_path, "r") as file:
-                prompt = file.read()
-        elif path_valid_result == PATH_VALIDITY.DNE:
-            prompt = default_cfg.default_sys_prompt(prompt_path)
-        else:
-            interpret_results(path_valid_result)
-
+        prompt:str = self.__get_cfg(prompt_path, default_cfg.default_sys_prompt)
         return prompt
 
-    def run(func: Callable[[str], None], name: str) -> None:
-        func(name)
-
-    def __create_default_cfg(srv_cfg_path)
+    def __get_cfg(self, cfg_path:str, default_prog: Callable[[str], Any]) -> Any:
+        path_valid_res:PATH_VALIDITY = is_valid_path(cfg_path)
+        if path_valid_res is PATH_VALIDITY.VALID:
+            with open(cfg_path, "r") as file:
+                if ".json" in cfg_path:
+                    data = json.load(file)
+                else:
+                    data = file.read()
+        elif path_valid_res is PATH_VALIDITY.DNE:
+            data = default_prog(cfg_path)
+        else:
+            interpret_results(path_valid_res)
+            exit(0)
+        return data
 
     def __setup_srv_cfg(self, srv_cfg_path:str) -> None:
-        path_validity_res:PATH_VALIDITY = is_valid_path(srv_cfg_path)
-        if path_validity_res is PATH_VALIDITY.VALID:
-            with open(srv_cfg_path, "r") as file:
-                data = json.load(file)
-        elif path_validity_res is PATH_VALIDITY.DNE:
-            data = default_cfg.default_srv_cfg(srv_cfg_path)
-        else:
-            interpret_results(path_validity_res)
-            exit(0)
-        
+        data = self.__get_cfg(srv_cfg_path, default_cfg.default_srv_cfg)
         self.__cfg_urls(cast(dict[str, str|int], data.get("urls")))
         self.__sys_prompt:str = self.__get_sys_prompt(cast(str, data.get("SYSTEM_PROMPT_FILE_PATH")))
         self.__server_cmd_components:list[str] = cast(list[str], data.get("options"))
 
-    def __cfg_msg_pkg(self, msg_pkg_cfg_path:str):
-        path_valid_res:PATH_VALIDITY = is_valid_path(msg_pkg_cfg_path)
-        if path_valid_res is PATH_VALIDITY.VALID:
-            with open(msg_pkg_cfg_path, "r") as file:
-                data:dict[str, str|float|int|bool] = json.load(file)
-        elif path_valid_res is PATH_VALIDITY.DNE:
-            data = default_cfg.default_msg_pkg(msg_pkg_cfg_path)
-        else:
-            interpret_results(path_valid_res)
-            exit(0)
-        
+    def __cfg_msg_pkg(self, msg_pkg_cfg_path:str) -> None:
+        data = self.__get_cfg(msg_pkg_cfg_path, default_cfg.default_msg_pkg)
         self.__message_packet:MessageBlock = MessageBlock(
             model=str(data["model"]),
             temperature=float(data["model"]),
             max_tokens=int(data["max_tokens"]),
             stream=bool(data["stream"])
         )
+
+    def __setup_args_cfg(self, args_cfg_path:str) -> None:
+        self.__cli_args = self.__get_cfg(args_cfg_path, default_cfg.default_args_cfg)
  
     @property
     def message_package(self) -> MessageBlock:
@@ -154,7 +143,7 @@ class Config:
 
     @property
     def program_arguments(self) -> dict[str, dict[str, str]]:
-        return self.__data["PROGRAM_ARGS"]
+        return self.__cli_args
 
     def __str__(self) -> str:
         results = ""
