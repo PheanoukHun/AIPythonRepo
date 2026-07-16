@@ -1,6 +1,7 @@
 import json
 import os
 
+import default_cfg
 from server_interacting.message_block import MessageBlock
 from server_interacting.url import URL
 from .valid_path import (
@@ -37,71 +38,7 @@ class Config:
                 except json.JSONDecodeError:
                     print("Incorrect Config Json Format")
         else:
-            self.__create_default_config_file(config_path_validity)
-
-    def __create_default_config_file(self, path_validity: PATH_VALIDITY) -> None:
-
-        if path_validity is PATH_VALIDITY.DNE:
-            self.__data = {
-                "PROGAM_DESCRIPTION": {
-                    "prog_name": "AISummerizer",
-                    "description": "A Simple AI Summerizer that takes in text and uses a System Prompt to summerize the text based on your preferences.",
-                },
-                "PROGRAM_ARGS": {
-                    "--input-file": {
-                        "Description": "Allows for the Direct Input of Text without the need of users adding to it.",
-                        "alt_name": "-in",
-                        "action": "store",
-                    },
-                    "--no-reasoning": {
-                        "Description": "Prevents the Model from Reasoing",
-                        "alt_name": "--no-rea",
-                        "action": "store_true",
-                    },
-                    "--reasoning": {
-                        "Description": "Allows the Model to Reason (Default)",
-                        "alt_name": "--rea",
-                        "action": "store_true",
-                    },
-                    "--multi-line-text": {
-                        "Description": "Allow the user to type in multi-line results, must end wit '/*-' to end the response",
-                        "alt_name": "-mlt",
-                        "action": "store_true",
-                    },
-                },
-                "URL": {
-                    "baseURL": "http://127.0.0.1",
-                    "port": 8080,
-                    "trailingURL": "/v1/chat/completions",
-                    "healthTrailing": "/health",
-                    "expectedHealthyStatusCode": 200,
-                },
-                "message_pkg": {
-                    "model": "LLM-Model",
-                    "temperature": 0.9,
-                    "max_tokens": 7200,
-                    "stream": False,
-                },
-                "server_cmd": {
-                    "SYSTEM_PROMPT_FILE_PATH": "/home/procastoh/Git-Repos/AIPythonRepo/AINoteSumm/prompt/system-prompt.md",
-                    "options": [
-                        "llama-server",
-                        "-m",
-                        "/path/to/llm.gguf",
-                        "components",
-                        "that",
-                        "could",
-                        "be",
-                        "added",
-                        "continuous",
-                    ],
-                },
-            }
-
-            with open(self.__config_file_path, "w") as file:
-                json.dump(self.__data, file, indent=4)
-        else:
-            interpret_results(path_validity)
+            self.__main_cfg = default_cfg.default_main_cfg(self.__config_file_path)
 
     def __generate_default_sys_prompt_file(self, path: str) -> str:
 
