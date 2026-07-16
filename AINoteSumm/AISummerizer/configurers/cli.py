@@ -10,7 +10,6 @@ class CLI_Options:
         self.__options: dict[str, bool | str] = self.__get_dict_options(
             self.__parsed_args
         )
-        self.__update_configs(configs)
 
     def __create_parser(
         self, prog_name: str, prog_desc: str, prog_args: dict[str, dict[str, str]]

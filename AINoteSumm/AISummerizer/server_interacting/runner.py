@@ -88,12 +88,12 @@ class Runner:
             self.__type_writer_print(text)
             return text
 
-        if run_type is RUN_TYPE.SINGLE:
-            text = self.__single_run()
-        elif run_type is RUN_TYPE.REPEATED:
-            text = self.__continuous_loop()
-        elif run_type is RUN_TYPE.INPUT_FILE:
-            text = self.__read_text_file("")
+        # if run_type is RUN_TYPE.SINGLE:
+        #     text = self.__single_run()
+        # elif run_type is RUN_TYPE.REPEATED:
+        #     text = self.__continuous_loop()
+        # elif run_type is RUN_TYPE.INPUT_FILE:
+        #     text = self.__read_text_file("")
 
         return text
 
