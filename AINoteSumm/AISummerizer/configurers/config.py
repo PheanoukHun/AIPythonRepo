@@ -27,9 +27,10 @@ class Config:
         config_dir:str = self.__cfg_file_paths["CFG_DIR"]
 
         srv_cfg_path = os.path.join(config_dir, self.__cfg_file_paths["SRV_CFG_PATH"])
-        self.__build_srv_cfg(srv_cfg_path)
+        self.__setup_srv_cfg(srv_cfg_path)
 
-        msg_pkg_cfg_path = os.path.
+        msg_pkg_cfg_path = os.path.join(config_dir, self.__cfg_file_paths["MSG_PKG_PATH"])
+        self.__cfg_msg_pkg(msg_pkg_cfg_path)
 
     def __get_cfg_file_paths(self) -> dict[str, str]:
 
@@ -45,9 +46,9 @@ class Config:
         else:
             main_cfg = default_cfg.default_main_cfg(self.__config_file_path)
 
-        self.__prog_name = main_cfg.get("PROGRAM_NAME")
-        self.__VERSION = main_cfg.get("VERSION")
-        self.__prog_desc = main_cfg.get("PROGRAM_DESCRIPTION")
+        self.__prog_name:str = str(main_cfg.get("PROGRAM_NAME"))
+        self.__version:str = str(main_cfg.get("VERSION"))
+        self.__prog_desc:str = str(main_cfg.get("PROGRAM_DESCRIPTION"))
 
         cfg_file_paths: dict[str, str] = cast(dict[str, str], main_cfg.get("CFG_FILES"))
 
@@ -81,7 +82,12 @@ class Config:
 
         return prompt
 
-    def __build_srv_cfg(self, srv_cfg_path:str) -> None:
+    def run(func: Callable[[str], None], name: str) -> None:
+        func(name)
+
+    def __create_default_cfg(srv_cfg_path)
+
+    def __setup_srv_cfg(self, srv_cfg_path:str) -> None:
         path_validity_res:PATH_VALIDITY = is_valid_path(srv_cfg_path)
         if path_validity_res is PATH_VALIDITY.VALID:
             with open(srv_cfg_path, "r") as file:
@@ -97,7 +103,22 @@ class Config:
         self.__server_cmd_components:list[str] = cast(list[str], data.get("options"))
 
     def __cfg_msg_pkg(self, msg_pkg_cfg_path:str):
-        pass
+        path_valid_res:PATH_VALIDITY = is_valid_path(msg_pkg_cfg_path)
+        if path_valid_res is PATH_VALIDITY.VALID:
+            with open(msg_pkg_cfg_path, "r") as file:
+                data:dict[str, str|float|int|bool] = json.load(file)
+        elif path_valid_res is PATH_VALIDITY.DNE:
+            data = default_cfg.default_msg_pkg(msg_pkg_cfg_path)
+        else:
+            interpret_results(path_valid_res)
+            exit(0)
+        
+        self.__message_packet:MessageBlock = MessageBlock(
+            model=str(data["model"]),
+            temperature=float(data["model"]),
+            max_tokens=int(data["max_tokens"]),
+            stream=bool(data["stream"])
+        )
  
     @property
     def message_package(self) -> MessageBlock:
@@ -120,8 +141,16 @@ class Config:
         return self.__server_cmd_components
 
     @property
-    def program_description(self) -> dict[str, str]:
-        return self.__data["PROGAM_DESCRIPTION"]
+    def program_name(self) -> str:
+        return self.__prog_name
+
+    @property
+    def program_version(self) -> str:
+        return self.__version
+
+    @property
+    def program_description(self) -> str:
+        return self.__prog_desc
 
     @property
     def program_arguments(self) -> dict[str, dict[str, str]]:
