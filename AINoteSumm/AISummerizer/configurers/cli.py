@@ -6,9 +6,9 @@ class CLI_Options:
         self.__parser = self.__create_parser(
             configs.program_name, configs.program_description, configs.program_arguments
         )
-        self.parsed_args: Namespace = self.__parser.parse_args()
+        self.__parsed_args: Namespace = self.__parser.parse_args()
         self.__options: dict[str, bool | str] = self.__get_dict_options(
-            self.parsed_args
+            self.__parsed_args
         )
         self.__update_configs(configs)
 

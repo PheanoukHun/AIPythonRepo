@@ -55,11 +55,6 @@ def default_args_cfg(cfg_path:str) -> dict[str, dict[str, str]]:
         "alt_name": "--no-rea",
         "action": "store_true"
       },
-      "--reasoning": {
-        "Description": "Allows the Model to Reason (Default)",
-        "alt_name": "--rea",
-        "action": "store_true"
-      },
       "--multi-line-text": {
         "Description": "Allow the user to type in multi-line results, must end wit '/*-' to end the response",
         "alt_name": "-mlt",
