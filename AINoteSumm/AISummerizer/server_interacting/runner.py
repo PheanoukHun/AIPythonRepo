@@ -10,7 +10,9 @@ from configurers.valid_path import (
 from .server_message import MessageServer
 
 
-class 
+class Options:
+    EXIT: str = "$$EXIT$$"
+    CLEAR: str = "$$CLEAR$$"
 
 
 class MULTILINE_INPUT(Enum):
@@ -35,7 +37,7 @@ class Runner:
         outputs = []
         while True:
             result: str = self.__single_run(allow_multiline)
-            if result == "$$QUIT$$":
+            if result == Options.EXIT:
                 break
             self.__type_writer_print(result)
             outputs.append(result)
