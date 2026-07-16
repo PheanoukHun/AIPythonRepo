@@ -34,7 +34,7 @@ def default_main_cfg(cfg_path: str) -> dict[str, dict[str, str] | str]:
             "CFG_DIR": "/home/procastoh/Git-Repos/AIPythonRepo/AINoteSumm/configs",
             "ARGS_CFG_PATH": "args.json",
             "SRV_CFG_PATH": "server_cfg.json",
-            "SRV_CMD_PATH": "server_cmd.json",
+            "MSG_PKG_PATH": "msg_pkg.json",
         },
     }
 

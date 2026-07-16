@@ -24,6 +24,11 @@ class Config:
         # Getting Configurations
         self.__cfg_file_paths: dict[str, str] = self.__get_cfg_file_paths()
 
+        config_dir:str = self.__cfg_file_paths["CFG_DIR"]
+
+        srv_cfg_path = os.path.join(config_dir, self.__cfg_file_paths["SRV_CFG_PATH"])
+        self.__build_srv_cfg(srv_cfg_path)
+
     def __get_cfg_file_paths(self) -> dict[str, str]:
 
         main_cfg: dict[str, str | dict[str, str]] = {}
@@ -46,12 +51,21 @@ class Config:
 
         return cfg_file_paths
 
-    def __cfg_urls(self, url_info: dict[str, str|int]) -> None:
+    def __build_srv_cfg(self, srv_cfg_path:str):
+        pass
+
+    def __cfg_urls(self, url_info: dict[str, str | int]) -> None:
         self.__msg_url = URL(
-            str(url_info.get("baseURL")), int(url_info.get("port")), str(url_info.get("trailingURL"))
+            base_URL=cast(str, url_info.get("baseURL")),
+            port_num=cast(int, url_info.get("port")),
+            trailing_URL=cast(str, url_info["trailingURL"]),
         )
 
-        URL(base_URL=url_info.get("baseURL"))
+        self.__health_url = URL(
+            base_URL=cast(str, url_info["baseURL"]),
+            port_num=cast(int, url_info["port"]),
+            trailing_URL=cast(str, url_info["healthTraling"]),
+        )
 
     def __get_sys_prompt(self, prompt_path: str) -> str:
 
