@@ -9,7 +9,6 @@ if __name__ == "__main__":
 
     configs = Config()
     cli_opts = CLI_Options(configs)
-    print(cli_opts.options)
     # msg_srvr = MessageServer(configs)
     # runner = Runner(msg_srvr, options=cli_opts.options)
     # runner.run()

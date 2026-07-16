@@ -36,12 +36,18 @@ class Runner:
 
         return "\n".join(outputs)
 
+    def __input(self, allow_multiline_input:bool = False) -> str:
+
+        res:str = input("\n> ")
+        
+        while ("/*-" in res and allow_multiline_input):
+            res = res + input("\n>")
+
+        return res
+
     def __single_run(self) -> str:
         try:
-            if "multi_line_text" in self.__options:
-                user_in = self.__multi_line_input()
-            else:
-                user_in = input("\n> ")
+            user_in = self.__input()
 
             proc_in = self.__parse_option(user_in)
 

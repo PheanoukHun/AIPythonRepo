@@ -43,9 +43,6 @@ class CLI_Options:
             if value not in (None, False)
         }
 
-    def __update_configs(self, configs:Config):
-        pass
-
     @property
     def options(self):
         return self.__options
