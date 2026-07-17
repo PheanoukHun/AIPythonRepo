@@ -133,3 +133,9 @@ class Runner:
             print(char, end="", flush=True)
             time.sleep(0.00625)
         print()
+
+
+class RunnerTwo:
+
+    def __init__(self):
+        pass
