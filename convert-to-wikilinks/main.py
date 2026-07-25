@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import sys
 
 from converter import LinkConverter
@@ -12,8 +14,32 @@ def usage():
 
 class MassConvert:
     def __init__(self, dir_path: str):
-        pass
+        self.files: list[str] = FileScanner(dir_path).get_all_files()
+        self.converter: LinkConverter = LinkConverter()
+        self.convert_files()
 
+    def convert_files(self) -> None:
+
+        count:int = 1
+        
+        for file in self.files:
+            is_valid_file:PATH_VALIDITY = is_valid_path(file)
+            interpret_results(is_valid_file)
+
+            with open(file, "r", encoding="utf-8") as f:
+                content = f.read()
+
+            self.converter.convert_markdown_to_wikilink(content)
+
+            with open(file, "w", encoding="utf-8") as f:
+                _ = f.write(content)
+
+            print(f"{count}. {file} was Successfully converted and changes has been saved.")
+            count+=1
 
 if __name__ == "__main__":
-    pass
+    if sys.argv != 2:
+        usage()
+
+    dir_path: str = sys.argv[1]
+    MassConvert(dir_path)
