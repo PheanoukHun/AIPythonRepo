@@ -1,6 +1,8 @@
 import re
 import sys
 
+from valid_path import PATH_VALIDITY, interpret_results, is_valid_path
+
 
 class LinkConverter:
     """
@@ -35,24 +37,21 @@ if __name__ == "__main__":
         print("Usage: python converter.py <file_path>")
         sys.exit(1)
 
-    file_path = sys.argv[1]
+    file_path:str = sys.argv[1]
 
-    try:
-        # Read the existing content of the file
-        with open(file_path, "r", encoding="utf-8") as f:
-            content = f.read()
+    is_file_valid:PATH_VALIDITY = is_valid_path(file_path)
+    interpret_results(is_file_valid)
 
-        # Convert the content
-        converter = LinkConverter()
-        new_content = converter.convert_markdown_to_wikilink(content)
+    # Read the existing content of the file
+    with open(file_path, "r", encoding="utf-8") as f:
+        content = f.read()
 
-        # Write the converted content back to the file
-        with open(file_path, "w", encoding="utf-8") as f:
-            _ = f.write(new_content)
+    # Convert the content
+    converter = LinkConverter()
+    new_content = converter.convert_markdown_to_wikilink(content)
 
-        print(f"Successfully converted and saved changes to: {file_path}")
+    # Write the converted content back to the file
+    with open(file_path, "w", encoding="utf-8") as f:
+        _ = f.write(new_content)
 
-    except FileNotFoundError:
-        print(f"Error: File not found at {file_path}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    print(f"Successfully converted and saved changes to: {file_path}")
