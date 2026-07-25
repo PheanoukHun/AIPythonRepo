@@ -11,24 +11,38 @@ class LinkConverter:
     """
 
     def __init__(self):
-        # Regex pattern to find text inside the first set of square brackets [Text].
-        # It captures the text (Group 1) that appears before the double-slash link path.
-        self.pattern:str = r"\[([^\]]+?)\]\([^)]*\)"
+        # Pattern for broken format: [[word1]] word2](url) → [[word1 word2]]
+        self.broken_pattern:str = r"\[\[([^\]]+)\]\]\s*([^\]]+)\]\(([^)]+)\)"
+        # Pattern for wikilink with URL suffix: [[text]](url) → [[text]]
+        self.wiki_url_pattern:str = r"\[\[([^\]]+)\]\]\(([^)]+)\)"
+        # Pattern for standard markdown link: [text](url) → [[text]]
+        self.markdown_pattern:str = r"\[([^\]]+)\]\(([^)]+)\)"
 
     def convert_markdown_to_wikilink(self, text: str) -> str:
         """
         Finds all matching links in the text and converts them to Wikilinks.
+        Handles three formats:
+        1. Broken: [[word1]] word2](url) → [[word1 word2]]
+        2. Wikilink with URL: [[text]](url) → [[text]]
+        3. Markdown: [text](url) → [[text]]
         """
 
-        def replacement_function(match):
-            """
-            Helper function for re.sub to replace the match with the Wikilink format.
-            The captured text is in group 1.
-            """
-            captured_text = match.group(1).strip()
-            return f"[[{captured_text}]]"
+        def broken_replacement(match):
+            text1 = match.group(1).strip()
+            text2 = match.group(2).strip()
+            return f"[[{text1} {text2}]]"
 
-        return re.sub(self.pattern, replacement_function, text)
+        def wiki_url_replacement(match):
+            return f"[[{match.group(1).strip()}]]"
+
+        def markdown_replacement(match):
+            return f"[[{match.group(1).strip()}]]"
+
+        text = re.sub(self.broken_pattern, broken_replacement, text)
+        text = re.sub(self.wiki_url_pattern, wiki_url_replacement, text)
+        text = re.sub(self.markdown_pattern, markdown_replacement, text)
+
+        return text
 
 
 if __name__ == "__main__":
