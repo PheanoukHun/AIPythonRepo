@@ -25,7 +25,5 @@ if __name__ == "__main__":
         sys.exit(1)
 
     dir_path: str = sys.argv[1]
-    try:
-        files = FindMarkdownFiles(dir_path).get_all_files()
-        print("Files:", *files, sep="\n")
-    except Broke
+    files = FindMarkdownFiles(dir_path).get_all_files()
+    print("Files:", *files, sep="\n")
