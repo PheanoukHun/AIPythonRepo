@@ -13,7 +13,7 @@ class LinkConverter:
     def __init__(self):
         # Regex pattern to find text inside the first set of square brackets [Text].
         # It captures the text (Group 1) that appears before the double-slash link path.
-        self.pattern:str = r"\[([^\]]+)\]\([^)]+\)"
+        self.pattern:str = r"\[([^\]\[]+)\]\([^)]+\)"
 
     def convert_markdown_to_wikilink(self, text: str) -> str:
         """
