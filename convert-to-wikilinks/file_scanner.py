@@ -28,5 +28,4 @@ if __name__ == "__main__":
     try:
         files = FindMarkdownFiles(dir_path).get_all_files()
         print("Files:", *files, sep="\n")
-    except BrokenPipeError:
-        sys.stderr.close()
+    except Broke
