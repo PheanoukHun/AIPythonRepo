@@ -3,7 +3,7 @@
 import sys
 
 from converter import LinkConverter
-from file_scanner import FileScanner
+from file_scanner import FindMarkdownFiles
 from valid_path import PATH_VALIDITY, interpret_results, is_valid_path
 
 
@@ -14,7 +14,7 @@ def usage():
 
 class MassConvert:
     def __init__(self, dir_path: str):
-        self.files: list[str] = FileScanner(dir_path).get_all_files()
+        self.files: list[str] = FindMarkdownFiles(dir_path).get_all_files()
         self.converter: LinkConverter = LinkConverter()
         self.convert_files()
 
@@ -25,7 +25,7 @@ class MassConvert:
         for file in self.files:
             is_valid_file:PATH_VALIDITY = is_valid_path(file)
             interpret_results(is_valid_file)
-
+            
             with open(file, "r", encoding="utf-8") as f:
                 content = f.read()
 
