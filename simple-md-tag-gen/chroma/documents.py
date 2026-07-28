@@ -1,3 +1,4 @@
+import json
 from models.schemas import Document
 from chroma.client import ChromaClient
 import chromadb
@@ -16,14 +17,21 @@ class DocumentManager:
     def insert_document(self, document: Document):
         """
         Inserts a markdown document and its metadata into the document collection.
+        Serializes list fields to JSON strings for ChromaDB compatibility.
         """
         doc_id = document.id
+        
+        # Prepare metadata - convert lists to JSON strings
+        metadata = document.metadata.copy()
+        for key, value in metadata.items():
+            if isinstance(value, list):
+                metadata[key] = json.dumps(value)
         
         # ChromaDB stores content (document) and metadata (tags, filename)
         self.documents_collection.add(
             ids=[doc_id],
             documents=[document.content],
-            metadatas=[document.metadata]
+            metadatas=[metadata]
         )
         print(f"Document {doc_id} inserted successfully.")
 
@@ -45,7 +53,13 @@ class DocumentManager:
             
             # Extract relevant information: filename and tags
             filename = metadata.get('filename', 'unknown_file')
-            tags = metadata.get('tags', [])
+            tags_json = metadata.get('tags', '[]')
+            
+            # Deserialize tags from JSON string
+            try:
+                tags = json.loads(tags_json)
+            except (json.JSONDecodeError, TypeError):
+                tags = []
             
             similar_docs.append({
                 "filename": filename,

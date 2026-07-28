@@ -4,7 +4,7 @@ from chroma.documents import DocumentManager
 from chroma.tags import TagsManager
 from markdown.parser import MarkdownParser
 from prompts.tag_generation import TagPromptGenerator
-from models.schemas import Document
+from models.schemas import Document, Tag
 
 class TagAgent:
     """
@@ -24,6 +24,7 @@ class TagAgent:
     def generate_tags(self, markdown_text: str, doc_id: str) -> List[str]:
         """
         Runs the full tagging workflow for a given markdown text.
+        Returns the list of tags generated for the document.
         """
         # 1. Parse markdown content
         document_content = self.parser.parse(markdown_text)
@@ -32,8 +33,6 @@ class TagAgent:
         similar_docs = self.doc_manager.query_similar_documents(document_content)
         
         # 3. Query known tags (using the document content as the query)
-        # NOTE: In a production system, this query would ideally run asynchronously
-        # and the embedding generation for the query text would be handled by the Chroma setup.
         known_tags = self.tag_manager.query_tags(document_content)
         
         # 4. Collect similar document tags
@@ -52,12 +51,25 @@ class TagAgent:
         print(prompt)
         print("-------------------------------\n")
         
-        # 6. Simulate LLM call and tag storage
-        # In a real scenario, we'd call the LLM here and then store the result.
-        # For demonstration, we return the generated prompt structure.
-        
-        # Store the new document before returning
-        new_doc = Document(id=doc_id, content=document_content, metadata={"tags": []})
+        # 6. SIMULATE LLM CALL and process output
+        # In a real implementation, you would send the prompt to an LLM and parse JSON response
+        simulated_llm_output = ["python", "authentication", "security", "api", "new_feature_tag"]
+
+        # 7. Update Tag Vocabulary with new tags
+        self.tag_manager.add_tag_to_vocabulary(
+            new_tags=simulated_llm_output, 
+            description_source=document_content
+        )
+
+        # 8. Store the new document with generated tags
+        new_doc = Document(
+            id=doc_id, 
+            content=document_content, 
+            metadata={
+                "filename": f"{doc_id}.md",
+                "tags": simulated_llm_output
+            }
+        )
         self.doc_manager.insert_document(new_doc)
         
-        return known_tags # Returning known tags for simulation purposes
+        return simulated_llm_output

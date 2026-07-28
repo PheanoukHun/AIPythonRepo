@@ -13,26 +13,7 @@ class TagsManager:
         if not self.tags_collection:
             raise Exception("Failed to initialize tag_collection.")
 
-    def add_tag_to_vocabulary(self, new_tags: List[str], description_source: str = "Generated"):
-        """
-        Adds new tags (from LLM generation) to the tag collection if they don't exist.
-        The description source is used to create an embedding for the new tag name.
-        """
-        for tag_name in new_tags:
-            # Check if the tag already exists (simplified check by name)
-            existing_tags = self.tags_collection.get(where={"name": tag_name})
-            if existing_tags and existing_tags["ids"]:
-                # Tag already exists
-                continue
-            
-            # Add the new tag dynamically
-            new_id = f"tag_{tag_name}"
-            self.tags_collection.add(
-                ids=[new_id],
-                documents=[f"New tag: {tag_name}. Description based on query: {description_source}"],
-                metadatas=[{"name": tag_name, "category": "auto_generated"}]
-            )
-            print(f"Dynamically added new tag: {tag_name}")
+    def initialize_tags(self, tags: List[Tag]):
         """
         Inserts the initial controlled vocabulary into the tag collection.
         Generates embeddings from the tag descriptions.
@@ -47,11 +28,6 @@ class TagsManager:
             documents.append(tag_obj.description)
             metadatas.append({"name": tag_name, "category": tag_obj.category})
         
-        # ChromaDB expects embedding generation handled by the client/model.
-        # For this implementation, we assume a default embedding function is configured 
-        # or will be provided when the client is set up.
-        # NOTE: In a real implementation, embedding generation would happen here using the vectorizer.
-        # For now, we simulate the data insertion structure.
         self.tags_collection.add(
             ids=ids,
             documents=documents,
@@ -73,3 +49,24 @@ class TagsManager:
         # Extract and return only the tag names
         tag_names = [meta['name'] for r in results['metadatas'] for meta in r if 'name' in meta]
         return tag_names
+
+    def add_tag_to_vocabulary(self, new_tags: List[str], description_source: str = "Generated"):
+        """
+        Adds new tags (from LLM generation) to the tag collection if they don't exist.
+        The description source is used to create an embedding for the new tag name.
+        """
+        for tag_name in new_tags:
+            # Check if the tag already exists (simplified check by name)
+            existing_tags = self.tags_collection.get(where={"name": tag_name})
+            if existing_tags and existing_tags["ids"]:
+                # Tag already exists
+                continue
+            
+            # Add the new tag dynamically
+            new_id = f"tag_{tag_name}"
+            self.tags_collection.add(
+                ids=[new_id],
+                documents=[f"New tag: {tag_name}. Description based on query: {description_source}"],
+                metadatas=[{"name": tag_name, "category": "auto_generated"}]
+            )
+            print(f"Dynamically added new tag: {tag_name}")
