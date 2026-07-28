@@ -9,7 +9,7 @@ class TagsManager:
     """
     def __init__(self, client: ChromaClient):
         self.client = client
-        self.tags_collection = self.client.get_or_create_collection(name="tag_collection")
+        self.tags_collection = self.client.get_collection("tag_collection")
         if not self.tags_collection:
             raise Exception("Failed to initialize tag_collection.")
 

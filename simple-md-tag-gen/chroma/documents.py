@@ -9,7 +9,7 @@ class DocumentManager:
     """
     def __init__(self, client: ChromaClient):
         self.client = client
-        self.documents_collection = self.client.get_or_create_collection(name="document_collection")
+        self.documents_collection = self.client.get_collection("document_collection")
         if not self.documents_collection:
             raise Exception("Failed to initialize document_collection.")
 
