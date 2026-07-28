@@ -52,7 +52,7 @@ class DocumentManager:
         if results['ids'] and len(results['ids']) > 0 and len(results['ids'][0]) > 0:
             for i in range(len(results['ids'][0])):
                 # Assuming metadata structure from schemas.py
-                metadata = results['metadatas'][i][0]
+                metadata = results['metadatas'][0][i]
                 
                 # Extract relevant information: filename and tags
                 filename = metadata.get('filename', 'unknown_file')
