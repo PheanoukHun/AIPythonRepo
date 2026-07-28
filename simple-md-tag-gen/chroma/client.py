@@ -15,11 +15,21 @@ class ChromaClient:
         print("ChromaDB Client initialized.")
 
     def get_collection(self, collection_name: str):
-        """Retrieves a specific collection from the client."""
+        """
+        Retrieves a specific collection from the client, creating it if it does not exist.
+        """
         try:
-            return self.client.get_collection(name=collection_name)
+            # Check if the collection exists
+            try:
+                self.client.get_collection(name=collection_name)
+                return self.client.get_collection(name=collection_name)
+            except Exception:
+                # If get_collection fails (usually because it doesn't exist), create it
+                print(f"Collection '{collection_name}' not found. Creating it.")
+                self.client.create_collection(name=collection_name)
+                return self.client.get_collection(name=collection_name)
         except Exception as e:
-            print(f"Error accessing collection {collection_name}: {e}")
+            print(f"Fatal error accessing collection {collection_name}: {e}")
             return None
 
     def close(self):
