@@ -47,22 +47,25 @@ class DocumentManager:
 
         # Structure the output for the Agent
         similar_docs = []
-        for i in range(len(results['ids'][0])):
-            # Assuming metadata structure from schemas.py
-            metadata = results['metadatas'][i][0]
-            
-            # Extract relevant information: filename and tags
-            filename = metadata.get('filename', 'unknown_file')
-            tags_json = metadata.get('tags', '[]')
-            
-            # Deserialize tags from JSON string
-            try:
-                tags = json.loads(tags_json)
-            except (json.JSONDecodeError, TypeError):
-                tags = []
-            
-            similar_docs.append({
-                "filename": filename,
-                "tags": tags
-            })
+        
+        # Check if we have any results
+        if results['ids'] and len(results['ids']) > 0 and len(results['ids'][0]) > 0:
+            for i in range(len(results['ids'][0])):
+                # Assuming metadata structure from schemas.py
+                metadata = results['metadatas'][i][0]
+                
+                # Extract relevant information: filename and tags
+                filename = metadata.get('filename', 'unknown_file')
+                tags_json = metadata.get('tags', '[]')
+                
+                # Deserialize tags from JSON string
+                try:
+                    tags = json.loads(tags_json)
+                except (json.JSONDecodeError, TypeError):
+                    tags = []
+                
+                similar_docs.append({
+                    "filename": filename,
+                    "tags": tags
+                })
         return similar_docs

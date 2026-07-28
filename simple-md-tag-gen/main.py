@@ -15,8 +15,11 @@ def main():
     """
     print("--- Starting Repository Tagging Process ---")
 
-    # 1. Find all markdown files in the repository
-    all_markdown_files = glob.glob("**/*.md", recursive=True)
+    # 1. Find all markdown files in the repository (excluding .venv and other virtual envs)
+    all_markdown_files = [
+        f for f in glob.glob("**/*.md", recursive=True) 
+        if not f.startswith('.venv/') and not f.startswith('venv/') and not f.startswith('__pycache__/')
+    ]
     print(f"Found {len(all_markdown_files)} markdown files to process.")
     
     if not all_markdown_files:

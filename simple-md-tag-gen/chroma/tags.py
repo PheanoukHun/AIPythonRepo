@@ -46,8 +46,10 @@ class TagsManager:
             n_results=n_results
         )
         
-        # Extract and return only the tag names
-        tag_names = [meta['name'] for r in results['metadatas'] for meta in r if 'name' in meta]
+        # Extract and return only the tag names - check if results exist first
+        tag_names = []
+        if results['metadatas'] and len(results['metadatas']) > 0 and len(results['metadatas'][0]) > 0:
+            tag_names = [meta['name'] for r in results['metadatas'] for meta in r if 'name' in meta]
         return tag_names
 
     def add_tag_to_vocabulary(self, new_tags: List[str], description_source: str = "Generated"):
