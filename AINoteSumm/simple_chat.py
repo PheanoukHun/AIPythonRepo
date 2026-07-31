@@ -1,7 +1,7 @@
 import requests
 import time
 
-url = "http://127.0.0.1:8080/v1/chat/completions"
+url = "http://0.0.0.0:8080/v1/chat/completions"
 
 def chat(prompt: str) -> str:
     payload = {
