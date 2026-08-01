@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import json
+import os
 from collections.abc import Callable
-from typing import Any, cast
+from typing import Any, Final, cast
 
-import openai
+from openai import OpenAI
 from openai.types.chat import (
     ChatCompletionFunctionToolParam,
     ChatCompletionMessageParam,
@@ -16,7 +17,7 @@ from openai.types.shared_params import FunctionDefinition
 
 
 class Agent:
-    DEFAULT_SYS_PROMPT: str = (
+    DEFAULT_SYS_PROMPT: Final[str] = (
         "You are a helpful AI Assistant. Use tools whenever appropriate."
     )
 
@@ -27,15 +28,15 @@ class Agent:
         api_key: str | None = None,
         model: str,
         sys_prompt: str = DEFAULT_SYS_PROMPT,
-        tool_choice: ChatCompletionToolChoiceOptionParam | None = "auto",
+        tool_choice: ChatCompletionToolChoiceOptionParam = "auto",
     ) -> None:
 
         # Model Info
-        self.__client: openai.OpenAI = openai.OpenAI(
+        self.__client: Final[OpenAI] = OpenAI(
             base_url=url, api_key=api_key or "not-needed"
         )
-        self.__model: str = model
-        self.__tool_choice = tool_choice
+        self.__model: Final[str] = model
+        self.__tool_choice: ChatCompletionToolChoiceOptionParam = tool_choice
 
         # List of Past Messages
         self.__messages: list[ChatCompletionMessageParam] = [
@@ -49,7 +50,7 @@ class Agent:
         self.__tools: dict[str, Callable[..., Any]] = {}
         self.__tool_schemas: list[ChatCompletionFunctionToolParam] = []
 
-    def tool(self, *, desc: str, params: dict[str, Any]):
+    def tool(self, *, description: str, parameters: dict[str, Any]):
         """
         Register a tool using a decorator.
 
@@ -78,8 +79,8 @@ class Agent:
                     type="function",
                     function=FunctionDefinition(
                         name=func.__name__,
-                        description=desc,
-                        parameters=params,
+                        description=description,
+                        parameters=parameters,
                     ),
                 )
             )
@@ -90,7 +91,9 @@ class Agent:
 
     def __execute_tool(self, tool_call: ChatCompletionMessageToolCall) -> str:
         function_name = tool_call.function.name
-        function_args: dict[str, Any] = json.loads(tool_call.function.arguments)
+        function_args: dict[str, Any] = cast(
+            dict[str, Any], json.loads(tool_call.function.arguments)
+        )
 
         if function_name not in self.__tools:
             raise ValueError(f"Unknown tool '{function_name}'")
@@ -120,7 +123,7 @@ class Agent:
 
             if response_message.tool_calls:
                 self.__messages.append(
-                    cast(ChatCompletionMessageParam, response_message)
+                    cast(ChatCompletionMessageParam, cast(object, response_message))
                 )
                 for tool_call in response_message.tool_calls:
                     if not isinstance(tool_call, ChatCompletionMessageToolCall):
@@ -139,3 +142,47 @@ class Agent:
     def clear(self) -> None:
         """Reset the conversation but keep registered tools."""
         self.__messages = [self.__messages[0]]
+
+
+if __name__ == "__main__":
+    agent = Agent(
+        model=os.getenv("OPENAI_MODEL", "Llama3.2"),
+        url=os.getenv("OPENAI_BASE_URL", "localhost:8080/v1"),
+    )
+
+    @agent.tool(
+        description="Get the weather for a city.",
+        parameters={
+            "type": "object",
+            "properties": {"city": {"type": "string"}},
+            "required": ["city"],
+        },
+    )
+    def get_weather(city: str) -> dict[str, str]:
+        return {
+            "city": city,
+            "temperature": "86°F",
+            "condition": "Sunny",
+        }
+
+    @agent.tool(
+        description="Multiply two numbers.",
+        parameters={
+            "type": "object",
+            "properties": {
+                "a": {"type": "number"},
+                "b": {"type": "number"},
+            },
+            "required": ["a", "b"],
+        },
+    )
+    def multiply(a: float, b: float) -> float:
+        return a * b
+
+    while True:
+        user_input = input("> ")
+
+        if user_input.lower() in ("exit", "quit"):
+            break
+
+        print("\nAssistant:", agent.chat(user_input))
