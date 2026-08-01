@@ -44,12 +44,31 @@ def run_chat(messages: List[Dict[str, str]]):
     
     # Convert Python functions into OpenAI tool schema format
     tools = [
-        {
+    tools = []
+    for name, func in available_functions.items():
+        params_schema = {}
+        if name == "get_current_weather":
+            params_schema = {
+                "type": "object",
+                "properties": {
+                    "location": {"type": "string", "description": "The location to check the weather for."},
+                    "unit": {"type": "string", "description": "The temperature unit (celsius or fahrenheit).", "default": "celsius"}
+                },
+                "required": ["location"]
+            }
+        elif name == "calculate_square":
+            params_schema = {
+                "type": "object",
+                "properties": {
+                    "number": {"type": "integer", "description": "The number to square."}
+                },
+                "required": ["number"]
+            }
+        
+        tools.append({
             "type": "function",
-            "function": {"name": name, "description": func.__doc__, "parameters": func.__annotations__}
-            for name, func in available_functions.items()
-        }
-    ]
+            "function": {"name": name, "description": func.__doc__, "parameters": params_schema}
+        })
     
     while True:
         # 1. Call the API
