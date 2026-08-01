@@ -7,27 +7,23 @@ from collections.abc import Callable
 from typing import Any, cast
 
 import openai
-from openai.resources.beta.responses.responses import OpenAI
 from openai.types.chat import (
     ChatCompletionFunctionToolParam,
     ChatCompletionMessageParam,
-    ChatCompletionMessageToolCall,
-    ChatCompletionToolChoiceOptionParam,
-    ChatCompletionToolMessageParam,
-    ChatCompletionToolParam,
 )
-from openai.types.shared_params import FunctionDefinition
+
+DEFAULT_SYS_PROMPT = "You are a helpful AI Assitant. Use tools whenever appropriate."
 
 
 class Agent:
-    def __init__(self, *, url: str, model: str, sys_prompt: str, api_key: str) -> None:
+    def __init__(self, *, url: str, api_key: str = "NULL", model: str, sys_prompt: str = DEFAULT_SYS_PROMPT) -> None:
 
         # Model Info
-        self.__client: OpenAI = openai.OpenAI(base_url=url, api_key=api_key)
+        self.__client: openai.OpenAI = openai.OpenAI(base_url=url, api_key=api_key)
         self.__model: str = model
 
         # List of Past Messages
-        self.__messages = [
+        self.__messages: list[ChatCompletionMessageParam] = [
             {
                 "role": "system",
                 "content": sys_prompt,
@@ -35,8 +31,8 @@ class Agent:
         ]
 
         # List of Tools
-        self.__tools: dict[str, Callable[..., Any]] = {}
-        self.__tool_schemas: list[dict[Any, Any]] = []
+        self.__tools: list[ChatCompletionMessageParam] | None = None
+        self.__tool_schemas: list[ChatCompletionFunctionToolParam] = []
 
     def tool(self, *, desc: str, params: dict[str, Any]):
         """
@@ -86,8 +82,9 @@ class Agent:
         )
 
         while True:
-
             response = self.__client.chat.completions.create(
                 model=self.__model,
-                
+                messages=self.__messages,
+                tools=self.__tool_schemas,
+                tool_choice="auto",
             )
