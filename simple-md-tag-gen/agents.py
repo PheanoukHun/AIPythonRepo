@@ -10,6 +10,7 @@ from openai.types.chat import (
     ChatCompletionFunctionToolParam,
     ChatCompletionMessageParam,
     ChatCompletionMessageToolCall,
+    ChatCompletionToolChoiceOptionParam,
     ChatCompletionToolMessageParam,
     ChatCompletionToolParam,
 )
@@ -52,11 +53,12 @@ class Agent:
         base_url: str | None = None,
         api_key: str | None = None,
         functions: dict[str, Callable] | None = None,
-        tool_choice: str | None = "auto",
+        tool_choice: ChatCompletionToolChoiceOptionParam | None = "auto",
     ) -> None:
         if client is None:
+            base_url = base_url or os.getenv("OPENAI_BASE_URL")
             client = openai.OpenAI(
-                base_url=base_url or os.getenv("OPENAI_BASE_URL"),
+                base_url=self._normalize_base_url(base_url),
                 api_key=api_key or os.getenv("OPENAI_API_KEY") or "not-needed",
             )
         self.client = client
@@ -65,6 +67,12 @@ class Agent:
         self.functions: dict[str, Callable] = functions or {}
         self.tools: list[ChatCompletionToolParam] = self._build_tools()
         self.messages: list[ChatCompletionMessageParam] = []
+
+    @staticmethod
+    def _normalize_base_url(base_url: str | None) -> str | None:
+        if base_url and not base_url.startswith(("http://", "https://")):
+            return f"http://{base_url}"
+        return base_url
 
     def _build_tools(self) -> list[ChatCompletionToolParam]:
         tools: list[ChatCompletionToolParam] = []
@@ -129,9 +137,7 @@ class Agent:
             response_message = response.choices[0].message
 
             if response_message.tool_calls:
-                self.messages.append(
-                    cast(ChatCompletionMessageParam, response_message)
-                )
+                self.messages.append(cast(ChatCompletionMessageParam, response_message))
                 for tool_call in response_message.tool_calls:
                     if not isinstance(tool_call, ChatCompletionMessageToolCall):
                         continue
@@ -148,10 +154,11 @@ class Agent:
 
 
 if __name__ == "__main__":
-    model = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
+    model = os.getenv("MODEL", "llama3.2")
+    base_url = os.getenv("BASEURL", "127.0.0.1:8081/v1")
     try:
-        agent = Agent(model=model, functions=available_functions)
-    except openai.OpenAIError as e:
+        agent = Agent(model=model, base_url=base_url, functions=available_functions)
+    except Exception as e:
         print(f"Error initializing OpenAI client: {e}")
         sys.exit(1)
 
