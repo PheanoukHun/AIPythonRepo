@@ -7,7 +7,6 @@ class SimpleAIAgents:
     def process_input(self, input_data):
         """Processes the input data and generates a response."""
         print(f"[{self.name}] Received input: {input_data}")
-        # Simple processing logic
         response = f"Processed '{input_data}' by {self.name}"
         self.memory.append(input_data)
         return response
