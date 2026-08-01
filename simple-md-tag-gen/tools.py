@@ -1,8 +1,9 @@
 import os
-from typing import Dict, Any, Callable, List
+from typing import Any, Callable, Dict, List
 
 # Define the available tools the AI agent can call
 available_tools: Dict[str, Callable] = {}
+
 
 def read_file(file_path: str) -> str:
     """
@@ -17,12 +18,13 @@ def read_file(file_path: str) -> str:
     """
     if not os.path.exists(file_path):
         raise IOError(f"File not found at path: {file_path}")
-    
+
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
+        with open(file_path, "r", encoding="utf-8") as f:
             return f.read()
     except Exception as e:
         raise IOError(f"Error reading file: {e}")
+
 
 available_tools["read_file"] = read_file
 

@@ -1,16 +1,20 @@
-import openai
+import inspect
 import json
-from typing import Callable, Dict, Any, List
+import os
+import sys
+from collections.abc import Callable
+from typing import Any, cast
 
-# Initialize the OpenAI client.
-# NOTE: Ensure you have set the OPENAI_API_KEY environment variable.
-try:
-    client = openai.OpenAI()
-except Exception as e:
-    print(f"Error initializing OpenAI client: {e}")
-    exit()
+import openai
+from openai.types.chat import (
+    ChatCompletionFunctionToolParam,
+    ChatCompletionMessageParam,
+    ChatCompletionMessageToolCall,
+    ChatCompletionToolMessageParam,
+    ChatCompletionToolParam,
+)
+from openai.types.shared_params import FunctionDefinition
 
-# --- Define the functions (tools) the AI can call ---
 
 def get_current_weather(location: str, unit: str = "celsius") -> str:
     """Gets the current weather for a given location."""
@@ -21,109 +25,137 @@ def get_current_weather(location: str, unit: str = "celsius") -> str:
     else:
         return f"Sorry, I don't have weather data for {location}."
 
+
 def calculate_square(number: int) -> str:
     """Calculates the square of a given number."""
     return f"{number} squared is {number * number}."
 
-# Map of function names to actual callable objects
-available_functions: Dict[str, Callable] = {
+
+available_functions: dict[str, Callable] = {
     "get_current_weather": get_current_weather,
     "calculate_square": calculate_square,
 }
 
-# --- Main Agent Logic ---
 
-def run_chat(messages: List[Dict[str, str]]):
+class Agent:
+    """An OpenAI-compatible agent that can call registered tools.
+
+    Works with any OpenAI-compatible API by pointing ``base_url`` at it
+    (e.g. OpenAI, Azure OpenAI, vLLM, Ollama, llama.cpp, local proxies).
     """
-    Runs the conversation loop, handling tool calls and responses.
-    
-    Args:
-        messages: Initial list of user/system messages.
-    """
-    print("Agent starting conversation...")
-    
-    # Convert Python functions into OpenAI tool schema format
-    tools = [
-    tools = []
-    for name, func in available_functions.items():
-        params_schema = {}
-        if name == "get_current_weather":
-            params_schema = {
-                "type": "object",
-                "properties": {
-                    "location": {"type": "string", "description": "The location to check the weather for."},
-                    "unit": {"type": "string", "description": "The temperature unit (celsius or fahrenheit).", "default": "celsius"}
-                },
-                "required": ["location"]
-            }
-        elif name == "calculate_square":
-            params_schema = {
-                "type": "object",
-                "properties": {
-                    "number": {"type": "integer", "description": "The number to square."}
-                },
-                "required": ["number"]
-            }
-        
-        tools.append({
-            "type": "function",
-            "function": {"name": name, "description": func.__doc__, "parameters": params_schema}
-        })
-    
-    while True:
-        # 1. Call the API
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo", # Using a common model for demonstration
-            messages=messages,
-            tools=tools,
-            tool_choice="auto",
+
+    def __init__(
+        self,
+        client: openai.OpenAI | None = None,
+        *,
+        model: str,
+        base_url: str | None = None,
+        api_key: str | None = None,
+        functions: dict[str, Callable] | None = None,
+        tool_choice: str | None = "auto",
+    ) -> None:
+        if client is None:
+            client = openai.OpenAI(
+                base_url=base_url or os.getenv("OPENAI_BASE_URL"),
+                api_key=api_key or os.getenv("OPENAI_API_KEY") or "not-needed",
+            )
+        self.client = client
+        self.model = model
+        self.tool_choice = tool_choice
+        self.functions: dict[str, Callable] = functions or {}
+        self.tools: list[ChatCompletionToolParam] = self._build_tools()
+        self.messages: list[ChatCompletionMessageParam] = []
+
+    def _build_tools(self) -> list[ChatCompletionToolParam]:
+        tools: list[ChatCompletionToolParam] = []
+        for name, func in self.functions.items():
+            tools.append(self._function_to_tool(name, func))
+        return tools
+
+    def _function_to_tool(self, name: str, func: Callable) -> ChatCompletionToolParam:
+        signature = inspect.signature(func)
+        properties: dict[str, object] = {}
+        required: list[str] = []
+        for param_name, param in signature.parameters.items():
+            properties[param_name] = {"type": self._map_type(param.annotation)}
+            if param.default is inspect.Parameter.empty:
+                required.append(param_name)
+
+        params_schema: dict[str, object] = {
+            "type": "object",
+            "properties": properties,
+            "required": required,
+        }
+        return ChatCompletionFunctionToolParam(
+            type="function",
+            function=FunctionDefinition(
+                name=name,
+                description=func.__doc__ or "",
+                parameters=params_schema,
+            ),
         )
-        
-        response_message = response.choices[0].message
-        
-        # 2. Check for tool calls
-        if response_message.tool_calls:
-            messages.append(response_message)
-            
-            tool_outputs = []
-            for tool_call in response_message.tool_calls:
-                function_name = tool_call.function.name
-                function_args = json.loads(tool_call.function.arguments)
-                
-                if function_name not in available_functions:
-                    raise ValueError(f"Unknown function: {function_name}")
 
-                function_to_call = available_functions[function_name]
-                
-                # Execute the function and get the result
-                function_response = function_to_call(**function_args)
-                
-                # Append the function response to messages for the next API call
-                tool_outputs.append({
-                    "tool_call_id": tool_call.id,
-                    "name": function_name,
-                    "content": function_response,
-                })
-            
-            # 3. Send tool results back to the API
-            messages.append(response_message) # First message is the request with tool calls
-            for output in tool_outputs:
-                messages.append({
-                    "tool_call_id": output["tool_call_id"],
-                    "role": "tool",
-                    "name": output["name"],
-                    "content": output["content"],
-                })
-            
-        else:
-            # No tool calls, final response received
-            print("\n--- Final AI Response ---")
-            print(response_message.content)
-            break
+    @staticmethod
+    def _map_type(annotation: Any) -> str:
+        if annotation is int:
+            return "integer"
+        if annotation is float:
+            return "number"
+        if annotation is bool:
+            return "boolean"
+        return "string"
+
+    def _execute_tool(self, tool_call: ChatCompletionMessageToolCall) -> str:
+        function_name = tool_call.function.name
+        function_args = json.loads(tool_call.function.arguments)
+
+        if function_name not in self.functions:
+            raise ValueError(f"Unknown function: {function_name}")
+
+        func = self.functions[function_name]
+        return str(func(**function_args))
+
+    def run(self, user_input: str) -> str:
+        """Runs the conversation loop until a final response is reached."""
+        self.messages.append({"role": "user", "content": user_input})
+
+        while True:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=self.messages,
+                tools=self.tools,
+                tool_choice=self.tool_choice,
+            )
+            response_message = response.choices[0].message
+
+            if response_message.tool_calls:
+                self.messages.append(
+                    cast(ChatCompletionMessageParam, response_message)
+                )
+                for tool_call in response_message.tool_calls:
+                    if not isinstance(tool_call, ChatCompletionMessageToolCall):
+                        continue
+                    result = self._execute_tool(tool_call)
+                    self.messages.append(
+                        ChatCompletionToolMessageParam(
+                            tool_call_id=tool_call.id,
+                            role="tool",
+                            content=result,
+                        )
+                    )
+            else:
+                return response_message.content or ""
+
 
 if __name__ == "__main__":
-    # Example Usage:
-    initial_messages = [
-        {"role": "user", "content": "What is the weather in Tokyo? Then, calculate the square of 12."}
-    ]
-    run_chat(initial_messages)
+    model = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
+    try:
+        agent = Agent(model=model, functions=available_functions)
+    except openai.OpenAIError as e:
+        print(f"Error initializing OpenAI client: {e}")
+        sys.exit(1)
+
+    final_response = agent.run(
+        "What is the weather in Tokyo? Then, calculate the square of 12."
+    )
+    print(f"\n--- Final AI Response ---\n{final_response}")
