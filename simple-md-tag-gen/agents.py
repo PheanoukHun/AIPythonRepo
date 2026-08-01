@@ -146,7 +146,7 @@ class Agent:
 
     def _execute_tool(self, tool_call: ChatCompletionMessageToolCall) -> str:
         function_name = tool_call.function.name
-        function_args = json.loads(tool_call.function.arguments)
+        function_args: dict[str, Any] = json.loads(tool_call.function.arguments)
 
         if function_name not in self.functions:
             raise ValueError(f"Unknown tool '{function_name}'")
