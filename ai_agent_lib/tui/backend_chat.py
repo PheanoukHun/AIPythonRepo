@@ -21,4 +21,4 @@ class ChatBackend:
 
     async def send(self, message: str) -> str:
         await asyncio.sleep(0.5)
-        return f" AI: {self.__chat.chat(message=message)}"
+        return self.__chat.chat(message=message)

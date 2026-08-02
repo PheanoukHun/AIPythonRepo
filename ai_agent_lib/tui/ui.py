@@ -1,6 +1,7 @@
 import asyncio
 
 from backend_chat import ChatBackend
+from rich.markdown import Markdown
 from textual.app import App, ComposeResult
 from textual.containers import Container, Horizontal
 from textual.widgets import Footer, Header, Input, RichLog
@@ -66,7 +67,8 @@ class ChatApp(App):
         response = await self.backend.send(message)
 
         chat.write("")
-        chat.write(f"[bold green]Assistant:[/] {response}")
+        chat.write(f"[bold green]Assistant:[/]")
+        chat.write(Markdown(response))
         chat.write("")
 
         input_box.disabled = False
