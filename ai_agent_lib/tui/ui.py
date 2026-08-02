@@ -1,5 +1,6 @@
 from backend_chat import ChatBackend
 from rich.markdown import Markdown
+from ai_agent.special_inputs import SPEC_COMS
 from textual import events
 from textual.app import App, ComposeResult
 from textual.containers import Container, Horizontal
@@ -85,6 +86,22 @@ class ChatApp(App):
 
         chat = self.query_one("#chat", RichLog)
         input_box = self.query_one("#input", ChatInput)
+
+        try:
+            command = SPEC_COMS(message)
+        except ValueError:
+            command = None
+
+        if command is SPEC_COMS.CLEAR:
+            self.backend.clear_chat()
+            chat.clear()
+            input_box.focus()
+            return
+
+        if command is SPEC_COMS.CLEAR_SCREEN:
+            chat.clear()
+            input_box.focus()
+            return
 
         chat.write(f"[bold cyan]You:[/] {message}")
 

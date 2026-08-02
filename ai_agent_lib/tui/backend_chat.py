@@ -19,6 +19,9 @@ class ChatBackend:
             url=os.getenv("BASE_URL", "http://localhost:8080/v1"),
         )
 
+    def clear_chat(self) -> None:
+        self.__chat.handle_command(command="/clear")
+
     async def send(self, message: str) -> str:
         await asyncio.sleep(0.5)
         return self.__chat.chat(message=message)
