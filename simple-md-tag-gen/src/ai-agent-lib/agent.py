@@ -157,6 +157,10 @@ class Agent:
     def num_tools(self) -> int:
         return len(self.__tool_schemas)
 
+    @property
+    def tool_names(self) -> list[str]:
+        return [tool["function"]["name"] for tool in self.__tool_schemas]
+
 
 if __name__ == "__main__":
     agent = Agent(
