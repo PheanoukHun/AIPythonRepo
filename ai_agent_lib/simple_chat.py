@@ -1,6 +1,7 @@
 import os
 import subprocess
 import sys
+from time import sleep
 
 from dotenv import load_dotenv
 
@@ -55,7 +56,7 @@ class AIChat:
         else:
             self.__called_tool_function()
 
-    def chat(self, message:str) -> str:
+    def chat(self, message: str) -> str:
         message = message.strip()
 
         if not message:
@@ -67,10 +68,30 @@ class AIChat:
 
         return self.__chat_client.chat(message)
 
-    def chat_loop(self):
-        while True:
-            msg_in:str = input("\n> ")
-            print(f"\nAI: {self.chat(msg_in)}")
+    def cli_chat(self):
+        try:
+            while True:
+                msg_in: str = input("\n> ")
+
+
+                chat_res: str = self.chat(msg_in)
+
+                if (
+                    chat_res == SPEC_COMS.SKIP.value
+                    or chat_res == SPEC_COMS.ERROR.value
+                ):
+                    continue
+
+                print("\nAI: ", end="")
+                for char in chat_res:
+                    print(char, end="", flush=True)
+                    sleep(0.005)
+
+                print()
+
+        except KeyboardInterrupt:
+            print()
+            self.__exit_function()
 
 
 if __name__ == "__main__":
@@ -78,4 +99,4 @@ if __name__ == "__main__":
         model=os.getenv("MODEL", "llama3.2"),
         url=os.getenv("BASE_URL", "http://0.0.0.0:8080/v1"),
     )
-    cli_chat.chat_loop()
+    cli_chat.cli_chat()
