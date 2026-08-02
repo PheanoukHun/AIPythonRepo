@@ -1,7 +1,8 @@
 import os
+import sys
 
 from agent import Agent
-from special_inputs import SPECIAL_IN
+from special_inputs import SPEC_COMS
 from tools import register_tools
 
 
@@ -13,29 +14,57 @@ class SimpleChat:
         )
         register_tools(self.__chat_client)
 
-    def __called_tool_function(self):
-        print(f"\nNumber of Registered Tools: {self.__chat_client.}")
+    def __called_tool_function(self) -> None:
+        print(f"\nNumber of Registered Tools: {self.__chat_client.num_tools}")
+        print("Available Tools:")
+
+        for i in range(len(self.__chat_client.tool_names)):
+            print(f"{i + 1}. {self.__chat_client.tool_names[i]}")
+
+        print()
+
+    def __exit_function(self) -> None:
+        print("\nBye!\n")
+        sys.exit(0)
+
+    def __clear_function(self) -> None:
+        agent.clear()
+
+    def handle_command(self, *, command: str) -> bool:
+
+        try:
+            special: SPEC_COMS = SPEC_COMS(command)
+        except ValueError:
+            print(f"\nUnknown Command: {command}")
+            print("Here are all the Available Commands:")
+            for COMS in SPEC_COMS:
+                print(f"- {COMS}")
+            print()
+            return False
+
+        if special is SPEC_COMS.EXIT:
+            self.__exit_function()
+            return False
+        elif special is SPEC_COMS.CLEAR:
+            pass
+        return True
 
 
 # Command Handling
 def handle_command(command: str) -> bool:
     """Handle a slash command. Returns False when the loop should exit."""
     try:
-        special = SPECIAL_IN(command)
+        special = SPEC_COMS(command)
     except ValueError:
         print(f"Unknown command: {command}")
         return True
 
-    if special is SPECIAL_IN.EXIT:
+    if special is SPEC_COMS.EXIT:
         return False
-    elif special is SPECIAL_IN.CLEAR:
+    elif special is SPEC_COMS.CLEAR:
         agent.clear()
         print("\nConversation cleared.")
-    elif special is SPECIAL_IN.TOOL:
-        print("\nAvailable tools:")
-        for name in agent.tool_names:
-            print("\t- ", name)
-    elif special is SPECIAL_IN.READ:
+    elif special is SPEC_COMS.READ:
         pass
 
     print()

@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class SPECIAL_IN(Enum):
+class SPEC_COMS(Enum):
     EXIT = "/exit"
     CLEAR = "/clear"
     TOOL = "/tool"
