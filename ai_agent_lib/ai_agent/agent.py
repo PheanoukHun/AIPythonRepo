@@ -143,6 +143,9 @@ class Agent:
                         )
                     )
             else:
+                self.__messages.append(
+                    cast(ChatCompletionMessageParam, cast(object, response_message))
+                )
                 return response_message.content or ""
 
     def clear(self) -> None:
