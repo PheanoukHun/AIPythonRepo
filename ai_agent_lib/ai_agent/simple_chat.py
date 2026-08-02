@@ -41,11 +41,12 @@ class AIChat:
         subprocess.run("cls" if os.name == "nt" else "clear", shell=True, check=False)
 
     def handle_command(self, *, command: str) -> str:
+        command_name, _, command_arg = command.partition(" ")
 
         try:
-            special: SPEC_COMS = SPEC_COMS(command)
+            special: SPEC_COMS = SPEC_COMS(command_name)
         except ValueError:
-            print(f"\nUnknown Command: {command}")
+            print(f"\nUnknown Command: {command_name}")
             print("Here are all the Available Commands:")
             for option in list_usr_enums():
                 print(f"- {option}, Value: {option}")
@@ -60,8 +61,22 @@ class AIChat:
             return SPEC_COMS.CLEAR.value
         elif special is SPEC_COMS.CLEAR_SCREEN:
             return SPEC_COMS.CLEAR_SCREEN.value
+        elif special is SPEC_COMS.SYSTEM:
+            prompt = command_arg.strip()
+            if not prompt:
+                print(f"\nCurrent System Prompt:\n{self.__chat_client.get_sys_prompt()}\n")
+                return SPEC_COMS.SYSTEM.value
+            self.__chat_client.set_sys_prompt(prompt)
+            print("\nSystem prompt updated.\n")
+            return SPEC_COMS.SYSTEM.value
         else:
             return self.__called_tool_function()
+
+    def set_sys_prompt(self, prompt: str) -> None:
+        self.__chat_client.set_sys_prompt(prompt)
+
+    def get_sys_prompt(self) -> str:
+        return self.__chat_client.get_sys_prompt()
 
     def chat(self, message: str) -> str:
         message = message.strip()

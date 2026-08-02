@@ -152,6 +152,16 @@ class Agent:
         """Reset the conversation but keep registered tools."""
         self.__messages = [self.__messages[0]]
 
+    def set_sys_prompt(self, sys_prompt: str) -> None:
+        """Replace the system prompt for current and future turns."""
+        self.__messages[0] = {
+            "role": "system",
+            "content": sys_prompt,
+        }
+
+    def get_sys_prompt(self) -> str:
+        return str(self.__messages[0].get("content", ""))
+
     @property
     def num_tools(self) -> int:
         return len(self.__tool_schemas)

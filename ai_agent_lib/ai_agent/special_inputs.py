@@ -6,6 +6,7 @@ class SPEC_COMS(Enum):
     CLEAR_SCREEN = "/clear-screen"
     EXIT = "/exit"
     TOOL = "/tool"
+    SYSTEM = "/system"
     ERROR = "$$ERROR$$"
     SKIP = "$$SKIP$$"
 
@@ -16,6 +17,8 @@ class SPEC_COMS(Enum):
             return cls.EXIT
         elif value in ("/clear", "/clr"):
             return cls.CLEAR
+        elif value in ("/system", "/sys"):
+            return cls.SYSTEM
         return None
 
 

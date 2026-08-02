@@ -1,5 +1,6 @@
 from backend_chat import ChatBackend
 from rich.markdown import Markdown
+from rich.markup import escape
 from ai_agent.special_inputs import SPEC_COMS
 from textual import events
 from textual.app import App, ComposeResult
@@ -26,7 +27,7 @@ class ChatInput(TextArea):
             event.prevent_default()
             self._submit_value()
             return
-        if event.key == "shift+enter":
+        if event.key in ("shift+enter", "ctrl+j"):
             event.stop()
             event.prevent_default()
             self.insert("\n")
@@ -75,7 +76,7 @@ class ChatApp(App):
 
             with Horizontal():
                 yield ChatInput(
-                    placeholder="Type a Message... (Enter to send, Shift+Enter for newline)",
+                    placeholder="Type a Message... (Enter to send, Shift+Enter / Ctrl+J for newline)",
                     id="input"
                 )
 
@@ -86,8 +87,10 @@ class ChatApp(App):
         chat = self.query_one("#chat", RichLog)
         input_box = self.query_one("#input", ChatInput)
 
+        command_text, _, command_arg = message.partition(" ")
+
         try:
-            command = SPEC_COMS(message)
+            command = SPEC_COMS(command_text)
         except ValueError:
             command = None
 
@@ -99,6 +102,18 @@ class ChatApp(App):
 
         if command is SPEC_COMS.CLEAR_SCREEN:
             chat.clear()
+            input_box.focus()
+            return
+
+        if command is SPEC_COMS.SYSTEM:
+            prompt = command_arg.strip()
+            if prompt:
+                self.backend.set_sys_prompt(prompt)
+                chat.write("[bold yellow]System prompt updated.[/]")
+            else:
+                chat.write(
+                    f"[bold yellow]Current system prompt:[/]\n{escape(self.backend.get_sys_prompt())}"
+                )
             input_box.focus()
             return
 
