@@ -2,10 +2,12 @@ from enum import Enum
 
 
 class SPEC_COMS(Enum):
-    EXIT = "/exit"
     CLEAR = "/clear"
-    TOOL = "/tool"
+    CLEAR_SCREEN = "/clear-screen"
+    EXIT = "/exit"
     READ = "/read"
+    TOOL = "/tool"
+    ERROR = "$$ERROR$$"
 
     @classmethod
     def _missing_(cls, value: object):

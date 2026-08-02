@@ -19,7 +19,6 @@ import inspect
 import json
 import os
 import platform
-import subprocess
 import urllib.request
 from collections.abc import Callable
 from pathlib import Path
@@ -82,16 +81,11 @@ def to_lowercase(text: str) -> str:
 
 
 def read_file(file_path: str) -> str:
-    """Read a file using the `strings` command and return its printable text."""
-    result = subprocess.run(
-        ["strings", file_path],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    if result.returncode != 0:
-        raise OSError(result.stderr.strip() or f"Failed to read file: {file_path}")
-    return result.stdout
+    """Read the contents of a file as text and return them."""
+    path = Path(file_path)
+    if not path.is_file():
+        raise OSError(f"Not a file: {file_path}")
+    return path.read_text(encoding="utf-8")
 
 
 def write_file(file_path: str, content: str) -> str:

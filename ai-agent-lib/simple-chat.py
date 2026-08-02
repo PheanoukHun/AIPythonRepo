@@ -1,4 +1,5 @@
 import os
+import subprocess
 import sys
 
 from agent import Agent
@@ -21,16 +22,18 @@ class SimpleChat:
         for i in range(len(self.__chat_client.tool_names)):
             print(f"{i + 1}. {self.__chat_client.tool_names[i]}")
 
-        print()
-
     def __exit_function(self) -> None:
         print("\nBye!\n")
         sys.exit(0)
 
     def __clear_function(self) -> None:
+        self.__clear_screen()
         agent.clear()
 
-    def handle_command(self, *, command: str) -> bool:
+    def __clear_screen(self) -> None:
+        subprocess.run("cls" if os.name == "nt" else "clear", shell=True, check=False)
+
+    def handle_command(self, *, command: str) -> str:
 
         try:
             special: SPEC_COMS = SPEC_COMS(command)
@@ -38,16 +41,19 @@ class SimpleChat:
             print(f"\nUnknown Command: {command}")
             print("Here are all the Available Commands:")
             for COMS in SPEC_COMS:
-                print(f"- {COMS}")
+                print(f"- {COMS}, Value: {COMS.value}")
             print()
-            return False
+            return SPEC_COMS.ERROR.value
 
         if special is SPEC_COMS.EXIT:
             self.__exit_function()
-            return False
         elif special is SPEC_COMS.CLEAR:
+            self.__clear_function()
+        elif special is SPEC_COMS.CLEAR_SCREEN:
+            self.__clear_screen()
+        elif special is SPEC_COMS.READ:
             pass
-        return True
+        return special.value
 
 
 # Command Handling
