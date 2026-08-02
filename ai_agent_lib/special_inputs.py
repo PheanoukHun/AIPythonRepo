@@ -1,4 +1,3 @@
-from curses import ERR
 from enum import Enum
 
 

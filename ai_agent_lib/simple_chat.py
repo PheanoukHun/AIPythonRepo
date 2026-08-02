@@ -2,12 +2,16 @@ import os
 import subprocess
 import sys
 
+from dotenv import load_dotenv
+
 from agent import Agent
-from special_inputs import SPEC_COMS
+from special_inputs import SPEC_COMS, list_usr_enums
 from tools import register_tools
 
+load_dotenv()
 
-class SimpleCLIChat:
+
+class AIChat:
     def __init__(self, *, model: str, url: str):
         self.__chat_client: Agent = Agent(model=model, url=url)
         register_tools(self.__chat_client)
@@ -37,8 +41,8 @@ class SimpleCLIChat:
         except ValueError:
             print(f"\nUnknown Command: {command}")
             print("Here are all the Available Commands:")
-            for COMS in SPEC_COMS:
-                print(f"- {COMS}, Value: {COMS.value}")
+            for option in list_usr_enums():
+                print(f"- {option}, Value: {option}")
             print()
             return
 
@@ -55,21 +59,22 @@ class SimpleCLIChat:
         message = message.strip()
 
         if not message:
-            return ""
+            return SPEC_COMS.SKIP.value
 
         if message.startswith("/"):
             self.handle_command(command=message)
-            return "$$SKIP$$"
+            return SPEC_COMS.SKIP.value
 
-        print("\nAI:", self.__chat_client.chat(message), "\n")
+        return self.__chat_client.chat(message)
 
     def chat_loop(self):
         while True:
-            self.chat()
+            msg_in:str = input("\n> ")
+            print(f"\nAI: {self.chat(msg_in)}")
 
 
 if __name__ == "__main__":
-    cli_chat = SimpleCLIChat(
+    cli_chat = AIChat(
         model=os.getenv("MODEL", "llama3.2"),
         url=os.getenv("BASE_URL", "http://0.0.0.0:8080/v1"),
     )

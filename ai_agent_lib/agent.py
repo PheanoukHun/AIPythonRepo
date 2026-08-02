@@ -1,14 +1,10 @@
 from __future__ import annotations
 
 import json
-import os
 from collections.abc import Callable
 from typing import Any, Final, cast
 
-from dotenv import load_dotenv
 from openai import OpenAI
-
-load_dotenv()
 from openai.types.chat import (
     ChatCompletionFunctionToolParam,
     ChatCompletionMessageParam,
@@ -160,52 +156,3 @@ class Agent:
     @property
     def tool_names(self) -> list[str]:
         return [tool["function"]["name"] for tool in self.__tool_schemas]
-
-
-if __name__ == "__main__":
-    agent = Agent(
-        model=os.getenv("MODEL", "Llama3.2"),
-        url=os.getenv("BASE_URL", "localhost:8080/v1"),
-    )
-
-    @agent.tool(
-        description="Get the weather for a city.",
-        parameters={
-            "type": "object",
-            "properties": {"city": {"type": "string"}},
-            "required": ["city"],
-        },
-    )
-    def get_weather(city: str) -> dict[str, str]:
-        return {
-            "city": city,
-            "temperature": "86°F",
-            "condition": "Sunny",
-        }
-
-    @agent.tool(
-        description="Multiply two numbers.",
-        parameters={
-            "type": "object",
-            "properties": {
-                "a": {"type": "number"},
-                "b": {"type": "number"},
-            },
-            "required": ["a", "b"],
-        },
-    )
-    def multiply(a: float, b: float) -> float:
-        return a * b
-
-    try:
-        while True:
-            user_input = input("\n> ")
-    
-            if user_input.lower() in ("exit", "quit"):
-                break
-    
-            print("\nAssistant:", agent.chat(user_input))
-    except KeyboardInterrupt:
-        import sys
-        print("Bye")
-        sys.exit(0)
