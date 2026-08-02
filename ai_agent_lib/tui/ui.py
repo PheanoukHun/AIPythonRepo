@@ -1,6 +1,6 @@
 import asyncio
 
-from chat import ChatBackend
+from backend_chat import ChatBackend
 from textual.app import App, ComposeResult
 from textual.containers import Container, Horizontal
 from textual.widgets import Footer, Header, Input, RichLog

@@ -5,9 +5,14 @@ from time import sleep
 
 from dotenv import load_dotenv
 
-from .agent import Agent
-from .special_inputs import SPEC_COMS, list_usr_enums
-from .tools import register_tools
+if __package__:
+    from .agent import Agent
+    from .special_inputs import SPEC_COMS, list_usr_enums
+    from .tools import register_tools
+else:
+    from agent import Agent
+    from special_inputs import SPEC_COMS, list_usr_enums
+    from tools import register_tools
 
 load_dotenv()
 
@@ -18,24 +23,19 @@ class AIChat:
         register_tools(self.__chat_client)
 
     def __called_tool_function(self) -> str:
-
-        result = f"""
-        Number of Registered Tools: {self.__chat_client.num_tools}
-        Available Tools:
-        """
+        result = (
+            f"Number of Registered Tools: {self.__chat_client.num_tools}\n"
+            "Available Tools:\n"
+        )
 
         for i in range(len(self.__chat_client.tool_names)):
-            result += "\n{i + 1}. {self.__chat_client.tool_names[i]}"
+            result += f"\n{i + 1}. {self.__chat_client.tool_names[i]}"
 
         return result
 
     def __exit_function(self) -> None:
         print("\nBye!\n")
         sys.exit(0)
-
-    def __clear_function(self) -> None:
-        self.__clear_screen()
-        self.__chat_client.clear()
 
     def __clear_screen(self) -> None:
         subprocess.run("cls" if os.name == "nt" else "clear", shell=True, check=False)
@@ -56,11 +56,12 @@ class AIChat:
             self.__exit_function()
             return SPEC_COMS.EXIT.value
         elif special is SPEC_COMS.CLEAR:
+            self.__chat_client.clear()
             return SPEC_COMS.CLEAR.value
         elif special is SPEC_COMS.CLEAR_SCREEN:
             return SPEC_COMS.CLEAR_SCREEN.value
         else:
-            self.__called_tool_function()
+            return self.__called_tool_function()
 
     def chat(self, message: str) -> str:
         message = message.strip()
@@ -69,8 +70,7 @@ class AIChat:
             return SPEC_COMS.SKIP.value
 
         if message.startswith("/"):
-            self.handle_command(command=message)
-            return SPEC_COMS.SKIP.value
+            return self.handle_command(command=message)
 
         return self.__chat_client.chat(message)
 
@@ -79,13 +79,12 @@ class AIChat:
             while True:
                 msg_in: str = input("\n> ")
 
-
                 chat_res: str = self.chat(msg_in)
 
-                if (
-                    chat_res == SPEC_COMS.SKIP.value
-                    or chat_res == SPEC_COMS.ERROR.value
-                ):
+                if chat_res in (SPEC_COMS.SKIP.value, SPEC_COMS.ERROR.value):
+                    continue
+                elif chat_res in (SPEC_COMS.CLEAR.value, SPEC_COMS.CLEAR_SCREEN.value):
+                    self.__clear_screen()
                     continue
 
                 print("\nAI: ", end="")
