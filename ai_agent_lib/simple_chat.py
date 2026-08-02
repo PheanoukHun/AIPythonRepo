@@ -51,20 +51,17 @@ class SimpleCLIChat:
         else:
             self.__called_tool_function()
 
-    def chat(self) -> None:
-        try:
-            user_input: str = input("\n> ").strip()
+    def chat(self, message:str) -> str:
+        message = message.strip()
 
-            if not user_input:
-                return
+        if not message:
+            return ""
 
-            if user_input.startswith("/"):
-                self.handle_command(command=user_input)
-                return
+        if message.startswith("/"):
+            self.handle_command(command=message)
+            return "$$SKIP$$"
 
-            print("\nAI:", self.__chat_client.chat(user_input), "\n")
-        except KeyboardInterrupt:
-            self.__exit_function()
+        print("\nAI:", self.__chat_client.chat(message), "\n")
 
     def chat_loop(self):
         while True:

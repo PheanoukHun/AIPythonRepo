@@ -26,8 +26,44 @@ class ChatApp(App):
     }
     """
 
-    BINDINGS: Final[list[tuple[str]]] = [("ctrl+c", "quit", "Quit")]
+    BINDINGS = [("ctrl+c", "quit", "Quit")]
 
     def __init__(self):
         super().__init__()
         self.backend = ChatBackend()
+
+    def compose(self) -> ComposeResult:
+        yield Header()
+
+        with Container():
+           yield RichLog(id="chat", wrap=True, highlight=True) 
+
+           with Horizontal():
+               yield Input(
+                   placeholder="Type a Message...",
+                   id="input"
+               )
+
+        yield Footer()
+
+    async def on_input_submitted(self, *, event: Input.Submitted):
+        message = event.value.strip()
+
+        if not message:
+            return
+
+        chat = self.query_one("#chat", RichLog)
+        input_box = self.query_one("#input", Input)
+
+        chat.write(f"[bold cyan]You:[/] {message}")
+        
+        input_box.value = ""
+        input_box.disabled = True
+
+        response = await self.backend.send(message)
+
+        chat.write(f"[bold green]Assistant:[/] {response}")
+
+        input_box.disabled = False
+        input_box.focus()
+            
