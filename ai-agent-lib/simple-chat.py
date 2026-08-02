@@ -5,6 +5,18 @@ from special_inputs import SPECIAL_IN
 from tools import register_tools
 
 
+class SimpleChat:
+    def __init__(self):
+        self.__chat_client: Agent = Agent(
+            model=os.getenv("MODEL", "llama3.2"),
+            url=os.getenv("BASE_URL", "http://0.0.0.0:8080/v1"),
+        )
+        register_tools(self.__chat_client)
+
+    def __called_tool_function(self):
+        print(f"\nNumber of Registered Tools: {self.__chat_client.}")
+
+
 # Command Handling
 def handle_command(command: str) -> bool:
     """Handle a slash command. Returns False when the loop should exit."""
@@ -16,15 +28,17 @@ def handle_command(command: str) -> bool:
 
     if special is SPECIAL_IN.EXIT:
         return False
-    if special is SPECIAL_IN.CLEAR:
+    elif special is SPECIAL_IN.CLEAR:
         agent.clear()
-        print("\nConversation cleared.\n")
-        return True
-    if special is SPECIAL_IN.TOOL:
+        print("\nConversation cleared.")
+    elif special is SPECIAL_IN.TOOL:
         print("\nAvailable tools:")
         for name in agent.tool_names:
-            print("  -", name)
-        return True
+            print("\t- ", name)
+    elif special is SPECIAL_IN.READ:
+        pass
+
+    print()
     return True
 
 
