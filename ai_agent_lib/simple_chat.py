@@ -7,12 +7,9 @@ from special_inputs import SPEC_COMS
 from tools import register_tools
 
 
-class SimpleChat:
-    def __init__(self, *, model:str, url:str):
-        self.__chat_client: Agent = Agent(
-            model=os.getenv("MODEL", "llama3.2"),
-            url=os.getenv("BASE_URL", "http://0.0.0.0:8080/v1"),
-        )
+class SimpleCLIChat:
+    def __init__(self, *, model: str, url: str):
+        self.__chat_client: Agent = Agent(model=model, url=url)
         register_tools(self.__chat_client)
 
     def __called_tool_function(self) -> None:
@@ -56,11 +53,11 @@ class SimpleChat:
 
     def chat(self) -> None:
         try:
-            user_input:str = input("\n> ").strip()
+            user_input: str = input("\n> ").strip()
 
             if not user_input:
                 return
-                
+
             if user_input.startswith("/"):
                 self.handle_command(command=user_input)
                 return
@@ -73,5 +70,10 @@ class SimpleChat:
         while True:
             self.chat()
 
+
 if __name__ == "__main__":
-    
+    cli_chat = SimpleCLIChat(
+        model=os.getenv("MODEL", "llama3.2"),
+        url=os.getenv("BASE_URL", "http://0.0.0.0:8080/v1"),
+    )
+    cli_chat.chat_loop()

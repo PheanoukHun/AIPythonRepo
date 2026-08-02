@@ -115,7 +115,7 @@ def glob(pattern: str, directory: str = ".") -> str:
 
 def current_datetime() -> str:
     """Return the current date and time as an ISO-8601 string."""
-    return _dt.datetime.now().isoformat()
+    return _dt.datetime.now(_dt.timezone.utc).isoformat()
 
 
 def current_working_directory() -> str:
@@ -191,7 +191,7 @@ TOOL_SCHEMAS: list[dict] = [
 
 def register_tools(agent) -> None:
     """Register every general-purpose tool onto an Agent instance."""
-    for name, func in TOOLS.items():
+    for func in TOOLS.values():
         signature = inspect.signature(func)
         annotations = inspect.get_annotations(func, eval_str=True)
         properties: dict[str, object] = {}
