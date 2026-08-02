@@ -5,7 +5,10 @@ import os
 from collections.abc import Callable
 from typing import Any, Final, cast
 
+from dotenv import load_dotenv
 from openai import OpenAI
+
+load_dotenv()
 from openai.types.chat import (
     ChatCompletionFunctionToolParam,
     ChatCompletionMessageParam,
@@ -33,7 +36,8 @@ class Agent:
 
         # Model Info
         self.__client: Final[OpenAI] = OpenAI(
-            base_url=url, api_key=api_key or "not-needed"
+            base_url=self._normalize_base_url(url),
+            api_key=api_key or "not-needed",
         )
         self.__model: Final[str] = model
         self.__tool_choice: ChatCompletionToolChoiceOptionParam = tool_choice
@@ -49,6 +53,12 @@ class Agent:
         # List of Tools
         self.__tools: dict[str, Callable[..., Any]] = {}
         self.__tool_schemas: list[ChatCompletionFunctionToolParam] = []
+
+    @staticmethod
+    def _normalize_base_url(url: str) -> str:
+        if not url.startswith(("http://", "https://")):
+            return f"http://{url}"
+        return url
 
     def tool(self, *, description: str, parameters: dict[str, Any]):
         """
