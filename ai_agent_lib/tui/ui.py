@@ -36,7 +36,7 @@ class ChatApp(App):
         yield Header()
 
         with Container():
-           yield RichLog(id="chat", wrap=True, highlight=True) 
+           yield RichLog(id="chat", wrap=True, highlight=True, markup=True) 
 
            with Horizontal():
                yield Input(
@@ -46,7 +46,7 @@ class ChatApp(App):
 
         yield Footer()
 
-    async def on_input_submitted(self, *, event: Input.Submitted):
+    async def on_input_submitted(self, event: Input.Submitted):
         message = event.value.strip()
 
         if not message:
