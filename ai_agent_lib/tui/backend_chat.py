@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from simple_chat import AIChat
+from ai_agent.simple_chat import AIChat
 
 load_dotenv()
 

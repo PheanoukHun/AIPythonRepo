@@ -5,9 +5,9 @@ from time import sleep
 
 from dotenv import load_dotenv
 
-from agent import Agent
-from special_inputs import SPEC_COMS, list_usr_enums
-from tools import register_tools
+from .agent import Agent
+from .special_inputs import SPEC_COMS, list_usr_enums
+from .tools import register_tools
 
 load_dotenv()
 
@@ -17,12 +17,17 @@ class AIChat:
         self.__chat_client: Agent = Agent(model=model, url=url)
         register_tools(self.__chat_client)
 
-    def __called_tool_function(self) -> None:
-        print(f"\nNumber of Registered Tools: {self.__chat_client.num_tools}")
-        print("Available Tools:")
+    def __called_tool_function(self) -> str:
+
+        result = f"""
+        Number of Registered Tools: {self.__chat_client.num_tools}
+        Available Tools:
+        """
 
         for i in range(len(self.__chat_client.tool_names)):
-            print(f"{i + 1}. {self.__chat_client.tool_names[i]}")
+            result += "\n{i + 1}. {self.__chat_client.tool_names[i]}"
+
+        return result
 
     def __exit_function(self) -> None:
         print("\nBye!\n")
@@ -35,7 +40,7 @@ class AIChat:
     def __clear_screen(self) -> None:
         subprocess.run("cls" if os.name == "nt" else "clear", shell=True, check=False)
 
-    def handle_command(self, *, command: str) -> None:
+    def handle_command(self, *, command: str) -> str:
 
         try:
             special: SPEC_COMS = SPEC_COMS(command)
@@ -45,14 +50,15 @@ class AIChat:
             for option in list_usr_enums():
                 print(f"- {option}, Value: {option}")
             print()
-            return
+            return SPEC_COMS.ERROR.value
 
         if special is SPEC_COMS.EXIT:
             self.__exit_function()
+            return SPEC_COMS.EXIT.value
         elif special is SPEC_COMS.CLEAR:
-            self.__clear_function()
+            return SPEC_COMS.CLEAR.value
         elif special is SPEC_COMS.CLEAR_SCREEN:
-            self.__clear_screen()
+            return SPEC_COMS.CLEAR_SCREEN.value
         else:
             self.__called_tool_function()
 

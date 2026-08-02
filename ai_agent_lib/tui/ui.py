@@ -28,6 +28,9 @@ class ChatApp(App):
 
     BINDINGS = [("ctrl+c", "quit", "Quit")]
 
+    async def on_mount(self) -> None:
+        self.query_one("#input", Input).focus()
+
     def __init__(self):
         super().__init__()
         self.backend = ChatBackend()
@@ -62,7 +65,9 @@ class ChatApp(App):
 
         response = await self.backend.send(message)
 
+        chat.write("")
         chat.write(f"[bold green]Assistant:[/] {response}")
+        chat.write("")
 
         input_box.disabled = False
         input_box.focus()
