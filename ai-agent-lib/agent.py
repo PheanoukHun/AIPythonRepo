@@ -153,6 +153,14 @@ class Agent:
         """Reset the conversation but keep registered tools."""
         self.__messages = [self.__messages[0]]
 
+    @property
+    def num_tools(self) -> int:
+        return len(self.__tool_schemas)
+
+    @property
+    def tool_names(self) -> list[str]:
+        return [tool["function"]["name"] for tool in self.__tool_schemas]
+
 
 if __name__ == "__main__":
     agent = Agent(
@@ -191,7 +199,7 @@ if __name__ == "__main__":
 
     try:
         while True:
-            user_input = input("> ")
+            user_input = input("\n> ")
     
             if user_input.lower() in ("exit", "quit"):
                 break
@@ -199,4 +207,5 @@ if __name__ == "__main__":
             print("\nAssistant:", agent.chat(user_input))
     except KeyboardInterrupt:
         import sys
+        print("Bye")
         sys.exit(0)
