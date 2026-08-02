@@ -5,7 +5,7 @@ from textual import events
 from textual.app import App, ComposeResult
 from textual.containers import Container, Horizontal
 from textual.message import Message
-from textual.widgets import Footer, Header, RichLog, TextArea
+from textual.widgets import Header, RichLog, TextArea
 
 
 class ChatInput(TextArea):
@@ -79,7 +79,6 @@ class ChatApp(App):
                     id="input"
                 )
 
-        yield Footer()
 
     async def on_chat_input_submitted(self, event: ChatInput.Submitted):
         message = event.value
