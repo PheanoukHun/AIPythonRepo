@@ -164,8 +164,8 @@ class Agent:
 
 if __name__ == "__main__":
     agent = Agent(
-        model=os.getenv("OPENAI_MODEL", "Llama3.2"),
-        url=os.getenv("OPENAI_BASE_URL", "localhost:8080/v1"),
+        model=os.getenv("MODEL", "Llama3.2"),
+        url=os.getenv("BASE_URL", "localhost:8080/v1"),
     )
 
     @agent.tool(

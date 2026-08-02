@@ -5,7 +5,6 @@ class SPEC_COMS(Enum):
     CLEAR = "/clear"
     CLEAR_SCREEN = "/clear-screen"
     EXIT = "/exit"
-    READ = "/read"
     TOOL = "/tool"
     ERROR = "$$ERROR$$"
 

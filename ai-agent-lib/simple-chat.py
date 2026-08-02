@@ -8,7 +8,7 @@ from tools import register_tools
 
 
 class SimpleChat:
-    def __init__(self):
+    def __init__(self, *, model:str, url:str):
         self.__chat_client: Agent = Agent(
             model=os.getenv("MODEL", "llama3.2"),
             url=os.getenv("BASE_URL", "http://0.0.0.0:8080/v1"),
@@ -28,12 +28,12 @@ class SimpleChat:
 
     def __clear_function(self) -> None:
         self.__clear_screen()
-        agent.clear()
+        self.__chat_client.clear()
 
     def __clear_screen(self) -> None:
         subprocess.run("cls" if os.name == "nt" else "clear", shell=True, check=False)
 
-    def handle_command(self, *, command: str) -> str:
+    def handle_command(self, *, command: str) -> None:
 
         try:
             special: SPEC_COMS = SPEC_COMS(command)
@@ -43,7 +43,7 @@ class SimpleChat:
             for COMS in SPEC_COMS:
                 print(f"- {COMS}, Value: {COMS.value}")
             print()
-            return SPEC_COMS.ERROR.value
+            return
 
         if special is SPEC_COMS.EXIT:
             self.__exit_function()
@@ -51,56 +51,27 @@ class SimpleChat:
             self.__clear_function()
         elif special is SPEC_COMS.CLEAR_SCREEN:
             self.__clear_screen()
-        elif special is SPEC_COMS.READ:
-            pass
-        return special.value
+        else:
+            self.__called_tool_function()
 
+    def chat(self) -> None:
+        try:
+            user_input:str = input("\n> ").strip()
 
-# Command Handling
-def handle_command(command: str) -> bool:
-    """Handle a slash command. Returns False when the loop should exit."""
-    try:
-        special = SPEC_COMS(command)
-    except ValueError:
-        print(f"Unknown command: {command}")
-        return True
+            if not user_input:
+                return
+                
+            if user_input.startswith("/"):
+                self.handle_command(command=user_input)
+                return
 
-    if special is SPEC_COMS.EXIT:
-        return False
-    elif special is SPEC_COMS.CLEAR:
-        agent.clear()
-        print("\nConversation cleared.")
-    elif special is SPEC_COMS.READ:
-        pass
+            print("\nAI:", self.__chat_client.chat(user_input), "\n")
+        except KeyboardInterrupt:
+            self.__exit_function()
 
-    print()
-    return True
+    def chat_loop(self):
+        while True:
+            self.chat()
 
-
-# 1. Intitialize Agent Class
-agent = Agent(
-    model=os.getenv("OPENAI_MODEL", "Llama3.2"),
-    url=os.getenv("OPENAI_BASE_URL", "localhost:8080/v1"),
-)
-
-# 2. Register every general-purpose tool from tools.py
-register_tools(agent)
-print("Registered tools:", agent.num_tools)
-
-
-# 3. Chat Loop
-try:
-    while True:
-        user_input = input("\n> ").strip()
-
-        if (not user_input) or (not user_input.strip()):
-            continue
-
-        if user_input.startswith("/"):
-            if not handle_command(user_input.lower()):
-                break
-            continue
-
-        print("\nAI:", agent.chat(user_input))
-except KeyboardInterrupt:
-    print("\nBye.")
+if __name__ == "__main__":
+    
