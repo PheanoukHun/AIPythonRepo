@@ -31,24 +31,24 @@ from pathlib import Path
 
 def add(a: float, b: float) -> float:
     """Add two numbers."""
-    return a + b
+    return float(a) + float(b)
 
 
 def subtract(a: float, b: float) -> float:
     """Subtract b from a."""
-    return a - b
+    return float(a) - float(b)
 
 
 def multiply(a: float, b: float) -> float:
     """Multiply two numbers."""
-    return a * b
+    return float(a) * float(b)
 
 
 def divide(a: float, b: float) -> float:
     """Divide a by b."""
-    if b == 0:
+    if float(b) == 0:
         raise ZeroDivisionError("Cannot divide by zero.")
-    return a / b
+    return float(a) / float(b)
 
 
 # -------------------------
@@ -197,12 +197,13 @@ TOOL_SCHEMAS: list[dict] = [
 
 def register_tools(agent) -> None:
     """Register every general-purpose tool onto an Agent instance."""
-    for func in TOOLS.values():
+    for name, func in TOOLS.items():
         signature = inspect.signature(func)
+        annotations = inspect.get_annotations(func, eval_str=True)
         properties: dict[str, object] = {}
         required: list[str] = []
         for param_name, param in signature.parameters.items():
-            annotation = param.annotation
+            annotation = annotations.get(param_name, str)
             if annotation is int:
                 json_type = "integer"
             elif annotation is float:
