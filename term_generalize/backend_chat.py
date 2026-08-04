@@ -1,22 +1,32 @@
+from __future__ import annotations
+
 import asyncio
 import os
-import httpx
 from pathlib import Path
+from typing import Final
 
+import httpx
 from dotenv import load_dotenv
-from agent import AIChat
+
+from agent import Agent
 
 load_dotenv()
 
 
-
 class ChatBackend:
-    def __init__(self):
-        base_url:str = os.getenv("BASE_URL", "http://0.0.0.0:8080/v1")
-        
+    DEFAULT_SYS_PROMPT: Final[str] = (
+        "You are a helpful AI Assistant. Use tools whenever appropriate."
+    )
 
-    
-        
+    def __init__(self):
+        base_url: str = os.getenv("BASE_URL", "http://0.0.0.0:8080/v1")
+
+        self.__agent = Agent(
+            model=os.getenv("MODEL", "llama3.2"),
+            url=base_url,
+            sys_prompt=os.getenv("SYSTEM_PROMPT", self.DEFAULT_SYS_PROMPT),
+        )
+
     # def clear_chat(self) -> None:
     #     self.__chat.handle_command(command="/clear")
 

@@ -16,18 +16,14 @@ from openai.types.shared_params import FunctionDefinition
 
 
 class Agent:
-    DEFAULT_SYS_PROMPT: Final[str] = (
-        "You are a helpful AI Assistant. Use tools whenever appropriate."
-    )
-
     def __init__(
         self,
         *,
-        url: str,
-        api_key: str | None = None,
         model: str,
-        sys_prompt: str = DEFAULT_SYS_PROMPT,
+        url: str,
+        sys_prompt: str,
         tool_choice: ChatCompletionToolChoiceOptionParam = "auto",
+        api_key: str | None = None,
     ) -> None:
 
         # Model Info
@@ -172,11 +168,15 @@ class Agent:
 
 
 class AIChat:
+    DEFAULT_SYS_PROMPT: Final[str] = (
+        "You are a helpful AI Assistant. Use tools whenever appropriate."
+    )
+
     def __init__(
         self,
         *,
         model: str,
         url: str,
-        sys_prompt: str = "You are a helpful AI Assistant. Use tools whenever appropriate.",
+        sys_prompt: str = DEFAULT_SYS_PROMPT,
     ):
         self.__agent = Agent(model=model, url=url, sys_prompt=sys_prompt)
