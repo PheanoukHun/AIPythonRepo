@@ -166,17 +166,3 @@ class Agent:
     def tool_names(self) -> list[str]:
         return [tool["function"]["name"] for tool in self.__tool_schemas]
 
-
-class AIChat:
-    DEFAULT_SYS_PROMPT: Final[str] = (
-        "You are a helpful AI Assistant. Use tools whenever appropriate."
-    )
-
-    def __init__(
-        self,
-        *,
-        model: str,
-        url: str,
-        sys_prompt: str = DEFAULT_SYS_PROMPT,
-    ):
-        self.__agent = Agent(model=model, url=url, sys_prompt=sys_prompt)
