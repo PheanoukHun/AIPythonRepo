@@ -1,7 +1,7 @@
 from backend_chat import ChatBackend
 from rich.markdown import Markdown
 from rich.markup import escape
-from ai_agent.special_inputs import SPEC_COMS
+from ai_agent.special_inputs import SPEC_IN
 from textual import events
 from textual.app import App, ComposeResult
 from textual.containers import Container, Horizontal
@@ -90,22 +90,22 @@ class ChatApp(App):
         command_text, _, command_arg = message.partition(" ")
 
         try:
-            command = SPEC_COMS(command_text)
+            command = SPEC_IN(command_text)
         except ValueError:
             command = None
 
-        if command is SPEC_COMS.CLEAR:
+        if command is SPEC_IN.CLEAR:
             self.backend.clear_chat()
             chat.clear()
             input_box.focus()
             return
 
-        if command is SPEC_COMS.CLEAR_SCREEN:
+        if command is SPEC_IN.CLEAR_SCREEN:
             chat.clear()
             input_box.focus()
             return
 
-        if command is SPEC_COMS.SYSTEM:
+        if command is SPEC_IN.SYSTEM:
             prompt = command_arg.strip()
             if prompt:
                 self.backend.set_sys_prompt(prompt)

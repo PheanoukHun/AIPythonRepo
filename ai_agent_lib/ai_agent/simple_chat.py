@@ -7,11 +7,11 @@ from dotenv import load_dotenv
 
 if __package__:
     from .agent import Agent
-    from .special_inputs import SPEC_COMS, list_usr_enums
+    from .special_inputs import SPEC_IN, list_usr_enums
     from .tools import register_tools
 else:
     from agent import Agent
-    from special_inputs import SPEC_COMS, list_usr_enums
+    from special_inputs import SPEC_IN, list_usr_enums
     from tools import register_tools
 
 load_dotenv()
@@ -44,31 +44,31 @@ class AIChat:
         command_name, _, command_arg = command.partition(" ")
 
         try:
-            special: SPEC_COMS = SPEC_COMS(command_name)
+            special: SPEC_IN = SPEC_IN(command_name)
         except ValueError:
             print(f"\nUnknown Command: {command_name}")
             print("Here are all the Available Commands:")
             for option in list_usr_enums():
                 print(f"- {option}, Value: {option}")
             print()
-            return SPEC_COMS.ERROR.value
+            return SPEC_IN.ERROR.value
 
-        if special is SPEC_COMS.EXIT:
+        if special is SPEC_IN.EXIT:
             self.__exit_function()
-            return SPEC_COMS.EXIT.value
-        elif special is SPEC_COMS.CLEAR:
+            return SPEC_IN.EXIT.value
+        elif special is SPEC_IN.CLEAR:
             self.__chat_client.clear()
-            return SPEC_COMS.CLEAR.value
-        elif special is SPEC_COMS.CLEAR_SCREEN:
-            return SPEC_COMS.CLEAR_SCREEN.value
-        elif special is SPEC_COMS.SYSTEM:
+            return SPEC_IN.CLEAR.value
+        elif special is SPEC_IN.CLEAR_SCREEN:
+            return SPEC_IN.CLEAR_SCREEN.value
+        elif special is SPEC_IN.SYSTEM:
             prompt = command_arg.strip()
             if not prompt:
                 print(f"\nCurrent System Prompt:\n{self.__chat_client.get_sys_prompt()}\n")
-                return SPEC_COMS.SYSTEM.value
+                return SPEC_IN.SYSTEM.value
             self.__chat_client.set_sys_prompt(prompt)
             print("\nSystem prompt updated.\n")
-            return SPEC_COMS.SYSTEM.value
+            return SPEC_IN.SYSTEM.value
         else:
             return self.__called_tool_function()
 
@@ -82,7 +82,7 @@ class AIChat:
         message = message.strip()
 
         if not message:
-            return SPEC_COMS.SKIP.value
+            return SPEC_IN.SKIP.value
 
         if message.startswith("/"):
             return self.handle_command(command=message)
@@ -96,9 +96,9 @@ class AIChat:
 
                 chat_res: str = self.chat(msg_in)
 
-                if chat_res in (SPEC_COMS.SKIP.value, SPEC_COMS.ERROR.value):
+                if chat_res in (SPEC_IN.SKIP.value, SPEC_IN.ERROR.value):
                     continue
-                elif chat_res in (SPEC_COMS.CLEAR.value, SPEC_COMS.CLEAR_SCREEN.value):
+                elif chat_res in (SPEC_IN.CLEAR.value, SPEC_IN.CLEAR_SCREEN.value):
                     self.__clear_screen()
                     continue
 

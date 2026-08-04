@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class SPEC_COMS(Enum):
+class SPEC_IN(Enum):
     CLEAR = "/clear"
     CLEAR_SCREEN = "/clear-screen"
     EXIT = "/exit"
@@ -25,6 +25,6 @@ class SPEC_COMS(Enum):
 def list_usr_enums() -> list[str]:
     return [
         option.value
-        for option in SPEC_COMS
-        if not (option is SPEC_COMS.ERROR or option is SPEC_COMS.SKIP)
+        for option in SPEC_IN
+        if not (option is SPEC_IN.ERROR or option is SPEC_IN.SKIP)
     ]
