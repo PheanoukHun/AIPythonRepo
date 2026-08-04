@@ -1,15 +1,12 @@
 import asyncio
 import os
-import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
-from ai_agent.simple_chat import AIChat
 
 load_dotenv()
+
 
 
 class ChatBackend:

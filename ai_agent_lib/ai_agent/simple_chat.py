@@ -18,7 +18,13 @@ load_dotenv()
 
 
 class AIChat:
-    def __init__(self, *, model: str, url: str):
+    def __init__(
+        self,
+        *,
+        model: str,
+        url: str,
+        sys_prompt: str = "You are a helpful AI Assistant. Use tools whenever appropriate.",
+    ):
         self.__chat_client: Agent = Agent(model=model, url=url)
         register_tools(self.__chat_client)
 
@@ -64,7 +70,9 @@ class AIChat:
         elif special is SPEC_IN.SYSTEM:
             prompt = command_arg.strip()
             if not prompt:
-                print(f"\nCurrent System Prompt:\n{self.__chat_client.get_sys_prompt()}\n")
+                print(
+                    f"\nCurrent System Prompt:\n{self.__chat_client.get_sys_prompt()}\n"
+                )
                 return SPEC_IN.SYSTEM.value
             self.__chat_client.set_sys_prompt(prompt)
             print("\nSystem prompt updated.\n")
