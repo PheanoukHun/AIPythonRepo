@@ -169,3 +169,14 @@ class Agent:
     @property
     def tool_names(self) -> list[str]:
         return [tool["function"]["name"] for tool in self.__tool_schemas]
+
+
+class AIChat:
+    def __init__(
+        self,
+        *,
+        model: str,
+        url: str,
+        sys_prompt: str = "You are a helpful AI Assistant. Use tools whenever appropriate.",
+    ):
+        self.__agent = Agent(model=model, url=url, sys_prompt=sys_prompt)

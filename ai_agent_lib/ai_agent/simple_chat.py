@@ -25,7 +25,7 @@ class AIChat:
         url: str,
         sys_prompt: str = "You are a helpful AI Assistant. Use tools whenever appropriate.",
     ):
-        self.__chat_client: Agent = Agent(model=model, url=url)
+        self.__chat_client: Agent = Agent(model=model, url=url, sys_prompt=sys_prompt)
         register_tools(self.__chat_client)
 
     def __called_tool_function(self) -> str:
