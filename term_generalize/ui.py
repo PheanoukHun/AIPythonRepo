@@ -67,6 +67,7 @@ class ChatApp(App):
     def __init__(self):
         super().__init__()
         self.backend = ChatBackend()
+        self.sub_title = self.backend.backend_label
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -121,7 +122,13 @@ class ChatApp(App):
 
         input_box.disabled = True
 
-        response = await self.backend.send(message)
+        try:
+            response = await self.backend.send(message)
+        except Exception as exc:
+            chat.write(f"[bold red]Error:[/] {escape(str(exc))}")
+            input_box.disabled = False
+            input_box.focus()
+            return
 
         chat.write("")
         chat.write("[bold green]Assistant:[/]")
