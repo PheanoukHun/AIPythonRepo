@@ -21,14 +21,8 @@ class ChatBackend:
         base_url: str = os.getenv("BASE_URL", "http://0.0.0.0:8081")
         api_key: str | None = os.getenv("API_KEY")
 
-        interactive: bool = os.getenv("INTERACTIVE_DETECT", "true").lower() in (
-            "1",
-            "true",
-            "yes",
-        )
-
         self.__server: DetectedServer = detect_backend(
-            base_url=base_url, api_key=api_key, interactive=interactive
+            base_url=base_url, api_key=api_key
         )
 
         self.__agent = Agent(
