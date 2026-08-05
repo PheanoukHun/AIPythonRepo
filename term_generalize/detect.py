@@ -40,18 +40,28 @@ _OPENAI_SUFFIXES: Final[tuple[str, ...]] = (
 )
 
 
+class OPENAI_ENDPOINTS(Enum):
+    COMPLETIONS = "/v1/chat/completions"
+    V1 = "/v1"
+    V0 = "/api/v0"
+
+
 def _normalize_host(base_url: str) -> str:
     url = base_url.strip().rstrip("/")
     if not url.startswith(("http://", "https://")):
         url = f"http://{url}"
-    for suffix in _OPENAI_SUFFIXES:
-        if url.endswith(suffix):
-            return url[: -len(suffix)]
+    for suffix in list(OPENAI_ENDPOINTS):
+
+        sufval:str = suffix.value
+        
+        if url.endswith(sufval):
+            return url[: -len(sufval)]
+            
     return url
 
 
 def _openai_base(host: str) -> str:
-    return f"{host}/v1"
+    return f"{host}{OPENAI_ENDPOINTS.V1}"
 
 
 def _json(response: httpx.Response | None) -> dict | None:
@@ -174,9 +184,7 @@ def detect_backend(
             owned = _owned_by(models_data)
             if owned & {"vllm", "VLLM"}:
                 return DetectedServer(Service.VLLM, _openai_base(host), ids)
-            if "lmstudio" in owned or any(
-                _id.startswith("lmstudio") for _id in ids
-            ):
+            if "lmstudio" in owned or any(_id.startswith("lmstudio") for _id in ids):
                 return DetectedServer(Service.LM_STUDIO, _openai_base(host), ids)
             if owned & {"llama.cpp", "llamacpp"}:
                 return DetectedServer(Service.LLAMA_CPP, _openai_base(host), ids)
