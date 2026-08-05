@@ -29,20 +29,14 @@ class DetectedServer:
 SUPPORTED_PORTS: Final[dict[Service, int]] = {
     Service.OLLAMA: 11434,
     Service.LM_STUDIO: 1234,
-    Service.LLAMA_CPP: 8080,
+    Service.LLAMA_CPP: 8089,
     Service.VLLM: 8000,
 }
-
-_OPENAI_SUFFIXES: Final[tuple[str, ...]] = (
-    "/v1/chat/completions",
-    "/v1",
-    "/api/v0",
-)
 
 
 class OPENAI_ENDPOINTS(Enum):
     COMPLETIONS = "/v1/chat/completions"
-    V1 = "/v1"
+    BASE = "/v1"
     V0 = "/api/v0"
 
 
@@ -61,7 +55,7 @@ def _normalize_host(base_url: str) -> str:
 
 
 def _openai_base(host: str) -> str:
-    return f"{host}{OPENAI_ENDPOINTS.V1}"
+    return f"{host}{OPENAI_ENDPOINTS.BASE}"
 
 
 def _json(response: httpx.Response | None) -> dict | None:
@@ -205,3 +199,7 @@ def detect_backend(
         f"No local AI server detected at {host}.\n"
         f"Start one of the supported servers and try again:\n{defaults}"
     )
+
+if __name__ == "__main__":
+    url = input("URL: ")
+    service:DetectedServer = detect_backend(url)
