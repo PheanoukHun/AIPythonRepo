@@ -55,7 +55,7 @@ def _normalize_host(base_url: str) -> str:
 
 
 def _openai_base(host: str) -> str:
-    return f"{host}{OPENAI_ENDPOINTS.BASE}"
+    return f"{host}{OPENAI_ENDPOINTS.BASE.value}"
 
 
 def _json(response: httpx.Response | None) -> dict | None:
@@ -114,11 +114,43 @@ def _ollama_model_ids(client: httpx.Client) -> tuple[str, ...]:
     )
 
 
+def choose_service(prompt: str | None = None) -> Service:
+    """Prompt the user to pick one of the four supported services."""
+    choices = [s for s in Service if s is not Service.UNKNOWN_OPENAI_COMPATIBLE]
+    if prompt is None:
+        prompt = (
+            "No known local AI service was detected at the given address.\n"
+            "Select which service you are running:"
+        )
+    print(prompt)
+    for index, service in enumerate(choices, start=1):
+        print(f"  {index}. {service.value}")
+    while True:
+        try:
+            raw = input(f"Choose 1-{len(choices)}: ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("No selection made; continuing as OpenAI-compatible.")
+            return Service.UNKNOWN_OPENAI_COMPATIBLE
+        if raw.isdigit():
+            index = int(raw)
+            if 1 <= index <= len(choices):
+                return choices[index - 1]
+        print("Invalid choice, try again.")
+
+
+def _resolve_unknown(server: DetectedServer, interactive: bool) -> DetectedServer:
+    if server.service is not Service.UNKNOWN_OPENAI_COMPATIBLE or not interactive:
+        return server
+    choice = choose_service()
+    return DetectedServer(choice, server.openai_base, server.model_ids)
+
+
 def detect_backend(
     base_url: str,
     api_key: str | None = None,
     *,
     timeout: float = 1.5,
+    interactive: bool = False,
 ) -> DetectedServer:
     host = _normalize_host(base_url)
     headers = {"Authorization": f"Bearer {api_key}"} if api_key else None
@@ -184,12 +216,18 @@ def detect_backend(
                 return DetectedServer(Service.LLAMA_CPP, _openai_base(host), ids)
             if "library" in owned:
                 return DetectedServer(Service.OLLAMA, _openai_base(host), ids)
-            return DetectedServer(
-                Service.UNKNOWN_OPENAI_COMPATIBLE, _openai_base(host), ids
+            return _resolve_unknown(
+                DetectedServer(
+                    Service.UNKNOWN_OPENAI_COMPATIBLE, _openai_base(host), ids
+                ),
+                interactive,
             )
 
     if reachable:
-        return DetectedServer(Service.UNKNOWN_OPENAI_COMPATIBLE, _openai_base(host))
+        return _resolve_unknown(
+            DetectedServer(Service.UNKNOWN_OPENAI_COMPATIBLE, _openai_base(host)),
+            interactive,
+        )
 
     defaults = "\n".join(
         f"  - {service.value} -> {service.name.lower()}:{port}"
@@ -203,3 +241,4 @@ def detect_backend(
 if __name__ == "__main__":
     url = input("URL: ")
     service:DetectedServer = detect_backend(url)
+    print(service.service.value)
