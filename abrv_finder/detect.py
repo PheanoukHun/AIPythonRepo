@@ -25,6 +25,13 @@ class DetectedServer:
     openai_base: str
     model_ids: tuple[str, ...] = field(default_factory=tuple)
 
+    def __str__(self) -> str:
+        server_desc_str: str = "Service Provider:"
+        server_desc_str += f"\n - Service Name:{self.service.value}"
+        server_desc_str += f"\n - OpenAI Base URL: {self.openai_base}"
+        server_desc_str += f"\n - Model IDs: {self.model_ids}"
+        return server_desc_str
+
 
 SUPPORTED_PORTS: Final[dict[Service, int]] = {
     Service.OLLAMA: 11434,
@@ -202,5 +209,5 @@ def detect_backend(
 
 if __name__ == "__main__":
     url = input("URL: ")
-    service:DetectedServer = detect_backend(url)
-    print(service.service.value)
+    service_found:DetectedServer = detect_backend(url)
+    print(service_found)
