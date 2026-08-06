@@ -202,6 +202,7 @@ def detect_backend(
         f"  - {service.value} -> {service.name.lower()}:{port}"
         for service, port in SUPPORTED_PORTS.items()
     )
+    
     raise BackendError(
         f"No local AI server detected at {host}.\n"
         f"Start one of the supported servers and try again:\n{defaults}"
