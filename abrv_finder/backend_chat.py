@@ -5,6 +5,7 @@ import json
 import os
 import subprocess
 import sys
+import time
 from pathlib import Path
 from typing import Final, cast
 
@@ -61,12 +62,58 @@ class ChatBackend:
 
             _ = subprocess.Popen(command)
 
+            # Wait until the server is ready
+            while True:
+                try:
+                    self.__server = detect_backend(
+                        base_url=base_url,
+                        api_key=api_key,
+                    )
+                    break
+                except BackendError:
+                    time.sleep(1)
+
         self.__agent = Agent(
             model=os.getenv("MODEL", "GPT5-Nano"),
             url=self.__server.openai_base,
-            sys_prompt=os.getenv("SYSTEM_PROMPT", self.DEFAULT_SYS_PROMPT),
+            sys_prompt=self.DEFAULT_SYS_PROMPT,
             api_key=api_key,
         )
+
+        self.register_arbv_tool(os.getenv("FIELD", "Computer Science"))
+
+    def register_arbv_tool(self, field: str) -> None:
+        @self.__agent.tool(
+            description=f"Expand a {field} acronym or abbreviation.",
+            parameters={
+                "type": "object",
+                "properties": {
+                    "term": {
+                        "type": "string",
+                        "description": "The acronym or abbreviation (e.g. MFT, IOC, TGT).",
+                    },
+                    "context": {
+                        "type": "string",
+                        "description": "Optional context such as Windows, Active Directory, malware analysis, Azure, etc.",
+                    },
+                },
+                "required": ["term"],
+            },
+        )
+        def explain_term(term: str, context: str = "") -> str:
+            prompt = f"""You are a {field} terminology assistant.
+
+        Interpret abbreviations using {field} terminology first.
+        Return:
+        1. Most likely meaning
+        2. Brief explanation
+        3. Relevant alternative meanings (if any)
+
+        Term: {term}
+        Context: {context if context else "None"}
+        """
+
+            return self.__agent.chat(prompt)
 
     @property
     def server(self) -> DetectedServer:
