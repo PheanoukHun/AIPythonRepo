@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import os
 import subprocess
-from typing import Final
+from typing import Final, cast
 
 from dotenv import load_dotenv
 
@@ -28,7 +29,14 @@ class ChatBackend:
             )
         except BackendError:
             file_location: str | None = os.getenv("COMMAND_FILE_LOCATION")
-            _ = subprocess.Popen("")
+            if file_location:
+                with open(file_location) as file:
+                    comm_lists:dict = json.load(file, json=4)
+                    prefered_provider:str = str(comm_lists.get("FAVORITE"))
+                    command:list = cast(list, comm_lists.get(prefered_provider))
+            else:
+                pass
+            _ = subprocess.Popen(command)
 
         self.__agent = Agent(
             model=os.getenv("MODEL", "llama3.2"),
