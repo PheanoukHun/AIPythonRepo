@@ -106,12 +106,12 @@ class Agent:
         return json.dumps(result)
 
     def chat(self, prompt: str) -> str:
-        self.__messages.append(
+        
+        self.__messages = 
             {
                 "role": "user",
                 "content": prompt,
             }
-        )
 
         while True:
             response = self.__client.chat.completions.create(
