@@ -35,10 +35,10 @@ class ChatBackend:
 
         if not ENV_PATH.exists():
             generate_env(ENV_PATH=ENV_PATH)
-            generate_default_srv_command(f"{PROJECT_ROOT / "example-cfg.json"}")
+            generate_default_srv_command(str(PROJECT_ROOT / "example-cfg.json"))
             sys.exit()
 
-        load_dotenv()
+        load_dotenv(ENV_PATH)
 
         base_url: str = os.getenv("BASE_URL", "https://api.openai.com/")
         api_key: str = os.getenv("API_KEY", "NONE")
@@ -59,12 +59,32 @@ class ChatBackend:
                 generate_default_srv_command(file_location)
                 sys.exit()
 
-            prefered_provider: str = str(comm_lists.get("FAVORITE"))
-            command: list = cast(list, comm_lists.get(prefered_provider))
-            _ = subprocess.Popen(command)
+            preferred_provider = comm_lists.get("FAVORITE")
+
+            if preferred_provider is None:
+                raise RuntimeError("Missing FAVORITE in command configuration.")
+
+            command = comm_lists.get(preferred_provider)
+
+            if not isinstance(command, list):
+                raise TypeError(
+                    f"No startup command configured for '{preferred_provider}'."
+                )
+
+            if len(command) == 0:
+                print(
+                    f"\nPlease Configure the Preferred Command Server ({preferred_provider}), it is currently empty."
+                )
+            self.__server_process = subprocess.Popen(command)
 
             # Wait until the server is ready
             for _ in range(60):
+                if self.__server_process.poll() is not None:
+                    raise RuntimeError(
+                        f"{preferred_provider} exited with code "
+                        f"{self.__server_process.returncode}"
+                    )
+
                 try:
                     self.__server = detect_backend(
                         base_url=base_url,
@@ -74,7 +94,7 @@ class ChatBackend:
                 except BackendError:
                     time.sleep(1)
             else:
-                raise RuntimeError(f"Could not Load {prefered_provider}")
+                raise RuntimeError(f"Timed out waiting for {preferred_provider}.")
 
         self.__agent = Agent(
             model=os.getenv("MODEL", "GPT5-Nano"),
