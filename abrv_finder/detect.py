@@ -29,7 +29,7 @@ class DetectedServer:
         server_desc_str: str = "Service Provider:"
         server_desc_str += f"\n - Service Name:{self.service.value}"
         server_desc_str += f"\n - OpenAI Base URL: {self.openai_base}"
-        server_desc_str += f"\n - Model IDs: {self.model_ids}"
+        server_desc_str += f"\n - Model Name IDs: {self.model_ids[0]}"
         return server_desc_str
 
 
