@@ -22,7 +22,6 @@ from generate_default_settings import (
     generate_env,
 )
 
-load_dotenv()
 PROJECT_ROOT: Path = Path(__file__).resolve().parent
 ENV_PATH: Path = PROJECT_ROOT / ".env"
 
@@ -36,8 +35,10 @@ class ChatBackend:
 
         if not ENV_PATH.exists():
             generate_env(ENV_PATH=ENV_PATH)
-            generate_default_srv_command(f"{PROJECT_ROOT}/example-cfg.json")
+            generate_default_srv_command(f"{PROJECT_ROOT / "example-cfg.json"}")
             sys.exit()
+
+        load_dotenv()
 
         base_url: str = os.getenv("BASE_URL", "https://api.openai.com/")
         api_key: str = os.getenv("API_KEY", "NONE")
@@ -48,22 +49,22 @@ class ChatBackend:
             )
         except BackendError:
             file_location: str = os.getenv(
-                "COMMAND_FILE_LOCATION", f"{PROJECT_ROOT}/example-cfg.json"
+                "COMMAND_FILE_LOCATION", str(PROJECT_ROOT / "example-cfg.json")
             )
 
             try:
                 with open(file_location, "r") as file:
-                    comm_lists: dict = json.load(file, json=4)
-                    prefered_provider: str = str(comm_lists.get("FAVORITE"))
-                    command: list = cast(list, comm_lists.get(prefered_provider))
+                    comm_lists: dict = json.load(file)
             except FileNotFoundError:
                 generate_default_srv_command(file_location)
                 sys.exit()
 
+            prefered_provider: str = str(comm_lists.get("FAVORITE"))
+            command: list = cast(list, comm_lists.get(prefered_provider))
             _ = subprocess.Popen(command)
 
             # Wait until the server is ready
-            while True:
+            for _ in range(60):
                 try:
                     self.__server = detect_backend(
                         base_url=base_url,
@@ -72,6 +73,8 @@ class ChatBackend:
                     break
                 except BackendError:
                     time.sleep(1)
+            else:
+                raise RuntimeError(f"Could not Load {prefered_provider}")
 
         self.__agent = Agent(
             model=os.getenv("MODEL", "GPT5-Nano"),
