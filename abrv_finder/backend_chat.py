@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+import pathlib
 import subprocess
 from typing import Final, cast
 
@@ -12,6 +13,7 @@ from agent import Agent
 from detect import BackendError, DetectedServer, detect_backend
 
 load_dotenv()
+proj_path: str = str(pathlib.Path(__file__).resolve().parent)
 
 
 class ChatBackend:
@@ -20,8 +22,8 @@ class ChatBackend:
     )
 
     def __init__(self):
-        base_url: str = os.getenv("BASE_URL", "http://0.0.0.0:8080")
-        api_key: str | None = os.getenv("API_KEY")
+        base_url: str = os.getenv("BASE_URL", "http://127.0.0.1:8080")
+        api_key: str = os.getenv("API_KEY", "NONE")
 
         try:
             self.__server: DetectedServer = detect_backend(
@@ -29,13 +31,15 @@ class ChatBackend:
             )
         except BackendError:
             file_location: str | None = os.getenv("COMMAND_FILE_LOCATION")
-            if file_location:
-                with open(file_location) as file:
-                    comm_lists:dict = json.load(file, json=4)
-                    prefered_provider:str = str(comm_lists.get("FAVORITE"))
-                    command:list = cast(list, comm_lists.get(prefered_provider))
-            else:
-                pass
+
+            if not file_location:
+                file_location = ""
+
+            with open(file_location) as file:
+                comm_lists: dict = json.load(file, json=4)
+                prefered_provider: str = str(comm_lists.get("FAVORITE"))
+                command: list = cast(list, comm_lists.get(prefered_provider))
+
             _ = subprocess.Popen(command)
 
         self.__agent = Agent(
