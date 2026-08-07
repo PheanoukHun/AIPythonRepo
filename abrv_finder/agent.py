@@ -106,12 +106,14 @@ class Agent:
         return json.dumps(result)
 
     def chat(self, prompt: str) -> str:
-        
-        self.__messages = 
+
+        self.__messages = [
+            self.__messages[0],
             {
                 "role": "user",
                 "content": prompt,
-            }
+            },
+        ]
 
         while True:
             response = self.__client.chat.completions.create(
@@ -165,4 +167,3 @@ class Agent:
     @property
     def tool_names(self) -> list[str]:
         return [tool["function"]["name"] for tool in self.__tool_schemas]
-
