@@ -105,7 +105,7 @@ class ChatBackend:
             api_key=api_key,
         )
 
-        # self.register_arbv_tool(os.getenv("FIELD", "Computer Science"))
+        self.register_arbv_tool(os.getenv("FIELD", "Computer Science"))
 
     def register_arbv_tool(self, field: str) -> None:
         @self.__agent.tool(
