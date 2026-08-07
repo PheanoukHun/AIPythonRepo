@@ -38,7 +38,7 @@ class ChatBackend:
             generate_default_srv_command(f"{PROJECT_ROOT}/example-cfg.json")
             sys.exit()
 
-        base_url: str = os.getenv("BASE_URL", "http://127.0.0.1:8080")
+        base_url: str = os.getenv("BASE_URL", "https://api.openai.com/")
         api_key: str = os.getenv("API_KEY", "NONE")
 
         try:
@@ -62,7 +62,7 @@ class ChatBackend:
             _ = subprocess.Popen(command)
 
         self.__agent = Agent(
-            model=os.getenv("MODEL", "llama3.2"),
+            model=os.getenv("MODEL", "GPT5-Nano"),
             url=self.__server.openai_base,
             sys_prompt=os.getenv("SYSTEM_PROMPT", self.DEFAULT_SYS_PROMPT),
             api_key=api_key,
