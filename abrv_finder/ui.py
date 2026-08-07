@@ -1,12 +1,13 @@
-from backend_chat import ChatBackend
 from rich.markdown import Markdown
 from rich.markup import escape
-from ai_agent.special_inputs import SPEC_IN
 from textual import events
 from textual.app import App, ComposeResult
 from textual.containers import Container, Horizontal
 from textual.message import Message
 from textual.widgets import Header, RichLog, TextArea
+
+from backend_chat import ChatBackend
+from special_inputs import SPEC_IN
 
 
 class ChatInput(TextArea):
@@ -78,9 +79,8 @@ class ChatApp(App):
             with Horizontal():
                 yield ChatInput(
                     placeholder="Type a Message... (Enter to send, Shift+Enter / Ctrl+J for newline)",
-                    id="input"
+                    id="input",
                 )
-
 
     async def on_chat_input_submitted(self, event: ChatInput.Submitted):
         message = event.value
