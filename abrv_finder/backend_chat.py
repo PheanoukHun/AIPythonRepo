@@ -33,6 +33,8 @@ class ChatBackend:
 
     def __init__(self):
 
+        self.__server_process: subprocess.Popen[bytes] | None = None
+        
         if not ENV_PATH.exists():
             generate_env(ENV_PATH=ENV_PATH)
             generate_default_srv_command(str(PROJECT_ROOT / "example-cfg.json"))
@@ -99,11 +101,11 @@ class ChatBackend:
         self.__agent = Agent(
             model=os.getenv("MODEL", "GPT5-Nano"),
             url=self.__server.openai_base,
-            sys_prompt=self.DEFAULT_SYS_PROMPT,
+            sys_prompt=os.getenv("SYSTEM_PROMPT", self.DEFAULT_SYS_PROMPT),
             api_key=api_key,
         )
 
-        self.register_arbv_tool(os.getenv("FIELD", "Computer Science"))
+        # self.register_arbv_tool(os.getenv("FIELD", "Computer Science"))
 
     def register_arbv_tool(self, field: str) -> None:
         @self.__agent.tool(
@@ -157,6 +159,11 @@ class ChatBackend:
 
     def get_sys_prompt(self) -> str:
         return self.__agent.get_sys_prompt()
+
+    def exit(self) -> None:
+        if self.__server_process:
+            self.__server_process.kill()
+        sys.exit()
 
     async def send(self, prompt: str) -> str:
         await asyncio.sleep(0.5)

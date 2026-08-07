@@ -118,6 +118,10 @@ class ChatApp(App):
             input_box.focus()
             return
 
+        if command is SPEC_IN.EXIT:
+            self.backend.exit()
+            return
+
         chat.write(f"[bold cyan]You:[/] {message}")
 
         input_box.disabled = True

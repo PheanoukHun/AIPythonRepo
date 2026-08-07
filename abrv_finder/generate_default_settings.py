@@ -24,6 +24,7 @@ def generate_env(ENV_PATH: Path) -> None:
         "MODEL=GPT5-Nano"
         "BASE_URL=https://api.openai.com/"
         "API=YOUR-API-KEY-HERE"
+        "SYSTEM_PROMPT=You are a helpful AI Assistant. Use tools whenever appropriate."
         "FIELD=Computer Science"
         "COMMAND_FILE_LOCATION=example-cfg.json"
     )
